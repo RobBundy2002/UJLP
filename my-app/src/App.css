@@ -10,18 +10,20 @@ html, body {
 
 .App {
   text-align: center;
-  max-width: 100%;
-  width: 100%;
-  height: auto;
-  min-height: 100vh;
+  width: 1500px;
+  height: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
+  overflow: hidden;
   background-color: #FFFFFF;
   border-radius: 20px;
 }
 
 .App-header {
+  position: relative;
+  top: -4px;
   background-color: #FFFFFF;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -30,6 +32,9 @@ html, body {
 }
 
 .App-header-top {
+  position: relative;
+  top: -600px;
+  left: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -37,21 +42,33 @@ html, body {
   background-color: #344b8e;
   color: white;
   border-bottom: 1px solid #344b8e;
-  padding: 1rem;
-  box-sizing: border-box;
 }
 
 .App-nav-top {
+  position: relative;
+  top: -50px;
+  left: 0;
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   background-color: #344b8e;
   color: white;
   z-index: 10;
 }
+.App-nav-bottom {
+  position: relative;
+  top: 6px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  background-color: #344b8e;
+  color: white;
+}
+
 
 .App-title {
-  font-size: 2.5rem;
+  font-size: 3.5rem;
   margin: 0;
   padding-left: 1rem;
   color: #ffa51f;
@@ -61,20 +78,20 @@ html, body {
 
 .App-nav {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 1rem;
-  gap: 1rem;
+  margin-top: -550px;
+  margin-left: 2px;
+  justify-content: flex-start;
+
 }
 
 .App-link {
   display: inline-block;
-  padding: 0.5rem 2rem;
-  font-size: 1rem;
+  padding: 1rem 7rem;
+  font-size: 1.4rem;
   color: white;
   background-color: #ffa51f;
   border: none;
-  border-radius: 8px;
+  border-radius: 1px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
@@ -85,10 +102,22 @@ html, body {
 .App-link:hover {
   background-color: #ffd89e;
   color: #282c34;
+  text-decoration: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.App-instagram, .App-email {
+.App-instagram {
+  background-color: #ffa51f;
+  border-radius: 30px;
+  z-index: 1;
+  position: relative;
+  bottom: -200px;
+  left: -450px;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 2rem;
+}
+
+.App-email {
   background-color: #ffa51f;
   border-radius: 30px;
   color: white;
@@ -97,48 +126,27 @@ html, body {
   text-decoration: none;
   text-align: center;
   font-family: 'Public Sans', sans-serif;
-  font-size: 1rem;
+  font-size: 2rem;
   cursor: pointer;
+  z-index: 1;
+  position: relative;
+  bottom: -200px;
+  left: -430px;
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s, color 0.3s;
 }
 
-.App-instagram:hover, .App-email:hover {
+.App-email:hover {
   background-color: #ffd89e;
   color: #282c34;
-}
-
-.App-email {
-  margin-left: 1rem;
 }
 
 footer.App-footer {
   background-color: #344b8e;
   color: white;
   text-align: center;
-  padding: 2rem;
-  width: 100%;
+  padding: 102rem;
   position: relative;
+  width: 100%;
   bottom: 0;
-}
-
-@media (max-width: 768px) {
-  .App-title {
-    font-size: 2rem;
-  }
-
-  .App-link {
-    padding: 0.5rem 1.5rem;
-    font-size: 0.9rem;
-  }
-
-  .App-instagram, .App-email {
-    font-size: 0.9rem;
-    padding: 0.8rem 1.5rem;
-  }
-
-  .App-nav {
-    flex-direction: column;
-  }
 }
