@@ -1,38 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  height: 100%;
+}
+
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: #FFFFFF;
+  border-radius: 20px;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.App-header-top {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #344b8e;
+  color: white;
+  border-bottom: 1px solid #344b8e;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.App-nav-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: #344b8e;
+  color: white;
+  z-index: 10;
+}
+
+.App-title {
+  font-size: 2.5rem;
+  margin: 0;
+  padding-left: 1rem;
+  color: #ffa51f;
+  text-shadow: 2px 2px 4px #344b8e;
+  font-family: 'Anton', sans-serif;
+}
+
+.App-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.App-link {
+  display: inline-block;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #ffa51f;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  font-family: 'Public Sans', sans-serif;
+}
+
+.App-link:hover {
+  background-color: #ffd89e;
+  color: #282c34;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.App-instagram, .App-email {
+  background-color: #ffa51f;
+  border-radius: 30px;
+  color: white;
+  display: inline-block;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  text-align: center;
+  font-family: 'Public Sans', sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.App-instagram:hover, .App-email:hover {
+  background-color: #ffd89e;
+  color: #282c34;
+}
+
+.App-email {
+  margin-left: 1rem;
+}
+
+footer.App-footer {
+  background-color: #344b8e;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
+@media (max-width: 768px) {
+  .App-title {
+    font-size: 2rem;
   }
-  to {
-    transform: rotate(360deg);
+
+  .App-link {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .App-instagram, .App-email {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .App-nav {
+    flex-direction: column;
   }
 }

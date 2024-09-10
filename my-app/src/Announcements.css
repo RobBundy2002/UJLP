@@ -1,0 +1,53 @@
+.Announcements {
+    padding: 20rem;
+    position: relative;
+    top: -950px;
+    left: -5px;
+    height: 100%;
+    width:60%;
+}
+
+.Announcements h1 {
+    font-size: 2.5rem;
+    color: #344b8e;
+    margin-bottom: 1rem;
+    font-family: 'Anton', sans-serif;
+}
+
+.Announcements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.Announcement-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Announcement-item h2 {
+    font-size: 1.8rem;
+    color: #ffa51f;
+    margin: 0 0 0.5rem;
+}
+
+.Announcement-item p {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+}
+
+
+.App-nav-bottom {
+    position: relative;
+    top: 6px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    background-color: #344b8e;
+    color: white;
+}
