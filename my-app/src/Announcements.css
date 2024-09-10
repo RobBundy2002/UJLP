@@ -1,14 +1,13 @@
 .Announcements {
-    padding: 20rem;
+    padding: 2rem;
     position: relative;
-    top: -950px;
-    left: -5px;
-    height: 100%;
-    width:60%;
+    max-width: 90%;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .Announcements h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: #344b8e;
     margin-bottom: 1rem;
     font-family: 'Anton', sans-serif;
@@ -24,12 +23,12 @@
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
-    padding: 1.5rem;
+    padding: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .Announcement-item h2 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     color: #ffa51f;
     margin: 0 0 0.5rem;
 }
@@ -40,14 +39,34 @@
     color: #333;
 }
 
-
 .App-nav-bottom {
     position: relative;
-    top: 6px;
+    top: 0;
     left: 0;
     width: 100%;
     display: flex;
     align-items: flex-start;
     background-color: #344b8e;
     color: white;
+    z-index: 10;
+}
+
+@media (max-width: 768px) {
+    .Announcements {
+        padding: 1rem;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .Announcements h1 {
+        font-size: 1.5rem;
+    }
+
+    .Announcement-item {
+        padding: 0.75rem;
+    }
+
+    .Announcement-item h2 {
+        font-size: 1.25rem;
+    }
 }

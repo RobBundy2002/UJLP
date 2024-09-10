@@ -1,19 +1,23 @@
 .About {
-    position: relative;
-    padding: 20px;
-    max-width: 800px;
-    margin-top: -650px;
-    margin-left: 340px;
+    /*position: relative;*/
+    padding: 2rem;
+    max-width: 100%;
+    /*margin: 0 auto;*/
     z-index: 10;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+    /*align-items: center;*/
 }
 
 .About-Top {
-    height: 80vh;
+    height: 50vh;
 }
 
 .About h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+    font-size: 2rem;
+    margin-bottom: 1rem;
     color: #344b8e;
     font-family: 'Anton', sans-serif;
 }
@@ -21,13 +25,13 @@
 .About-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 1rem;
 }
 
 .About-table th,
 .About-table td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 0.5rem;
     text-align: left;
 }
 
@@ -43,4 +47,22 @@
 
 .About-table tr:hover {
     background-color: #ddd;
+}
+
+@media (max-width: 768px) {
+    .About {
+        padding: 1rem;
+        max-width: 100%;
+        margin: 0;
+    }
+
+    .About h1 {
+        font-size: 1.5rem;
+    }
+
+    .About-table th,
+    .About-table td {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
 }

@@ -10,31 +10,26 @@ html, body {
 
 .App {
   text-align: center;
-  width: 1500px;
-  height: 1200px;
-  margin: 0 auto;
+  max-width: 100%;
+  width: 100%;
+  min-height: 100vh;
   box-sizing: border-box;
-  overflow: hidden;
   background-color: #FFFFFF;
   border-radius: 20px;
+  position: relative;
 }
 
 .App-header {
-  position: relative;
-  top: -4px;
   background-color: #FFFFFF;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   color: white;
+  position: relative;
 }
 
 .App-header-top {
-  position: relative;
-  top: -600px;
-  left: 0;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -42,33 +37,23 @@ html, body {
   background-color: #344b8e;
   color: white;
   border-bottom: 1px solid #344b8e;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .App-nav-top {
-  position: relative;
-  top: -50px;
-  left: 0;
-  width: 100%;
+  width: 50%;
   display: flex;
-  align-items: flex-start;
-  background-color: #344b8e;
+  justify-content: center;
   color: white;
   z-index: 10;
-}
-.App-nav-bottom {
+  padding: 0.5rem;
+  box-sizing: border-box;
   position: relative;
-  top: 6px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-  background-color: #344b8e;
-  color: white;
 }
-
 
 .App-title {
-  font-size: 3.5rem;
+  font-size: 3rem;
   margin: 0;
   padding-left: 1rem;
   color: #ffa51f;
@@ -78,20 +63,26 @@ html, body {
 
 .App-nav {
   display: flex;
-  margin-top: -550px;
-  margin-left: 2px;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-top: -01.7%;
+  width: 1010%;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+  box-sizing: border-box;
 
 }
 
 .App-link {
   display: inline-block;
-  padding: 1rem 7rem;
-  font-size: 1.4rem;
+  padding: 0.75rem 2rem;
+  width: 3.13%;
+  font-size: 1rem;
+  position: relative;
   color: white;
   background-color: #ffa51f;
   border: none;
-  border-radius: 1px;
+  border-radius: 8px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
@@ -106,37 +97,37 @@ html, body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.App-instagram {
-  background-color: #ffa51f;
-  border-radius: 30px;
-  z-index: 1;
-  position: relative;
-  bottom: -200px;
-  left: -450px;
-  font-family: 'Public Sans', sans-serif;
-  font-size: 2rem;
-}
-
-.App-email {
+.App-instagram, .App-email {
   background-color: #ffa51f;
   border-radius: 30px;
   color: white;
   display: inline-block;
-  padding: 1rem 2rem;
+  padding: 0.75rem 1.5rem;
   text-decoration: none;
   text-align: center;
   font-family: 'Public Sans', sans-serif;
-  font-size: 2rem;
+  font-size: 1rem;
   cursor: pointer;
-  z-index: 1;
-  position: relative;
-  bottom: -200px;
-  left: -430px;
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, color 0.3s;
+  position: relative; /* Use fixed positioning for viewport-relative placement */
 }
 
-.App-email:hover {
+.App-instagram {
+  left: -41vw;
+  bottom: -6.5vh;
+  z-index: 3;
+  width: 9vh;
+}
+
+.App-email {
+  left: -37vw;
+  bottom: -6.5vh;
+  z-index: 3;
+}
+
+.App-email:hover, .App-instagram:hover {
   background-color: #ffd89e;
   color: #282c34;
 }
@@ -145,8 +136,30 @@ footer.App-footer {
   background-color: #344b8e;
   color: white;
   text-align: center;
-  padding: 102rem;
-  position: relative;
+  padding: 2rem;
   width: 100%;
-  bottom: 0;
+  box-sizing: border-box;
+  margin-top: auto;
+  margin-bottom: 0;
+  position: relative;
+}
+
+@media (max-width: 768px) {
+  .App-title {
+    font-size: 2rem;
+  }
+
+  .App-link {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .App-instagram, .App-email {
+    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+  }
+
+  .App-nav {
+    flex-direction: column;
+  }
 }
