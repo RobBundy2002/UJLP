@@ -4,6 +4,7 @@
     max-width: 800px;
     margin-top: -650px;
     margin-left: 340px;
+    z-index: 10;
 }
 
 .About-Top {
