@@ -8,7 +8,6 @@
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
-
 }
 
 .About-Top {
@@ -28,8 +27,7 @@
     margin-top: 1rem;
 }
 
-.About-table th,
-.About-table td {
+.About-table th, .About-table td {
     border: 1px solid #ddd;
     padding: 0.5rem;
     text-align: left;

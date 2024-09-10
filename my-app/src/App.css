@@ -4,7 +4,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   height: 100%;
 }
 
@@ -116,14 +116,14 @@ html, body {
 
 .App-instagram {
   left: -41vw;
-  bottom: -6.5vh;
+  bottom: 7vh;
   z-index: 3;
   width: 9vh;
 }
 
 .App-email {
   left: -37vw;
-  bottom: -6.5vh;
+  bottom: 7vh;
   z-index: 3;
 }
 
@@ -139,8 +139,7 @@ footer.App-footer {
   padding: 2rem;
   width: 100%;
   box-sizing: border-box;
-  margin-top: auto;
-  margin-bottom: 0;
+  margin-top: -13.5vh;
   position: relative;
 }
 
