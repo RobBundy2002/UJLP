@@ -9,7 +9,7 @@ function Contact() {
                 <p>We'd love to hear from you! Please fill out our Google Form to get in touch.</p>
             </div>
             <div className="Contact-form">
-                <a href="https://forms.gle/your-google-form-id" target="_blank" rel="noopener noreferrer" className="button-link">
+                <a href="https://forms.office.com/r/ZpWdDuEQyt" target="_blank" rel="noopener noreferrer" className="button-link">
                     Fill Out Our Form
                 </a>
             </div>
