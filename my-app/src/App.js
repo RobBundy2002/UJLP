@@ -34,7 +34,7 @@ function App() {
               <Route path="/contact" element={<Contact/>}/>
             </Routes>
           </main>
-          <a href="https://www.instagram.com/derektsai06" className="App-link App-instagram" target="_blank"
+          <a href="https://www.instagram.com/ujlawandpolitics/?hl=en" className="App-link App-instagram" target="_blank"
              rel="noopener noreferrer">Instagram</a>
           <a href="mailto:ujlawandpolitics@gmail.com" className="App-email">Email Us</a> {}
           <footer className="App-footer">
