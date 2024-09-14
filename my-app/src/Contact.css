@@ -23,7 +23,8 @@
 
 .Contact-header p {
     font-size: 1.2rem;
-    color: #666; /* Subtle text color */
+    color: #344b8e;
+    font-family: 'Times New Roman', serif;
 }
 
 .Contact-form {
