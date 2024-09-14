@@ -1,0 +1,24 @@
+.Journal {
+    position: relative;
+    top: -75vh;
+    right: -17vh;
+    padding: 2rem;
+    max-width: 80%;
+    z-index: 1;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.Journal-message {
+    font-size: 2rem;
+    color: #344b8e;
+    font-family: 'Times New Roman', serif;
+    text-align: center;
+    margin: 0;
+}

@@ -13,6 +13,7 @@ function App() {
         <div className="App">
           <header className="App-header">
             <div className="App-header-top">
+              <img src="/Logo.png" alt="Logo" className="App-logo"/>
               <div className="App-title">Undergraduate Journal of Law and Politics</div>
             </div>
             <nav className="App-nav">
