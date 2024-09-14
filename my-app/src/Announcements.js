@@ -3,9 +3,7 @@ import './Announcements.css';
 
 function Announcements() {
     const announcements = [
-        { title: "New Club Meeting", date: "2024-09-15", description: "Join us for our next club meeting where we'll discuss upcoming events and activities." },
-        { title: "Annual Conference", date: "2024-10-05", description: "Our annual conference is just around the corner. Don't miss out on the exciting keynote speakers and sessions." },
-        { title: "Volunteer Opportunity", date: "2024-11-01", description: "Looking for volunteers for our community outreach program. Get involved and make a difference!" },
+        { title: "New Club Meeting", date: "2024-09-15", description:" UJLP Interest meetings: Friday, September 20 and 27, 5:00pm, New Cabell Hall 027. We will be discussing the membership process, applications, club functions, and more! Demonstrating interest in joining our group is important, so make attendance a priority (or shoot us an email and we’ll get you caught up). " },
     ];
 
     return (

@@ -6,6 +6,7 @@ import About from './About';
 import Journal from './Journal';
 import Announcements from './Announcements';
 import Contact from './Contact';
+import logo from './Logo.png'
 
 function App() {
   return (
@@ -13,11 +14,13 @@ function App() {
         <div className="App">
           <header className="App-header">
             <div className="App-header-top">
-              <img src="/Logo.png" alt="Logo" className="App-logo"/>
-              <div className="App-title">Undergraduate Journal of Law and Politics</div>
+              <div className="App-title">
+                <img src={logo} alt="Logo" className=""/>
+                &emsp;  &emsp;  &emsp;  &emsp;  Undergraduate Journal of Law and Politics
+              </div>
             </div>
             <nav className="App-nav">
-              <nav className="App-nav-top">
+            <nav className="App-nav-top">
                 <Link to="/" className="App-link">Home</Link>
                 <Link to="/about" className="App-link">About</Link>
                 <Link to="/journal" className="App-link">Journal</Link>

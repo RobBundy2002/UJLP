@@ -53,9 +53,12 @@ html, body {
 }
 
 .App-title {
+  display: flex;
+  justify-content: center;
   font-size: 3rem;
   margin: 0;
-  padding-left: 1rem;
+  padding-left: .5rem;
+  align-items: center;
   color: #ffa51f;
   text-shadow: 2px 2px 4px #344b8e;
   font-family: 'Anton', sans-serif;
@@ -110,7 +113,7 @@ html, body {
   border: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s, color 0.3s;
-  position: relative; /* Use fixed positioning for viewport-relative placement */
+  position: relative;
 }
 
 .App-instagram {
