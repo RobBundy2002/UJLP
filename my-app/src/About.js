@@ -26,11 +26,11 @@ function About() {
                 <tr>
                     <td>Leadership</td>
                     <td>
-                        Editor-in-Chief: Derek Tsai
+                        Editor-in-Chief: Sam Burnett
 
                         Director of Engagement: Shelby Eliasek
 
-                        Managing Editor: Sam Burnett
+                        Managing Editor: Derek Tsai
                     </td>
                 </tr>
                 <tr>
@@ -38,10 +38,6 @@ function About() {
                     <td>Founded in 2024, the club aims to bring together students with an interest in legal and
                         political issues.
                     </td>
-                </tr>
-                <tr>
-                    <td>Club Events</td>
-                    <td></td>
                 </tr>
                 <tr>
                     <td>Membership</td>

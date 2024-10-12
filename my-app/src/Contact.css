@@ -1,13 +1,25 @@
 .Contact {
+    padding: 2rem;
+    max-width: 90%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    position: relative;
+    top: -87vh;
+}
+
+.Contact-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-    background-color: #FFFFFF;
-    min-height: 100vh;
-    position: relative;
-    top: -80vh;
-    left: 0vh;
+    gap: 1rem;
+    right: -50vh;
+}
+
+.Contact-item {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: .25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .Contact-header {
@@ -16,90 +28,9 @@
 }
 
 .Contact-header h1 {
-    font-size: 2.5rem;
+    font-size: 4rem;
     color: #344b8e;
-    margin: 0;
-}
-
-.Contact-header p {
-    font-size: 1.2rem;
-    color: #344b8e;
-    font-family: 'Times New Roman', serif;
-}
-
-.Contact-form {
-    width: 100%;
-    max-width: 600px;
-    background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.Contact-form .form-group {
     margin-bottom: 1rem;
+    font-family: 'Anton', sans-serif;
 }
 
-.Contact-form label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-}
-
-.Contact-form input,
-.Contact-form textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.Contact-form button {
-    background-color: #ffa51f;
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.Contact-form button:hover {
-    background-color: #ffd89e;
-}
-
-.Contact-social {
-    margin-top: 2rem;
-}
-
-.Contact-social a {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    text-decoration: none;
-    color: white;
-    border-radius: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s, color 0.3s;
-    margin: 0.5rem;
-}
-
-.Contact-instagram {
-    background-color: #ffa51f;
-}
-
-.Contact-instagram:hover {
-    background-color: #ffd89e;
-    color: #282c34;
-}
-
-.Contact-email {
-    background-color: #344b8e;
-}
-
-.Contact-email:hover {
-    background-color: #ffd89e;
-    color: #282c34;
-}

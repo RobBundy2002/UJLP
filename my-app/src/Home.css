@@ -23,10 +23,25 @@
     margin: 0;
 }
 
+.TitleWrapper h1 {
+    position: relative;
+    top: -88vh;
+    right: -15vh;
+    padding: 2rem;
+    max-width: 80%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    margin-bottom: -8rem;
+    color: #344b8e;
+    font-family: 'Anton', sans-serif;
+}
 .Home-message {
     font-size: 2rem;
     color: #344b8e;
-    font-family: 'Anton', serif;
+    font-family: 'Times New Roman', serif;
     text-align: center;
     margin: 0;
 }

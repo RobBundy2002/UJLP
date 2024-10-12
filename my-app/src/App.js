@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes, Link, Navigate} from 'react-router-dom';
 import './App.css';
 import Home from './Home';
 import About from './About';
@@ -36,6 +36,7 @@ function App() {
               <Route path="/journal" element={<Journal/>}/>
               <Route path="/announcements" element={<Announcements/>}/>
               <Route path="/contact" element={<Contact/>}/>
+                <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </main>
           <a href="https://www.instagram.com/ujlawandpolitics/?hl=en" className="App-link App-instagram" target="_blank"

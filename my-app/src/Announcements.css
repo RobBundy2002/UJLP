@@ -4,12 +4,12 @@
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
-    top: -75vh;
+    top: -87vh;
 }
 
 
 .Announcements h1 {
-    font-size: 2rem;
+    font-size: 4rem;
     color: #344b8e;
     margin-bottom: 1rem;
     font-family: 'Anton', sans-serif;

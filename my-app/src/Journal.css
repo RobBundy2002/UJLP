@@ -15,10 +15,27 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.TitleWrapper h1 {
+    position: relative;
+    top: -87vh;
+    right: -14vh;
+    max-width: 80%;
+    padding: 2rem;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    margin-bottom: -8rem;
+    color: #344b8e;
+    font-family: 'Anton', sans-serif;
+}
+
 .Journal-message {
     font-size: 2rem;
     color: #344b8e;
     font-family: 'Times New Roman', serif;
     text-align: center;
     margin: 0;
+    font-style: italic;
 }

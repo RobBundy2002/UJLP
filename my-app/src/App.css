@@ -15,7 +15,7 @@ html, body {
   min-height: 100vh;
   box-sizing: border-box;
   background-color: #FFFFFF;
-  border-radius: 20px;
+  border-radius: 20rem;
   position: relative;
 }
 
@@ -55,7 +55,7 @@ html, body {
 .App-title {
   display: flex;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 3vw;
   margin: 0;
   padding-left: .5rem;
   align-items: center;
@@ -67,8 +67,8 @@ html, body {
 .App-nav {
   display: flex;
   flex-wrap: wrap;
-  margin-top: -01.7%;
-  width: 1010%;
+  margin-top: -2rem;
+  width: 210%;
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
@@ -78,13 +78,12 @@ html, body {
 .App-link {
   display: inline-block;
   padding: 0.75rem 2rem;
-  width: 3.13%;
+  width: 15.5rem;
   font-size: 1rem;
   position: relative;
   color: white;
   background-color: #ffa51f;
   border: none;
-  border-radius: 45px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
