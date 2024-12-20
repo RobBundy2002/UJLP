@@ -11,7 +11,7 @@ const contacts = [
     {
         title: "Check out our Instagram",
         description: "Follow us on Instagram for updates.",
-        link: "https://www.instagram.com/ujlawandpolitics/",
+        link: "https://www.instagram.com/ujlawandpoliticsatuva/",
         linkText: "Instagram"
     },
     {

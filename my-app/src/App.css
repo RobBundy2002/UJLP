@@ -43,7 +43,7 @@ html, body {
 }
 
 .App-nav-top {
-  width: 18vw;
+  width:14vw;
   display: flex;
   justify-content: center;
   color: white;
@@ -111,10 +111,6 @@ html, body {
     font-size: 0.9rem;        /* Smaller font size */
     width: 100%;              /* Make buttons fill the available width */
     max-width: 250px;         /* Limit max width of buttons */
-  }
-
-  .App-nav-top {
-    width: 18vw;
   }
 }
 
