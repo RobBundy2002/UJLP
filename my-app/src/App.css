@@ -4,7 +4,8 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   height: 100%;
 }
 
@@ -42,7 +43,7 @@ html, body {
 }
 
 .App-nav-top {
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: center;
   color: white;
@@ -63,12 +64,9 @@ html, body {
   text-shadow: 2px 2px 4px #344b8e;
   font-family: 'Anton', sans-serif;
 }
-
 .App-nav {
   display: flex;
-  flex-wrap: wrap;
-  margin-top: -2rem;
-  width: 210%;
+  flex-wrap: wrap; /* Allows buttons to wrap if needed */
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
@@ -77,8 +75,8 @@ html, body {
 
 .App-link {
   display: inline-block;
-  padding: 0.75rem 2rem;
-  width: 15.5rem;
+  padding: 0.75rem 2rem; /* Default size */
+  width: auto; /* Auto width to let buttons shrink */
   font-size: 1rem;
   position: relative;
   color: white;
@@ -98,68 +96,26 @@ html, body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.App-instagram, .App-email {
-  background-color: #ffa51f;
-  border-radius: 30px;
-  color: white;
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  text-decoration: none;
-  text-align: center;
-  font-family: 'Public Sans', sans-serif;
-  font-size: 1rem;
-  cursor: pointer;
-  border: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s, color 0.3s;
-  position: relative;
-}
-
-.App-instagram {
-  left: -41vw;
-  bottom: 7vh;
-  z-index: 3;
-  width: 9vh;
-}
-
-.App-email {
-  left: -37vw;
-  bottom: 7vh;
-  z-index: 3;
-}
-
-.App-email:hover, .App-instagram:hover {
-  background-color: #ffd89e;
-  color: #282c34;
-}
-
-footer.App-footer {
-  background-color: #344b8e;
-  color: white;
-  text-align: center;
-  padding: 2rem;
-  width: 100%;
-  box-sizing: border-box;
-  margin-top: -13.5vh;
-  position: relative;
-}
-
+/* Adjust button size for smaller screens */
 @media (max-width: 768px) {
-  .App-title {
-    font-size: 2rem;
+  .App-nav {
+    flex-direction: column; /* Stack buttons vertically */
+    align-items: center;    /* Center buttons */
   }
 
   .App-link {
-    padding: 0.5rem 1.5rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 1.5rem;  /* Smaller padding */
+    font-size: 0.9rem;        /* Smaller font size */
+    width: 100%;              /* Make buttons fill the available width */
+    max-width: 250px;         /* Limit max width of buttons */
   }
+}
 
-  .App-instagram, .App-email {
-    font-size: 0.9rem;
-    padding: 0.5rem 1.2rem;
-  }
-
-  .App-nav {
-    flex-direction: column;
+@media (max-width: 480px) {
+  .App-link {
+    padding: 0.5rem 1rem;   /* Even smaller padding */
+    font-size: 0.8rem;       /* Smaller font size */
+    width: 100%;             /* Full width on very small screens */
+    max-width: 200px;        /* Further limit max width */
   }
 }

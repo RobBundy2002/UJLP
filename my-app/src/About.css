@@ -8,14 +8,17 @@
     display: flex;
     justify-content: flex-end;
     flex-direction: column;
+
 }
 
 .About-Top {
     height: 50vh;
+
 }
 
 .About h1 {
     font-size: 4rem;
+    margin-top: 20rem;
     margin-bottom: 1rem;
     color: #344b8e;
     font-family: 'Anton', sans-serif;
