@@ -1,9 +1,10 @@
 .Home {
     position: relative;
-    top: -75vh;
-    right: -17vh;
+    top: -75vw;
+    right: -15vw;
     padding: 2rem;
     max-width: 80%;
+    margin-top: 30rem;
     z-index: 1;
     box-sizing: border-box;
     display: flex;
@@ -25,17 +26,12 @@
 
 .TitleWrapper h1 {
     position: relative;
-    top: -88vh;
-    right: -15vh;
-    padding: 2rem;
-    margin-top: 16rem;
+    top: -88vw;
+    right: -17vw;
+    margin-top: 2rem;
     max-width: 100%;
-    z-index: 1;
-    display: flex;
     justify-content: center;
-    align-items: center;
     font-size: 8vw;
-    margin-bottom: -8rem;
     color: #344b8e;
     font-family: 'Anton', sans-serif;
 }

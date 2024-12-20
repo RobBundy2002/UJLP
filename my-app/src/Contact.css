@@ -1,17 +1,17 @@
 .Contact {
     padding: 2rem;
     max-width: 90%;
+    margin: 0 auto;
     box-sizing: border-box;
     position: relative;
     top: -87vh;
-    margin-top: 16rem;
 }
 
 .Contact-list {
+    margin-top: 20rem;
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    right: -50vh;
 }
 
 .Contact-item {
@@ -25,6 +25,7 @@
 .Contact-header {
     text-align: center;
     margin-bottom: 2rem;
+    margin-top: 16rem;
 }
 
 .Contact-header h1 {

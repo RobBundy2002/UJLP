@@ -43,7 +43,7 @@ html, body {
 }
 
 .App-nav-top {
-  width: 100%;
+  width: 18vw;
   display: flex;
   justify-content: center;
   color: white;
@@ -55,8 +55,7 @@ html, body {
 
 .App-title {
   display: flex;
-  justify-content: center;
-  font-size: 4vw;
+  font-size: 3.25vw;
   margin: 0;
   padding-left: .5rem;
   align-items: center;
@@ -66,7 +65,7 @@ html, body {
 }
 .App-nav {
   display: flex;
-  flex-wrap: wrap; /* Allows buttons to wrap if needed */
+  flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
@@ -99,8 +98,12 @@ html, body {
 /* Adjust button size for smaller screens */
 @media (max-width: 768px) {
   .App-nav {
-    flex-direction: column; /* Stack buttons vertically */
-    align-items: center;    /* Center buttons */
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .App-title {
+    font-size: 3vw;
   }
 
   .App-link {
@@ -108,6 +111,10 @@ html, body {
     font-size: 0.9rem;        /* Smaller font size */
     width: 100%;              /* Make buttons fill the available width */
     max-width: 250px;         /* Limit max width of buttons */
+  }
+
+  .App-nav-top {
+    width: 18vw;
   }
 }
 
