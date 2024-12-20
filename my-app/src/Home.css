@@ -29,16 +29,17 @@
     right: -15vh;
     padding: 2rem;
     margin-top: 16rem;
-    max-width: 80%;
+    max-width: 100%;
     z-index: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 4rem;
+    font-size: 8vw;
     margin-bottom: -8rem;
     color: #344b8e;
     font-family: 'Anton', sans-serif;
 }
+
 .Home-message {
     font-size: 2rem;
     color: #344b8e;
@@ -46,4 +47,5 @@
     text-align: center;
     margin: 0;
 }
+
 

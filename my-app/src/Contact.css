@@ -1,7 +1,6 @@
 .Contact {
     padding: 2rem;
     max-width: 90%;
-    margin: 0 auto;
     box-sizing: border-box;
     position: relative;
     top: -87vh;
@@ -29,7 +28,7 @@
 }
 
 .Contact-header h1 {
-    font-size: 4rem;
+    font-size: 8vw;
     color: #344b8e;
     margin-bottom: 1rem;
     font-family: 'Anton', sans-serif;

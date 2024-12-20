@@ -56,7 +56,7 @@ html, body {
 .App-title {
   display: flex;
   justify-content: center;
-  font-size: 3rem;
+  font-size: 4vw;
   margin: 0;
   padding-left: .5rem;
   align-items: center;
