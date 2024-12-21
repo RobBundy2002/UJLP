@@ -43,11 +43,10 @@ html, body {
 }
 
 .App-nav-top {
-  width:14vw;
+  width:100%;
   display: flex;
   justify-content: center;
   color: white;
-  z-index: 10;
   padding: 0.5rem;
   box-sizing: border-box;
   position: relative;
@@ -63,19 +62,23 @@ html, body {
   text-shadow: 2px 2px 4px #344b8e;
   font-family: 'Anton', sans-serif;
 }
+
 .App-nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
+  z-index: 10;
   box-sizing: border-box;
+  width: 105vw;
 }
 
 .App-link {
   display: inline-block;
-  padding: 0.75rem 2rem; /* Default size */
-  width: auto; /* Auto width to let buttons shrink */
+  padding: 0.75rem 2rem;
+  width: 100%;
+  margin-top: -1.55vw;
   font-size: 1rem;
   position: relative;
   color: white;
@@ -95,30 +98,25 @@ html, body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Adjust button size for smaller screens */
+
 @media (max-width: 768px) {
   .App-nav {
     flex-direction: column;
     align-items: center;
+    width: 120%;
   }
-
   .App-title {
     font-size: 3vw;
   }
-
   .App-link {
-    padding: 0.5rem 1.5rem;  /* Smaller padding */
-    font-size: 0.9rem;        /* Smaller font size */
-    width: 100%;              /* Make buttons fill the available width */
-    max-width: 250px;         /* Limit max width of buttons */
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    width: 100%;
+    max-width: 200px;
+    margin-top: 0;
   }
-}
-
-@media (max-width: 480px) {
-  .App-link {
-    padding: 0.5rem 1rem;   /* Even smaller padding */
-    font-size: 0.8rem;       /* Smaller font size */
-    width: 100%;             /* Full width on very small screens */
-    max-width: 200px;        /* Further limit max width */
+  .App-nav-top{
+    width: 100vw;
+    margin-top: -4.8vw;
   }
 }

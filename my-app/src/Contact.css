@@ -4,7 +4,7 @@
     margin: 0 auto;
     box-sizing: border-box;
     position: relative;
-    top: -87vh;
+    top: -115vh;
 }
 
 .Contact-list {
@@ -35,3 +35,10 @@
     font-family: 'Anton', sans-serif;
 }
 
+@media (max-width: 768px) {
+    .Contact {
+        padding: 1rem;
+        max-width: 100%;
+        margin-top: -5vw;
+    }
+}

@@ -1,6 +1,6 @@
 .About {
     position: relative;
-    top: -87vh;
+    top: -115vh;
     padding: 2rem;
     max-width: 100%;
     z-index: 1;
@@ -50,13 +50,12 @@
 
 @media (max-width: 768px) {
     .About {
-        padding: 1rem;
         max-width: 100%;
-        margin: 0;
+        margin-top: -8vw;
     }
 
     .About h1 {
-        font-size: 1.5rem;
+        font-size: 2.5rem;
     }
 
     .About-table th,

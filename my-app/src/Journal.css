@@ -1,8 +1,9 @@
 .Journal {
     position: relative;
-    top: -75vh;
+    top: -115vh;
+    right: -5vh;
     padding: 2rem;
-    max-width: 100%;
+    max-width: 90%;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 15px;
@@ -11,7 +12,7 @@
 
 .TitleWrapper h1 {
     position: relative;
-    top: -87vh;
+    top: -111vh;
     max-width: 65%;
     color: #344b8e;
     margin-bottom: 1rem;
@@ -27,4 +28,15 @@
     text-align: center;
     margin: 1rem 0;
     font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .Journal{
+        top: -148vw;
+        max-width: 80%;
+        right: -3vw;
+    }
+    .TitleWrapper h1 {
+        top: -150vw;
+    }
 }
