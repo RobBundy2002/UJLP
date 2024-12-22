@@ -32,11 +32,12 @@
 
 @media (max-width: 768px) {
     .Journal{
-        top: -148vw;
-        max-width: 80%;
+        top: -225vw;
+        max-width: 73%;
         right: -3vw;
     }
     .TitleWrapper h1 {
-        top: -150vw;
+        top: -230vw;
+        font-size: 15vw;
     }
 }

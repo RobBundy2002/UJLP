@@ -39,6 +39,10 @@
     .Contact {
         padding: 1rem;
         max-width: 100%;
-        margin-top: -5vw;
+        margin-top: -10vw;
     }
+    .Contact-header h1 {
+        font-size: 15vw;
+    }
+
 }

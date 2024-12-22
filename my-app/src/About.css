@@ -50,8 +50,8 @@
 
 @media (max-width: 768px) {
     .About {
-        max-width: 95%;
-        margin-top: -8vw;
+        max-width: 100%;
+        margin-top: -15vw;
     }
 
     .About h1 {
@@ -60,7 +60,7 @@
 
     .About-table th,
     .About-table td {
-        padding: 0.5rem;
-        font-size: 0.9rem;
+        width: 10%;
+        font-size: 0.7rem;
     }
 }

@@ -28,7 +28,7 @@ function About() {
                     <td>
                         Editor-in-Chief: Sam Burnett
 
-                        Director of Engagement: Shelby Eliasek
+                        Director of Engagement: Shelby Eliasek &emsp; &emsp; &emsp;
 
                         Managing Editor: Derek Tsai
                     </td>
