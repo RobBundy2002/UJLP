@@ -51,11 +51,11 @@
 @media (max-width: 768px) {
     .About {
         max-width: 100%;
-        margin-top: -15vw;
+        margin-top: -10vw;
     }
 
     .About h1 {
-        font-size: 2.5rem;
+        font-size: 15vw;
     }
 
     .About-table th,
@@ -64,3 +64,5 @@
         font-size: 0.7rem;
     }
 }
+
+
