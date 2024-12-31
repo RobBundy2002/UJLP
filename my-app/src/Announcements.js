@@ -3,7 +3,7 @@ import './Announcements.css';
 
 function Announcements() {
     const announcements = [
-        { title: "New Club Meeting", date: "2024-09-15", description:" UJLP Interest meetings: Friday, September 20 and 27, 5:00pm, New Cabell Hall 027. We will be discussing the membership process, applications, club functions, and more! Demonstrating interest in joining our group is important, so make attendance a priority (or shoot us an email and we’ll get you caught up). " },
+        { title: "New Member Announcement", date: "2024-10-24", description:" The UJLP formally accepted 10 new writers and 7 new editors for our 2024-2025 publication cycle! " },
     ];
 
     return (
