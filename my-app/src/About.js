@@ -26,11 +26,11 @@ function About() {
                 <tr>
                     <td>Leadership</td>
                     <td>
-                        Editor-in-Chief: Sam Burnett
+                        Editor-in-Chief: Sam Burnett |
 
-                        Director of Engagement: Shelby Eliasek &emsp; &emsp; &emsp;
+                        Director of Engagement: Shelby Eliasek |
 
-                        Managing Editor: Derek Tsai
+                        Managing Editor: Derek Tsai |
                     </td>
                 </tr>
                 <tr>
