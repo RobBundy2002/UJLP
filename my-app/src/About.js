@@ -50,9 +50,9 @@ function About() {
                     <td>Contact</td>
                     <td>
                         Email us at <a
-                        href="mailto:ujlawandpolitics@gmail.com">ujlawandpolitics@gmail.com</a>&nbsp;&nbsp;
+                        href="mailto:ujlawandpolitics@gmail.com">ujlawandpolitics@gmail.com</a>
                         or check us out on Instagram at <a href="https://www.instagram.com/ujlawandpoliticsatuva/" target="_blank"
-                           rel="noopener noreferrer">Instagram</a>
+                           rel="noopener noreferrer">UJLawAndPoliticsAtUVA</a>
                     </td>
                 </tr>
                 </tbody>
