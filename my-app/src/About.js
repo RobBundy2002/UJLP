@@ -26,11 +26,11 @@ function About() {
                 <tr>
                     <td>Leadership</td>
                     <td>
-                        Editor-in-Chief: Sam Burnett
+                        Editor-in-Chief: Sam Burnett |
 
-                        Director of Engagement: Shelby Eliasek &emsp; &emsp; &emsp;
+                        Director of Engagement: Shelby Eliasek |
 
-                        Managing Editor: Derek Tsai
+                        Managing Editor: Derek Tsai |
                     </td>
                 </tr>
                 <tr>
@@ -50,9 +50,9 @@ function About() {
                     <td>Contact</td>
                     <td>
                         Email us at <a
-                        href="mailto:ujlawandpolitics@gmail.com">ujlawandpolitics@gmail.com</a>&nbsp;&nbsp;
+                        href="mailto:ujlawandpolitics@gmail.com">ujlawandpolitics@gmail.com</a>&nbsp;
                         or check us out on Instagram at <a href="https://www.instagram.com/ujlawandpoliticsatuva/" target="_blank"
-                           rel="noopener noreferrer">Instagram</a>
+                           rel="noopener noreferrer">UJLawAndPoliticsAtUVA</a>
                     </td>
                 </tr>
                 </tbody>
