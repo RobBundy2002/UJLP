@@ -31,6 +31,8 @@ function About() {
                         Director of Engagement: Shelby Eliasek |
 
                         Managing Editor: Derek Tsai |
+
+                        Website Development Manager: Rob Bundy |
                     </td>
                 </tr>
                 <tr>
