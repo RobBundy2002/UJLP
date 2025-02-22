@@ -7,6 +7,7 @@ import Journal from './Journal';
 import Announcements from './Announcements';
 import Contact from './Contact';
 import logo from './Logo.png'
+import Footer from "./Footer";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
             </Routes>
           </main>
         </div>
+          <Footer></Footer>
       </Router>
   );
 }

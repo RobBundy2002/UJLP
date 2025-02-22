@@ -1,0 +1,17 @@
+.footer {
+    padding: 2vh;
+    background: #344b8e;
+    color: white;
+    text-align: center;
+    position: relative;
+    bottom: -10vh;
+    width: 97.7%;
+    z-index: 1000;
+}
+
+@media (max-width: 600px) {
+    .footer {
+        bottom: -433.5vh;
+        width: 92.3%;
+    }
+}
