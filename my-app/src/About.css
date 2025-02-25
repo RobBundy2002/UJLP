@@ -1,12 +1,12 @@
 .About {
     position: relative;
-    top: -115vh;
+    top: -12vh;
     padding: 2rem;
     max-width: 100%;
     z-index: 1;
     box-sizing: border-box;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     flex-direction: column;
 }
 
@@ -26,6 +26,10 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .About-table th, .About-table td {
@@ -48,6 +52,20 @@
     background-color: #ddd;
 }
 
+.About-link{
+    color: #007bff;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-decoration: none;
+    border-bottom: 2px solid #007bff;
+    transition: color 0.3s, border-color 0.3s;
+}
+
+.About-link:hover {
+    color: #0056b3;
+    border-color: #0056b3;
+}
+
 @media (max-width: 768px) {
     .About {
         max-width: 100%;
@@ -64,5 +82,3 @@
         font-size: 0.7rem;
     }
 }
-
-

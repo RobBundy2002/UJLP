@@ -1,6 +1,6 @@
 .Home {
     position: relative;
-    top: -55vw;
+    top: -3vw;
     right: -10vw;
     padding: 2rem;
     max-width: 80%;
@@ -12,7 +12,7 @@
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
 }
 
 .Home-heading {
@@ -25,22 +25,24 @@
 
 .TitleWrapper h1 {
     position: relative;
-    top: -107vw;
-    right: -17vw;
-    margin-top: -222rem;
+    top: 0;
+    margin-top: -80vh;
     max-width: 100%;
     justify-content: center;
-    font-size: 8vw;
+    font-size: 6vw;
     color: #344b8e;
     font-family: 'Anton', sans-serif;
 }
 
 .Home-message {
-    font-size: 2rem;
-    color: #344b8e;
-    font-family: 'Times New Roman', serif;
-    text-align: center;
-    margin: 0;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: 1.7rem;
+    font-weight: 300;
+    max-width: 100%;
+    margin-left: 2vh;
+    margin-top: 0vh;
+    z-index: 1;
 }
 
 @media (max-width: 768px) {
@@ -48,8 +50,5 @@
         top: -230vw;
     }
 }
-
-
-
 
 
