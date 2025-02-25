@@ -7,7 +7,6 @@
     top: -115vh;
 }
 
-
 .Announcements h1 {
     margin-top: 16rem;
     font-size: 6vw;
@@ -17,29 +16,38 @@
 }
 
 .Announcements-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* New grid layout */
+    gap: 20px; /* Space between items */
+    margin-left: 0vh;
 }
 
 .Announcement-item {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+    text-align: center;
+    color: #333;
+}
+
+.Announcement-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .Announcement-item h2 {
     font-size: 1.5rem;
-    color: #ffa51f;
+    color: #000000;
     margin: 0 0 0.5rem;
 }
 
 .Announcement-item p {
-    margin: 0;
-    font-size: 1rem;
-    color: #333;
+    font-size: 1em;
+    font-weight: 300;
+    margin-bottom: 3vh;
 }
 
 .App-nav-bottom {
