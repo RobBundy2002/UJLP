@@ -33,11 +33,9 @@ function Contact() {
                     <div className="Contact-item" key={index}>
                         <h2>{contact.title}</h2>
                         <p>{contact.description}</p>
-                        <a href={contact.link} target="_blank" rel="noopener noreferrer">{contact.linkText}</a>
+                        <a href={contact.link} target="_blank" rel="noopener noreferrer" className="Contact-link">{contact.linkText}</a>
                     </div>
                 ))}
-                <p>We will get back to you as soon as possible! Thank you for your patience and interest in our
-                    work.</p>
             </div>
         </div>
     );
