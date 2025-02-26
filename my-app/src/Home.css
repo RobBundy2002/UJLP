@@ -1,9 +1,8 @@
 .Home {
     position: relative;
     top: -3vw;
-    right: -10vw;
-    padding: 2rem;
-    max-width: 80%;
+    right: -5vw;
+    max-width: 90%;
     z-index: 1;
     box-sizing: border-box;
     display: flex;
@@ -12,7 +11,6 @@
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 15px;
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
 }
 
 .Home-heading {
@@ -47,7 +45,7 @@
 
 @media (max-width: 768px) {
     .Home{
-        top: -230vw;
+        top: -5vw;
     }
 }
 

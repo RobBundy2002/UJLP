@@ -69,11 +69,17 @@
 @media (max-width: 768px) {
     .About {
         max-width: 100%;
-        margin-top: -10vw;
+        margin-top: 12vw;
+        margin-left: -4vw;
     }
 
     .About h1 {
         font-size: 15vw;
+    }
+
+    .TitleWrapper h1{
+        font-size: 12vw;
+        margin-top: -74vh;
     }
 
     .About-table th,
