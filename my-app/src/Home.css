@@ -13,6 +13,12 @@
     border-radius: 15px;
 }
 
+.Home-message:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 30px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
 .Home-heading {
     font-size: 2rem;
     color: #344b8e;
