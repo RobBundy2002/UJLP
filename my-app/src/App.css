@@ -1,121 +1,137 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap');
 
 html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  height: 100%;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  scroll-behavior: smooth;
 }
 
 .App {
-  text-align: center;
-  max-width: 100%;
   width: 100%;
   min-height: 100vh;
-  box-sizing: border-box;
-  background-color: #FFFFFF;
-  border-radius: 20rem;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .App-header {
-  background-color: #FFFFFF;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: white;
-  position: relative;
-}
-
-.App-header-top {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  background-color: #344b8e;
-  color: white;
-  border-bottom: 1px solid #344b8e;
-  padding: 1rem;
-  box-sizing: border-box;
-}
-
-.App-nav-top {
-  width:100%;
-  display: flex;
-  justify-content: center;
-  color: white;
-  padding: 0.5rem;
-  box-sizing: border-box;
-  position: relative;
+  border-bottom: 1px solid #dcdcdc;
+  padding: 1.5rem 2rem;
+  background-color: #ffffff;
 }
 
 .App-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #000000;
+  font-weight: 700;
+  text-align: left;
   display: flex;
-  font-size: 3.25vw;
-  margin: 0;
-  padding-left: .5rem;
   align-items: center;
-  color: #ffa51f;
-  text-shadow: 2px 2px 4px #344b8e;
-  font-family: 'Anton', sans-serif;
+  gap: 1rem;
 }
 
-.App-nav {
+.App-title img {
+  height: 50px;
+  width: auto;
+}
+
+.App-nav-top {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem;
-  padding: 1rem;
-  z-index: 10;
-  box-sizing: border-box;
-  width: 105vw;
+  gap: 2rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .App-link {
-  display: inline-block;
-  padding: 0.75rem 2rem;
-  width: 100%;
-  margin-top: -1.55vw;
-  font-size: 1rem;
-  position: relative;
-  color: white;
-  background-color: #ffa51f;
-  border: none;
   text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
-  font-family: 'Public Sans', sans-serif;
+  color: #1a1a1a;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.App-link::after {
+  content: "";
+  display: block;
+  height: 2px;
+  background-color: #1a1a1a;
+  width: 0;
+  transition: width 0.3s ease;
+  margin-top: 4px;
 }
 
 .App-link:hover {
-  background-color: #ffd89e;
-  color: #282c34;
+  color: #4a4a4a;
+}
+
+.App-link:hover::after {
+  width: 100%;
+}
+
+main {
+  width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: #007acc;
   text-decoration: none;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  width: 100%;
+  border-top: 1px solid #eaeaea;
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 0.875rem;
+  color: #777;
+  background-color: #f8f8f8;
+  margin-top: auto;
 }
 
 @media (max-width: 768px) {
-  .App-nav {
+  .App-title {
+    font-size: 1.5rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .App-nav-top {
     flex-direction: column;
     align-items: center;
-    width: 120%;
+    gap: 1rem;
+    margin-left: 20vh;
   }
-  .App-title {
-    font-size: 3vw;
-  }
-  .App-link {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
-    width: 100%;
-    max-width: 200px;
-    margin-top: 0;
-  }
-  .App-nav-top{
-    width: 7.7vh;
-    margin-top: -5.8vh;
+
+  main {
+    padding: 1.5rem 1rem;
   }
 }

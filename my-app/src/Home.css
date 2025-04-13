@@ -1,58 +1,182 @@
-.Home {
-    position: relative;
-    top: -3vw;
-    right: -5vw;
-    max-width: 90%;
-    z-index: 1;
+.home {
+    font-family: 'Public Sans', sans-serif;
+    background-color: #ffffff;
+}
+
+.home-header {
+    background-color: #344b8e;
+    color: white;
+    padding: 2rem;
+    text-align: center;
     box-sizing: border-box;
+    margin-bottom: 2rem;
+}
+
+.home-header-top {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 15px;
+    flex-wrap: wrap;
 }
 
-.Home-message:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 30px 20px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+.home-title {
+    display: flex;
+    align-items: center;
+    font-family: 'Anton', sans-serif;
+    font-size: 2.5rem;
 }
 
-.Home-heading {
+.home-logo {
+    max-width: 80px;
+    margin-right: 1rem;
+}
+
+.home-title-text {
+    color: #ffa51f;
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px #344b8e;
+}
+
+.home-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.home-nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.home-nav-link:hover {
+    color: #ffa51f;
+}
+
+.home-intro {
+    text-align: center;
+    margin-top: 4rem;
+    padding: 2rem;
+}
+
+.home-intro-title {
     font-size: 2rem;
     color: #344b8e;
-    font-family: 'Anton', serif;
-    text-align: center;
-    margin: 0;
+    margin-bottom: 1rem;
 }
 
-.TitleWrapper h1 {
-    position: relative;
-    top: 0;
-    margin-top: -80vh;
-    max-width: 100%;
-    justify-content: center;
-    font-size: 6vw;
-    color: #344b8e;
-    font-family: 'Anton', sans-serif;
-}
-
-.Home-message {
-    padding: 20px;
-    border-radius: 10px;
-    font-size: 1.7rem;
-    font-weight: 300;
-    max-width: 100%;
-    margin-left: 2vh;
-    margin-top: 0vh;
-    z-index: 1;
+.home-intro-description {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #333;
 }
 
 @media (max-width: 768px) {
-    .Home{
-        top: -5vw;
+    .home-header {
+        padding: 1rem;
+    }
+
+    .home-title-text {
+        font-size: 1.8rem;
+    }
+
+    .home-nav {
+        align-items: center;
+    }
+
+    .home-nav-link {
+        font-size: 1.2rem;
     }
 }
 
+.home-container {
+    font-family: 'Public Sans', sans-serif;
+    color: #1a1a1a;
+    padding: 0;
+    margin: 0;
+}
 
+.intro-section {
+    padding: 4rem 2rem;
+    background-color: #ffffff;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.intro-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #344b8e;
+}
+
+.intro-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+.highlight-section {
+    background-color: #f8f8f8;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.highlight-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #344b8e;
+}
+
+.articles-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.article-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 1.5rem;
+    text-align: left;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.article-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #1a1a1a;
+    margin-bottom: 0.5rem;
+}
+
+.article-card p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+.preview-snippet {
+    margin-top: 0.5rem;
+}
+
+.read-more {
+    color: #ffa51f;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.read-more:hover {
+    color: #344b8e;
+}

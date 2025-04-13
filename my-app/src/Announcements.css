@@ -1,82 +1,74 @@
-.Announcements {
-    padding: 2rem;
-    max-width: 90%;
-    margin: 0 auto;
-    box-sizing: border-box;
-    position: relative;
-    top: -115vh;
-}
-
-.Announcements h1 {
-    margin-top: 16rem;
-    font-size: 6vw;
-    color: #344b8e;
-    margin-bottom: 1rem;
-    font-family: 'Anton', sans-serif;
-}
-
-.Announcements-list {
-    z-index: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* New grid layout */
-    gap: 20px; /* Space between items */
-    margin-left: 0vh;
-}
-
-.Announcement-item {
-    background-color: rgba(255, 255, 255, 0.8);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease-in-out;
+.announcements-page {
+    font-family: Arial, sans-serif;
+    padding: 3rem 2rem;
+    background-color: #fafafa;
+    color: #2c3e50;
     text-align: center;
-    color: #333;
 }
 
-.Announcement-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.15);
+.announcements-header {
+    margin-bottom: 3rem;
 }
 
-.Announcement-item h2 {
-    font-size: 1.5rem;
-    color: #000000;
-    margin: 0 0 0.5rem;
+.announcements-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #344b8e;
 }
 
-.Announcement-item p {
-    font-size: 1em;
-    font-weight: 300;
-    margin-bottom: 3vh;
+.announcements-header p {
+    font-size: 1.2rem;
+    color: #34495e;
+    margin-top: 1rem;
 }
 
-.App-nav-bottom {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    background-color: #344b8e;
-    color: white;
-    z-index: 10;
+.announcement-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    justify-items: center;
 }
 
-@media (max-width: 768px) {
-    .Announcements {
-        padding: 1rem;
-        max-width: 100%;
-    }
+.announcement-card {
+    background-color: #ffffff;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
 
-    .Announcements h1 {
-        font-size: 2.5rem;
-    }
+.announcement-card:hover {
+    transform: translateY(-5px);
+}
 
-    .Announcement-item {
-        padding: 0.75rem;
-    }
+.announcement-card h2 {
+    font-size: 1.8rem;
+    color: black;
+    margin-bottom: 1rem;
+}
 
-    .Announcement-item h2 {
-        font-size: 1.25rem;
-    }
+.announcement-date {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+}
+
+.announcement-card p {
+    font-size: 1.1rem;
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+}
+
+.announcement-link {
+    font-size: 1.1rem;
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.announcement-link:hover {
+    text-decoration: underline;
 }

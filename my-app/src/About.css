@@ -1,96 +1,48 @@
-.About {
-    position: relative;
-    top: -12vh;
-    padding: 2rem;
-    max-width: 100%;
-    z-index: 1;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.About-Top {
-    height: 50vh;
-}
-
-.About h1 {
-    font-size: 6vw;
-    margin-top: 16rem;
-    margin-bottom: 1rem;
-    color: #344b8e;
-    font-family: 'Anton', sans-serif;
-}
-
-.About-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    background-color: rgba(255, 255, 255, 0.9);
+.about-us-wrapper {
+    font-family: 'Arial', sans-serif;
+    color: #333;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.About-table th, .About-table td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    text-align: left;
+.about-title {
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 40px;
+    color: #344b8e;
 }
 
-.About-table th {
-    background-color: #ffa51f;
-    color: white;
-    font-family: 'Public Sans', sans-serif;
+.about-section {
+    margin-bottom: 30px;
 }
 
-.About-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+.section-title {
+    font-size: 1.8em;
+    color: #344b8e;
+    margin-bottom: 10px;
 }
 
-.About-table tr:hover {
-    background-color: #ddd;
+.about-text {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
-.About-link{
-    color: #007bff;
-    font-weight: bold;
-    font-size: 1.1em;
+.leadership-list {
+    font-size: 1.2em;
+    margin-left: 20px;
+}
+
+.leadership-list li {
+    margin-bottom: 10px;
+}
+
+.about-link {
+    color: #0044cc;
     text-decoration: none;
-    border-bottom: 2px solid #007bff;
-    transition: color 0.3s, border-color 0.3s;
 }
 
-.About-link:hover {
-    color: #0056b3;
-    border-color: #0056b3;
-}
-
-.About-table:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.2);
-    transition: transform 0.5s ease, box-shadow .5s ease;
-}
-
-@media (max-width: 768px) {
-    .About {
-        max-width: 100%;
-        margin-top: 12vw;
-        margin-left: -4vw;
-    }
-
-    .About h1 {
-        font-size: 15vw;
-    }
-
-    .TitleWrapper h1{
-        font-size: 12vw;
-        margin-top: -74vh;
-    }
-
-    .About-table th,
-    .About-table td {
-        width: 10%;
-        font-size: 0.7rem;
-    }
+.about-link:hover {
+    text-decoration: underline;
 }

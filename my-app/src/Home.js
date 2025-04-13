@@ -1,24 +1,46 @@
 import React from 'react';
 import './Home.css';
+import { Link } from 'react-router-dom';
 
 function Home() {
     return (
-        <div className="TitleWrapper">
-            <h1>Home</h1>
-            <div className="Home">
-                <div className="Home-message">
-                    The Undergraduate Journal of Law and Politics is a group of writers, editors, and executives that
-                    work
-                    to draft and publish undergraduate students’ writings of law reviews, political interests, and
-                    opinion
-                    pieces. Unlike a traditional law review, the UJLP provides members with the opportunity to write on
-                    both
-                    law and politics, not just strictly court cases. We publish scholarly articles, essays, book
-                    reviews,
-                    and commentaries that explore the dynamic relationship between legal frameworks and political
-                    processes.
+        <div className="home-container">
+            <section className="intro-section">
+                <div className="intro-text">
+                    <h2>Welcome</h2>
+                    <p>
+                        The Undergraduate Journal of Law and Politics (UJLP) is dedicated to fostering critical dialogue
+                        and original scholarship on legal and political issues. We publish rigorous, thoughtful work by
+                        undergraduate students at the University of Virginia and beyond.
+                    </p>
+                    <p>
+                        Whether you're interested in publishing, editing, or exploring impactful commentary,
+                        UJLP is a space for engaged, curious minds to contribute meaningfully to the discourse.
+                    </p>
                 </div>
-            </div>
+            </section>
+
+            <section className="highlight-section">
+                <h2>Featured Articles</h2>
+                <div className="articles-preview">
+                    <div className="article-card">
+                        <h3>Constitutional Boundaries in Digital Spaces</h3>
+                        <p>By John Doe • April 2025</p>
+                        <p className="preview-snippet">
+                            This piece is coming soon.
+                        </p>
+                        <Link to="/journal" className="read-more">Read more →</Link>  {/* Use Link instead of a */}
+                    </div>
+                    <div className="article-card">
+                        <h3>This Article is in Progress</h3>
+                        <p>By Jane Doe • April 2025</p>
+                        <p className="preview-snippet">
+                            This piece is coming soon.
+                        </p>
+                        <Link to="/journal" className="read-more">Read more →</Link>
+                    </div>
+                </div>
+            </section>
         </div>
     );
 }
