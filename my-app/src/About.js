@@ -29,6 +29,7 @@ function About() {
                             Editor-in-Chief: Sam Burnett |<br />
                             Director of Engagement: Shelby Eliasek |<br />
                             Managing Editor: Derek Tsai |<br />
+                            Director of Legal Writing & Research: Ruichong Xu |<br />
                             Website Development Manager: Rob Bundy |
                         </td>
                     </tr>
