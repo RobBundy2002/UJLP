@@ -33,7 +33,6 @@ function Announcements() {
                         <h2>{announcement.title}</h2>
                         <p className="announcement-date">{announcement.date}</p>
                         <p>{announcement.content}</p>
-                        <a href={announcement.link} className="announcement-link">Read More →</a>
                     </div>
                 ))}
             </section>
@@ -41,4 +40,4 @@ function Announcements() {
     );
 }
 
-export default Announcements;;
+export default Announcements;
