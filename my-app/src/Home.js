@@ -24,7 +24,7 @@ function Home() {
                 <h2>Featured Articles</h2>
                 <div className="articles-preview">
                     <div className="article-card">
-                        <h3>Constitutional Boundaries in Digital Spaces</h3>
+                        <h3>This piece is coming soon.</h3>
                         <p>By John Doe • April 2025</p>
                         <p className="preview-snippet">
                             This piece is coming soon.

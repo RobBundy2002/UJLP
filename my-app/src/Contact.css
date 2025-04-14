@@ -46,7 +46,7 @@
 
 .contact-card h2 {
     font-size: 1.8rem;
-    colo: black;
+    color: black;
     margin-bottom: 1rem;
 }
 
@@ -66,3 +66,12 @@
 .contact-link:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+    .contact-card {
+        position: relative;
+        left: -6vh;
+        max-width: 32vh;
+    }
+}
+

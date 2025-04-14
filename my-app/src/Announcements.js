@@ -23,7 +23,7 @@ function Announcements() {
     return (
         <div className="announcements-page">
             <section className="announcements-header">
-                <h1>Recent Announcements</h1>
+                <h1>Announcements</h1>
                 <p>Stay updated with our latest events, news, and activities at UJLP.</p>
             </section>
 

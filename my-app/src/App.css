@@ -9,6 +9,8 @@ html, body {
   background-color: #ffffff;
   color: #1a1a1a;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+
 }
 
 .App {

@@ -72,3 +72,15 @@
 .announcement-link:hover {
     text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+    .announcement-card {
+        position: relative;
+        left: -6vh;
+        max-width: 30vh;
+    }
+    .announcements-header h1{
+        position: relative;
+        font-size: 2.0rem;
+    }
+}
