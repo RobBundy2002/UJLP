@@ -2,11 +2,11 @@ import React from 'react';
 import './About.css';
 import './Home.css';
 import samImg from './SamBurnett.jpeg';
-// import shelbyImg from './images/shelby.png';
+import shelbyImg from './Shelby.jpeg';
 import derekImg from './DerekTsai.JPG';
 import ruichongImg from './Richard.jpeg';
 import robImg from './Rob.jpg';
-
+// import evanImg from './Evan.jpg';
 function About() {
     return (
         <div className="about-us-wrapper">
@@ -23,25 +23,29 @@ function About() {
                 <h2 className="section-title">Leadership</h2>
                 <div className="leadership-cards">
                     <div className="leader-card">
-                            <img src={samImg} alt="Sam Burnett" className="leader-img"/>
-                            <p><strong>Editor-in-Chief</strong><br/>Sam Burnett</p>
+                        <img src={samImg} alt="Sam Burnett" className="leader-img"/>
+                        <p><strong>Editor-in-Chief</strong><br/>Sam Burnett</p>
                     </div>
                     <div className="leader-card">
                         <img src={derekImg} alt="Derek Tsai" className="leader-img"/>
                         <p><strong>Managing Editor</strong><br/>Derek Tsai</p>
                     </div>
-                    {/*<div className="leader-card">*/}
-                    {/*    <img src={shelbyImg} alt="Shelby Eliasek" className="leader-img"/>*/}
-                    {/*    <p><strong>Director of Engagement</strong><br/>Shelby Eliasek</p>*/}
-                    {/*</div>*/}
                     <div className="leader-card">
-                        <img src={ruichongImg} alt="Richard (Ruichong) Xu" className="leader-img"/>
-                        <p><strong>Director of Legal Writing & Research</strong><br/>Richard Xu</p>
+                        <img src={shelbyImg} alt="Shelby Eliasek" className="leader-img"/>
+                        <p><strong>Director of Media</strong><br/>Shelby Eliasek</p>
                     </div>
                     <div className="leader-card">
                         <img src={robImg} alt="Rob Bundy" className="leader-img"/>
                         <p><strong>Director of Technology</strong><br/>Rob Bundy</p>
                     </div>
+                    <div className="leader-card">
+                        <img src={ruichongImg} alt="Richard (Ruichong) Xu" className="leader-img"/>
+                        <p><strong>Director of Legal Writing & Research</strong><br/>Richard Xu</p>
+                    </div>
+                    {/*<div className="leader-card">*/}
+                    {/*    <img src={evanImg} alt="Evan Proudkii" className="leader-img"/>*/}
+                    {/*    <p><strong>Director of Communications</strong><br/>Evan Proudkii</p>*/}
+                    {/*</div>*/}
                 </div>
             </div>
 
