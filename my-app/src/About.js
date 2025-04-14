@@ -1,9 +1,9 @@
 import React from 'react';
 import './About.css';
 import './Home.css';
-import samImg from './SamBurnett.jpeg';
+import samImg from './Sam.png';
 import shelbyImg from './Shelby.jpeg';
-import derekImg from './DerekTsai.JPG';
+import derekImg from './Derek.png';
 import ruichongImg from './Richard.jpeg';
 import robImg from './Rob.jpg';
 // import evanImg from './Evan.jpg';
