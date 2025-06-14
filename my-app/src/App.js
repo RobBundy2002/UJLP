@@ -1,5 +1,5 @@
-import React from 'react';
-import { HashRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { HashRouter as Router, Route, Routes, Link, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
 import About from './About';
@@ -9,36 +9,95 @@ import Contact from './Contact';
 import Footer from './Footer';
 import logo from "./Logo.png";
 
+function ScrollToTop() {
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [pathname]);
+
+    return null;
+}
+
+function Navigation() {
+    const [isScrolled, setIsScrolled] = useState(false);
+    const location = useLocation();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    return (
+        <header className={`App-header ${isScrolled ? 'scrolled' : ''}`}>
+            <div className="header-container">
+                <Link to="/" className="App-title">
+                    <img src={logo} alt="UJLP Logo" />
+                    <span>Undergraduate Journal of Law and Politics</span>
+                </Link>
+                <nav className="App-nav-top">
+                    <Link to="/" className={`App-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
+                    <Link to="/about" className={`App-link ${location.pathname === '/about' ? 'active' : ''}`}>About</Link>
+                    <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`}>Journal</Link>
+                    <Link to="/announcements" className={`App-link ${location.pathname === '/announcements' ? 'active' : ''}`}>Announcements</Link>
+                    <Link to="/contact" className={`App-link ${location.pathname === '/contact' ? 'active' : ''}`}>Contact</Link>
+                </nav>
+            </div>
+        </header>
+    );
+}
+
 function App() {
+    const [theme, setTheme] = useState(() => {
+        // Check if user has a theme preference in localStorage
+        const savedTheme = localStorage.getItem('theme');
+        // Check if user's system prefers dark mode
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        return savedTheme || (prefersDark ? 'dark' : 'light');
+    });
+
+    useEffect(() => {
+        // Update data-theme attribute when theme changes
+        document.documentElement.setAttribute('data-theme', theme);
+        // Save theme preference to localStorage
+        localStorage.setItem('theme', theme);
+    }, [theme]);
+
+    const toggleTheme = () => {
+        setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+    };
+
     return (
         <Router>
-            <div className="SiteWrapper">
-                <main className="Content">
-                    <header className="home-header">
-                        <div className="home-header-top">
-                            <div className="home-title">
-                                <img src={logo} alt="Logo" className="home-logo"/>
-                                <h1 className="home-title-text">Undergraduate Journal of Law and Politics</h1>
-                            </div>
-                            <nav className="home-nav">
-                                <Link to="/" className="home-nav-link">Home</Link>
-                                <Link to="/about" className="home-nav-link">About</Link>
-                                <Link to="/journal" className="home-nav-link">Journal</Link>
-                                <Link to="/announcements" className="home-nav-link">Announcements</Link>
-                                <Link to="/contact" className="home-nav-link">Contact</Link>
-                            </nav>
-                        </div>
-                    </header>
+            <div className="App">
+                <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+                    {theme === 'light' ? (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+                        </svg>
+                    ) : (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41.39.39 1.03.39 1.41 0l1.06-1.06z"/>
+                        </svg>
+                    )}
+                </button>
+                <Navigation />
+                <main className="fade-in">
+                    <ScrollToTop />
                     <Routes>
-                        <Route path="/" element={<Home/>}/>
-                        <Route path="/about" element={<About/>}/>
-                        <Route path="/journal" element={<Journal/>}/>
-                        <Route path="/announcements" element={<Announcements/>}/>
-                        <Route path="/contact" element={<Contact/>}/>
-                        <Route path="*" element={<Navigate to="/"/>}/>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/journal" element={<Journal />} />
+                        <Route path="/announcements" element={<Announcements />} />
+                        <Route path="/contact" element={<Contact />} />
+                        <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </main>
-                <Footer/>
+                <Footer />
             </div>
         </Router>
     );
