@@ -61,7 +61,13 @@ function Announcements() {
                             placeholder="Enter your email address" 
                             className="subscribe-input"
                         />
-                        <button type="submit" className="cta-button primary">Subscribe</button>
+                        <button 
+                            type="submit" 
+                            className="cta-button primary"
+                            style={{ marginLeft: '20px' }}
+                        >
+                            Subscribe
+                        </button>
                     </form>
                 </div>
             </section>

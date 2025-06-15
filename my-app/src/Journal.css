@@ -211,6 +211,8 @@
     }
 
     .cta-buttons {
+        align-items: center;
+        margin-left: -23px;
         flex-direction: column;
         gap: 1rem;
     }
