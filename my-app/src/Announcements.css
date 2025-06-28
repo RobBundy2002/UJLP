@@ -5,7 +5,6 @@
     padding: 0 2rem;
 }
 
-/* Hero Section */
 .announcements-hero {
     min-height: 40vh;
     display: flex;
@@ -44,7 +43,6 @@
     opacity: 0.9;
 }
 
-/* Announcements Section */
 .announcements-section {
     background-color: var(--background-white);
 }
@@ -78,7 +76,6 @@
     display: inline-block;
     padding: 0.25rem 0.75rem;
     background: var(--accent-color);
-    color: var(--background-white);
     border-radius: 4px;
     font-size: 0.875rem;
     margin-bottom: 1rem;
@@ -104,7 +101,6 @@
     margin: 0;
 }
 
-/* Subscribe Section */
 .subscribe-section {
     background-color: var(--background-light);
     margin: 0 -2rem;
@@ -151,7 +147,6 @@
     opacity: 0.7;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .announcements-container {
         padding: 0 1rem;

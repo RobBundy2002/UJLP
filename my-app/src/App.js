@@ -53,17 +53,13 @@ function Navigation() {
 
 function App() {
     const [theme, setTheme] = useState(() => {
-        // Check if user has a theme preference in localStorage
         const savedTheme = localStorage.getItem('theme');
-        // Check if user's system prefers dark mode
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         return savedTheme || (prefersDark ? 'dark' : 'light');
     });
 
     useEffect(() => {
-        // Update data-theme attribute when theme changes
         document.documentElement.setAttribute('data-theme', theme);
-        // Save theme preference to localStorage
         localStorage.setItem('theme', theme);
     }, [theme]);
 

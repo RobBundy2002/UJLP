@@ -5,7 +5,6 @@
     padding: 0 2rem;
 }
 
-/* Hero Section */
 .journal-hero {
     min-height: 40vh;
     display: flex;
@@ -37,7 +36,6 @@
     line-height: 1.2;
 }
 
-/* Intro Section */
 .journal-intro {
     margin-bottom: 4rem;
 }
@@ -54,7 +52,6 @@
     color: var(--text-secondary);
 }
 
-/* Articles Section */
 .journal-articles {
     margin-bottom: 4rem;
 }
@@ -145,7 +142,6 @@
     color: var(--primary-color);
 }
 
-/* CTA Section */
 .journal-cta {
     background: var(--background-light);
     text-align: center;

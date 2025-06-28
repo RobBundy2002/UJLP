@@ -5,7 +5,6 @@
     padding: 0 2rem;
 }
 
-/* Hero Section */
 .about-hero {
     min-height: 40vh;
     display: flex;
@@ -14,7 +13,6 @@
     text-align: center;
     padding: 4rem 0;
     background: var(--background-light);
-    /* color: var(--background-white); */
     margin: -2rem -2rem 4rem -2rem;
     position: relative;
     overflow: hidden;
@@ -53,7 +51,6 @@
     opacity: 0.9;
 }
 
-/* Section Styles */
 .section-content {
     position: relative;
     z-index: 3;
@@ -82,7 +79,6 @@
     border-radius: 2px;
 }
 
-/* Mission Section */
 .mission-content {
     max-width: 900px;
     margin: 0 auto;
@@ -96,7 +92,6 @@
     color: var(--text-secondary);
 }
 
-/* Leadership Section */
 .leadership-section {
     background-color: var(--background-light);
     margin: 0 -2rem;
@@ -179,7 +174,6 @@
     font-size: 1.05rem;
 }
 
-/* Team Section */
 .team-content {
     max-width: 900px;
     margin: 0 auto;
@@ -193,7 +187,6 @@
     color: var(--text-secondary);
 }
 
-/* History Section */
 .history-section {
     background-color: var(--background-light);
     margin: 0 -2rem;
@@ -213,7 +206,6 @@
     color: var(--text-secondary);
 }
 
-/* Work Section */
 .work-content {
     max-width: 900px;
     margin: 0 auto;
@@ -227,7 +219,6 @@
     color: var(--text-secondary);
 }
 
-/* Join Section */
 .join-section {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     color: var(--background-white);
@@ -277,7 +268,6 @@
     justify-content: center;
 }
 
-/* Button Styles */
 .cta-button {
     display: inline-block;
     padding: 1rem 2rem;
@@ -299,7 +289,6 @@
     background: var(--secondary-color);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .about-container {
         padding: 0 1rem;
@@ -402,7 +391,6 @@
     }
 }
 
-/* Additional breakpoint for very small screens */
 @media (max-width: 480px) {
     .about-hero {
         min-height: 25vh;
