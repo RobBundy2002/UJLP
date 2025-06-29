@@ -48,7 +48,7 @@ function Contact() {
                                     href={contact.link} 
                                     target="_blank" 
                                     rel="noopener noreferrer" 
-                                    className="cta-button"
+                                    className="cta-button-contact"
                                     style={{ width: '80%' }}
                                 >
                                     {contact.linkText}

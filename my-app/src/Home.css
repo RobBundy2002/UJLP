@@ -394,7 +394,7 @@
 
     .intro-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        margin-left: 7px;
     }
 
     .section-content {
@@ -415,8 +415,26 @@
     }
 
     .cta-section {
+        margin-left: 10px;
         padding: 3rem 1rem;
     }
+
+    .cta-button-home{
+        margin-left: 20px;
+        display: inline-block;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--background-white);
+        background: var(--primary-color);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
 
     .cta-buttons {
         flex-direction: column;

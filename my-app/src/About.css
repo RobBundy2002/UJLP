@@ -325,6 +325,25 @@
         margin-bottom: 1rem;
     }
 
+
+    .cta-button-about {
+        margin-left:14px;
+        width: 70%;
+        display: inline-block;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--background-white);
+        background: var(--primary-color);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+
     .section-content h2::after {
         width: 60px;
         height: 3px;
@@ -384,10 +403,16 @@
     }
 
     .cta-button {
-        width: 100%;
+        width: 70%;
         max-width: 300px;
         text-align: center;
-        margin-right: -20px;
+    }
+
+    .cta-button-journal {
+        width: 70%;
+        max-width: 300px;
+        text-align: center;
+        margin-left: 10px;
     }
 }
 

@@ -64,7 +64,7 @@ function Announcements() {
                         <button 
                             type="submit" 
                             className="cta-button primary"
-                            style={{ marginLeft: '20px' }}
+                            style={{ width: "100%" }}
                         >
                             Subscribe
                         </button>

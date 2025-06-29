@@ -17,8 +17,8 @@ function About() {
                         <h1>About UJLP</h1>
                         <p>Discover our mission, our team, and our commitment to excellence in legal journalism.</p>
                         <div className="cta-buttons">
-                            <a href="#/contact" className="cta-button">Join Our Team</a>
-                            <a href="#/journal" className="cta-button">View Our Work</a>
+                            <a href="#/contact" className="cta-button-about">Join Our Team</a>
+                            <a href="#/journal" className="cta-button-about">View Our Work</a>
                         </div>
                     </div>
                 </div>
@@ -159,7 +159,7 @@ function About() {
                     <div className="cta-content">
                         <h2>Join Our Team</h2>
                         <p>We're always looking for talented individuals to join our team. If you're passionate about journalism and want to make a difference, we'd love to hear from you.</p>
-                        <a href="/contact" className="cta-button primary">Join Our Team</a>
+                        <a href="/contact" className="cta-button ">Join Our Team</a>
                     </div>
                 </div>
             </section>

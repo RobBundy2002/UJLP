@@ -365,11 +365,7 @@ footer {
     }
 
     .App-nav-top {
-
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: var(--background-white);
+        margin-left: -3rem;
         padding: 1rem;
         flex-direction: column;
         gap: 1rem;
