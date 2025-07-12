@@ -36,7 +36,7 @@ function Journal() {
                 <div className="section-content">
                     <h1>The Journal</h1>
                     <p className="hero-content">
-                        Publishing the best of undergraduate research in law and politics
+                        Publishing the best undergraduate research in both law and politics
                     </p>
                 </div>
             </section>
@@ -76,9 +76,9 @@ function Journal() {
                 <div className="section-content">
                     <h2>Contribute to Our Journal</h2>
                     <p>We welcome submissions from undergraduate students interested in legal and political research.</p>
-                    <div className="cta-buttons-journal">
-                        <a href="#/contact" className="cta-button primary">Submit Your Work</a>
-                        <a href="#/about" className="cta-button primary">Learn More</a>
+                    <div className="cta-buttons">
+                        <a href="#/contact" className="cta-button">Submit Your Work</a>
+                        <a href="#/about" className="cta-button">Learn More</a>
                     </div>
                 </div>
             </section>

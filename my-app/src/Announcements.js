@@ -63,7 +63,7 @@ function Announcements() {
                         />
                         <button 
                             type="submit" 
-                            className="cta-button primary"
+                            className="cta-button"
                             style={{ width: "100%" }}
                         >
                             Subscribe

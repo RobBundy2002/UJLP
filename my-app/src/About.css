@@ -16,6 +16,7 @@
     margin: -2rem -2rem 4rem -2rem;
     position: relative;
     overflow: hidden;
+    border-radius: 20px;
 }
 
 .about-hero::before {
@@ -96,6 +97,7 @@
     background-color: var(--background-light);
     margin: 0 -2rem;
     padding: 0 2rem;
+    border-radius: 20px;
 }
 
 .leadership-grid {
@@ -187,10 +189,81 @@
     color: var(--text-secondary);
 }
 
+.team-members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.team-member-card {
+    background: var(--background-white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    border: 1px solid var(--border-color);
+}
+
+.team-member-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.team-member-image {
+    width: 100%;
+    height: 116px;
+    overflow: hidden;
+    position: relative;
+}
+
+.team-member-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
+}
+
+.team-member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-speed) ease;
+}
+
+.team-member-card:hover .team-member-image img {
+    transform: scale(1.05);
+}
+
+.team-member-info {
+    padding: 1rem;
+    background: var(--background-white);
+    text-align: center;
+}
+
+.team-member-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.team-member-role {
+    display: block;
+    color: var(--accent-color);
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.3px;
+}
+
 .history-section {
     background-color: var(--background-light);
     margin: 0 -2rem;
     padding: 0 2rem;
+    border-radius: 20px;
 }
 
 .history-content {
@@ -220,13 +293,14 @@
 }
 
 .join-section {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background: linear-gradient(135deg, var(--background-light) 0%, var(--background-white) 100%);
     color: var(--background-white);
     text-align: center;
     margin: 0 -2rem;
     padding: 5rem 2rem;
     position: relative;
     overflow: hidden;
+    border-radius: 20px;
 }
 
 .join-section::before {
@@ -241,7 +315,7 @@
 }
 
 .join-section h2 {
-    color: var(--background-white);
+    color: white;
     position: relative;
 }
 
@@ -298,6 +372,19 @@
         min-height: 30vh;
         margin: -1rem -1rem 3rem -1rem;
         padding: 2rem 0;
+        transform: translateX(3.75px);
+    }
+
+    .leadership-section {
+        transform: translateX(3.75px);
+    }
+
+    .history-section {
+        transform: translateX(3.75px);
+    }
+
+    .join-section {
+        transform: translateX(3.75px);
     }
 
     .hero-content h1 {
@@ -398,8 +485,8 @@
     .cta-buttons {
         flex-direction: column;
         gap: 1rem;
-        align-items: flex-start;
-        padding-left: 1rem;
+        align-items: center;
+        justify-content: center;
     }
 
     .cta-button {
@@ -412,7 +499,6 @@
         width: 70%;
         max-width: 300px;
         text-align: center;
-        margin-left: 10px;
     }
 }
 

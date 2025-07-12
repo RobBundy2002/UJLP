@@ -17,6 +17,7 @@
     margin: -2rem -2rem 4rem -2rem;
     position: relative;
     overflow: hidden;
+    border-radius: 20px;
 }
 
 .contact-hero::before {
@@ -116,6 +117,10 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     margin-bottom: 4rem;
+    background: var(--background-light);
+    padding: 3rem 2rem;
+    margin: 0 -2rem;
+    border-radius: 20px;
 }
 
 .info-card {
@@ -144,7 +149,7 @@
     .contact-hero {
         min-height: 30vh;
         margin: -1rem -1rem 3rem -1rem;
-        padding: 3rem 1rem;
+        transform: translateX(3.75px);
     }
 
     .contact-hero h1 {
@@ -207,6 +212,7 @@
         grid-template-columns: 1fr;
         gap: 1.5rem;
         margin-bottom: 3rem;
+        transform: translateX(3.75px);
     }
 
     .info-card {

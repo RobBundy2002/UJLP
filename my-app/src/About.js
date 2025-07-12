@@ -17,8 +17,7 @@ function About() {
                         <h1>About UJLP</h1>
                         <p>Discover our mission, our team, and our commitment to excellence in legal journalism.</p>
                         <div className="cta-buttons">
-                            <a href="#/contact" className="cta-button-about">Join Our Team</a>
-                            <a href="#/journal" className="cta-button-about">View Our Work</a>
+                            <a href="#/journal" className="cta-button">View Our Work</a>
                         </div>
                     </div>
                 </div>
@@ -119,6 +118,98 @@ function About() {
                             research, and drafting, while editors fact-check court cases and historical details, manage citations,
                             and review drafts. By working together, the Journal maintains accurate and high-quality content.
                         </p>
+                    </div>
+                    <div className="team-members-grid">
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>John Smith</h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Sarah Johnson</h3>
+                                <span className="team-member-role">Editor</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Michael Davis</h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Emily Wilson</h3>
+                                <span className="team-member-role">Editor</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>David Brown</h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Lisa Garcia</h3>
+                                <span className="team-member-role">Editor</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Robert Martinez</h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Jennifer Taylor</h3>
+                                <span className="team-member-role">Editor</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Chris Anderson</h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Amanda Rodriguez</h3>
+                                <span className="team-member-role">Editor</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>James Thompson</h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Nicole White</h3>
+                                <span className="team-member-role">Editor</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Kevin Lee</h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Rachel Clark</h3>
+                                <span className="team-member-role">Editor</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
+                                <h3>Thomas Lewis</h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
