@@ -1,0 +1,243 @@
+.author-bio-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.author-hero {
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4rem 0;
+    background: var(--background-light);
+    margin: -2rem -2rem 4rem -2rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.author-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="rgba(255,255,255,0.05)"/></svg>');
+    opacity: 0.1;
+}
+
+.author-content {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.author-image {
+    flex-shrink: 0;
+}
+
+.author-image img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--background-white);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.author-info {
+    text-align: left;
+    color: white;
+}
+
+.author-info h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.author-role {
+    display: block;
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.author-details {
+    text-align: left;
+}
+
+.author-details p {
+    margin-bottom: 0.5rem;
+    color: white;
+    opacity: 0.9;
+}
+
+.author-bio-section {
+    margin-bottom: 4rem;
+}
+
+.bio-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.bio-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.author-publications {
+    background: var(--background-light);
+    margin: 0 -2rem 4rem -2rem;
+    padding: 4rem 2rem;
+    border-radius: 20px;
+}
+
+.publications-list {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.publication-item {
+    background: var(--background-white);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-color);
+}
+
+.publication-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.publication-meta {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.publication-excerpt {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.author-contact {
+    margin-bottom: 4rem;
+}
+
+.contact-info {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-info p {
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.contact-info a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+.contact-info a:hover {
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .author-bio-container {
+        padding: 0 1rem;
+    }
+
+    .author-hero {
+        min-height: 30vh;
+        margin: -1rem -1rem 3rem -1rem;
+        padding: 2rem 0;
+        transform: translateX(3.75px);
+    }
+
+    .author-content {
+        flex-direction: column;
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .author-image img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .author-info {
+        text-align: center;
+    }
+
+    .author-info h1 {
+        font-size: 2rem;
+    }
+
+    .author-role {
+        font-size: 1rem;
+    }
+
+    .author-details {
+        text-align: center;
+    }
+
+    .bio-content {
+        text-align: left;
+    }
+
+    .bio-content p {
+        font-size: 1rem;
+    }
+
+    .author-publications {
+        margin: 0 -1rem 3rem -1rem;
+        padding: 3rem 1rem;
+        transform: translateX(3.75px);
+    }
+
+    .publication-item {
+        padding: 1.5rem;
+    }
+
+    .publication-item h3 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .author-image img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .author-info h1 {
+        font-size: 1.75rem;
+    }
+
+    .author-role {
+        font-size: 0.9rem;
+    }
+
+    .bio-content p {
+        font-size: 0.95rem;
+    }
+} 

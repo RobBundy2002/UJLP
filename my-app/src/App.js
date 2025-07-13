@@ -7,6 +7,8 @@ import Journal from './Journal';
 import Announcements from './Announcements';
 import Contact from './Contact';
 import Footer from './Footer';
+import Derek from './authorbios/Derek';
+import Mikayla from './authorbios/Mikayla';
 import logo from "./Logo.png";
 
 function ScrollToTop() {
@@ -90,6 +92,8 @@ function App() {
                         <Route path="/journal" element={<Journal />} />
                         <Route path="/announcements" element={<Announcements />} />
                         <Route path="/contact" element={<Contact />} />
+                        <Route path="/author/derek" element={<Derek />} />
+                        <Route path="/author/mikayla" element={<Mikayla />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </main>

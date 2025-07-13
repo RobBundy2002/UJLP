@@ -1,20 +1,23 @@
 import React from 'react';
 import './Journal.css';
 import './Home.css';
+import { Link } from 'react-router-dom';
 
 const articles = [
     {
-        title: "This Article is in Progress",
-        author: "Jane Doe",
-        category: "Constitutional Law",
+        title: "Dangerous Implications: The application of corporate personhood and its threat to democracy",
+        author: "Derek Tsai",
+        authorLink: "/author/derek",
+        category: "International Law",
         date: "June 2025",
         excerpt: "",
         link: "#"
     },
     {
-        title: "This Article is in Progress",
-        author: "John Smith",
-        category: "Environmental Law",
+        title: "From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness",
+        author: "Mikayla Grady",
+        authorLink: "/author/mikayla",
+        category: "Criminal Law",
         date: "June 2025",
         excerpt: "",
         link: "#"
@@ -62,7 +65,13 @@ function Journal() {
                                 <div className="article-content">
                                     <span className="article-category">{article.category}</span>
                                     <h3>{article.title}</h3>
-                                    <p className="article-meta">By {article.author} • {article.date}</p>
+                                    <p className="article-meta">
+                                        By {article.authorLink ? (
+                                            <Link to={article.authorLink} className="author-link">{article.author}</Link>
+                                        ) : (
+                                            article.author
+                                        )} • {article.date}
+                                    </p>
                                     <p className="article-excerpt">{article.excerpt}</p>
                                     <a href={article.link} className="article-link">Read Article →</a>
                                 </div>

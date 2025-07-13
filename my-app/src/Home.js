@@ -57,22 +57,22 @@ function Home() {
                     <div className="articles-grid">
                         <article className="article-card">
                             <div className="article-content">
-                                <span className="article-category">Politics</span>
-                                <h3>This Article is in Progress</h3>
-                                <p className="article-meta">By John Doe • June 2025</p>
+                                <span className="article-category">International Law</span>
+                                <h3>"Dangerous Implications: The application of corporate personhood and its threat to democracy"</h3>
+                                <p className="article-meta">By <Link to="/author/derek" className="author-link">Derek Tsai</Link> • July 2025</p>
                                 <p className="article-preview">
-                                    This piece is coming soon.
+                                    An examination of how corporate personhood doctrines impact democratic governance and political power structures.
                                 </p>
                                 <Link to="/journal" className="article-link">Read more →</Link>
                             </div>
                         </article>
                         <article className="article-card">
                             <div className="article-content">
-                                <span className="article-category">Law</span>
-                                <h3>This Article is in Progress</h3>
-                                <p className="article-meta">By Jane Doe • June 2025</p>
+                                <span className="article-category">Criminal Law</span>
+                                <h3>"From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness"</h3>
+                                <p className="article-meta">By <Link to="/author/mikayla" className="author-link">Mikayla Grady</Link> • June 2025</p>
                                 <p className="article-preview">
-                                    This piece is coming soon.
+                                    A critical analysis of how modern mental health understanding should reshape legal approaches to insanity defense.
                                 </p>
                                 <Link to="/journal" className="article-link">Read more →</Link>
                             </div>
@@ -87,10 +87,10 @@ function Home() {
             <section className="cta-section">
                 <div className="section-content">
                     <h2>Join Our Community</h2>
-                    <p>Be part of the conversation. Submit your work or join our editorial team.</p>
+                    <p>Be part of the conversation. Submit your work, join our team, or explore our latest publications.</p>
                     <div className="cta-buttons">
-                        <Link to="/contact" className="cta-button">Submit Your Work</Link>
-                        <Link to="/contact" className="cta-button">Join Our Team</Link>
+                        <Link to="/journal" className="cta-button primary">View Journal</Link>
+                        <Link to="/contact" className="cta-button">Get Involved</Link>
                     </div>
                 </div>
             </section>

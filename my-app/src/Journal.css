@@ -143,6 +143,18 @@
     color: var(--primary-color);
 }
 
+.author-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-speed) ease;
+}
+
+.author-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
 .journal-cta {
     background: var(--background-light);
     text-align: center;
