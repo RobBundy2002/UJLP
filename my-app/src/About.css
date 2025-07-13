@@ -500,6 +500,11 @@
         max-width: 300px;
         text-align: center;
     }
+
+    .team-members-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
 }
 
 @media (max-width: 480px) {
