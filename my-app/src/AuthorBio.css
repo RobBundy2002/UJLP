@@ -152,13 +152,21 @@
 }
 
 .contact-info a {
-    color: var(--accent-color);
+    color: var(--primary-color);
     text-decoration: none;
     transition: color var(--transition-speed) ease;
 }
 
 .contact-info a:hover {
     color: var(--primary-color);
+}
+
+[data-theme="dark"] .contact-info a {
+    color: var(--accent-color);
+}
+
+[data-theme="dark"] .contact-info a:hover {
+    color: var(--accent-color);
 }
 
 @media (max-width: 768px) {
