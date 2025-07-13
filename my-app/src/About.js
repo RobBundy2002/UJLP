@@ -122,94 +122,67 @@ function About() {
                     <div className="team-members-grid">
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>John Smith</h3>
-                                <span className="team-member-role">Staff Writer</span>
+                                <h3>Alex Executive</h3>
+                                <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Sarah Johnson</h3>
-                                <span className="team-member-role">Editor</span>
+                                <h3>Bailey Executive</h3>
+                                <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Michael Davis</h3>
-                                <span className="team-member-role">Staff Writer</span>
+                                <h3>Casey Executive</h3>
+                                <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Emily Wilson</h3>
-                                <span className="team-member-role">Editor</span>
+                                <h3>Drew Executive</h3>
+                                <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>David Brown</h3>
-                                <span className="team-member-role">Staff Writer</span>
+                                <h3>Emery Executive</h3>
+                                <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Lisa Garcia</h3>
-                                <span className="team-member-role">Editor</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Robert Martinez</h3>
-                                <span className="team-member-role">Staff Writer</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Jennifer Taylor</h3>
-                                <span className="team-member-role">Editor</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Chris Anderson</h3>
-                                <span className="team-member-role">Staff Writer</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Amanda Rodriguez</h3>
-                                <span className="team-member-role">Editor</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>James Thompson</h3>
-                                <span className="team-member-role">Staff Writer</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Nicole White</h3>
-                                <span className="team-member-role">Editor</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Kevin Lee</h3>
-                                <span className="team-member-role">Staff Writer</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Rachel Clark</h3>
-                                <span className="team-member-role">Editor</span>
-                            </div>
-                        </div>
-                        <div className="team-member-card">
-                            <div className="team-member-info">
-                                <h3>Thomas Lewis</h3>
-                                <span className="team-member-role">Staff Writer</span>
-                            </div>
-                        </div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 1</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 2</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 3</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 4</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 5</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 6</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 7</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 8</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 9</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 10</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 11</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 12</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 13</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 14</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 15</h3><span className="team-member-role">Staff Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 1</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 2</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 3</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 4</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 5</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 6</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 7</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 8</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 9</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 10</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 11</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 12</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 13</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 14</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 15</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Jordan Coordinator</h3><span className="team-member-role">Event Coordinator</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Skyler Coordinator</h3><span className="team-member-role">Event Coordinator</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Taylor Coordinator</h3><span className="team-member-role">Event Coordinator</span></div></div>
                     </div>
                 </div>
             </section>
