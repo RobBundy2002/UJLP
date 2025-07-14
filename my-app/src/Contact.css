@@ -226,6 +226,18 @@
     .info-card p {
         font-size: 0.95rem;
     }
+
+    .cta-button {
+        font-size: 0.95rem !important;
+        padding: 0.5rem 1rem !important;
+        min-width: 210px !important;
+        max-width: 100% !important;
+    }
+    button[type="submit"],
+    .contact-section .cta-button {
+        min-width: 210px !important;
+        max-width: 100% !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -275,5 +287,15 @@
     .contact-info {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+.cta-button {
+    background: var(--primary-color) !important;
+    color: var(--accent-color) !important;
+    border: none !important;
+}
+.cta-button:hover {
+    background: var(--accent-color) !important;
+    color: var(--primary-color) !important;
 }
 

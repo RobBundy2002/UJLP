@@ -117,13 +117,13 @@ The website supports a comprehensive team organization:
 
 2. **Install dependencies**
    ```bash
-   npm install
-   ```
+npm install
+```
 
 3. **Start the development server**
    ```bash
    npm start
-   ```
+```
 
 4. **Open your browser**
    Navigate to `http://localhost:3000`

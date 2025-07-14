@@ -13,7 +13,7 @@ function Derek() {
                         </div>
                         <div className="author-info">
                             <h1>Derek Tsai</h1>
-                            <span className="author-role">Managing Editor</span>
+                            <span className="author-role">Editor-in-Chief</span>
                             <div className="author-details">
                                 <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
                                 <p><strong>Hometown:</strong> McLean, Virginia</p>
@@ -31,8 +31,7 @@ function Derek() {
                     <div className="bio-content">
                         <p>
                             Derek Tsai is a second-year student at the University of Virginia, pursuing a double major in History and Economics. 
-                            As the Managing Editor of the Undergraduate Journal of Law and Politics, Derek oversees day-to-day editorial operations 
-                            and coordinates article workflows across departments.
+                            As the Editor-in-Chief of the Undergraduate Journal of Law and Politics, Derek sets the editorial vision, oversees all operations, and represents the organization in official capacities.
                         </p>
                         <p>
                             Originally from McLean, Virginia, Derek has developed a deep interest in constitutional law and its intersection with

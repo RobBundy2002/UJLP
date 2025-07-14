@@ -1,6 +1,7 @@
 import React from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
+import AuthorCarousel from './components/AuthorCarousel';
 
 function Home() {
     return (
@@ -12,7 +13,7 @@ function Home() {
                         Fostering critical dialogue and original scholarship on legal and political issues
                     </p>
                     <div className="cta-buttons">
-                        <a href="#/journal" className="cta-button">View Our Work</a>
+                        <a href="#/journal" className="cta-button primary">View Our Work</a>
                         <a href="#/contact" className="cta-button">Submit Your Work</a>
                     </div>
                 </div>
@@ -50,6 +51,8 @@ function Home() {
                     </div>
                 </div>
             </section>
+
+            <AuthorCarousel />
 
             <section className="featured-section">
                 <div className="section-content">

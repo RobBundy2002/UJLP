@@ -4,6 +4,7 @@ import './App.css';
 import Home from './Home';
 import About from './About';
 import Journal from './Journal';
+import Archives from './Archives';
 import Announcements from './Announcements';
 import Contact from './Contact';
 import Footer from './Footer';
@@ -23,6 +24,7 @@ function ScrollToTop() {
 
 function Navigation() {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -34,20 +36,53 @@ function Navigation() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useEffect(() => {
+        // Close mobile menu when location changes
+        setIsMobileMenuOpen(false);
+    }, [location]);
+
+    useEffect(() => {
+        // Prevent background scrolling when mobile menu is open
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMobileMenuOpen]);
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+    };
+
     return (
         <header className={`App-header ${isScrolled ? 'scrolled' : ''}`}>
             <div className="header-container">
                 <Link to="/" className="App-title">
                     <img src={logo} alt="UJLP Logo" />
-                    <span>Undergraduate Journal of Law and Politics</span>
+                    <div className="title-text">
+                        <span className="title-line-1">Undergraduate Journal</span>
+                        <span className="title-line-2">of Law and Politics</span>
+                    </div>
                 </Link>
-                <nav className="App-nav-top">
-                    <Link to="/" className={`App-link ${location.pathname === '/' ? 'active' : ''}`}>Home</Link>
-                    <Link to="/about" className={`App-link ${location.pathname === '/about' ? 'active' : ''}`}>About</Link>
-                    <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`}>Journal</Link>
-                    <Link to="/announcements" className={`App-link ${location.pathname === '/announcements' ? 'active' : ''}`}>Announcements</Link>
-                    <Link to="/contact" className={`App-link ${location.pathname === '/contact' ? 'active' : ''}`}>Contact</Link>
+                <nav className={`App-nav-top ${isMobileMenuOpen ? 'active' : ''}`}>
+                    <Link to="/" className={`App-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMobileMenu}>Home</Link>
+                    <Link to="/about" className={`App-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMobileMenu}>About</Link>
+                    <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`} onClick={closeMobileMenu}>Journal</Link>
+                    <Link to="/archives" className={`App-link ${location.pathname === '/archives' ? 'active' : ''}`} onClick={closeMobileMenu}>Archives</Link>
+                    <Link to="/announcements" className={`App-link ${location.pathname === '/announcements' ? 'active' : ''}`} onClick={closeMobileMenu}>Announcements</Link>
+                    <Link to="/contact" className={`App-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={closeMobileMenu}>Contact</Link>
                 </nav>
+                <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+                    <span className={`hamburger ${isMobileMenuOpen ? 'active' : ''}`}></span>
+                </button>
             </div>
         </header>
     );
@@ -90,6 +125,7 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/journal" element={<Journal />} />
+                        <Route path="/archives" element={<Archives />} />
                         <Route path="/announcements" element={<Announcements />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/author/derek" element={<Derek />} />

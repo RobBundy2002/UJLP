@@ -192,6 +192,6 @@
     }
 
     .subscribe-input {
-        transform: translateX(-4px);
+        transform: translateX(-12px);
     }
 }

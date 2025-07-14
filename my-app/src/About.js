@@ -1,6 +1,7 @@
 import React from 'react';
 import './About.css';
 import './Home.css';
+import Timeline from './components/Timeline';
 import samImg from './Sam.png';
 import shelbyImg from './Shelby.jpeg';
 import derekImg from './Derek.png';
@@ -40,23 +41,12 @@ function About() {
                     <div className="leadership-grid">
                         <div className="leader-card">
                             <div className="leader-image">
-                                <img src={samImg} alt="Sam Burnett" />
-                            </div>
-                            <div className="leader-info">
-                                <h3>Sam Burnett</h3>
-                                <span className="leader-role">Editor-in-Chief</span>
-                                <p>Sam Burnett is a journalist with years of editorial experience, currently leading the team as Editor-in-Chief.</p>
-                            </div>
-                        </div>
-
-                        <div className="leader-card">
-                            <div className="leader-image">
                                 <img src={derekImg} alt="Derek Tsai" />
                             </div>
                             <div className="leader-info">
                                 <h3>Derek Tsai</h3>
-                                <span className="leader-role">Managing Editor</span>
-                                <p>Derek Tsai oversees day-to-day editorial operations and coordinates article workflows across departments.</p>
+                                <span className="leader-role">Editor-in-Chief</span>
+                                <p>Derek Tsai leads the Undergraduate Journal of Law and Politics, setting editorial vision, overseeing all operations, and representing the organization in official capacities.</p>
                             </div>
                         </div>
 
@@ -66,8 +56,8 @@ function About() {
                             </div>
                             <div className="leader-info">
                                 <h3>Shelby Eliasek</h3>
-                                <span className="leader-role">Director of Media</span>
-                                <p>Shelby Eliasek directs all media production, handling visual content creation and branding strategy.</p>
+                                <span className="leader-role">Director of Operations</span>
+                                <p>Shelby Eliasek manages logistics, events, and organizational strategy, ensuring the smooth day-to-day functioning of the Journal.</p>
                             </div>
                         </div>
 
@@ -99,8 +89,19 @@ function About() {
                             </div>
                             <div className="leader-info">
                                 <h3>Evan Proudkii</h3>
-                                <span className="leader-role">Director of Communications</span>
-                                <p>Evan Proudkii leads our communication strategy, managing external relations and ensuring effective messaging across all platforms.</p>
+                                <span className="leader-role">Managing Editor</span>
+                                <p>Evan Proudkii coordinates editorial workflows, supports writers and editors, and ensures the quality and timely publication of all articles.</p>
+                            </div>
+                        </div>
+
+                        <div className="leader-card">
+                            <div className="leader-image">
+                                <img src={samImg} alt="Sam Burnett" />
+                            </div>
+                            <div className="leader-info">
+                                <h3>Sam Burnett</h3>
+                                <span className="leader-role">Editor Emeritus</span>
+                                <p>Sam Burnett is a journalist with years of editorial experience, now serving as Editor Emeritus after leading the team as Editor-in-Chief.</p>
                             </div>
                         </div>
                     </div>
@@ -186,6 +187,8 @@ function About() {
                     </div>
                 </div>
             </section>
+
+            <Timeline />
 
             <section className="history-section">
                 <div className="section-content">
