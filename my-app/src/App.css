@@ -309,7 +309,7 @@ footer {
   padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--background-white);
+  color: white;
   background: var(--primary-color);
   border: none;
   border-radius: 8px;
@@ -436,7 +436,7 @@ footer {
         display: block;
         position: absolute;
         right: 1rem;
-        bottom: 0rem;
+        bottom: 0.3rem;
         transform: none;
         z-index: 1001;
         background: none;

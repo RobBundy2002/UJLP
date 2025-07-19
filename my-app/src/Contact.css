@@ -173,7 +173,7 @@
         padding: 1rem 2rem;
         font-size: 1.0rem;
         font-weight: 500;
-        color: var(--background-white);
+        color: white;
         background: var(--primary-color);
         border: none;
         border-radius: 8px;
@@ -228,6 +228,7 @@
     }
 
     .cta-button {
+        color: white;
         font-size: 0.95rem !important;
         padding: 0.5rem 1rem !important;
         min-width: 210px !important;
@@ -235,8 +236,8 @@
     }
     button[type="submit"],
     .contact-section .cta-button {
-        min-width: 210px !important;
-        max-width: 100% !important;
+        min-width: 90% !important;
+        max-width: 90% !important;
     }
 }
 
@@ -291,7 +292,7 @@
 
 .cta-button {
     background: var(--primary-color) !important;
-    color: var(--accent-color) !important;
+    color: white;
     border: none !important;
 }
 .cta-button:hover {

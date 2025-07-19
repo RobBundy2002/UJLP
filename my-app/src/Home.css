@@ -315,6 +315,7 @@
 }
 
 .cta-button {
+    color: white;
     display: inline-block;
     padding: 0.875rem 1.75rem;
     border-radius: 6px;
@@ -336,7 +337,7 @@
 .cta-button,
 .cta-button.primary {
     background: var(--primary-color) !important;
-    color: var(--accent-color) !important;
+    color: white;
     border: none !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -441,7 +442,7 @@
         padding: 1rem 2rem;
         font-size: 1.1rem;
         font-weight: 600;
-        color: var(--background-white);
+        color: white;
         background: var(--primary-color);
         border: none;
         border-radius: 8px;

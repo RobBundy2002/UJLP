@@ -49,7 +49,6 @@ function About() {
                                 <p>Derek Tsai leads the Undergraduate Journal of Law and Politics, setting editorial vision, overseeing all operations, and representing the organization in official capacities.</p>
                             </div>
                         </div>
-
                         <div className="leader-card">
                             <div className="leader-image">
                                 <img src={shelbyImg} alt="Shelby Eliasek" />
@@ -60,29 +59,6 @@ function About() {
                                 <p>Shelby Eliasek manages logistics, events, and organizational strategy, ensuring the smooth day-to-day functioning of the Journal.</p>
                             </div>
                         </div>
-
-                        <div className="leader-card">
-                            <div className="leader-image">
-                                <img src={robImg} alt="Rob Bundy" />
-                            </div>
-                            <div className="leader-info">
-                                <h3>Rob Bundy</h3>
-                                <span className="leader-role">Director of Technology</span>
-                                <p>Rob Bundy manages technical infrastructure and ensures seamless digital experiences for all platforms.</p>
-                            </div>
-                        </div>
-
-                        <div className="leader-card">
-                            <div className="leader-image">
-                                <img src={ruichongImg} alt="Richard (Ruichong) Xu" />
-                            </div>
-                            <div className="leader-info">
-                                <h3>Richard Xu</h3>
-                                <span className="leader-role">Director of Legal Writing & Research</span>
-                                <p>Richard Xu leads legal research initiatives and ensures the accuracy and integrity of legal content.</p>
-                            </div>
-                        </div>
-
                         <div className="leader-card">
                             <div className="leader-image">
                                 <img src={evanImg} alt="Evan Proudkii" />
@@ -93,7 +69,26 @@ function About() {
                                 <p>Evan Proudkii coordinates editorial workflows, supports writers and editors, and ensures the quality and timely publication of all articles.</p>
                             </div>
                         </div>
-
+                        <div className="leader-card">
+                            <div className="leader-image">
+                                <img src={ruichongImg} alt="Richard (Ruichong) Xu" />
+                            </div>
+                            <div className="leader-info">
+                                <h3>Richard Xu</h3>
+                                <span className="leader-role">Director of Legal Writing & Research</span>
+                                <p>Richard Xu leads legal research initiatives and ensures the accuracy and integrity of legal content.</p>
+                            </div>
+                        </div>
+                        <div className="leader-card">
+                            <div className="leader-image">
+                                <img src={robImg} alt="Rob Bundy" />
+                            </div>
+                            <div className="leader-info">
+                                <h3>Rob Bundy</h3>
+                                <span className="leader-role">Director of Technology</span>
+                                <p>Rob Bundy manages technical infrastructure and ensures seamless digital experiences for all platforms.</p>
+                            </div>
+                        </div>
                         <div className="leader-card">
                             <div className="leader-image">
                                 <img src={samImg} alt="Sam Burnett" />
@@ -123,13 +118,13 @@ function About() {
                     <div className="team-members-grid">
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Alex Executive</h3>
+                                <h3>Will Olszewski</h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Bailey Executive</h3>
+                                <h3>Rishi Chandra</h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
