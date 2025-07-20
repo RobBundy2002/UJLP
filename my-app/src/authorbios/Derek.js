@@ -18,7 +18,7 @@ function Derek() {
                                 <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
                                 <p><strong>Hometown:</strong> McLean, Virginia</p>
                                 <p><strong>Major:</strong> History & Economics</p>
-                                <p><strong>Research Interests:</strong> Corporate Law, Constitutional Law</p>
+                                <p><strong>Research Interests:</strong> Corporate and Constitutional Law</p>
                             </div>
                         </div>
                     </div>

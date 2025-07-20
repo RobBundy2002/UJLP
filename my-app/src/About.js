@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './About.css';
 import './Home.css';
 import Timeline from './components/Timeline';
@@ -44,7 +45,7 @@ function About() {
                                 <img src={derekImg} alt="Derek Tsai" />
                             </div>
                             <div className="leader-info">
-                                <h3>Derek Tsai</h3>
+                                <h3><Link to="/author/derek" className="author-link">Derek Tsai</Link></h3>
                                 <span className="leader-role">Editor-in-Chief</span>
                                 <p>Derek Tsai leads the Undergraduate Journal of Law and Politics, setting editorial vision, overseeing all operations, and representing the organization in official capacities.</p>
                             </div>
@@ -84,7 +85,7 @@ function About() {
                                 <img src={robImg} alt="Rob Bundy" />
                             </div>
                             <div className="leader-info">
-                                <h3>Rob Bundy</h3>
+                                <h3><Link to="/author/rob" className="author-link">Rob Bundy</Link></h3>
                                 <span className="leader-role">Director of Technology</span>
                                 <p>Rob Bundy manages technical infrastructure and ensures seamless digital experiences for all platforms.</p>
                             </div>
@@ -146,8 +147,6 @@ function About() {
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>

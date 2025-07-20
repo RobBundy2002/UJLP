@@ -183,14 +183,14 @@
 }
 
 .author-link {
-    color: var(--accent-color);
+    color: var(--primary-color);
     text-decoration: none;
     font-weight: 500;
     transition: color var(--transition-speed) ease;
 }
 
 .author-link:hover {
-    color: var(--primary-color);
+    color: var(--accent-color);
     text-decoration: underline;
 }
 

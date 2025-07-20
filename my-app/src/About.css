@@ -172,8 +172,20 @@
 
 .leader-info p {
     color: var(--text-secondary);
-    line-height: 1.7;
-    font-size: 1.05rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.author-link {
+    color: var(--primary-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color var(--transition-speed) ease;
+}
+
+.author-link:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
 }
 
 .team-content {
