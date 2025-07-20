@@ -34,7 +34,7 @@
     display: flex;
     align-items: center;
     gap: 3rem;
-    max-width: 800px;
+    width: 100%;
     margin: 0 auto;
 }
 
@@ -275,13 +275,14 @@
         min-height: 30vh;
         margin: -1rem -1rem 3rem -1rem;
         padding: 2rem 0;
-        transform: translateX(4px);
+        transform: translateX(3.75px);
     }
 
     .author-content {
         flex-direction: column;
         gap: 2rem;
         text-align: right;
+        padding-right: 20px;
     }
 
     .author-image img {

@@ -16,7 +16,7 @@ function Derek() {
                             <span className="author-role">Editor-in-Chief</span>
                             <div className="author-details">
                                 <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
-                                <p><strong>Hometown:</strong> McLean, Virginia</p>
+                                <p><strong>Hometown:</strong> Great Falls, Virginia</p>
                                 <p><strong>Major:</strong> History & Economics</p>
                                 <p><strong>Research Interests:</strong> Corporate and Constitutional Law</p>
                             </div>
@@ -30,18 +30,20 @@ function Derek() {
                     <h2>About Derek</h2>
                     <div className="bio-content">
                         <p>
-                            Derek Tsai is a second-year student at the University of Virginia, pursuing a double major in History and Economics. 
-                            As the Editor-in-Chief of the Undergraduate Journal of Law and Politics, Derek sets the editorial vision, oversees all operations, and represents the organization in official capacities.
+                            Derek Tsai is a second-year at the University of Virginia studying economics and history on the pre-law track. 
+                            Derek is from Great Falls, Virginia, and attended Langley High School, where he developed his love for law.
                         </p>
                         <p>
-                            Originally from McLean, Virginia, Derek has developed a deep interest in constitutional law and its intersection with
-                            corporate governance. His research focuses on the implications of corporate personhood in democratic systems, 
-                            particularly examining how legal frameworks shape political power structures.
+                            After a meeting with the Clerk of the Supreme Court, Derek discovered his interest in constitutional law, 
+                            which was strengthened through mock trial competitions. At the University of Virginia, Derek pivoted to 
+                            authoring his original legal scholarship. His first article is about the Supreme Court's establishment 
+                            of corporate personhood, integrating his interest in economics and history with constitutional legal analysis.
                         </p>
                         <p>
-                            Derek's work with UJLP reflects his commitment to fostering rigorous academic discourse and expanding opportunities 
-                            for undergraduate legal research. He believes in the importance of connecting legal doctrine with broader humanistic 
-                            perspectives, ensuring that legal scholarship remains accessible and impactful.
+                            In his remaining time at UVA, Derek hopes to continue authoring scholarship on constitutional law that 
+                            affects corporations. A fun fact about him is that he exclusively listens to the Suits theme song 
+                            Greenback Boogie while working on anything related to law. Since he began his work at the Journal of 
+                            Law & Politics, he has become the song's top listener on Spotify.
                         </p>
                     </div>
                 </div>
