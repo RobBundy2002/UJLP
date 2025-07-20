@@ -3,52 +3,52 @@ import './Timeline.css';
 
 const timelineData = [
     {
-        year: 'Sept. 2024',
-        title: 'Foundation',
-        description: 'UJLP was established as a platform for undergraduate legal scholarship at the University of Virginia.',
+        year: 'Oct. 1983',
+        title: 'Founding of the Journal of Law & Politics',
+        description: 'The Journal of Law & Politics is founded under the guidance of Supreme Court Justice Antonin Scalia.',
+        category: 'Legacy'
+    },
+    {
+        year: 'Sep. 2024',
+        title: 'UJLP Founded',
+        description: 'UJLP is founded as the undergraduate affiliate of the Journal of Law & Politics.',
         category: 'Establishment'
     },
     {
         year: 'Oct. 2024',
-        title: 'Digital Platform',
-        description: 'Launched our digital platform to increase accessibility and reach of our publications.',
+        title: 'Digital Platform Launch',
+        description: 'UJLP launches its digital platform to improve accessibility and work towards its mission of expanding undergraduate legal scholarship.',
         category: 'Innovation'
     },
     {
-        year: 'Nov 8, 2024',
-        title: 'First round of writers and editors selected',
-        description: 'After a competitive application season, the UJLP selected its first round of writers and editors, consisting of 14 uniquely qualified undergraduate students.',
+        year: 'Nov. 2024',
+        title: 'Founding Members Selected',
+        description: 'UJLP selects its founding members and begins developing the publication infrastructure.',
         category: 'Milestone'
     },
     {
         year: 'Jan. 2025',
-        title: 'Guest speakers',
-        description: 'S.J.D Candidates from UVA Law spoke to the team, UJLP Executives taught legal citation techniques to the editors, and UVA undergraduate students presented their research articles.',
-        category: 'Growth'
+        title: 'First Speaker Event',
+        description: 'UJLP hosts its first speaker event featuring an S.J.D. candidate from the UVA School of Law.',
+        category: 'Events'
     },
     {
-        year: 'Aug 28-29, 2025',
-        title: 'UJLP Interest Meetings',
-        description: 'Hosted interest meetings to introduce UJLP to potential new members and share our mission.',
-        category: 'Recruitment'
+        year: 'Jul. 2025',
+        title: 'Reorganization and New Leadership',
+        description: 'UJLP reorganizes under a new leadership team and begins working to publish the Journal\'s inaugural edition.',
+        category: 'Leadership'
     },
     {
-        year: 'Sept 5, 2025',
-        title: 'Interest Forms Due',
-        description: 'Deadline for students to submit their interest forms to join UJLP.',
-        category: 'Recruitment'
+        year: 'Dec. 2025',
+        title: 'Inaugural Edition Published',
+        description: 'UJLP publishes its inaugural edition.',
+        category: 'Publication'
     },
     {
-        year: 'Fall 2025',
-        title: 'Form Editing Groups',
-        description: 'Established editing groups and began collaborative work on publications.',
-        category: 'Development'
-    },
-    {
-        year: 'Dec 5, 2025',
-        title: 'Publication Release',
-        description: 'Release of our inaugural publication featuring groundbreaking undergraduate legal scholarship.',
-        category: 'Milestone'
+        year: 'Jan. 2026',
+        title: 'First UJLP Symposium',
+        description: 'The first UJLP Symposium features the research of undergraduates published in the Journal\'s inaugural edition.',
+        category: 'Symposium'
     }
 ];
 
