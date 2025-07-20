@@ -3,42 +3,74 @@ import './Contact.css';
 
 const contacts = [
     {
-        title: "We'd love to hear from you!",
-        description: "Please fill out our Google Form to get in touch.",
+        title: "Get in Touch",
+        description: "Have questions or want to get involved? Fill out our form and we'll get back to you as soon as possible.",
         link: "https://forms.office.com/r/ZpWdDuEQyt",
-        linkText: "Google Form"
+        linkText: "Contact Form",
+        icon: "📝"
     },
     {
-        title: "Check out our Instagram",
-        description: "Follow us on Instagram for updates.",
+        title: "Follow Us",
+        description: "Stay updated with our latest news, events, and announcements by following us on Instagram.",
         link: "https://www.instagram.com/ujlawandpoliticsatuva/",
-        linkText: "Instagram"
+        linkText: "@ujlawandpoliticsatuva",
+        icon: "📸"
     },
     {
-        title: "Questions about UJLP?",
-        description: "If you have any questions about the UJLP, please email us.",
+        title: "Email Us",
+        description: "For direct inquiries about UJLP, our programs, or upcoming events, send us an email.",
         link: "mailto:ujlawandpolitics@gmail.com",
-        linkText: "ujlawandpolitics@gmail.com"
+        linkText: "ujlawandpolitics@gmail.com",
+        icon: "✉️"
     }
 ];
 
 function Contact() {
     return (
-        <div className="Contact">
-            <div className="Contact-header">
+        <div className="contact-container">
+            <section className="contact-hero">
                 <h1>Contact Us</h1>
-            </div>
-            <div className="Contacts-list">
-                {contacts.map((contact, index) => (
-                    <div className="Contact-item" key={index}>
-                        <h2>{contact.title}</h2>
-                        <p>{contact.description}</p>
-                        <a href={contact.link} target="_blank" rel="noopener noreferrer">{contact.linkText}</a>
-                    </div>
-                ))}
-                <p>We will get back to you as soon as possible! Thank you for your patience and interest in our
-                    work.</p>
-            </div>
+                <p className="hero-content">
+                    We're here to help! Whether you have questions about our programs, 
+                    want to get involved, or just want to say hello, we'd love to hear from you.
+                </p>
+            </section>
+
+            <section className="contact-section">
+                <div className="contact-grid">
+                    {contacts.map((contact, index) => (
+                        <div className="contact-card" key={index}>
+                            <div className="contact-icon">{contact.icon}</div>
+                            <div className="contact-content">
+                                <h2>{contact.title}</h2>
+                                <p>{contact.description}</p>
+                                <a 
+                                    href={contact.link} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="cta-button"
+                                    style={{ width: '80%' }}
+                                >
+                                    {contact.linkText}
+                                </a>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <section className="contact-info">
+                <div className="info-card">
+                    <h3>Office Hours</h3>
+                    <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                    <p>Saturday - Sunday: Closed</p>
+                </div>
+                <div className="info-card">
+                    <h3>Location</h3>
+                    <p>University of Virginia</p>
+                    <p>Charlottesville, VA 22903</p>
+                </div>
+            </section>
         </div>
     );
 }
