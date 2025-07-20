@@ -130,55 +130,42 @@ function About() {
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Casey Executive</h3>
+                                <h3>Mia Peterson</h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Drew Executive</h3>
+                                <h3>Coming Soon</h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Emery Executive</h3>
+                                <h3>Coming Soon</h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 1</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 2</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 3</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 4</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 5</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 6</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 7</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 8</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 9</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 10</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 11</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 12</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 13</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 14</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Writer 15</h3><span className="team-member-role">Staff Writer</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 1</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 2</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 3</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 4</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 5</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 6</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 7</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 8</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 9</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 10</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 11</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 12</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 13</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 14</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Editor 15</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Jordan Coordinator</h3><span className="team-member-role">Event Coordinator</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Skyler Coordinator</h3><span className="team-member-role">Event Coordinator</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Taylor Coordinator</h3><span className="team-member-role">Event Coordinator</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Internal Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Internal Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Event Coordinator</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Event Coordinator</span></div></div>
                     </div>
                 </div>
             </section>
