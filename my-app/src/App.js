@@ -11,6 +11,7 @@ import Footer from './Footer';
 import Derek from './authorbios/Derek';
 import Mikayla from './authorbios/Mikayla';
 import Rob from './authorbios/Rob';
+import Evan from './authorbios/Evan';
 import logo from "./Logo.png";
 
 function ScrollToTop() {
@@ -132,6 +133,7 @@ function App() {
                         <Route path="/author/derek" element={<Derek />} />
                         <Route path="/author/mikayla" element={<Mikayla />} />
                         <Route path="/author/rob" element={<Rob />} />
+                        <Route path="/author/evan" element={<Evan />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </main>

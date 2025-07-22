@@ -65,7 +65,7 @@ function About() {
                                 <img src={evanImg} alt="Evan Proudkii" />
                             </div>
                             <div className="leader-info">
-                                <h3>Evan Proudkii</h3>
+                                <h3><Link to="/author/evan" className="author-link">Evan Proudkii</Link></h3>
                                 <span className="leader-role">Managing Editor</span>
                                 <p>Evan Proudkii coordinates editorial workflows, supports writers and editors, and ensures the quality and timely publication of all articles.</p>
                             </div>
@@ -147,7 +147,6 @@ function About() {
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
