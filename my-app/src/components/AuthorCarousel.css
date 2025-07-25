@@ -53,7 +53,7 @@
     height: 400px;
     display: flex;
     transition: transform 0.5s ease;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .carousel-slide {
@@ -64,7 +64,10 @@
     opacity: 0;
     pointer-events: none;
     z-index: 1;
+    left: 0;
+    top: 0;
 }
+
 .carousel-slide.active {
     opacity: 1;
     pointer-events: auto;
@@ -72,6 +75,7 @@
 }
 
 .author-card {
+    background: var(--background-white);
     border-radius: 16px;
     padding: 2rem;
     height: 100%;
@@ -81,6 +85,9 @@
     text-align: center;
     box-shadow: 0 8px 32px rgba(0,0,0,0.10);
     transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
 }
 
 .author-card:hover {
