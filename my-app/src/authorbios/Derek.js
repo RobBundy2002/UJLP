@@ -30,7 +30,7 @@ function Derek() {
                     <h2>About Derek</h2>
                     <div className="bio-content">
                         <p>
-                            Derek Tsai is a second-year at the University of Virginia studying economics and history on the pre-law track. 
+                            Derek Tsai is a second-year Echols Scholar at the University of Virginia studying economics and history on the pre-law track.
                             Derek is from Great Falls, Virginia, and attended Langley High School, where he developed his love for law.
                         </p>
                         <p>
