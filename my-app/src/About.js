@@ -75,7 +75,7 @@ function About() {
                                 <img src={ruichongImg} alt="Richard (Ruichong) Xu" />
                             </div>
                             <div className="leader-info">
-                                <h3>Richard Xu</h3>
+                                <h3><Link to="/author/richard" className="author-link">Richard Xu</Link></h3>
                                 <span className="leader-role">Director of Legal Writing & Research</span>
                                 <p>Richard Xu leads legal research initiatives and ensures the accuracy and integrity of legal content.</p>
                             </div>

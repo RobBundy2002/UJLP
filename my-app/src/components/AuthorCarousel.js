@@ -5,6 +5,7 @@ import derekImg from '../Derek.png';
 import shelbyImg from '../Shelby.jpeg';
 import robImg from '../Rob.jpg';
 import evanImg from '../Evan.jpeg';
+import richardImg from '../Richard.jpeg';
 
 const authors = [
     {
@@ -38,6 +39,14 @@ const authors = [
         image: evanImg,
         bio: 'Political Science & Economics',
         link: '/author/evan'
+    },
+    {
+        id: 'richard',
+        name: 'Richard Xu',
+        role: 'Director of Legal Writing & Research',
+        image: richardImg,
+        bio: 'Political Philosophy, Policy, and Law',
+        link: '/author/richard'
     },
     {
         id: 'mikayla',

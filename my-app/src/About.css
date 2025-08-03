@@ -163,7 +163,7 @@
 
 .leader-role {
     display: block;
-    color: var(--accent-color);
+    color: var(--bac);
     font-weight: 500;
     font-size: 1.1rem;
     margin-bottom: 1rem;
@@ -265,7 +265,6 @@
 
 .team-member-role {
     display: block;
-    color: var(--accent-color);
     font-weight: 500;
     font-size: 0.9rem;
     letter-spacing: 0.3px;

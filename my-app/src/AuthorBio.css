@@ -75,6 +75,7 @@
 }
 
 .author-details p {
+    margin-right: .25rem;
     margin-bottom: 0.5rem;
     color: white;
     opacity: 0.9;
@@ -125,7 +126,6 @@
 }
 
 .publication-meta {
-    color: var(--accent-color);
     font-size: 0.9rem;
     margin-bottom: 1rem;
     font-weight: 500;

@@ -13,6 +13,7 @@ import Mikayla from './authorbios/Mikayla';
 import Rob from './authorbios/Rob';
 import Evan from './authorbios/Evan';
 import Shelby from './authorbios/Shelby';
+import Richard from './authorbios/Richard';
 import logo from "./Logo.png";
 
 function ScrollToTop() {
@@ -136,6 +137,7 @@ function App() {
                         <Route path="/author/rob" element={<Rob />} />
                         <Route path="/author/evan" element={<Evan />} />
                         <Route path="/author/shelby" element={<Shelby />} />
+                        <Route path="/author/richard" element={<Richard />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </main>

@@ -170,7 +170,7 @@ p {
 }
 
 a {
-  color: var(--accent-color);
+  color: var(--primary-color);
   text-decoration: none;
   transition: color var(--transition-speed) ease;
 }
@@ -366,6 +366,7 @@ footer {
     display: block;
     width: 24px;
     height: 2px;
+    bottom: 22px;
     background: var(--text-primary);
     position: relative;
     transition: all 0.3s ease;
@@ -541,8 +542,8 @@ footer {
     }
 
     .theme-toggle {
-        top: 0.5rem;
-        right: 0.5rem;
+        top: 1rem;
+        right: 3.75rem;
         width: 36px;
         height: 36px;
         z-index: 9999;

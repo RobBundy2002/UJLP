@@ -237,7 +237,7 @@
     button[type="submit"],
     .contact-section .cta-button {
         min-width: 90% !important;
-        max-width: 90% !important;
+        max-width: 96% !important;
     }
 }
 
