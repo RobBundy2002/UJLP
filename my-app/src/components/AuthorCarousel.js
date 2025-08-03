@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './AuthorCarousel.css';
 import derekImg from '../Derek.png';
-import shelbyImg from '../Shelby.jpeg';
 
 const authors = [
     {
@@ -14,36 +13,36 @@ const authors = [
         link: '/author/derek'
     },
     {
-        id: 'shelby',
-        name: 'Shelby Eliasek',
-        role: 'Director of Operations',
-        image: shelbyImg,
-        bio: 'Pre-Law Track with Studio Art Minor',
-        link: '/author/shelby'
-    },
-    {
-        id: 'rob',
-        name: 'Rob Bundy',
-        role: 'Director of Technology',
-        image: null,
-        bio: 'Computer Science & Religious Studies',
-        link: '/author/rob'
-    },
-    {
-        id: 'evan',
-        name: 'Evan Proudkii',
-        role: 'Managing Editor',
-        image: null,
-        bio: 'Political Science & Economics',
-        link: '/author/evan'
-    },
-    {
         id: 'mikayla',
         name: 'Mikayla Grady',
         role: 'Staff Writer',
         image: null,
         bio: 'Criminal Law Specialist',
         link: '/author/mikayla'
+    },
+    {
+        id: 'sarah',
+        name: 'Sarah Chen',
+        role: 'Executive Editor',
+        image: null,
+        bio: 'Constitutional Law Expert',
+        link: '/author/sarah'
+    },
+    {
+        id: 'michael',
+        name: 'Michael Rodriguez',
+        role: 'Staff Editor',
+        image: null,
+        bio: 'International Relations Focus',
+        link: '/author/michael'
+    },
+    {
+        id: 'emma',
+        name: 'Emma Thompson',
+        role: 'Executive Editor',
+        image: null,
+        bio: 'Environmental Law Specialist',
+        link: '/author/emma'
     }
 ];
 

@@ -15,7 +15,7 @@ function Evan() {
                             <h1>Evan Proudkii</h1>
                             <span className="author-role">Managing Editor</span>
                             <div className="author-details">
-                                <p><strong>Class:</strong> 2028</p>
+                                <p><strong>2nd Year at UVA:</strong>Class of 2028</p>
                                 <p><strong>Majors:</strong> Public Policy & Economics</p>
                                 <p><strong>Hometown:</strong> Tysons Corner, Virginia</p>
                                 <p><strong>Research Interests:</strong> Constitutional Law, Politics & Law</p>

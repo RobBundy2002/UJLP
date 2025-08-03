@@ -55,7 +55,7 @@ function About() {
                                 <img src={shelbyImg} alt="Shelby Eliasek" />
                             </div>
                             <div className="leader-info">
-                                <h3><Link to="/author/shelby" className="author-link">Shelby Eliasek</Link></h3>
+                                <h3>Shelby Eliasek</h3>
                                 <span className="leader-role">Director of Operations</span>
                                 <p>Shelby Eliasek manages logistics, events, and organizational strategy, ensuring the smooth day-to-day functioning of the Journal.</p>
                             </div>
