@@ -114,7 +114,7 @@
 .contact-link {
     display: inline-block;
     padding: 0.75rem 1.5rem;
-    background-color: var(--accent-color);
+    background-color: var(--primary-color);
     color: white;
     text-decoration: none;
     border-radius: 6px;

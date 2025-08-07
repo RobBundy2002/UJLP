@@ -134,7 +134,7 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    background: var(--accent-color);
+    background: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -162,7 +162,7 @@
 }
 
 .author-role {
-    color: var(--accent-color);
+    color: var(--primary-color);
     font-weight: 600;
     margin-bottom: 0 !important;
     font-size: 0.95rem;
@@ -209,7 +209,7 @@
 }
 
 .view-profile-btn:hover {
-    background: var(--accent-color);
+    background: var(--primary-color);
     color: var(--background-white);
     box-shadow: 0 4px 16px rgba(0,0,0,0.12);
     transform: translateY(-2px);
@@ -235,9 +235,9 @@
 }
 
 .carousel-button:hover {
-    background: var(--accent-color);
+    background: var(--primary-color);
     color: var(--background-white);
-    border-color: var(--accent-color);
+    border-color: var(--primary-color);
     transform: translateY(-50%) scale(1.1);
 }
 
@@ -273,7 +273,7 @@
 }
 
 .indicator.active {
-    background: var(--accent-color);
+    background: var(--primary-color);
     opacity: 1;
     transform: scale(1.2);
 }
@@ -367,7 +367,7 @@
 }
 
 .modal-profile-btn {
-    background: var(--accent-color);
+    background: var(--primary-color);
     color: var(--background-white);
     padding: 0.5rem 1.2rem;
     font-size: 1rem;

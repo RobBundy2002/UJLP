@@ -121,12 +121,12 @@ html, body {
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--accent-color);
+  background-color: var(--primary-color);
   transition: width var(--transition-speed) ease;
 }
 
 .App-link:hover {
-  color: var(--accent-color);
+  color: var(--primary-color);
 }
 
 .App-link:hover::after {
@@ -202,7 +202,7 @@ footer {
 }
 
 .footer-content a:hover {
-  color: var(--accent-color);
+  color: var(--primary-color);
 }
 
     .theme-toggle {
@@ -274,7 +274,7 @@ footer {
 }
 
 .nav-link:hover {
-  color: var(--accent-color);
+  color: var(--primary-color);
 }
 
 .section-content {

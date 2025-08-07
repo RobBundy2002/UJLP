@@ -69,7 +69,7 @@
 }
 
 .footer-content a:hover {
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
 
 .social-links {
@@ -100,7 +100,7 @@
 }
 
 .footer-bottom a:hover {
-    color: var(--accent-color);
+    color: var(--primary-color);
 }
 
 @media (max-width: 768px) {

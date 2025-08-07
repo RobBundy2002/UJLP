@@ -76,7 +76,7 @@
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background: var(--accent-color);
+    background: var(--primary-color);
     border-radius: 2px;
 }
 
@@ -184,7 +184,7 @@
 }
 
 .author-link:hover {
-    color: var(--accent-color);
+    color: var(--primary-color);
     text-decoration: underline;
 }
 

@@ -33,7 +33,7 @@
     top: 0;
     bottom: 0;
     width: 4px;
-    background: var(--accent-color);
+    background: var(--primary-color);
     transform: translateX(-50%);
     z-index: 0;
 }
@@ -65,7 +65,7 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: var(--accent-color);
+    background: var(--primary-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -109,7 +109,7 @@
 .timeline-category {
     display: inline-block;
     padding: 0.25rem 0.75rem;
-    background: var(--accent-color);
+    background: var(--primary-color);
     color: white;
     border-radius: 4px;
     font-size: 0.875rem;
