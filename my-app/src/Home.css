@@ -226,10 +226,27 @@
     background: var(--background-light);
     border-radius: 8px;
     transition: transform var(--transition-speed) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transition: left 0.5s ease;
 }
 
 .stat-item:hover {
     transform: translateY(-5px);
+}
+
+.stat-item:hover::before {
+    left: 100%;
 }
 
 .stat-number {

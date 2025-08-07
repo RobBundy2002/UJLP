@@ -22,14 +22,6 @@ const articles = [
         excerpt: "",
         link: "#"
     },
-    {
-        title: "This Article is in Progress",
-        author: "Sarah Johnson",
-        category: "International Law",
-        date: "June 2025",
-        excerpt: "",
-        link: "#"
-    },
 ];
 
 function Journal() {

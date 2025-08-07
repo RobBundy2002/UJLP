@@ -41,6 +41,20 @@
     margin-bottom: 1.5rem;
     color: white;
     line-height: 1.2;
+    position: relative;
+}
+
+.announcements-hero h1::after {
+    content: '';
+    position: absolute;
+    bottom: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #60a5fa, transparent);
+    border-radius: 2px;
+    animation: titleUnderline 2s ease-in-out infinite;
 }
 
 .announcements-hero .hero-subtitle {
@@ -164,7 +178,6 @@
     .announcements-hero {
         min-height: 30vh;
         margin: -1rem -1rem 3rem -1rem;
-        transform: translateX(3.75px);
     }
 
     .announcements-hero h1 {
@@ -177,6 +190,7 @@
 
     .announcements-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .subscribe-form {
@@ -184,14 +198,25 @@
     }
 
     .subscribe-input {
-        width: 89%;
+        width: 100%;
     }
 
     .subscribe-section {
-        transform: translateX(3.75px);
+        padding: 3rem 1rem;
     }
 
     .subscribe-input {
-        transform: translateX(-12px);
+        font-size: 1rem;
+    }
+}
+
+@keyframes titleUnderline {
+    0%, 100% {
+        opacity: 0.5;
+        transform: translateX(-50%) scaleX(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scaleX(1.2);
     }
 }

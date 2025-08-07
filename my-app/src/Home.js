@@ -40,12 +40,12 @@ function Home() {
                                 <span className="stat-label">Articles Published</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number">+</span>
-                                <span className="stat-label">Contributors</span>
+                                <span className="stat-number">12</span>
+                                <span className="stat-label">Team Members</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number">+</span>
-                                <span className="stat-label">Years of Excellence</span>
+                                <span className="stat-number">5</span>
+                                <span className="stat-label">Research Areas</span>
                             </div>
                         </div>
                     </div>
