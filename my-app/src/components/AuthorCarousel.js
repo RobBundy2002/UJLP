@@ -13,7 +13,7 @@ const authors = [
         name: 'Derek Tsai',
         role: 'Executive Editor',
         image: derekImg,
-        bio: 'Class of 2028',
+        bio: 'History & Economics',
         link: '/author/derek'
     },
     {

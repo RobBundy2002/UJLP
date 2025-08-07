@@ -119,19 +119,19 @@ function About() {
                     <div className="team-members-grid">
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Will Olszewski</h3>
+                                <h3><Link to="/author/will" className="author-link">Will Olszewski</Link></h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Rishi Chandra</h3>
+                                <h3><Link to="/author/rishi" className="author-link">Rishi Chandra</Link></h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
-                                <h3>Mia Peterson</h3>
+                                <h3><Link to="/author/mia" className="author-link">Mia Petersen</Link></h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
