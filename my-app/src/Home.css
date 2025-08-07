@@ -80,7 +80,7 @@
     padding: 0 2rem;
 }
 
-/* Hero Section - Spectacular Redesign */
+/* Hero Section */
 .hero-section {
     background: var(--background-light);
     color: var(--text-primary);
@@ -258,17 +258,35 @@
     margin-top: 2rem;
 }
 
+/* Enhanced Article Card Hover Effects - KEEPING ONLY THIS */
 .article-card {
     background: var(--background-white);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.article-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+    transition: left 0.5s ease;
 }
 
 .article-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px) rotateX(5deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.article-card:hover::before {
+    left: 100%;
 }
 
 .article-content {
@@ -372,29 +390,23 @@
     font-weight: 500;
     text-decoration: none;
     transition: all var(--transition-speed) ease;
+    background: var(--primary-color) !important;
+    border: none !important;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.cta-button.primary {
-    background-color: var(--background-white);
-    color: var(--primary-color);
-}
-
-.cta-button.primary:hover {
-    background-color: var(--background-light);
-    transform: translateY(-2px);
-}
-
-.cta-button,
 .cta-button.primary {
     background: var(--primary-color) !important;
     color: white;
     border: none !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 .cta-button:hover,
 .cta-button.primary:hover {
     background: var(--accent-color) !important;
-    color: var(--primary-color) !important;
+    color: white !important;
+    transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {

@@ -14,7 +14,7 @@ function Home() {
                     </p>
                     <div className="cta-buttons">
                         <a href="#/journal" className="cta-button primary">View Our Work</a>
-                        <a href="#/contact" className="cta-button">Submit Your Work</a>
+                        <a href="#/contact" className="cta-button primary">Submit Your Work</a>
                     </div>
                 </div>
             </section>
@@ -93,7 +93,7 @@ function Home() {
                     <p>Be part of the conversation. Submit your work, join our team, or explore our latest publications.</p>
                     <div className="cta-buttons">
                         <Link to="/journal" className="cta-button primary">View Journal</Link>
-                        <Link to="/contact" className="cta-button">Get Involved</Link>
+                        <Link to="/contact" className="cta-button primary">Get Involved</Link>
                     </div>
                 </div>
             </section>
