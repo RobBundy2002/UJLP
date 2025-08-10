@@ -1,9 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.4fffe407.css",
-    "main.js": "/static/js/main.717b16c2.js",
+    "main.css": "/static/css/main.f7d2fe5b.css",
+    "main.js": "/static/js/main.d8d01c3e.js",
     "static/js/453.ed3810f9.chunk.js": "/static/js/453.ed3810f9.chunk.js",
-    "static/media/Richard.jpeg": "/static/media/Richard.a0978228fb9d2d8062cd.jpeg",
     "static/media/Sam.png": "/static/media/Sam.2e88de99e6aa93504ea5.png",
     "static/media/Shelby.jpeg": "/static/media/Shelby.55d66e1eef70bffa8302.jpeg",
     "static/media/Derek.png": "/static/media/Derek.30e9609db0d3f9adbe7a.png",
@@ -11,15 +10,16 @@
     "static/media/Evan.jpeg": "/static/media/Evan.758c50f456312eba4091.jpeg",
     "static/media/Will.jpg": "/static/media/Will.0e98c1109bd1a5d5fc7b.jpg",
     "static/media/MiaImage.jpg": "/static/media/MiaImage.3894d5ef847bfedea47e.jpg",
+    "static/media/Richard.jpg": "/static/media/Richard.120ada6a162f86d14c9e.jpg",
     "static/media/Rishi.jpg": "/static/media/Rishi.46fa8e778d47ff16807d.jpg",
     "static/media/Rob.jpg": "/static/media/Rob.856205591cbe15b8a890.jpg",
     "index.html": "/index.html",
-    "main.4fffe407.css.map": "/static/css/main.4fffe407.css.map",
-    "main.717b16c2.js.map": "/static/js/main.717b16c2.js.map",
+    "main.f7d2fe5b.css.map": "/static/css/main.f7d2fe5b.css.map",
+    "main.d8d01c3e.js.map": "/static/js/main.d8d01c3e.js.map",
     "453.ed3810f9.chunk.js.map": "/static/js/453.ed3810f9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4fffe407.css",
-    "static/js/main.717b16c2.js"
+    "static/css/main.f7d2fe5b.css",
+    "static/js/main.d8d01c3e.js"
   ]
 }
