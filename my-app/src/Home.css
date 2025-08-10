@@ -80,7 +80,7 @@
     padding: 0 2rem;
 }
 
-/* Hero Section */
+/* Hero Section - Spectacular Redesign */
 .hero-section {
     background: var(--background-light);
     color: var(--text-primary);
@@ -226,27 +226,10 @@
     background: var(--background-light);
     border-radius: 8px;
     transition: transform var(--transition-speed) ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.stat-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-    transition: left 0.5s ease;
 }
 
 .stat-item:hover {
     transform: translateY(-5px);
-}
-
-.stat-item:hover::before {
-    left: 100%;
 }
 
 .stat-number {
@@ -275,35 +258,17 @@
     margin-top: 2rem;
 }
 
-/* Enhanced Article Card Hover Effects - KEEPING ONLY THIS */
 .article-card {
     background: var(--background-white);
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    transform-style: preserve-3d;
-}
-
-.article-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
-    transition: left 0.5s ease;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
 }
 
 .article-card:hover {
-    transform: translateY(-8px) rotateX(5deg);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
-
-.article-card:hover::before {
-    left: 100%;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
 }
 
 .article-content {
@@ -313,7 +278,7 @@
 .article-category {
     display: inline-block;
     padding: 0.25rem 0.75rem;
-    background: var(--primary-color);
+    background: var(--accent-color);
     color: var(--background-white);
     border-radius: 4px;
     font-size: 0.875rem;
@@ -333,7 +298,7 @@
 }
 
 .article-link {
-    color: var(--primary-color);
+    color: var(--accent-color);
     text-decoration: none;
     font-weight: 500;
     transition: color var(--transition-speed) ease;
@@ -407,23 +372,29 @@
     font-weight: 500;
     text-decoration: none;
     transition: all var(--transition-speed) ease;
-    background: var(--primary-color) !important;
-    border: none !important;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.cta-button.primary {
+    background-color: var(--background-white);
+    color: var(--primary-color);
+}
+
+.cta-button.primary:hover {
+    background-color: var(--background-light);
+    transform: translateY(-2px);
+}
+
+.cta-button,
 .cta-button.primary {
     background: var(--primary-color) !important;
     color: white;
     border: none !important;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 .cta-button:hover,
 .cta-button.primary:hover {
-    background: var(--primary-color) !important;
-    color: white !important;
-    transform: translateY(-2px);
+    background: var(--accent-color) !important;
+    color: var(--primary-color) !important;
 }
 
 @media (max-width: 768px) {

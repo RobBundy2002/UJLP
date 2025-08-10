@@ -5,7 +5,7 @@ import derekImg from '../Derek.png';
 import shelbyImg from '../Shelby.jpeg';
 import robImg from '../Rob.jpg';
 import evanImg from '../Evan.jpeg';
-import richardImg from '../Richard.jpeg';
+import richardImg from '../Richard.jpg';
 
 const authors = [
     {

@@ -6,7 +6,7 @@ import Timeline from './components/Timeline';
 import samImg from './Sam.png';
 import shelbyImg from './Shelby.jpeg';
 import derekImg from './Derek.png';
-import ruichongImg from './Richard.jpeg';
+import ruichongImg from './Richard.jpg';
 import robImg from './Rob.jpg';
 import evanImg from './Evan.jpeg';
 
