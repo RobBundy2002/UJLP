@@ -57,7 +57,7 @@ function Mia() {
                 <div className="section-content">
                     <h2>Contact</h2>
                     <div className="contact-info">
-                        <p><strong>Email:</strong></p>
+                        <p><strong>Email:</strong> <a href="mailto:ucn7ex@virginia.edu">ucn7ex@virginia.edu</a></p>
                         <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/mia-petersen11" target="_blank" rel="noopener noreferrer">Mia Petersen</a></p>
                     </div>
                 </div>

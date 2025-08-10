@@ -63,7 +63,7 @@ function Will() {
                 <div className="section-content">
                     <h2>Contact</h2>
                     <div className="contact-info">
-                        <p><strong>Email:</strong></p>
+                        <p><strong>Email:</strong> <a href="mailto:jug3sc@virginia.edu">jug3sc@virginia.edu</a></p>
                         <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/will-olszewski-881870343/" target="_blank" rel="noopener noreferrer">Will Olszewski</a></p>
                     </div>
                 </div>

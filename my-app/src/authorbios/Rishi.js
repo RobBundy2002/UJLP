@@ -63,7 +63,7 @@ function Rishi() {
                 <div className="section-content">
                     <h2>Contact</h2>
                     <div className="contact-info">
-                        <p><strong>Email:</strong></p>
+                        <p><strong>Email:</strong> <a href="mailto:dfz2vu@virginia.edu">dfz2vu@virginia.edu</a></p>
                         <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/rishi-chandra-7403b3329/" target="_blank" rel="noopener noreferrer">Rishi Chandra</a></p>
                     </div>
                 </div>
