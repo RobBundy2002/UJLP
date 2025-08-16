@@ -121,7 +121,7 @@ function Archives() {
                                         )} • {article.date}
                                     </p>
                                     <p className="article-excerpt">{article.excerpt}</p>
-                                    <a href={article.link} className="article-link">Read Article →</a>
+                                    <Link to="/insanitydefense" className="article-link">Read Article →</Link>
                                 </div>
                             </article>
                         ))}

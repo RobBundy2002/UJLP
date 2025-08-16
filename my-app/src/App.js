@@ -18,6 +18,8 @@ import Will from './authorbios/Will';
 import Rishi from './authorbios/Rishi';
 import Mia from './authorbios/Mia';
 import logo from "./Logo.png";
+import DangerousImplications from "./DangerousImplications";
+import InsanityDefense from "./InsanityDefense";
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -124,6 +126,8 @@ function App() {
                         <Route path="/author/will" element={<Will />} />
                         <Route path="/author/rishi" element={<Rishi />} />
                         <Route path="/author/mia" element={<Mia />} />
+                        <Route path="/dangerousimplications" element={<DangerousImplications />} />
+                        <Route path="/insanitydefense" element={<InsanityDefense />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </main>

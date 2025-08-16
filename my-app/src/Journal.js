@@ -11,7 +11,7 @@ const articles = [
         category: "International Law",
         date: "June 2025",
         excerpt: "",
-        link: "#"
+        pageLink: "/dangerousimplications" // link to Derek's article page
     },
     {
         title: "From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness",
@@ -20,7 +20,7 @@ const articles = [
         category: "Criminal Law",
         date: "June 2025",
         excerpt: "",
-        link: "#"
+        pageLink: "/insanitydefense" // link to Mikayla's article page
     },
     {
         title: "This Article is in Progress",
@@ -28,7 +28,7 @@ const articles = [
         category: "International Law",
         date: "June 2025",
         excerpt: "",
-        link: "#"
+        pageLink: "#" // placeholder
     },
 ];
 
@@ -48,8 +48,8 @@ function Journal() {
                 <div className="section-content">
                     <div className="intro-content">
                         <p>
-                            Our journal publishes rigorous, peer-reviewed research that explores the intersection of law, 
-                            politics, and society. Each article represents the culmination of months of research, 
+                            Our journal publishes rigorous, peer-reviewed research that explores the intersection of law,
+                            politics, and society. Each article represents the culmination of months of research,
                             analysis, and scholarly debate.
                         </p>
                     </div>
@@ -67,13 +67,13 @@ function Journal() {
                                     <h3>{article.title}</h3>
                                     <p className="article-meta">
                                         By {article.authorLink ? (
-                                            <Link to={article.authorLink} className="author-link">{article.author}</Link>
-                                        ) : (
-                                            article.author
-                                        )} • {article.date}
+                                        <Link to={article.authorLink} className="author-link">{article.author}</Link>
+                                    ) : (
+                                        article.author
+                                    )} • {article.date}
                                     </p>
                                     <p className="article-excerpt">{article.excerpt}</p>
-                                    <a href={article.link} className="article-link">Read Article →</a>
+                                    <Link to={article.pageLink} className="article-link">Read Article →</Link>
                                 </div>
                             </article>
                         ))}
