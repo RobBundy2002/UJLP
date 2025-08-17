@@ -245,8 +245,8 @@
         color: white;
         font-size: 0.95rem !important;
         padding: 0.5rem 1rem !important;
-        min-width: 210px !important;
-        max-width: 100% !important;
+        min-width: 180px !important;
+        max-width: 80% !important;
     }
     button[type="submit"],
     .contact-section .cta-button {
@@ -306,6 +306,7 @@
 }
 
 .cta-button {
+    margin-left: 0rem;
     display: inline-block;
     padding: 1rem 2rem;
     border-radius: 8px;
