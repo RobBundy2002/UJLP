@@ -304,7 +304,7 @@
 }
 
 .join-section {
-    background: linear-gradient(135deg, var(--background-light) 0%, var(--background-white) 100%);
+    background: var(--background-light);
     color: var(--background-white);
     text-align: center;
     margin: 0 -2rem;

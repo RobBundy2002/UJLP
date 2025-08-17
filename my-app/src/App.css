@@ -451,6 +451,9 @@ footer {
     }
 
     .App-nav-top.active {
+        margin-top: 0.02rem;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: auto;
         transform: translateX(0);
     }
 

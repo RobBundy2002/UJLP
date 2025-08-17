@@ -66,7 +66,7 @@ function Home() {
                                 <p className="article-preview">
                                     An examination of how corporate personhood doctrines impact democratic governance and political power structures.
                                 </p>
-                                <Link to="/journal" className="article-link">Read more →</Link>
+                                <Link to="/dangerousimplications" className="article-link">Read more →</Link>
                             </div>
                         </article>
                         <article className="article-card">
@@ -77,7 +77,7 @@ function Home() {
                                 <p className="article-preview">
                                     A critical analysis of how modern mental health understanding should reshape legal approaches to insanity defense.
                                 </p>
-                                <Link to="/journal" className="article-link">Read more →</Link>
+                                <Link to="/insanitydefense" className="article-link">Read more →</Link>
                             </div>
                         </article>
                     </div>
