@@ -380,7 +380,7 @@
 }
 
 .cta-button.primary:hover {
-    background-color: var(--background-light);
+    background-color: white;
     transform: translateY(-2px);
 }
 
@@ -394,7 +394,7 @@
 .cta-button:hover,
 .cta-button.primary:hover {
     background: var(--accent-color) !important;
-    color: var(--primary-color) !important;
+    color: white !important;
 }
 
 @media (max-width: 768px) {

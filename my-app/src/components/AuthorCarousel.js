@@ -123,7 +123,7 @@ function AuthorCarousel() {
                                         <p className="author-bio">{author.bio}</p>
                                         <div className="author-actions">
                                             <Link 
-                                                className="view-profile-btn"
+                                                className="cta-button"
                                                 to={author.link}
                                             >
                                                 About Author
