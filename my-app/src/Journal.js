@@ -11,7 +11,7 @@ const articles = [
         category: "International Law",
         date: "June 2025",
         excerpt: "",
-        pageLink: "/dangerousimplications" // link to Derek's article page
+        pageLink: "/dangerousimplications"
     },
     {
         title: "From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness",
@@ -20,7 +20,7 @@ const articles = [
         category: "Criminal Law",
         date: "June 2025",
         excerpt: "",
-        pageLink: "/insanitydefense" // link to Mikayla's article page
+        pageLink: "/insanitydefense"
     },
     {
         title: "This Article is in Progress",
@@ -28,7 +28,7 @@ const articles = [
         category: "International Law",
         date: "June 2025",
         excerpt: "",
-        pageLink: "#" // placeholder
+        pageLink: "#"
     },
 ];
 

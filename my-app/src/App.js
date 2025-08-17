@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { HashRouter as Router, Route, Routes, Link, Navigate, useLocation } from 'react-router-dom';
 import './App.css';
 import Home from './Home';
@@ -21,6 +21,7 @@ import logo from "./Logo.png";
 import DangerousImplications from "./DangerousImplications";
 import InsanityDefense from "./InsanityDefense";
 
+// Scroll to top on route change
 function ScrollToTop() {
     const { pathname } = useLocation();
 
@@ -35,25 +36,27 @@ function Navigation() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
+    const menuRef = useRef(null); // Ref to mobile menu for auto-scroll
 
+    // Track scroll for header style
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
-        };
-
+        const handleScroll = () => setIsScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Close mobile menu when navigating
     useEffect(() => {
-        // Close mobile menu when location changes
         setIsMobileMenuOpen(false);
     }, [location]);
 
+    // Prevent background scroll and auto-scroll menu to top
     useEffect(() => {
-        // Prevent background scrolling when mobile menu is open
         if (isMobileMenuOpen) {
             document.body.style.overflow = 'hidden';
+            if (menuRef.current) {
+                menuRef.current.scrollTop = 0; // auto-scroll to top
+            }
         } else {
             document.body.style.overflow = 'unset';
         }
@@ -63,13 +66,8 @@ function Navigation() {
         };
     }, [isMobileMenuOpen]);
 
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-
-    const closeMobileMenu = () => {
-        setIsMobileMenuOpen(false);
-    };
+    const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+    const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
     return (
         <header className={`App-header ${isScrolled ? 'scrolled' : ''}`}>
@@ -81,7 +79,10 @@ function Navigation() {
                         <span className="title-line-2">of Law and Politics</span>
                     </div>
                 </Link>
-                <nav className={`App-nav-top ${isMobileMenuOpen ? 'active' : ''}`}>
+                <nav
+                    ref={menuRef} // attach ref here
+                    className={`App-nav-top ${isMobileMenuOpen ? 'active' : ''}`}
+                >
                     <Link to="/" className={`App-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMobileMenu}>Home</Link>
                     <Link to="/about" className={`App-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMobileMenu}>About</Link>
                     <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`} onClick={closeMobileMenu}>Journal</Link>

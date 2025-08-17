@@ -44,6 +44,8 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: auto;
 }
 
 .App-header {
@@ -407,7 +409,7 @@ footer {
         display: block;
         position: absolute;
         right: 0rem;
-        bottom: 0.1rem;
+        bottom: 0.25rem;
         transform: none;
         z-index: 1001;
         background: none;
@@ -456,11 +458,9 @@ footer {
         display: block;
         text-decoration: none;
         color: var(--text-secondary);
-        transition: color var(--transition-speed) ease;
-    }
-
-    .App-link:hover {
-        color: var(--accent-color);
+        background-color: var(--background-light);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
     }
 
     .App-link:last-child {
@@ -567,10 +567,12 @@ footer {
 @media (max-width: 480px) {
     .App-title {
         font-size: 1.25rem;
+        margin-left: -.25rem;
     }
 
     .App-title img {
-        height: 28px;
+        height: 35px;
+         margin-right: -.2rem;
     }
 
     h1 {
