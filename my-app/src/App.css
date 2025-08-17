@@ -67,6 +67,16 @@ html, body {
   align-items: center;
 }
 
+.header-container::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    height: .5px;
+    background-color: #2c5282;
+}
+
 .App-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.75rem;
