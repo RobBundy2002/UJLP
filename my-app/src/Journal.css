@@ -318,6 +318,7 @@
     }
 
     .cta-buttons {
+        margin-left: -.1rem;
         align-items: center;
         flex-direction: column;
         gap: 1rem;

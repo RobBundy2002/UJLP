@@ -12,7 +12,7 @@ function Home() {
                     <p className="hero-subtitle">
                         Fostering critical dialogue and original scholarship on legal and political issues
                     </p>
-                    <div className="cta-buttons">
+                    <div className="cta-buttons-home">
                         <a href="#/journal" className="cta-button primary">View Our Work</a>
                         <a href="#/contact" className="cta-button primary">Submit Your Work</a>
                     </div>
@@ -92,8 +92,8 @@ function Home() {
                     <h2>Join Our Community</h2>
                     <p>Be part of the conversation. Submit your work, join our team, or explore our latest publications.</p>
                     <div className="cta-buttons">
-                        <Link to="/journal" className="cta-button primary">View Journal</Link>
-                        <Link to="/contact" className="cta-button primary">Get Involved</Link>
+                        <Link to="/journal" className="cta-button primary1">View Journal</Link>
+                        <Link to="/contact" className="cta-button primary1">Get Involved</Link>
                     </div>
                 </div>
             </section>

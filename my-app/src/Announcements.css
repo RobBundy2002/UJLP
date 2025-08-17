@@ -197,16 +197,13 @@
         flex-direction: column;
     }
 
-    .subscribe-input {
-        width: 100%;
-    }
-
     .subscribe-section {
+        margin-left: .5rem;
         padding: 3rem 1rem;
     }
 
     .subscribe-input {
-        width: 83%;
+        width: 79%;
         font-size: 1rem;
     }
 }

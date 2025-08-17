@@ -250,7 +250,7 @@
     }
     button[type="submit"],
     .contact-section .cta-button {
-        min-width: 90% !important;
+        min-width: 88% !important;
         max-width: 96% !important;
     }
 }

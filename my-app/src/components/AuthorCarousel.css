@@ -429,9 +429,9 @@
     }
 
     .carousel-container {
+        margin-left: 1.5rem;
         max-width: 100%;
         padding: 0 1rem;
-        margin: 0 auto;
         overflow: hidden;
     }
 
@@ -508,11 +508,10 @@
         right: 0.25rem;
     }
 
-    /* Hide carousel side bars on mobile */
     .carousel-container {
         overflow: hidden;
         border-radius: 12px;
-        margin: 0 -1rem;
+        margin-left: 0.5rem;
         padding: 0 1rem;
         position: relative;
     }
@@ -607,7 +606,7 @@
         z-index: 2;
     }
     .carousel-container {
-        margin: 0 auto !important;
+        margin-left: 0.5rem;
         max-width: 100% !important;
         overflow: hidden !important;
     }
@@ -662,7 +661,7 @@
     margin-bottom: 0.1rem;
   }
   .carousel-container {
-    margin: 0 auto;
+    margin-left: 0.5rem;
     overflow: hidden;
   }
 }
@@ -673,7 +672,6 @@
   }
   .carousel-container,
   .carousel-track {
-    /* Remove overflow hidden to prevent modal clipping */
     overflow-x: initial;
     overflow-y: initial;
   }

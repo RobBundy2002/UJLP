@@ -160,7 +160,7 @@
 @media (max-width: 768px) {
     .hero-section {
         min-height: 30vh;
-        margin: -1rem -1rem 3rem -1rem;
+        margin-left: -1rem;
         padding: 2rem 0;
         transform: translateX(3px);
     }
@@ -375,6 +375,7 @@
 }
 
 .cta-button.primary {
+    margin-bottom: 1rem;
     background-color: var(--background-white);
     color: var(--primary-color);
 }
@@ -386,6 +387,7 @@
 
 .cta-button,
 .cta-button.primary {
+    margin-left: 3rem;
     background: var(--primary-color) !important;
     color: white;
     border: none !important;
@@ -398,6 +400,15 @@
 }
 
 @media (max-width: 768px) {
+    .cta-button,
+    .cta-button.primary1 {
+        margin-left: 0rem;
+        background: var(--primary-color) !important;
+        color: white;
+        border: none !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
     .home-container {
         padding: 0 1rem;
     }
@@ -457,7 +468,15 @@
     }
 
     .cta-section {
+        margin-left: .1rem;
         transform: translateX(3px);
+    }
+
+    .cta-buttons-home {
+        margin-left: -2.7rem;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .cta-button-home{
@@ -527,6 +546,7 @@
     }
 
     .intro-stats {
+        margin-left:-.5rem;
         grid-template-columns: 1fr;
     }
 
