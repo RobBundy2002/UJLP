@@ -17,9 +17,11 @@ import Richard from './authorbios/Richard';
 import Will from './authorbios/Will';
 import Rishi from './authorbios/Rishi';
 import Mia from './authorbios/Mia';
+import Charlie from './authorbios/Charlie'
 import logo from "./Logo.png";
 import DangerousImplications from "./DangerousImplications";
 import InsanityDefense from "./InsanityDefense";
+import JoinTheTeam from "./JoinTheTeam";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -80,15 +82,15 @@ function Navigation() {
                     </div>
                 </Link>
                 <nav
-                    ref={menuRef} // attach ref here
+                    ref={menuRef}
                     className={`App-nav-top ${isMobileMenuOpen ? 'active' : ''}`}
                 >
                     <Link to="/" className={`App-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMobileMenu}>Home</Link>
                     <Link to="/about" className={`App-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMobileMenu}>About</Link>
                     <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`} onClick={closeMobileMenu}>Journal</Link>
-                    <Link to="/archives" className={`App-link ${location.pathname === '/archives' ? 'active' : ''}`} onClick={closeMobileMenu}>Archives</Link>
                     <Link to="/announcements" className={`App-link ${location.pathname === '/announcements' ? 'active' : ''}`} onClick={closeMobileMenu}>Announcements</Link>
                     <Link to="/contact" className={`App-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={closeMobileMenu}>Contact</Link>
+                    <Link to="/jointheteam" className={`App-link ${location.pathname === '/jointheteam' ? 'active' : ''}`} onClick={closeMobileMenu}>Apply</Link>
                 </nav>
                 <button className={`mobile-menu-button ${isMobileMenuOpen ? 'hidden' : ''}`} onClick={toggleMobileMenu}>
                     <svg className={`menu-icon ${isMobileMenuOpen ? 'active' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -115,9 +117,9 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/journal" element={<Journal />} />
-                        <Route path="/archives" element={<Archives />} />
                         <Route path="/announcements" element={<Announcements />} />
                         <Route path="/contact" element={<Contact />} />
+                        <Route path="/jointheteam" element={<JoinTheTeam />} />
                         <Route path="/author/derek" element={<Derek />} />
                         <Route path="/author/mikayla" element={<Mikayla />} />
                         <Route path="/author/rob" element={<Rob />} />
@@ -127,6 +129,7 @@ function App() {
                         <Route path="/author/will" element={<Will />} />
                         <Route path="/author/rishi" element={<Rishi />} />
                         <Route path="/author/mia" element={<Mia />} />
+                        <Route path="/author/charlie" element={<Charlie />} />
                         <Route path="/dangerousimplications" element={<DangerousImplications />} />
                         <Route path="/insanitydefense" element={<InsanityDefense />} />
                         <Route path="*" element={<Navigate to="/" />} />
