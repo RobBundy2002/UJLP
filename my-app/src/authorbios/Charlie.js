@@ -1,5 +1,6 @@
 import React from 'react';
 import '../AuthorBio.css';
+import charlieImg from '../Charlie.jpeg';
 
 function Charlie() {
     return (
@@ -8,7 +9,7 @@ function Charlie() {
                 <div className="section-content">
                     <div className="author-content">
                         <div className="author-image">
-                            <img alt="Charlie Aghdami" />
+                            <img src={charlieImg} alt="Charlie Aghdami" />
                         </div>
                         <div className="author-info">
                             <h1>Charlie Aghdami</h1>
