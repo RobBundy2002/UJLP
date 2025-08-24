@@ -5,7 +5,7 @@ const contacts = [
     {
         title: "See Updates",
         description: "Check out our latest news, announcements, and upcoming events on our Announcements page.",
-        link: "/announcements",
+        link: "/#/announcements",
         linkText: "View Announcements",
         icon: "📰"
     },
