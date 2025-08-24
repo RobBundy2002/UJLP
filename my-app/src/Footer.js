@@ -19,7 +19,7 @@ const Footer = () => {
                 </div>
                 <div className="footer-section">
                     <h3>Connect With Us</h3>
-                    <a href="mailto:ujlp@virginia.edu">ujlp@virginia.edu</a>
+                    <a href="mailto:ujlawandpolitics@gmail.com">ujlawandpolitics@gmail.com</a>
                     <div className="social-links">
                         <a href="https://www.linkedin.com/company/undergraduate-journal-of-law-politics/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
                         <a href="https://www.instagram.com/ujlawandpoliticsatuva/" target="_blank" rel="noopener noreferrer">Instagram</a>

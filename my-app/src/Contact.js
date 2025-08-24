@@ -3,11 +3,11 @@ import './Contact.css';
 
 const contacts = [
     {
-        title: "Get in Touch",
-        description: "Have questions or want to get involved? Fill out our form and we'll get back to you as soon as possible.",
-        link: "https://forms.office.com/r/ZpWdDuEQyt",
-        linkText: "Contact Form",
-        icon: "📝"
+        title: "See Updates",
+        description: "Check out our latest news, announcements, and upcoming events on our Announcements page.",
+        link: "/announcements",
+        linkText: "View Announcements",
+        icon: "📰"
     },
     {
         title: "Follow Us",
@@ -31,7 +31,7 @@ function Contact() {
             <section className="contact-hero">
                 <h1>Contact Us</h1>
                 <p className="hero-content">
-                    We're here to help! Whether you have questions about our programs, 
+                    We're here to help! Whether you have questions about our programs,
                     want to get involved, or just want to say hello, we'd love to hear from you.
                 </p>
             </section>
@@ -44,10 +44,10 @@ function Contact() {
                             <div className="contact-content">
                                 <h2>{contact.title}</h2>
                                 <p>{contact.description}</p>
-                                <a 
-                                    href={contact.link} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer" 
+                                <a
+                                    href={contact.link}
+                                    target={contact.link.startsWith('http') ? "_blank" : "_self"}
+                                    rel={contact.link.startsWith('http') ? "noopener noreferrer" : undefined}
                                     className="cta-button"
                                     style={{ width: '80%' }}
                                 >
