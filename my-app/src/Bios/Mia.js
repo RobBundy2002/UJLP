@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import miaImg from '../MiaImage.jpg';
+import '../Styling/AuthorBio.css';
+import miaImg from '../ProfilePictures/Mia.jpg';
 
 function Mia() {
     return (

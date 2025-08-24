@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import charlieImg from '../Charlie.jpeg';
+import '../Styling/AuthorBio.css';
+import charlieImg from '../ProfilePictures/Charlie.jpeg';
 
 function Charlie() {
     return (

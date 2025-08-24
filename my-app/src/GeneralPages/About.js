@@ -1,14 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './About.css';
-import './Home.css';
-import Timeline from './components/Timeline';
-import samImg from './Sam.png';
-import shelbyImg from './Shelby.jpeg';
-import derekImg from './Derek.png';
-import ruichongImg from './Richard.jpg';
-import robImg from './Rob.jpg';
-import evanImg from './Evan.jpeg';
+import '../Styling/About.css';
+import '../Styling/Home.css';
+import Timeline from '../Components/Timeline';
+import samImg from '../ProfilePictures/Sam.png';
+import shelbyImg from '../ProfilePictures/Shelby.jpeg';
+import derekImg from '../ProfilePictures/Derek.png';
+import ruichongImg from '../ProfilePictures/Richard.jpg';
+import robImg from '../ProfilePictures/Rob.jpg';
+import evanImg from '../ProfilePictures/Evan.jpeg';
 
 function About() {
     return (
@@ -206,7 +206,7 @@ function About() {
                     <div className="cta-content">
                         <h2>Join Our Team</h2>
                         <p>We're always looking for talented individuals to join our team. If you're passionate about journalism and want to make a difference, we'd love to hear from you.</p>
-                        <a href="/contact" className="cta-button ">Join Our Team</a>
+                        <a href="/my-app/src/GeneralPages/Contact" className="cta-button ">Join Our Team</a>
                     </div>
                 </div>
             </section>

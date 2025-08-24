@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import robImg from '../Rob.jpg';
+import '../Styling/AuthorBio.css';
+import robImg from '../ProfilePictures/Rob.jpg';
 
 function Rob() {
     return (
@@ -16,7 +16,7 @@ function Rob() {
                             <span className="author-role">Director of Technology</span>
                             <div className="author-details">
                                 <p><strong>Education:</strong> Bachelor of Arts in Computer Science with Minor in Religious Studies</p>
-                                <p><strong>Class:</strong> Class of 2025</p>
+                                <p><strong>UVA Alum:</strong> Class of 2025</p>
                                 <p><strong>Graduate Program:</strong> Online MS in Computer Science, Georgia Tech (Expected Dec 2028)</p>
                                 <p><strong>Research Interests:</strong> Human Computer Interaction, Software Development, Cybersecurity</p>
                             </div>
@@ -42,7 +42,7 @@ function Rob() {
                         </p>
                         <p>
                             Rob's technical expertise spans multiple programming languages and technologies including Java, Python, 
-                            JavaScript, React, Node.js, and various cloud technologies. His experience as a Software Developer at 
+                            JavaScript, React, Node.js, and various cloud technologies. His experience as a Software Developer at
                             GA-I3 and as a Teaching Assistant in UVA's Computer Science Department demonstrates his commitment to 
                             both technical excellence and knowledge sharing.
                         </p>

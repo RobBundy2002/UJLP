@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import './Archives.css';
-import './Home.css';
+import '../Styling/Archives.css';
+import '../Styling/Home.css';
 import { Link } from 'react-router-dom';
 
 const allArticles = [

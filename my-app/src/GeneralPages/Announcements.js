@@ -1,5 +1,5 @@
 import React from 'react';
-import './Announcements.css';
+import '../Styling/Announcements.css';
 
 const announcements = [
     {

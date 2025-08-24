@@ -1,25 +1,25 @@
 import React from 'react';
-import './Journal.css';
+import '../Styling/Journal.css';
 
-function DangerousImplications() {
+function InsanityDefense() {
     return (
         <div className="article-page fade-in">
             <h1>
-                Dangerous Implications: The application of corporate personhood and its threat to democracy
+                From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness
             </h1>
-            <p className="article-meta">By Derek Tsai • June 2025 • International Law</p>
+            <p className="article-meta">By Mikayla Grady • June 2025 • Criminal Law</p>
 
             <div className="pdf-container">
                 <object
-                    data="/dangerousimplications.pdf"
+                    data="/ArticlePDFs/insanitydefense.pdf"
                     type="application/pdf"
-                    width="600px"
+                    width= "600px"
                     height="600px"
                     style={{ border: 'none', borderRadius: '8px', overflow: 'auto' }}
                 >
                     <p>
                         Your browser does not support PDFs.{' '}
-                        <a href="/dangerousimplications.pdf" target="_blank" rel="noopener noreferrer">
+                        <a href="/ArticlePDFs/insanitydefense.pdf" target="_blank" rel="noopener noreferrer">
                             Download PDF
                         </a>
                         .
@@ -30,4 +30,4 @@ function DangerousImplications() {
     );
 }
 
-export default DangerousImplications;
+export default InsanityDefense;

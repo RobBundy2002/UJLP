@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import richardImg from '../Richard.jpg';
+import '../Styling/AuthorBio.css';
+import richardImg from '../ProfilePictures/Richard.jpg';
 
 function Richard() {
     return (

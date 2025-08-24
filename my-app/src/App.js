@@ -1,27 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HashRouter as Router, Route, Routes, Link, Navigate, useLocation } from 'react-router-dom';
-import './App.css';
-import Home from './Home';
-import About from './About';
-import Journal from './Journal';
-import Archives from './Archives';
-import Announcements from './Announcements';
-import Contact from './Contact';
-import Footer from './Footer';
-import Derek from './authorbios/Derek';
-import Mikayla from './authorbios/Mikayla';
-import Rob from './authorbios/Rob';
-import Evan from './authorbios/Evan';
-import Shelby from './authorbios/Shelby';
-import Richard from './authorbios/Richard';
-import Will from './authorbios/Will';
-import Rishi from './authorbios/Rishi';
-import Mia from './authorbios/Mia';
-import Charlie from './authorbios/Charlie'
+import './Styling/App.css';
+import Home from './GeneralPages/Home';
+import About from './GeneralPages/About';
+import Journal from './GeneralPages/Journal';
+import Archives from './GeneralPages/Archives';
+import Announcements from './GeneralPages/Announcements';
+import Contact from './GeneralPages/Contact';
+import Footer from './Components/Footer';
+import Derek from './Bios/Derek';
+import Mikayla from './Bios/Mikayla';
+import Rob from './Bios/Rob';
+import Evan from './Bios/Evan';
+import Shelby from './Bios/Shelby';
+import Richard from './Bios/Richard';
+import Will from './Bios/Will';
+import Rishi from './Bios/Rishi';
+import Mia from './Bios/Mia';
+import Charlie from './Bios/Charlie'
 import logo from "./Logo.png";
-import DangerousImplications from "./DangerousImplications";
-import InsanityDefense from "./InsanityDefense";
-import JoinTheTeam from "./JoinTheTeam";
+import DangerousImplications from "./ArticlePages/DangerousImplications";
+import InsanityDefense from "./ArticlePages/InsanityDefense";
+import JoinTheTeam from "./GeneralPages/JoinTheTeam";
 
 // Scroll to top on route change
 function ScrollToTop() {

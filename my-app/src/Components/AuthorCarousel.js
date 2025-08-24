@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './AuthorCarousel.css';
-import derekImg from '../Derek.png';
-import shelbyImg from '../Shelby.jpeg';
-import robImg from '../Rob.jpg';
-import evanImg from '../Evan.jpeg';
-import richardImg from '../Richard.jpg';
+import '../Styling/AuthorCarousel.css';
+import derekImg from '../ProfilePictures/Derek.png';
+import shelbyImg from '../ProfilePictures/Shelby.jpeg';
+import robImg from '../ProfilePictures/Rob.jpg';
+import evanImg from '../ProfilePictures/Evan.jpeg';
+import richardImg from '../ProfilePictures/Richard.jpg';
 
 const authors = [
     {
@@ -60,8 +60,6 @@ const authors = [
 
 function AuthorCarousel() {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedAuthor, setSelectedAuthor] = useState(null);
 
     useEffect(() => {
         const interval = setInterval(() => {

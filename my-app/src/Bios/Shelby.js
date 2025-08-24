@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import shelbyImg from '../Shelby.jpeg';
+import '../Styling/AuthorBio.css';
+import shelbyImg from '../ProfilePictures/Shelby.jpeg';
 
 function Shelby() {
     return (

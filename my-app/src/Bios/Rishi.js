@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import rishiImg from '../Rishi.jpg';
+import '../Styling/AuthorBio.css';
+import rishiImg from '../ProfilePictures/Rishi.jpg';
 
 function Rishi() {
     return (

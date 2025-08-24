@@ -1,5 +1,5 @@
 import React from 'react';
-import '../AuthorBio.css';
+import '../Styling/AuthorBio.css';
 
 function Mikayla() {
     return (

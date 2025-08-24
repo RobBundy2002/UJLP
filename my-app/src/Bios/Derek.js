@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import derekImg from '../Derek.png';
+import '../Styling/AuthorBio.css';
+import derekImg from '../ProfilePictures/Derek.png';
 
 function Derek() {
     return (

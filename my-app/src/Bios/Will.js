@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import willImg from '../Will.jpg';
+import '../Styling/AuthorBio.css';
+import willImg from '../ProfilePictures/Will.jpg';
 
 function Will() {
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
-import './Journal.css';
-import './Home.css';
+import '../Styling/Journal.css';
+import '../Styling/Home.css';
 import { Link } from 'react-router-dom';
 
 const articles = [

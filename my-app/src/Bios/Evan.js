@@ -1,6 +1,6 @@
 import React from 'react';
-import '../AuthorBio.css';
-import evanImg from '../Evan.jpeg';
+import '../Styling/AuthorBio.css';
+import evanImg from '../ProfilePictures/Evan.jpeg';
 
 function Evan() {
     return (
