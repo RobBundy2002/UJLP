@@ -149,19 +149,10 @@ function About() {
                         </div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Internal Writer</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Internal Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Submission Writer</span></div></div>
+                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Submission Writer</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Event Coordinator</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Event Coordinator</span></div></div>
                     </div>
@@ -206,7 +197,7 @@ function About() {
                     <div className="cta-content">
                         <h2>Join Our Team</h2>
                         <p>We're always looking for talented individuals to join our team. If you're passionate about journalism and want to make a difference, we'd love to hear from you.</p>
-                        <a href="/my-app/src/GeneralPages/Contact" className="cta-button ">Join Our Team</a>
+                        <a href="#/jointheteam" className="cta-button ">Join Our Team</a>
                     </div>
                 </div>
             </section>

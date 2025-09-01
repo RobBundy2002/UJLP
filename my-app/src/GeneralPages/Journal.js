@@ -86,7 +86,7 @@ function Journal() {
                     <h2>Contribute to Our Journal</h2>
                     <p>We welcome submissions from undergraduate students interested in legal and political research.</p>
                     <div className="cta-buttons">
-                        <a href="#/contact" className="cta-button">Submit Your Work</a>
+                        <a href="#/jointheteam" className="cta-button">Submit Your Work</a>
                         <a href="#/about" className="cta-button">Learn More</a>
                     </div>
                 </div>
