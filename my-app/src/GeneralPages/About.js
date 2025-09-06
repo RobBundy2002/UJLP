@@ -143,11 +143,16 @@ function About() {
                         </div>
                         <div className="team-member-card">
                             <div className="team-member-info">
+                                <h3><Link to="/author/rhett" className="author-link">Rhett Armentrout</Link></h3>
+                                <span className="team-member-role">Submission Writer</span>
+                            </div>
+                        </div>
+                        <div className="team-member-card">
+                            <div className="team-member-info">
                                 <h3>Coming Soon</h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-                        <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Staff Editor</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Internal Writer</span></div></div>
                         <div className="team-member-card"><div className="team-member-info"><h3>Coming Soon</h3><span className="team-member-role">Internal Writer</span></div></div>

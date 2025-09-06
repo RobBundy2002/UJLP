@@ -18,6 +18,7 @@ import Will from './Bios/Will';
 import Rishi from './Bios/Rishi';
 import Mia from './Bios/Mia';
 import Charlie from './Bios/Charlie'
+import Rhett from './Bios/Rhett';
 import logo from "./Logo.png";
 import DangerousImplications from "./ArticlePages/DangerousImplications";
 import InsanityDefense from "./ArticlePages/InsanityDefense";
@@ -130,6 +131,7 @@ function App() {
                         <Route path="/author/rishi" element={<Rishi />} />
                         <Route path="/author/mia" element={<Mia />} />
                         <Route path="/author/charlie" element={<Charlie />} />
+                        <Route path="/author/rhett" element={<Rhett />} />
                         <Route path="/dangerousimplications" element={<DangerousImplications />} />
                         <Route path="/insanitydefense" element={<InsanityDefense />} />
                         <Route path="*" element={<Navigate to="/" />} />
