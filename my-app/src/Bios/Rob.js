@@ -38,13 +38,14 @@ function Rob() {
                             As a Computer Science major with a minor in Religious Studies at the University of Virginia, Rob brings 
                             a unique interdisciplinary perspective to the intersection of technology and law. He is currently pursuing 
                             an online Master's degree in Computer Science with a concentration in Human Computer Interaction at 
-                            Georgia Institute of Technology.
+                            Georgia Institute of Technology. Alongside this his Master's program, Rob still resides in Charlottesville post-grad,
+                            and works full time as a software engineer at GA-Intelligence.
                         </p>
                         <p>
                             Rob's technical expertise spans multiple programming languages and technologies including Java, Python, 
-                            JavaScript, React, Node.js, and various cloud technologies. His experience as a Software Developer at
-                            GA-I3 and as a Teaching Assistant in UVA's Computer Science Department demonstrates his commitment to 
-                            both technical excellence and knowledge sharing.
+                            JavaScript, React, Node.js, and various cloud technologies. His experience as a Software Engineer and
+                            as a Teaching Assistant in UVA's Computer Science Department demonstrates his commitment to both technical
+                            excellence and knowledge sharing.
                         </p>
                         <p>
                             Rob's technical leadership helps UJLP maintain a modern, accessible digital platform that supports 
@@ -61,30 +62,36 @@ function Rob() {
                     <h2>Professional Experience</h2>
                     <div className="experience-list">
                         <div className="experience-item">
-                            <h3>Software Developer</h3>
-                            <p className="experience-meta">GA-I3 • June 2025 - Present</p>
+                            <h3>Software Engineer</h3>
+                            <p className="experience-meta">GA-Intelligence • June 2025 - Present</p>
                             <p className="experience-description">
-                                Collaborated with team members to design and implement backend solutions in Java. 
-                                Utilized version control and CI/CD pipelines to streamline development workflows. 
-                                Identified and mitigated security vulnerabilities in core company projects.
+                                - Led migration of data converters into a centralized repository, adding strict
+                                validation and unit tests to improve data flow reliability. <br />
+                                - Implemented a ConfigMap in a StatefulSet within our Helm chart, allowing dynamic
+                                data configuration to be injected into Kubernetes pods at runtime, improving
+                                deployment flexibility and maintainability. <br />
+                                - Designed and maintained a Helmfiles repo and Helm chart, streamlining scalable,
+                                reliable, and automated project deployment. <br />
+                                - Identified and mitigated security vulnerabilities in core projects; documented
+                                prevention strategies to guide future teams.
                             </p>
                         </div>
                         <div className="experience-item">
                             <h3>Backend Software Engineering Intern</h3>
                             <p className="experience-meta">GA-I3 (formerly GA-CCRI) • June 2024 - August 2024</p>
                             <p className="experience-description">
-                                Improved stack data-flow by integrating new data sources in Java. Prototyped and deployed 
-                                Bash automation tools for project funding source allocation. Expanded and redesigned CI/CD 
-                                docker architecture for increased maintainability and usability.
+                                - Improved stack data-flow by integrating new data sources in Java. <br />
+                                - Prototyped and deployed Bash automation tools for project funding source allocation. <br />
+                                - Expanded and redesigned CI/CD docker architecture for increased maintainability and usability.
                             </p>
                         </div>
                         <div className="experience-item">
                             <h3>Undergraduate Teaching Assistant</h3>
                             <p className="experience-meta">UVA Department of Computer Science • August 2023 - May 2025</p>
                             <p className="experience-description">
-                                Taught courses including Intro to Programming, Data Structures and Algorithms I, 
-                                Human Computer Interaction, and Intro to Cybersecurity. Served as Head Teaching Assistant 
-                                for CS1112, managing Piazza discussions and course administration.
+                                - Assisting the teaching of various CS courses including Intro to Programming, Data Structures and Algorithms I,
+                                Human Computer Interaction, and Intro to Cybersecurity. <br />
+                                - Served as Head Teaching Assistant for CS1112, managing Piazza discussions and course administration.
                             </p>
                         </div>
                     </div>
