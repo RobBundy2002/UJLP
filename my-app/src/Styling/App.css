@@ -61,10 +61,11 @@ html, body {
 .header-container {
   max-width: 1200px;
   margin: 0 auto;
+    height: 6rem;
   padding: 0 2rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+    align-items: flex-start;
 }
 
 .header-container::after {
@@ -83,11 +84,20 @@ html, body {
   color: var(--primary-color);
   font-weight: 700;
   display: flex;
-  align-items: center;
+    align-items: flex-start;
+    margin-top: 5rem;
   gap: 1rem;
 }
 
+.App-title img {
+    margin-top: -5rem;
+    width: 7rem;
+    height: 6rem;
+}
+
 .title-text {
+    margin-left: 1rem;
+    margin-top: -4rem;
   display: flex;
   flex-direction: column;
 }
@@ -98,12 +108,6 @@ html, body {
 
 .title-line-2 {
   line-height: 1.1;
-}
-
-.App-title img {
-  height: 40px;
-  width: auto;
-  transition: transform var(--transition-speed) ease;
 }
 
 .App-title img:hover {
@@ -118,9 +122,10 @@ html, body {
 
 .App-link {
   text-decoration: none;
+    margin-top: 1.25rem;
   color: var(--text-secondary);
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 1.25rem;
   transition: all var(--transition-speed) ease;
   position: relative;
   padding: 0.5rem 0;
@@ -395,14 +400,22 @@ footer {
         font-size: 1.5rem;
     }
 
+    .App-title img {
+        margin-top: -4rem;
+        width: 5rem;
+        height: 4rem;
+    }
+
     .title-text {
+        margin-top: -3rem;
+        margin-left: -.75rem;
         display: flex;
         flex-direction: column;
         line-height: 1.1;
     }
 
     .title-line-1 {
-        font-size: 1.2rem;
+        font-size: 1.0rem;
         line-height: 1.1;
     }
 
@@ -411,15 +424,11 @@ footer {
         line-height: 1.1;
     }
 
-    .App-title img {
-        height: 32px;
-    }
-
     .mobile-menu-button {
         display: block;
         position: absolute;
         right: 0rem;
-        bottom: 0.25rem;
+        bottom: 1.95rem;
         transform: none;
         z-index: 1001;
         background: none;
@@ -581,11 +590,6 @@ footer {
     .App-title {
         font-size: 1.25rem;
         margin-left: -.25rem;
-    }
-
-    .App-title img {
-        height: 35px;
-         margin-right: -.2rem;
     }
 
     h1 {

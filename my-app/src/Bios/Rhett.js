@@ -13,12 +13,12 @@ function Rhett() {
                         </div>
                         <div className="author-info">
                             <h1>Rhett Armentrout</h1>
-                            <span className="author-role">Executive Editor </span>
+                            <span className="author-role">Staff Writer </span>
                             <div className="author-details">
                                 <p><strong>2nd Year at UVA:</strong> Class of 2028 </p>
-                                <p><strong>Hometown:</strong> Harrisonburg, Va </p>
+                                <p><strong>Hometown:</strong> Harrisonburg, Virginia </p>
                                 <p><strong>Major:</strong> Materials Science Engineering </p>
-                                <p><strong>Research Interests:</strong> Coming Here Shortly! </p>
+                                <p><strong>Research Interests:</strong> Interests Coming Here Shortly! </p>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@ function Rhett() {
 
             <section className="author-bio-section">
                 <div className="section-content">
-                    <h2>About Charlie </h2>
+                    <h2>About Rhett </h2>
                     <div className="bio-content">
                         <p>
                             Rhett Armentrout is a second-year at the University of Virginia.

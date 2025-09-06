@@ -144,7 +144,7 @@ function About() {
                         <div className="team-member-card">
                             <div className="team-member-info">
                                 <h3><Link to="/author/rhett" className="author-link">Rhett Armentrout</Link></h3>
-                                <span className="team-member-role">Submission Writer</span>
+                                <span className="team-member-role">Staff Writer</span>
                             </div>
                         </div>
                         <div className="team-member-card">

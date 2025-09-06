@@ -19,7 +19,7 @@ import Rishi from './Bios/Rishi';
 import Mia from './Bios/Mia';
 import Charlie from './Bios/Charlie'
 import Rhett from './Bios/Rhett';
-import logo from "./Logo.png";
+import logo from "./IMG_7996.png";
 import DangerousImplications from "./ArticlePages/DangerousImplications";
 import InsanityDefense from "./ArticlePages/InsanityDefense";
 import JoinTheTeam from "./GeneralPages/JoinTheTeam";
@@ -76,7 +76,7 @@ function Navigation() {
         <header className={`App-header ${isScrolled ? 'scrolled' : ''}`}>
             <div className="header-container">
                 <Link to="/" className="App-title">
-                    <img src={logo} alt="UJLP Logo" />
+                    <img src={logo} alt="UJLP Logo"/>
                     <div className="title-text">
                         <span className="title-line-1">Undergraduate Journal</span>
                         <span className="title-line-2">of Law and Politics</span>
