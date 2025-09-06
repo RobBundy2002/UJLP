@@ -373,6 +373,19 @@
     background: white;
 }
 
+.team-member-photo {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: block;
+    margin-top: 2rem;
+    margin-left: 2.5rem;
+}
+
+
 @media (max-width: 768px) {
     .about-container {
         padding: 0 1rem;
@@ -422,6 +435,17 @@
         margin-bottom: 1rem;
     }
 
+    .team-member-photo {
+        width: 8rem;
+        height: 8rem;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        display: block;
+        margin-top: 2rem;
+        margin-left: 1rem;
+    }
 
     .cta-button-about {
         margin-left:14px;
