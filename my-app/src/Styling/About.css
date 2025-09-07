@@ -387,7 +387,7 @@
 
 
 @media (max-width: 768px) {
-    .about-container {
+.about-container {
         padding: 0 1rem;
     }
 
@@ -436,15 +436,15 @@
     }
 
     .team-member-photo {
-        width: 6rem;
-        height: 6rem;
+        width: 26vw;
+        height: 26vw;
         object-fit: cover;
         border-radius: 50%;
         border: 2px solid #fff;
         box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         display: block;
         margin-top: 2rem;
-        margin-left: 1rem;
+        margin-left: 7.5vw;
     }
 
     .cta-button-about {
