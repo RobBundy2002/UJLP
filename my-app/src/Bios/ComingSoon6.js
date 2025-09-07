@@ -1,24 +1,24 @@
 import React from 'react';
 import '../Styling/AuthorBio.css';
-import charlieImg from '../ProfilePictures/Charlie.jpeg';
+import comingSoonImg from '../ProfilePictures/ComingSoon.jpg';
 
-function Charlie() {
+function ComingSoon6() {
     return (
         <div className="author-bio-container fade-in">
             <section className="author-hero">
                 <div className="section-content">
                     <div className="author-content">
                         <div className="author-image">
-                            <img src={charlieImg} alt="Charlie Aghdami" />
+                            <img src={comingSoonImg} alt="Coming Soon 6" />
                         </div>
                         <div className="author-info">
-                            <h1>Charlie Aghdami</h1>
-                            <span className="author-role">Executive Editor </span>
+                            <h1>Coming Soon 6</h1>
+                            <span className="author-role">Submission Writer</span>
                             <div className="author-details">
-                                <p><strong>2nd Year at UVA:</strong> Coming Here To You Shortly So Stay Tuned! </p>
-                                <p><strong>Hometown:</strong> Coming Here To You Shortly! </p>
-                                <p><strong>Major:</strong> Coming Here To You Shortly! </p>
-                                <p><strong>Research Interests:</strong> Coming Here To You Shortly! </p>
+                                <p><strong>Year at UVA:</strong> Coming Here To You Shortly So Stay Tuned! </p>
+                                <p><strong>Hometown:</strong> Coming Here Shortly! </p>
+                                <p><strong>Major:</strong> Coming Here Shortly! </p>
+                                <p><strong>Research Interests:</strong> Coming Here Shortly! </p>
                             </div>
                         </div>
                     </div>
@@ -27,10 +27,10 @@ function Charlie() {
 
             <section className="author-bio-section">
                 <div className="section-content">
-                    <h2>About Charlie </h2>
+                    <h2>About</h2>
                     <div className="bio-content">
                         <p>
-                            Charlie Aghdami is a second-year at the University of Virginia.
+                            Coming Here Shortly!
                         </p>
                         <p>
                         </p>
@@ -56,4 +56,4 @@ function Charlie() {
     );
 }
 
-export default Charlie;
+export default ComingSoon6;

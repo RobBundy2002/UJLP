@@ -19,10 +19,18 @@ import Rishi from './Bios/Rishi';
 import Mia from './Bios/Mia';
 import Charlie from './Bios/Charlie'
 import Rhett from './Bios/Rhett';
-import logo from "./IMG_7996.png";
+import logo from "./ProfilePictures/HeaderLogo.png";
 import DangerousImplications from "./ArticlePages/DangerousImplications";
 import InsanityDefense from "./ArticlePages/InsanityDefense";
 import JoinTheTeam from "./GeneralPages/JoinTheTeam";
+import ComingSoon1 from "./Bios/ComingSoon1";
+import ComingSoon2 from "./Bios/ComingSoon2";
+import ComingSoon3 from "./Bios/ComingSoon3";
+import ComingSoon4 from "./Bios/ComingSoon4";
+import ComingSoon5 from "./Bios/ComingSoon5";
+import ComingSoon6 from "./Bios/ComingSoon6";
+import ComingSoon7 from "./Bios/ComingSoon7";
+import ComingSoon8 from "./Bios/ComingSoon8";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -132,6 +140,14 @@ function App() {
                         <Route path="/author/mia" element={<Mia />} />
                         <Route path="/author/charlie" element={<Charlie />} />
                         <Route path="/author/rhett" element={<Rhett />} />
+                        <Route path="/author/comingsoon1" element={<ComingSoon1 />} />
+                        <Route path="/author/comingsoon2" element={<ComingSoon2 />} />
+                        <Route path="/author/comingsoon3" element={<ComingSoon3 />} />
+                        <Route path="/author/comingsoon4" element={<ComingSoon4 />} />
+                        <Route path="/author/comingsoon5" element={<ComingSoon5 />} />
+                        <Route path="/author/comingsoon6" element={<ComingSoon6 />} />
+                        <Route path="/author/comingsoon7" element={<ComingSoon7 />} />
+                        <Route path="/author/comingsoon8" element={<ComingSoon8 />} />
                         <Route path="/dangerousimplications" element={<DangerousImplications />} />
                         <Route path="/insanitydefense" element={<InsanityDefense />} />
                         <Route path="*" element={<Navigate to="/" />} />
