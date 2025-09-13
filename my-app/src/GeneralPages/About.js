@@ -140,15 +140,6 @@ function About() {
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-
-                        <div className="team-member-card">
-                            <img src={require('../ProfilePictures/Charlie.jpeg')} alt="Charlie" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/charlie" className="author-link">Charlie Aghdami</Link></h3>
-                                <span className="team-member-role">Executive Editor</span>
-                            </div>
-                        </div>
-
                         <div className="team-member-card">
                             <img src={require('../ProfilePictures/Rhett.jpg')} alt="Rhett" className="team-member-photo"/>
                             <div className="team-member-info">
@@ -156,7 +147,13 @@ function About() {
                                 <span className="team-member-role">Staff Writer</span>
                             </div>
                         </div>
-
+                        <div className="team-member-card">
+                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
+                            <div className="team-member-info">
+                                <h3><Link to="/author/comingsoon2" className="author-link">Mikayla Grady</Link></h3>
+                                <span className="team-member-role">Staff Writer</span>
+                            </div>
+                        </div>
                         <div className="team-member-card">
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
@@ -171,7 +168,6 @@ function About() {
                                 <span className="team-member-role">Staff Editor</span>
                             </div>
                         </div>
-
                         <div className="team-member-card">
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
