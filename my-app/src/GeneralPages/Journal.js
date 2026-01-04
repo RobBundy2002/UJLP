@@ -15,8 +15,8 @@ const articles = [
     },
     {
         title: "From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness",
-        author: "Mikayla Grady",
-        authorLink: "/author/mikayla",
+        author: "Shelby Eliasek",
+        authorLink: "/author/shelby",
         category: "Criminal Law",
         date: "June 2025",
         excerpt: "",

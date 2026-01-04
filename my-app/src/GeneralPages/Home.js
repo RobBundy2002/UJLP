@@ -73,7 +73,7 @@ function Home() {
                             <div className="article-content">
                                 <span className="article-category">Criminal Law</span>
                                 <h3>"From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness"</h3>
-                                <p className="article-meta">By <Link to="/author/mikayla" className="author-link">Mikayla Grady</Link> • June 2025</p>
+                                <p className="article-meta">By <Link to="/author/mikayla" className="author-link">Shelby Eliasek</Link> • June 2025</p>
                                 <p className="article-preview">
                                     A critical analysis of how modern mental health understanding should reshape legal approaches to insanity defense.
                                 </p>

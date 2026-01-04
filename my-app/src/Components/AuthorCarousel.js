@@ -48,14 +48,14 @@ const authors = [
         bio: 'Political Philosophy, Policy, and Law',
         link: '/author/richard'
     },
-    {
-        id: 'mikayla',
-        name: 'Mikayla Grady',
-        role: 'Staff Writer',
-        image: null,
-        bio: 'Criminal Law Specialist',
-        link: '/author/mikayla'
-    }
+    // {
+    //     id: 'mikayla',
+    //     name: 'Mikayla Grady',
+    //     role: 'Staff Writer',
+    //     image: null,
+    //     bio: 'Criminal Law Specialist',
+    //     link: '/author/mikayla'
+    // }
 ];
 
 function AuthorCarousel() {

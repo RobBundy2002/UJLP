@@ -7,7 +7,7 @@ function InsanityDefense() {
             <h1>
                 From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness
             </h1>
-            <p className="article-meta">By Mikayla Grady • June 2025 • Criminal Law</p>
+            <p className="article-meta">By Shelby Eliasek • June 2025 • Criminal Law</p>
 
             <div className="pdf-container">
                 <object
