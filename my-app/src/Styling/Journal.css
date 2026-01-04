@@ -256,6 +256,114 @@
     border: 1px solid #ccc;
 }
 
+.article-page {
+    max-width: 100rem;
+    min-height: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.article-summary {
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: rgba(2, 27, 65, 0.2);
+    border-left: 4px solid #f97316;
+    border-radius: 12px;
+    text-align: left;
+    color: white;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.article-summary h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #f97316;
+}
+
+.article-summary p {
+    line-height: 1.7;
+    color: white;
+    font-size: 1rem;
+}
+
+.pdf-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem auto;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+
+.pdf-container object {
+    width: 100%;
+    height: 70vh;
+    border: 1px solid #ccc;
+}
+
+.article-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 0.5rem 1.5rem;
+    background: rgba(2, 27, 65, 0.2);
+    color: white;
+    border-left: 4px solid #f97316;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    gap: 0.5rem;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.author-profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f97316;
+}
+
+.author-name {
+    font-weight: 600;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.author-details {
+    font-weight: 400;
+    color: white;
+    font-size: 0.85rem;
+    margin-left: 0.75rem;
+}
+
+@media (max-width: 768px) {
+    .article-footer {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+        padding: 0.5rem 1rem;
+        max-width: 95%;
+    }
+    .author-details {
+        margin-left: 0;
+    }
+    .pdf-container object {
+        height: 50vh;
+    }
+}
+
 
 @media (max-width: 768px) {
     .pdf-container {
@@ -270,7 +378,7 @@
 
     .article-page {
         max-width: 100%;
-        /*margin-left: 3rem;*/
+        margin-left: 2.5rem;
     }
 
     .article-meta {
