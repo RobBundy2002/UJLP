@@ -4,7 +4,7 @@
   --primary-color: #2c5282;
   --secondary-color: #1a365d;
   --accent-color: #ff6b35;
-  --background-white: #ff8c61;  
+  --background-white: #ff8c61;
   --background-light: #ff6b35;
   --text-primary: #ffffff;
   --text-secondary: #ffffff;
@@ -374,7 +374,7 @@ footer {
     color: var(--text-primary);
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 1.5rem;
     position: relative;
     z-index: 1001;
 }
@@ -397,16 +397,19 @@ footer {
     }
 
     .App-title {
-        font-size: 1.5rem;
+        min-width: 0;
+        font-size: 1.05rem;
     }
 
     .App-title img {
         margin-top: -4rem;
         width: 5rem;
         height: 4rem;
+        margin-left: -1rem;
     }
 
     .title-text {
+        min-width: 0;
         margin-top: -3rem;
         margin-left: -.75rem;
         display: flex;
@@ -664,7 +667,7 @@ footer {
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
         url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="rgba(255,255,255,0.05)"/></svg>'),
         radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
@@ -901,4 +904,41 @@ footer {
   margin-bottom: 2rem;
   color: var(--text-primary);
   line-height: 1.6;
+}
+
+.header-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 6rem;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+    margin-top: .75rem;
+    margin-left: 1rem;
+    flex-shrink: 0;
+}
+
+.App-nav-top {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.App-link {
+    text-decoration: none;
+    margin-top: 1.25rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: all var(--transition-speed) ease;
+    position: relative;
+    padding: 0.5rem 0;
+    white-space: nowrap;
 }

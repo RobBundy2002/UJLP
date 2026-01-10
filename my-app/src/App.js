@@ -31,6 +31,7 @@ import ComingSoon5 from "./Bios/ComingSoon5";
 import ComingSoon6 from "./Bios/ComingSoon6";
 import ComingSoon7 from "./Bios/ComingSoon7";
 import ComingSoon8 from "./Bios/ComingSoon8";
+import SearchBar from "./Components/SearchBar";
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -49,19 +50,16 @@ function Navigation() {
     const location = useLocation();
     const menuRef = useRef(null); // Ref to mobile menu for auto-scroll
 
-    // Track scroll for header style
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Close mobile menu when navigating
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
 
-    // Prevent background scroll and auto-scroll menu to top
     useEffect(() => {
         if (isMobileMenuOpen) {
             document.body.style.overflow = 'hidden';
@@ -90,6 +88,7 @@ function Navigation() {
                         <span className="title-line-2">of Law and Politics</span>
                     </div>
                 </Link>
+
                 <nav
                     ref={menuRef}
                     className={`App-nav-top ${isMobileMenuOpen ? 'active' : ''}`}
@@ -101,6 +100,11 @@ function Navigation() {
                     <Link to="/contact" className={`App-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={closeMobileMenu}>Contact</Link>
                     <Link to="/jointheteam" className={`App-link ${location.pathname === '/jointheteam' ? 'active' : ''}`} onClick={closeMobileMenu}>Apply</Link>
                 </nav>
+
+                <div className="header-search">
+                    <SearchBar />
+                </div>
+
                 <button className={`mobile-menu-button ${isMobileMenuOpen ? 'hidden' : ''}`} onClick={toggleMobileMenu}>
                     <svg className={`menu-icon ${isMobileMenuOpen ? 'active' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M3 6h18M3 12h18M3 18h18"/>
