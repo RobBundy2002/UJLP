@@ -1,4 +1,3 @@
-/* === REVERTED TO ORIGINAL PROFESSIONAL COLOR SCHEME === */
 .author-spotlight {
     background-color: var(--background-white);
     padding: 4rem 0;
@@ -152,6 +151,14 @@
     border: 2px solid var(--border-color);
 }
 
+.author-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
 .author-info h3 {
     color: var(--primary-color);
     font-size: 1.1rem;
@@ -159,6 +166,7 @@
     font-weight: 700;
     letter-spacing: 0.01em;
     text-align: center;
+    width: 100%;
 }
 
 .author-role {
@@ -186,6 +194,7 @@
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 1rem;
+    width: 100%;
 }
 
 .view-profile-btn {
@@ -331,6 +340,7 @@
 }
 
 .modal-author-info {
+    width: 10000px;
     text-align: center;
 }
 
@@ -398,9 +408,6 @@
     transform: translateY(-2px);
 }
 
-
-
-/* Desktop-specific carousel button positioning */
 @media (min-width: 769px) {
     .carousel-button.prev {
         left: 20px;
@@ -657,25 +664,25 @@
 }
 
 @media (max-width: 600px) {
-  .author-image {
-    margin-bottom: 0.1rem;
-  }
-  .carousel-container {
-    margin-left: 0.5rem;
-    overflow: hidden;
-  }
+    .author-image {
+        margin-bottom: 0.1rem;
+    }
+    .carousel-container {
+        margin-left: 0.5rem;
+        overflow: hidden;
+    }
 }
 
 @media (min-width: 601px) {
-  .author-image {
-    margin-bottom: 0.3rem;
-  }
-  .carousel-container,
-  .carousel-track {
-    overflow-x: initial;
-    overflow-y: initial;
-  }
-  .author-card {
-    padding-top: 0.75rem;
-  }
-} 
+    .author-image {
+        margin-bottom: 0.3rem;
+    }
+    .carousel-container,
+    .carousel-track {
+        overflow-x: initial;
+        overflow-y: initial;
+    }
+    .author-card {
+        padding-top: 0.75rem;
+    }
+}

@@ -65,15 +65,11 @@ function Rob() {
                             <h3>Software Engineer</h3>
                             <p className="experience-meta">GA-Intelligence • June 2025 - Present</p>
                             <p className="experience-description">
-                                - Led migration of data converters into a centralized repository, adding strict
-                                validation and unit tests to improve data flow reliability. <br />
-                                - Implemented a ConfigMap in a StatefulSet within our Helm chart, allowing dynamic
-                                data configuration to be injected into Kubernetes pods at runtime, improving
-                                deployment flexibility and maintainability. <br />
-                                - Designed and maintained a Helmfiles repo and Helm chart, streamlining scalable,
-                                reliable, and automated project deployment. <br />
-                                - Identified and mitigated security vulnerabilities in core projects; documented
-                                prevention strategies to guide future teams.
+                                - Led migration of data converters into a centralized repository, adding strict validation and unit tests to improve data flow reliability.  <br />
+                                - Implemented ConfigMap integration within a Helm chart’s StatefulSet, enabling dynamic runtime configuration in Kubernetes.  <br />
+                                - Developed and integrated Spring Cloud Stream data converters, ensuring accurate data transformation and round-trip processing. <br />
+                                - Validated end-to-end data flows across our Kubernetes stack using k9s and Kafka topic inspection, ensuring system reliability. <br />
+                                - Recognized with a spotlight award for driving tracking initiatives and a software release through proactive repository ownership, rigorous MR governance, cross-team collaboration, and mentoring colleagues through pair programming and technical onboarding.
                             </p>
                         </div>
                         <div className="experience-item">
