@@ -9,16 +9,16 @@ const articles = [
         author: "Derek Tsai",
         authorLink: "/author/derek",
         category: "International Law",
-        date: "June 2025",
+        date: "January 2026",
         excerpt: "",
         pageLink: "/dangerousimplications"
     },
     {
-        title: "From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness",
+        title: "Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom\n",
         author: "Shelby Eliasek",
         authorLink: "/author/shelby",
-        category: "Criminal Law",
-        date: "June 2025",
+        category: "Education Law",
+        date: "January 2026",
         excerpt: "",
         pageLink: "/insanitydefense"
     },
