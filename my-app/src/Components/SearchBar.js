@@ -12,10 +12,10 @@ const searchData = {
             type: "article"
         },
         {
-            title: "From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness",
+            title: "Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom",
             author: "Shelby Eliasek",
-            category: "Criminal Law",
-            link: "/insanitydefense",
+            category: "Education Law",
+            link: "/schoolhousesecrets",
             type: "article"
         }
     ],
@@ -34,7 +34,7 @@ const searchData = {
         { title: "Journal", link: "/journal", type: "page" },
         { title: "Announcements", link: "/announcements", type: "page" },
         { title: "Contact", link: "/contact", type: "page" },
-        { title: "Join The Team", link: "/jointheteam", type: "page" }
+        { title: "Join The Team", link: "/jointheteam", type: "page" },
     ]
 };
 
