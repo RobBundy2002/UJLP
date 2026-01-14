@@ -153,7 +153,7 @@ function App() {
                         <Route path="/author/comingsoon7" element={<ComingSoon7 />} />
                         <Route path="/author/comingsoon8" element={<ComingSoon8 />} />
                         <Route path="/dangerousimplications" element={<DangerousImplications />} />
-                        <Route path="/insanitydefense" element={<SchoolhouseSecrets />} />
+                        <Route path="/schoolhousesecrets" element={<SchoolhouseSecrets />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </main>

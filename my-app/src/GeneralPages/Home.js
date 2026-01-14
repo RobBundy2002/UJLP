@@ -75,7 +75,7 @@ function Home() {
                                 <h3>"Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"</h3>
                                 <p className="article-meta">By <Link to="/author/mikayla" className="author-link">Shelby Eliasek</Link> • June 2025</p>
                                 <p className="article-preview">
-                                    A critical analysis of how modern mental health understanding should reshape legal approaches to insanity defense.
+                                    An examination of cases on public school policies regarding the use of gender non-conforming names and pronouns for students, and the rights of parents to be notified of these changes.
                                 </p>
                                 <Link to="/insanitydefense" className="article-link">Read more →</Link>
                             </div>

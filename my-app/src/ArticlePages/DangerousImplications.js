@@ -19,26 +19,15 @@ function DangerousImplications() {
                 </p>
             </div>
 
-            <div className="pdf-container">
-                <object
-                    data="/ArticlePDFs/dangerousimplications.pdf"
-                    type="application/pdf"
-                    width="100%"
-                    height="70vh"
-                    style={{ border: 'none', borderRadius: '8px', overflow: 'auto' }}
+            <div className="pdf-actions">
+                <a
+                    href="/ArticlePDFs/Untitled document.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="cta-button pdf-button"
                 >
-                    <p>
-                        Your browser does not support PDFs.{' '}
-                        <a
-                            href="/ArticlePDFs/dangerousimplications.pdf"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Download PDF
-                        </a>
-                        .
-                    </p>
-                </object>
+                    📄 Open Full PDF
+                </a>
             </div>
 
             <footer className="article-footer">

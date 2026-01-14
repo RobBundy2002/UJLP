@@ -1,6 +1,7 @@
 import React from 'react';
 import '../Styling/AuthorBio.css';
 import shelbyImg from '../ProfilePictures/Shelby.jpeg';
+import {Link} from "react-router-dom";
 
 function Shelby() {
     return (
@@ -70,11 +71,11 @@ function Shelby() {
                     <h2>Publications</h2>
                     <div className="publications-list">
                         <div className="publication-item">
-                            <h3>"Chevron Deference and the Separation of Powers: A Constitutional Analysis"</h3>
-                            <p className="publication-meta">Constitutional Law • In Progress</p>
+                            <h3><Link to="/schoolhousesecrets" className="author-link">"Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"</Link></h3>
+                            <p className="publication-meta">Education Law • January 2026</p>
                             <p className="publication-excerpt">
-                                An examination of Chevron Deference, the Loper Bright case, and the founding fathers' 
-                                intent regarding the Supreme Court's role in administrative law decisions.
+                                An examination of cases on public school policies regarding the use of gender non-conforming
+                                names and pronouns for students, and the rights of parents to be notified of these changes.
                             </p>
                         </div>
                     </div>
