@@ -20,7 +20,7 @@ const articles = [
         category: "Education Law",
         date: "January 2026",
         excerpt: "",
-        pageLink: "/insanitydefense"
+        pageLink: "/schoolhousesecrets"
     },
     {
         title: "This Article is in Progress",

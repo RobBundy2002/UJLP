@@ -29,7 +29,7 @@ function SchoolhouseSecrets() {
 
             <div className="pdf-actions">
                 <a
-                    href="/ArticlePDFs/Untitled document.pdf"
+                    href="/ArticlePDFs/Eliasek_Fall2025_Classroom_Gender.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="cta-button pdf-button"
