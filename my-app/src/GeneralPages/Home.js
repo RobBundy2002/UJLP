@@ -77,7 +77,7 @@ function Home() {
                                 <p className="article-preview">
                                     An examination of cases on public school policies regarding the use of gender non-conforming names and pronouns for students, and the rights of parents to be notified of these changes.
                                 </p>
-                                <Link to="/insanitydefense" className="article-link">Read more →</Link>
+                                <Link to="/schoolhousesecrets" className="article-link">Read more →</Link>
                             </div>
                         </article>
                     </div>
