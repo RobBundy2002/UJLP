@@ -32,13 +32,39 @@ import ComingSoon6 from "./Bios/ComingSoon6";
 import ComingSoon7 from "./Bios/ComingSoon7";
 import ComingSoon8 from "./Bios/ComingSoon8";
 import SearchBar from "./Components/SearchBar";
+import BackToTop from "./Components/BackToTop";
 
-// Scroll to top on route change
+// Scroll to top on route change with smooth animation
 function ScrollToTop() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        window.scrollTo(0, 0);
+        // Smooth scroll to top with animation
+        const scrollToTop = () => {
+            const startPosition = window.pageYOffset;
+            const duration = 500; // Animation duration in ms
+            let startTime = null;
+
+            const animation = (currentTime) => {
+                if (!startTime) startTime = currentTime;
+                const progress = currentTime - startTime;
+                const easeInOutQuad = (t) => {
+                    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+                };
+
+                if (progress < duration) {
+                    const newPosition = startPosition * (1 - easeInOutQuad(progress / duration));
+                    window.scrollTo(0, newPosition);
+                    requestAnimationFrame(animation);
+                } else {
+                    window.scrollTo(0, 0);
+                }
+            };
+
+            requestAnimationFrame(animation);
+        };
+
+        scrollToTop();
     }, [pathname]);
 
     return null;
@@ -158,6 +184,7 @@ function App() {
                     </Routes>
                 </main>
                 <Footer />
+                <BackToTop />
             </div>
         </Router>
     );

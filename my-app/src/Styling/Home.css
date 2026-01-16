@@ -99,7 +99,7 @@
     right: 0;
     bottom: 0;
     background: linear-gradient(135deg, var(--background-light) 0%, var(--background-light) 100%);
-    opacity: 0.95;
+    opacity: 0.85;
     z-index: 1;
 }
 
@@ -283,6 +283,24 @@
     border-radius: 4px;
     font-size: 0.875rem;
     margin-bottom: 1rem;
+}
+
+.article-category + .article-issue-badge {
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+}
+
+.article-issue-badge {
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+}
+
+.article-issue-badge + h3 {
+    margin-top: 1.5rem;
 }
 
 .article-meta {

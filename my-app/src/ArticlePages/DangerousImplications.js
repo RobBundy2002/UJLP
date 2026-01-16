@@ -1,6 +1,7 @@
 import React from 'react';
 import '../Styling/Journal.css';
 import profilePic from '../ProfilePictures/Derek.png';
+import PDFViewer from '../Components/PDFViewer';
 
 function DangerousImplications() {
     return (
@@ -8,7 +9,7 @@ function DangerousImplications() {
             <h1>
                 Dangerous Implications: The application of corporate personhood and its threat to democracy
             </h1>
-            <p className="article-meta">By Derek Tsai • June 2025 • International Law</p>
+            <p className="article-meta">By Derek Tsai • January 2026 • International Law • 2026 Issue 1</p>
 
             <div className="article-summary">
                 <h2>Summary</h2>
@@ -18,6 +19,12 @@ function DangerousImplications() {
                     individuals, and how this status can undermine democratic accountability and public interest.
                 </p>
             </div>
+
+            <PDFViewer 
+                pdfPath="/ArticlePDFs/Untitled document.pdf"
+                title="Dangerous Implications: The application of corporate personhood and its threat to democracy"
+                author="Derek Tsai"
+            />
 
             <div className="pdf-actions">
                 <a

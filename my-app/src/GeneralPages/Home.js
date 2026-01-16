@@ -2,11 +2,15 @@ import React from 'react';
 import '../Styling/Home.css';
 import { Link } from 'react-router-dom';
 import AuthorCarousel from '../Components/AuthorCarousel';
+import ParticleBackground from '../Components/ParticleBackground';
+import TypingText from '../Components/TypingText';
+import '../Components/IssueFilter.css';
 
 function Home() {
     return (
         <div className="home-container fade-in">
             <section className="hero-section">
+                <ParticleBackground />
                 <div className="hero-content">
                     <h1>Undergraduate Journal of Law and Politics</h1>
                     <p className="hero-subtitle">
@@ -36,16 +40,16 @@ function Home() {
                         </div>
                         <div className="intro-stats">
                             <div className="stat-item">
-                                <span className="stat-number">+</span>
-                                <span className="stat-label">Articles Published</span>
+                                <span className="stat-number">1</span>
+                                <span className="stat-label">Article Published</span>
                             </div>
                             <div className="stat-item">
                                 <span className="stat-number">12</span>
                                 <span className="stat-label">Team Members</span>
                             </div>
                             <div className="stat-item">
-                                <span className="stat-number">5</span>
-                                <span className="stat-label">Research Areas</span>
+                                <span className="stat-number">1</span>
+                                <span className="stat-label">Research Area</span>
                             </div>
                         </div>
                     </div>
@@ -60,9 +64,10 @@ function Home() {
                     <div className="articles-grid">
                         <article className="article-card">
                             <div className="article-content">
-                                <span className="article-category">International Law</span>
+                                <span className="article-category"><TypingText text="International Law" speed={80} /></span>
+                                <div className="article-issue-badge">2026 Issue 1</div>
                                 <h3>"Dangerous Implications: The application of corporate personhood and its threat to democracy"</h3>
-                                <p className="article-meta">By <Link to="/author/derek" className="author-link">Derek Tsai</Link> • July 2025</p>
+                                <p className="article-meta">By <Link to="/author/derek" className="author-link">Derek Tsai</Link> • January 2026</p>
                                 <p className="article-preview">
                                     An examination of how corporate personhood doctrines impact democratic governance and political power structures.
                                 </p>
@@ -71,9 +76,10 @@ function Home() {
                         </article>
                         <article className="article-card">
                             <div className="article-content">
-                                <span className="article-category">Education Law</span>
+                                <span className="article-category"><TypingText text="Education Law" speed={80} delay={500} /></span>
+                                <div className="article-issue-badge">2026 Issue 1</div>
                                 <h3>"Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"</h3>
-                                <p className="article-meta">By <Link to="/author/mikayla" className="author-link">Shelby Eliasek</Link> • June 2025</p>
+                                <p className="article-meta">By <Link to="/author/shelby" className="author-link">Shelby Eliasek</Link> • January 2026</p>
                                 <p className="article-preview">
                                     An examination of cases on public school policies regarding the use of gender non-conforming names and pronouns for students, and the rights of parents to be notified of these changes.
                                 </p>

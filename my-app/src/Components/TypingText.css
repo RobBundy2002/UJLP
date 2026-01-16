@@ -1,0 +1,25 @@
+.typing-text {
+    display: inline-block;
+}
+
+.cursor {
+    display: inline-block;
+    margin-left: 2px;
+    animation: blink 1s infinite;
+    color: var(--primary-color);
+    font-weight: inherit;
+}
+
+@keyframes blink {
+    0%, 50% {
+        opacity: 1;
+    }
+    51%, 100% {
+        opacity: 0;
+    }
+}
+
+/* Different cursor colors for light backgrounds */
+.article-category .cursor {
+    color: var(--background-white);
+}

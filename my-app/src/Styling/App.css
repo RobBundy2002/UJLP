@@ -126,7 +126,7 @@ html, body {
   color: var(--text-secondary);
   font-weight: 500;
   font-size: 1.25rem;
-  transition: all var(--transition-speed) ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   padding: 0.5rem 0;
 }
@@ -147,6 +147,14 @@ html, body {
 }
 
 .App-link:hover::after {
+  width: 100%;
+}
+
+.App-link.active {
+  color: var(--primary-color);
+}
+
+.App-link.active::after {
   width: 100%;
 }
 
@@ -236,7 +244,7 @@ footer {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition-speed) ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -353,17 +361,17 @@ footer {
 }
 
 .fade-in {
-  animation: fadeIn 0.5s ease-in;
+  animation: fadeIn 0.6s ease-out;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translate(-20px, 20px);
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
-    transform: translate(0, 0);
+    transform: translateY(0);
   }
 }
 
@@ -734,7 +742,7 @@ footer {
     border-radius: 8px;
     font-weight: 600;
     text-decoration: none;
-    transition: all var(--transition-speed) ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 1.1rem;
     letter-spacing: 0.5px;
 }
@@ -937,7 +945,7 @@ footer {
     color: var(--text-secondary);
     font-weight: 500;
     font-size: 1.1rem;
-    transition: all var(--transition-speed) ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     padding: 0.5rem 0;
     white-space: nowrap;

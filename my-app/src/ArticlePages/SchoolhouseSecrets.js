@@ -1,6 +1,7 @@
 import React from 'react';
 import '../Styling/Journal.css';
 import profilePic from "../ProfilePictures/Shelby.jpeg";
+import PDFViewer from '../Components/PDFViewer';
 
 function SchoolhouseSecrets() {
     return (
@@ -8,7 +9,7 @@ function SchoolhouseSecrets() {
             <h1>
                 Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom
             </h1>
-            <p className="article-meta">By Shelby Eliasek • January 2026 • Education Law</p>
+            <p className="article-meta">By Shelby Eliasek • January 2026 • Education Law • 2026 Issue 1</p>
 
             <div className="article-summary">
                 <h2>Summary</h2>
@@ -26,6 +27,12 @@ function SchoolhouseSecrets() {
                     implicated, and state and federal statutes currently shaping this area of law.
                 </p>
             </div>
+
+            <PDFViewer 
+                pdfPath="/ArticlePDFs/Eliasek_Fall2025_Classroom_Gender.pdf"
+                title="Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"
+                author="Shelby Eliasek"
+            />
 
             <div className="pdf-actions">
                 <a

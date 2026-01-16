@@ -134,6 +134,28 @@
     margin-bottom: 1rem;
 }
 
+.article-category + .article-issue-badge {
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+}
+
+.article-issue-badge {
+    display: block;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    width: fit-content;
+}
+
+.article-issue-badge + h3 {
+    margin-top: 1.5rem;
+}
+
+.article-category + h3 {
+    margin-top: 1.5rem;
+}
+
 .article-content h3 {
     font-size: 1.5rem;
     color: var(--primary-color);
@@ -487,7 +509,19 @@
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.no-articles {
+    text-align: center;
+    padding: 3rem;
+    background: var(--background-light);
+    border-radius: 8px;
+    color: var(--text-secondary);
+}
+
+.no-articles p {
+    font-size: 1.1rem;
+    margin-bottom: 0;
 }
 
 .pdf-button:hover {

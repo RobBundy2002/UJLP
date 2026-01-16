@@ -1,0 +1,111 @@
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: var(--background-white);
+    color: var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Entry animation */
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.back-to-top:hover {
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.3);
+    transform: translateY(-4px);
+}
+
+.back-to-top:active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 107, 53, 0.4);
+}
+
+.back-to-top:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.progress-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.progress-ring-circle-bg {
+    opacity: 0.3;
+}
+
+.progress-ring-circle {
+    linecap: round;
+}
+
+.back-to-top-arrow {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    transition: color 0.3s ease;
+    z-index: 1;
+}
+
+.back-to-top:hover .back-to-top-arrow {
+    color: var(--accent-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .back-to-top-arrow {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* Hover pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);
+    }
+    50% {
+        box-shadow: 0 6px 16px rgba(255, 107, 53, 0.3);
+    }
+}
+
+.back-to-top:hover {
+    animation: pulse 2s infinite;
+}

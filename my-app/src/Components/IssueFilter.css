@@ -1,0 +1,156 @@
+.issue-filter {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+}
+
+.issue-tabs {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.issue-tab {
+    padding: 0.75rem 1.5rem;
+    background: var(--background-white);
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.issue-tab:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 107, 53, 0.15);
+}
+
+.issue-tab.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+}
+
+.issue-tab.active:hover {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+/* Active indicator line */
+.issue-tab::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--accent-color);
+    transition: width 0.3s ease;
+    border-radius: 2px 2px 0 0;
+}
+
+.issue-tab.active::before {
+    width: 60%;
+}
+
+/* Smooth transition for content */
+.articles-grid {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.articles-grid.fade-enter {
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.articles-grid.fade-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.articles-grid.fade-exit {
+    opacity: 1;
+}
+
+.articles-grid.fade-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* Article card animation */
+.article-card {
+    animation: cardSlideIn 0.4s ease-out;
+}
+
+@keyframes cardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Issue badge on article card */
+.article-issue-badge {
+    display: block;
+    padding: 0.25rem 0.75rem;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+}
+
+.article-category {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.article-category + .article-issue-badge {
+    margin-top: 2rem; /* Space between category and issue badge */
+    margin-bottom: 1.5rem;
+}
+
+.article-issue-badge + h3 {
+    margin-top: 1.5rem; /* Space between issue badge and title */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .issue-tabs {
+        gap: 0.5rem;
+    }
+
+    .issue-tab {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .issue-tabs {
+        gap: 0.4rem;
+    }
+
+    .issue-tab {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.8rem;
+    }
+}
