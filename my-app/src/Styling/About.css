@@ -200,11 +200,96 @@
     color: var(--text-secondary);
 }
 
+/* Filter Container */
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 2rem 0 3rem 0;
+    padding: 0 1rem;
+}
+
+/* Filter Buttons */
+.filter-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--text-secondary);
+    background: var(--background-white);
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    text-transform: none;
+    letter-spacing: 0.3px;
+}
+
+.filter-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.filter-button.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.filter-button.active:hover {
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Team Card Animation States */
+.team-member-card.hidden {
+    display: none;
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.team-member-card.visible {
+    opacity: 1;
+    transform: scale(1);
+    animation: fadeInScale 0.4s ease forwards;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Add slight stagger delay to visible cards */
+.team-members-grid .team-member-card.visible:nth-child(1) { animation-delay: 0.05s; }
+.team-members-grid .team-member-card.visible:nth-child(2) { animation-delay: 0.1s; }
+.team-members-grid .team-member-card.visible:nth-child(3) { animation-delay: 0.15s; }
+.team-members-grid .team-member-card.visible:nth-child(4) { animation-delay: 0.2s; }
+.team-members-grid .team-member-card.visible:nth-child(5) { animation-delay: 0.25s; }
+.team-members-grid .team-member-card.visible:nth-child(6) { animation-delay: 0.3s; }
+.team-members-grid .team-member-card.visible:nth-child(7) { animation-delay: 0.35s; }
+.team-members-grid .team-member-card.visible:nth-child(8) { animation-delay: 0.4s; }
+.team-members-grid .team-member-card.visible:nth-child(9) { animation-delay: 0.45s; }
+.team-members-grid .team-member-card.visible:nth-child(10) { animation-delay: 0.5s; }
+
 .team-members-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1.5rem;
-    margin-top: 2rem;
+    margin: 2rem auto 0 auto;
+    justify-items: center;
+    align-items: center;
 }
 
 .team-member-card {
@@ -214,6 +299,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     border: 1px solid var(--border-color);
+    justify-self: center;
+    width: 100%;
+    max-width: 250px;
 }
 
 .team-member-card:hover {
@@ -381,8 +469,9 @@
     border: 2px solid #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     display: block;
-    margin-top: 2rem;
-    margin-left: 2.5rem;
+    margin: 2rem auto 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 
@@ -443,8 +532,9 @@
         border: 2px solid #fff;
         box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         display: block;
-        margin-top: 2rem;
-        margin-left: 7.5vw;
+        margin: 2rem auto 0 auto;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .cta-button-about {
@@ -539,6 +629,19 @@
     .team-members-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
+    }
+
+    .filter-container {
+        gap: 0.5rem;
+        margin: 1.5rem 0 2.5rem 0;
+    }
+
+    .filter-button {
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        flex: 1 1 auto;
+        min-width: calc(50% - 0.5rem);
+        max-width: calc(50% - 0.25rem);
     }
 }
 

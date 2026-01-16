@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../Styling/About.css';
 import '../Styling/Home.css';
@@ -11,6 +11,8 @@ import robImg from '../ProfilePictures/Rob.jpg';
 import evanImg from '../ProfilePictures/Evan.jpeg';
 
 function About() {
+    const [activeFilter, setActiveFilter] = useState('all');
+
     return (
         <div className="about-container fade-in">
             <section className="about-hero">
@@ -116,8 +118,48 @@ function About() {
                             and review drafts. By working together, the Journal maintains accurate and high-quality content.
                         </p>
                     </div>
+
+                    {/* Filter Buttons */}
+                    <div className="filter-container">
+                        <button 
+                            className={`filter-button ${activeFilter === 'all' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('all')}
+                        >
+                            All
+                        </button>
+                        <button 
+                            className={`filter-button ${activeFilter === 'executive-editor' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('executive-editor')}
+                        >
+                            Executive Editors
+                        </button>
+                        <button 
+                            className={`filter-button ${activeFilter === 'staff-editor' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('staff-editor')}
+                        >
+                            Staff Editors
+                        </button>
+                        <button 
+                            className={`filter-button ${activeFilter === 'internal-writer' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('internal-writer')}
+                        >
+                            Internal Writers
+                        </button>
+                        <button 
+                            className={`filter-button ${activeFilter === 'submission-writer' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('submission-writer')}
+                        >
+                            Submission Writers
+                        </button>
+                        <button 
+                            className={`filter-button ${activeFilter === 'event-coordinator' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('event-coordinator')}
+                        >
+                            Event Coordinators
+                        </button>
+                    </div>
                     <div className="team-members-grid">
-                        <div className="team-member-card">
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/Will.jpg')} alt="Will" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/will" className="author-link">Will Olszewski</Link></h3>
@@ -125,7 +167,7 @@ function About() {
                             </div>
                         </div>
 
-                        <div className="team-member-card">
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/Rishi.jpg')} alt="Rishi" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/rishi" className="author-link">Rishi Chandra</Link></h3>
@@ -133,42 +175,33 @@ function About() {
                             </div>
                         </div>
 
-                        <div className="team-member-card">
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/Mia.jpg')} alt="Mia" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/mia" className="author-link">Mia Petersen</Link></h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-                        {/*<div className="team-member-card">*/}
-                        {/*    <img src={require('../ProfilePictures/Rhett.jpg')} alt="Rhett" className="team-member-photo"/>*/}
-                        {/*    <div className="team-member-info">*/}
-                        {/*        <h3><Link to="/author/rhett" className="author-link">Rhett Armentrout</Link></h3>*/}
-                        {/*        <span className="team-member-role">Staff Writer</span>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-                        {/*<div className="team-member-card">*/}
-                        {/*    <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>*/}
-                        {/*    <div className="team-member-info">*/}
-                        {/*        <h3><Link to="/author/comingsoon2" className="author-link">Mikayla Grady</Link></h3>*/}
-                        {/*        <span className="team-member-role">Staff Writer</span>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-                        <div className="team-member-card">
+                        {/* Executive Editor (Coming Soon) */}
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/comingsoon1" className="author-link">Coming Soon</Link></h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-                        <div className="team-member-card">
+
+                        {/* Staff Editor */}
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'staff-editor' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/comingsoon2" className="author-link">Coming Soon</Link></h3>
                                 <span className="team-member-role">Staff Editor</span>
                             </div>
                         </div>
-                        <div className="team-member-card">
+
+                        {/* Internal Writers */}
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'internal-writer' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/comingsoon3" className="author-link">Coming Soon</Link></h3>
@@ -176,7 +209,7 @@ function About() {
                             </div>
                         </div>
 
-                        <div className="team-member-card">
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'internal-writer' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/comingsoon4" className="author-link">Coming Soon</Link></h3>
@@ -184,7 +217,8 @@ function About() {
                             </div>
                         </div>
 
-                        <div className="team-member-card">
+                        {/* Submission Writers */}
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'submission-writer' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/comingsoon5" className="author-link">Coming Soon</Link></h3>
@@ -192,7 +226,7 @@ function About() {
                             </div>
                         </div>
 
-                        <div className="team-member-card">
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'submission-writer' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/comingsoon6" className="author-link">Coming Soon</Link></h3>
@@ -200,7 +234,8 @@ function About() {
                             </div>
                         </div>
 
-                        <div className="team-member-card">
+                        {/* Event Coordinators */}
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'event-coordinator' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/comingsoon7" className="author-link">Coming Soon</Link></h3>
@@ -208,7 +243,7 @@ function About() {
                             </div>
                         </div>
 
-                        <div className="team-member-card">
+                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'event-coordinator' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/comingsoon8" className="author-link">Coming Soon</Link></h3>
