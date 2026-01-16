@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import './ParticleBackground.css';
+import '../Styling/ParticleBackground.css';
 
 const ParticleBackground = () => {
     const canvasRef = useRef(null);

@@ -1,5 +1,5 @@
 import React from 'react';
-import './PDFViewer.css';
+import '../Styling/PDFViewer.css';
 
 const PDFViewer = ({ pdfPath, title, author }) => {
     return (

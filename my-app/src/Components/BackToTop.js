@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './BackToTop.css';
+import '../Styling/BackToTop.css';
 import { useSmoothScroll } from './SmoothScroll';
 
 const BackToTop = ({ threshold = 300 }) => {

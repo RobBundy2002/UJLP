@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './TypingText.css';
+import '../Styling/TypingText.css';
 
 const TypingText = ({ text, speed = 100, pauseDelay = 2000, delay = 0 }) => {
     const [displayText, setDisplayText] = useState('');

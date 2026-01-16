@@ -3,7 +3,7 @@ import '../Styling/Archives.css';
 import '../Styling/Home.css';
 import { Link } from 'react-router-dom';
 import IssueFilter from '../Components/IssueFilter';
-import '../Components/IssueFilter.css';
+import '../Styling/IssueFilter.css';
 
 const issues = [
     { id: 'all', label: 'All Issues' },

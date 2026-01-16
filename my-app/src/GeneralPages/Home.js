@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import AuthorCarousel from '../Components/AuthorCarousel';
 import ParticleBackground from '../Components/ParticleBackground';
 import TypingText from '../Components/TypingText';
-import '../Components/IssueFilter.css';
+import '../Styling/IssueFilter.css';
 
 function Home() {
     return (

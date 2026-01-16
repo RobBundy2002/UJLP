@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './IssueFilter.css';
+import '../Styling/IssueFilter.css';
 
 const IssueFilter = ({ issues, activeIssue, onIssueChange }) => {
     return (

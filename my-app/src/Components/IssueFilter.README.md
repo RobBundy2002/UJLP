@@ -269,7 +269,7 @@ Individual article pages now include issue information in metadata:
 ## Example: Adding Issue Badge to Any Page
 
 ```javascript
-import '../Components/IssueFilter.css';
+import './IssueFilter.css';
 
 function MyComponent() {
     return (
