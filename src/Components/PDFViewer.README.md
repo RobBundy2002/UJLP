@@ -51,26 +51,26 @@ Author Profile:
 
 ```javascript
 import React from 'react';
-import PDFViewer from '../Components/PDFViewer';
+import PDFViewer from './PDFViewer';
 
 function ArticlePage() {
     return (
         <div className="article-page fade-in">
             <h1>Article Title</h1>
             <p className="article-meta">By Author • Date • Category</p>
-            
+
             <div className="article-summary">
                 <h2>Summary</h2>
                 <p>Summary text...</p>
             </div>
-            
+
             {/* Desktop PDF Viewer */}
-            <PDFViewer 
+            <PDFViewer
                 pdfPath="/ArticlePDFs/your-file.pdf"
                 title="Full Article Title"
                 author="Author Name"
             />
-            
+
             {/* Mobile PDF Button (only shows on mobile) */}
             <div className="pdf-actions">
                 <a
@@ -84,6 +84,7 @@ function ArticlePage() {
         </div>
     );
 }
+
 export default ArticlePage;
 ```
 

@@ -32,12 +32,12 @@ A professional issue archive filter with animated tabs that organizes journal ar
 ### In Journal Page
 
 ```javascript
-import IssueFilter from '../Components/IssueFilter';
+import IssueFilter from './IssueFilter';
 
 const issues = [
-    { id: 'all', label: 'All Issues' },
-    { id: '2026-1', label: '2026 Issue 1' },
-    { id: '2025-2', label: '2025 Issue 2' },
+    {id: 'all', label: 'All Issues'},
+    {id: '2026-1', label: '2026 Issue 1'},
+    {id: '2025-2', label: '2025 Issue 2'},
     ...more issues
 ];
 
@@ -58,16 +58,16 @@ const articles = [
 function Journal() {
     const [activeIssue, setActiveIssue] = useState('all');
 
-    const filteredArticles = activeIssue === 'all' 
-        ? articles 
+    const filteredArticles = activeIssue === 'all'
+        ? articles
         : articles.filter(article => article.issue === activeIssue);
 
     return (
         <div className="journal-container">
-            <IssueFilter 
-                issues={issues} 
-                activeIssue={activeIssue} 
-                onIssueChange={setActiveIssue} 
+            <IssueFilter
+                issues={issues}
+                activeIssue={activeIssue}
+                onIssueChange={setActiveIssue}
             />
             <div className="articles-grid">
                 {filteredArticles.map((article, index) => (

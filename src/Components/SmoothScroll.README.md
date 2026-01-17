@@ -118,20 +118,20 @@ function MyComponent() {
 ### Smooth Scroll on Component Mount
 
 ```jsx
-import { useEffect } from 'react';
-import { smoothScrollTo } from '../Components/SmoothScroll';
+import {useEffect} from 'react';
+import {smoothScrollTo} from './SmoothScroll';
 
-function ArticlePage({ articleId }) {
-  useEffect(() => {
-    // Scroll to specific article when page loads
-    smoothScrollTo(`article-${articleId}`);
-  }, [articleId]);
-  
-  return (
-    <div id={`article-${articleId}`}>
-      {/* Article content */}
-    </div>
-  );
+function ArticlePage({articleId}) {
+    useEffect(() => {
+        // Scroll to specific article when page loads
+        smoothScrollTo(`article-${articleId}`);
+    }, [articleId]);
+
+    return (
+        <div id={`article-${articleId}`}>
+            {/* Article content */}
+        </div>
+    );
 }
 ```
 

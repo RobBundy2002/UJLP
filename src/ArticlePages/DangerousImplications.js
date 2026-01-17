@@ -28,7 +28,7 @@ function DangerousImplications() {
 
             <div className="pdf-actions">
                 <a
-                    href="/ArticlePDFs/Untitled document.pdf"
+                    href="/ArticlePDFs/Untitled%20document.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="cta-button pdf-button"
