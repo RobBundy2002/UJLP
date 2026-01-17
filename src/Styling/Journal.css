@@ -255,7 +255,6 @@
     overflow: hidden;
 }
 
-
 .article-meta {
     margin-bottom: 20px;
     margin-left: 18px;
@@ -377,7 +376,6 @@
         text-align: center;
         padding: 0.5rem 1rem;
         max-width: 77%;
-        /*margin-left:-1rem;*/
     }
     .author-details {
         margin-left: 0;
@@ -423,7 +421,6 @@
         height: 40vh;
         border: 1px solid #ccc;
     }
-
 
     .journal-container {
         padding: 0 1rem;

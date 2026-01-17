@@ -317,7 +317,6 @@
     }
 }
 
-/* --- Fix for category select text being cut off --- */
 .category-filter {
     min-width: unset !important;
 }

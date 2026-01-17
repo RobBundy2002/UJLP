@@ -187,7 +187,6 @@
     color: var(--primary-color);
 }
 
-/* Scrollbar styling */
 .search-results-list::-webkit-scrollbar {
     width: 8px;
 }

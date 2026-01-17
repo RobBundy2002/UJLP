@@ -15,8 +15,6 @@
     justify-content: center;
     z-index: 1000;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Entry animation */
     animation: slideUp 0.4s ease-out;
 }
 
@@ -73,7 +71,6 @@
     color: var(--accent-color);
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .back-to-top {
         bottom: 1.5rem;
@@ -96,7 +93,6 @@
     }
 }
 
-/* Hover pulse animation */
 @keyframes pulse {
     0%, 100% {
         box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15);

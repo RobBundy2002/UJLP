@@ -122,7 +122,7 @@ html, body {
 
 .App-link {
   text-decoration: none;
-    margin-top: 1.25rem;
+  margin-top: 1.25rem;
   color: var(--text-secondary);
   font-weight: 500;
   font-size: 1.25rem;
@@ -230,12 +230,12 @@ footer {
   color: var(--primary-color);
 }
 
-    .theme-toggle {
-        position: fixed;
-        top: 1rem;
-        right: 5rem;
-        z-index: 9999;
-        background: var(--background-white);
+.theme-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 5rem;
+  z-index: 9999;
+  background: var(--background-white);
   border: 2px solid var(--border-color);
   border-radius: 50%;
   width: 40px;
@@ -584,14 +584,12 @@ footer {
         text-align: center;
     }
 
-    /* Prevent body scroll when modal is open */
     body.modal-open {
         overflow: hidden;
         position: fixed;
         width: 100%;
     }
 
-    /* Prevent body scroll when mobile menu is open */
     body.mobile-menu-open {
         overflow: hidden;
     }

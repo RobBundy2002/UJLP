@@ -48,7 +48,7 @@ const articles = [
         authorLink: "/author/author",
         category: "Category",
         date: "January 2026",
-        issue: "2026-1",  // Must match issue id
+        issue: "2026-1",
         excerpt: "Article excerpt...",
         pageLink: "/article"
     },
@@ -72,7 +72,6 @@ function Journal() {
             <div className="articles-grid">
                 {filteredArticles.map((article, index) => (
                     <article key={index}>
-                        {/* Article card content */}
                     </article>
                 ))}
             </div>
@@ -91,7 +90,6 @@ const issues = [
     { id: '2026-1', label: '2026 Issue 1' },
     { id: '2026-Spring', label: 'Spring 2026' },
     { id: '2026-Winter', label: 'Winter 2026' },
-    // Add more issues here
 ];
 ```
 
@@ -102,7 +100,7 @@ Edit `IssueFilter.css`:
 ```css
 .article-issue-badge {
     padding: 0.25rem 0.75rem;
-    background: var(--primary-color);  /* Change badge color */
+    background: var(--primary-color); 
     color: white;
     border-radius: 4px;
     font-size: 0.75rem;
@@ -134,7 +132,7 @@ Edit `IssueFilter.css`:
 **Tab hover:**
 ```css
 .issue-tab {
-    transition: all 0.2s ease;  /* Faster */
+    transition: all 0.2s ease; 
 }
 ```
 
@@ -183,8 +181,8 @@ Edit `IssueFilter.css`:
 ### Issue Object
 ```javascript
 {
-    id: '2026-1',        // Unique identifier for matching
-    label: '2026 Issue 1' // Display text for tab
+    id: '2026-1',    
+    label: '2026 Issue 1' 
 }
 ```
 
@@ -196,7 +194,7 @@ Edit `IssueFilter.css`:
     authorLink: "/author/author",
     category: "Category",
     date: "January 2026",
-    issue: "2026-1",     // Must match issue.id
+    issue: "2026-1",  
     excerpt: "Excerpt...",
     pageLink: "/article"
 }
@@ -276,7 +274,6 @@ function MyComponent() {
         <article>
             <div className="article-issue-badge">2026 Issue 1</div>
             <h3>Article Title</h3>
-            {/* Rest of article content */}
         </article>
     );
 }

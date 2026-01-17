@@ -34,15 +34,13 @@ import ComingSoon8 from "./Bios/ComingSoon8";
 import SearchBar from "./Components/SearchBar";
 import BackToTop from "./Components/BackToTop";
 
-// Scroll to top on route change with smooth animation
 function ScrollToTop() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        // Smooth scroll to top with animation
         const scrollToTop = () => {
             const startPosition = window.pageYOffset;
-            const duration = 500; // Animation duration in ms
+            const duration = 500;
             let startTime = null;
 
             const animation = (currentTime) => {
@@ -74,7 +72,7 @@ function Navigation() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const location = useLocation();
-    const menuRef = useRef(null); // Ref to mobile menu for auto-scroll
+    const menuRef = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -90,7 +88,7 @@ function Navigation() {
         if (isMobileMenuOpen) {
             document.body.style.overflow = 'hidden';
             if (menuRef.current) {
-                menuRef.current.scrollTop = 0; // auto-scroll to top
+                menuRef.current.scrollTop = 0;
             }
         } else {
             document.body.style.overflow = 'unset';

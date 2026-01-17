@@ -149,7 +149,6 @@
     opacity: 0.8;
 }
 
-/* Smaller desktop adjustments */
 @media (max-width: 1024px) {
     .pdf-title-text h3 {
         font-size: 1.1rem;
@@ -165,21 +164,18 @@
     }
 }
 
-/* Only show on desktop */
 @media (max-width: 768px) {
     .pdf-viewer-container {
         display: none;
     }
 }
 
-/* Mobile: ensure only pdf-actions button shows */
 @media (max-width: 768px) {
     .pdf-actions {
         display: flex;
     }
 }
 
-/* Desktop: hide pdf-actions button since pdf viewer shows */
 @media (min-width: 769px) {
     .pdf-actions .pdf-button {
         display: none;

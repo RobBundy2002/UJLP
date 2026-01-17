@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 function JoinTheTeam() {
     return (
         <div className="archives-container fade-in">
-            {/* Hero Section */}
             <section className="archives-hero">
                 <div className="section-content">
                     <h1>Join the Team</h1>
@@ -17,7 +16,6 @@ function JoinTheTeam() {
                 </div>
             </section>
 
-            {/* Info Section */}
             <section className="articles-section">
                 <div className="section-content">
                     <h2>Recruitment Overview</h2>
@@ -27,7 +25,6 @@ function JoinTheTeam() {
                         Information about open leadership and executive positions will be available on our <Link to="/announcements">Announcements</Link> page.
                     </p>
 
-                    {/* Staff Editor */}
                     <article className="article-card">
                         <div className="article-content">
                             <h3>Staff Editor</h3>
@@ -56,7 +53,6 @@ function JoinTheTeam() {
                         </div>
                     </article>
 
-                    {/* Staff Writer */}
                     <article className="article-card">
                         <div className="article-content">
                             <h3>Staff Writer</h3>
@@ -87,7 +83,6 @@ function JoinTheTeam() {
                         </div>
                     </article>
 
-                    {/* Submission Writers */}
                     <article className="article-card">
                         <div className="article-content">
                             <h3>Submission Writers</h3>

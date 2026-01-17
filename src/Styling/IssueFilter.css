@@ -44,7 +44,6 @@
     color: white;
 }
 
-/* Active indicator line */
 .issue-tab::before {
     content: '';
     position: absolute;
@@ -62,7 +61,6 @@
     width: 60%;
 }
 
-/* Smooth transition for content */
 .articles-grid {
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
@@ -86,7 +84,6 @@
     transform: translateY(-10px);
 }
 
-/* Article card animation */
 .article-card {
     animation: cardSlideIn 0.4s ease-out;
 }
@@ -102,7 +99,6 @@
     }
 }
 
-/* Issue badge on article card */
 .article-issue-badge {
     display: block;
     padding: 0.25rem 0.75rem;
@@ -124,15 +120,14 @@
 }
 
 .article-category + .article-issue-badge {
-    margin-top: 2rem; /* Space between category and issue badge */
+    margin-top: 2rem;
     margin-bottom: 1.5rem;
 }
 
 .article-issue-badge + h3 {
-    margin-top: 1.5rem; /* Space between issue badge and title */
+    margin-top: 1.5rem;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .issue-tabs {
         gap: 0.5rem;

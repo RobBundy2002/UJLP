@@ -19,7 +19,6 @@
     }
 }
 
-/* Different cursor colors for light backgrounds */
 .article-category .cursor {
     color: var(--background-white);
 }

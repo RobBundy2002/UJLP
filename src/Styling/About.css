@@ -200,7 +200,6 @@
     color: var(--text-secondary);
 }
 
-/* Filter Container */
 .filter-container {
     display: flex;
     flex-wrap: wrap;
@@ -211,7 +210,6 @@
     padding: 0 1rem;
 }
 
-/* Filter Buttons */
 .filter-button {
     padding: 0.75rem 1.5rem;
     font-size: 0.95rem;
@@ -247,7 +245,6 @@
     border-color: var(--primary-color);
 }
 
-/* Team Card Animation States */
 .team-member-card.hidden {
     display: none;
     opacity: 0;
@@ -271,7 +268,6 @@
     }
 }
 
-/* Add slight stagger delay to visible cards */
 .team-members-grid .team-member-card.visible:nth-child(1) { animation-delay: 0.05s; }
 .team-members-grid .team-member-card.visible:nth-child(2) { animation-delay: 0.1s; }
 .team-members-grid .team-member-card.visible:nth-child(3) { animation-delay: 0.15s; }

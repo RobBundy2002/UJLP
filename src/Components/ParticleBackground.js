@@ -12,19 +12,15 @@ const ParticleBackground = () => {
         let animationFrameId;
         let particles = [];
 
-        // Configuration
         const particleCount = 80;
         const connectionDistance = 150;
-        const particleColor = 'rgba(255, 107, 53, 0.3)'; // Orange/coral theme
-        const connectionColor = 'rgba(255, 107, 53, 0.1)';
+        const particleColor = 'rgba(255, 107, 53, 0.3)';
 
-        // Resize handler
         const resize = () => {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
         };
 
-        // Particle class
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -38,7 +34,6 @@ const ParticleBackground = () => {
                 this.x += this.vx;
                 this.y += this.vy;
 
-                // Bounce off edges
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
@@ -51,7 +46,6 @@ const ParticleBackground = () => {
             }
         }
 
-        // Initialize particles
         const initParticles = () => {
             particles = [];
             for (let i = 0; i < particleCount; i++) {
@@ -59,7 +53,6 @@ const ParticleBackground = () => {
             }
         };
 
-        // Draw connections between nearby particles
         const drawConnections = () => {
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
@@ -80,7 +73,6 @@ const ParticleBackground = () => {
             }
         };
 
-        // Animation loop
         const animate = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -93,7 +85,6 @@ const ParticleBackground = () => {
             animationFrameId = requestAnimationFrame(animate);
         };
 
-        // Setup
         resize();
         initParticles();
         animate();
@@ -103,7 +94,6 @@ const ParticleBackground = () => {
             initParticles();
         });
 
-        // Cleanup
         return () => {
             window.removeEventListener('resize', resize);
             cancelAnimationFrame(animationFrameId);

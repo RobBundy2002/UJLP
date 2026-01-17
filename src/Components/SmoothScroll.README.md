@@ -69,10 +69,8 @@ Smoothly scroll to any element by ID:
 ```javascript
 import { smoothScrollTo } from './Components/SmoothScroll';
 
-// Scroll to element with 80px header offset
 smoothScrollTo('about-section');
 
-// Scroll with custom offset
 smoothScrollTo('contact-section', 100);
 ```
 
@@ -104,7 +102,6 @@ function MyComponent() {
 ### Adding Section Links
 
 ```jsx
-// In your component
 <button onClick={() => smoothScrollTo('about')}>
   About Us
 </button>
@@ -123,13 +120,11 @@ import {smoothScrollTo} from './SmoothScroll';
 
 function ArticlePage({articleId}) {
     useEffect(() => {
-        // Scroll to specific article when page loads
         smoothScrollTo(`article-${articleId}`);
     }, [articleId]);
 
     return (
         <div id={`article-${articleId}`}>
-            {/* Article content */}
         </div>
     );
 }
@@ -141,7 +136,7 @@ function ArticlePage({articleId}) {
 
 Edit `src/App.js` in the `ScrollToTop` component:
 ```javascript
-const duration = 500; // Change this value (in milliseconds)
+const duration = 500;
 ```
 
 ### Adjust Header Offset
@@ -149,7 +144,7 @@ const duration = 500; // Change this value (in milliseconds)
 Edit `src/Styling/index.css`:
 ```css
 html {
-  scroll-padding-top: 80px; /* Change this if header height changes */
+  scroll-padding-top: 80px; 
 }
 ```
 
@@ -158,13 +153,13 @@ html {
 Edit `src/Styling/App.css`:
 ```css
 .fade-in {
-  animation: fadeIn 0.6s ease-out; /* Adjust duration */
+  animation: fadeIn 0.6s ease-out;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(15px); /* Adjust slide distance */
+    transform: translateY(15px); 
   }
   to {
     opacity: 1;
@@ -178,7 +173,7 @@ Edit `src/Styling/App.css`:
 Edit `src/Styling/index.css`:
 ```css
 .App-link, .nav-link {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Adjust 0.3s */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 ```
 

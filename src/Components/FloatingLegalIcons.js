@@ -5,26 +5,26 @@ const FloatingLegalIcons = ({ count = 15 }) => {
     const containerRef = useRef(null);
 
     const icons = [
-        '⚖️',  // Scales of justice
         '⚖️',
         '⚖️',
         '⚖️',
-        '📜',  // Scroll
+        '⚖️',
         '📜',
         '📜',
-        '📚',  // Books
+        '📜',
         '📚',
-        '🖋️',  // Quill pen
+        '📚',
         '🖋️',
-        '📝',  // Writing
+        '🖋️',
         '📝',
-        '⚡',  // Lightning/energy
+        '📝',
         '⚡',
-        '🏛️',  // Building/columns
+        '⚡',
         '🏛️',
-        '📄',  // Document
+        '🏛️',
         '📄',
-        '🌍',  // Globe (politics)
+        '📄',
+        '🌍',
         '🌍',
     ];
 
@@ -35,20 +35,18 @@ const FloatingLegalIcons = ({ count = 15 }) => {
         const floatingElements = container.querySelectorAll('.floating-icon');
 
         floatingElements.forEach((element) => {
-            // Random starting position
+
             const startLeft = Math.random() * 100;
             const startTop = Math.random() * 100;
             element.style.left = `${startLeft}%`;
             element.style.top = `${startTop}%`;
 
-            // Random duration and delay
-            const duration = 15 + Math.random() * 20; // 15-35 seconds
-            const delay = Math.random() * -20; // Negative to start immediately at random positions
+            const duration = 15 + Math.random() * 20;
+            const delay = Math.random() * -20;
             element.style.animationDuration = `${duration}s`;
             element.style.animationDelay = `${delay}s`;
 
-            // Random size
-            const fontSize = 1 + Math.random() * 1.5; // 1-2.5rem
+            const fontSize = 1 + Math.random() * 1.5;
             element.style.fontSize = `${fontSize}rem`;
         });
     }, [count]);

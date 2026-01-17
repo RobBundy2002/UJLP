@@ -18,15 +18,15 @@ A beautiful, responsive PDF viewer that displays PDFs inline on desktop with a p
 ### What Users See:
 ```
 ┌─────────────────────────────────────────┐
-│ 📄 Article Title                ⬇️ Download │  Gradient header
-│    By Author Name                          │
+│ 📄 Article Title            ⬇️ Download │  Gradient header
+│    By Author Name                       │
 ├─────────────────────────────────────────┤
-│                                           │
-│         [Embedded PDF Viewer]            │  Actual PDF displayed
-│         with browser controls            │  No scrolling the whole page!
-│                                           │
+│                                         │
+│         [Embedded PDF Viewer]           │  Actual PDF displayed
+│         with browser controls           │  No scrolling the whole page!
+│                                         │
 ├─────────────────────────────────────────┤
-│ 💡 Use the toolbar to zoom, navigate...  │  Helpful hints
+│ 💡 Use the toolbar to zoom, navigate... │  Helpful hints
 └─────────────────────────────────────────┘
 ```
 
@@ -64,14 +64,12 @@ function ArticlePage() {
                 <p>Summary text...</p>
             </div>
 
-            {/* Desktop PDF Viewer */}
             <PDFViewer
                 pdfPath="/ArticlePDFs/your-file.pdf"
                 title="Full Article Title"
                 author="Author Name"
             />
 
-            {/* Mobile PDF Button (only shows on mobile) */}
             <div className="pdf-actions">
                 <a
                     href="/ArticlePDFs/your-file.pdf"
@@ -118,7 +116,7 @@ Edit `PDFViewer.css`:
 
 ```css
 .pdf-object {
-    height: 700px;  /* Adjust this value */
+    height: 700px;
 }
 ```
 
@@ -127,7 +125,6 @@ Edit `PDFViewer.css`:
 ```css
 .pdf-viewer-header {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
-    /* Change to your preferred colors */
 }
 ```
 
@@ -139,7 +136,6 @@ Edit `PDFViewer.css`:
         0 4px 6px rgba(0, 0, 0, 0.05),
         0 10px 15px rgba(0, 0, 0, 0.1),
         0 25px 50px rgba(0, 0, 0, 0.15);
-    /* Adjust or remove for different effect */
 }
 ```
 
@@ -147,11 +143,11 @@ Edit `PDFViewer.css`:
 
 ```css
 .pdf-viewer-container {
-    border-radius: 16px;  /* 0 = sharp corners, 24px = more rounded */
+    border-radius: 16px; 
 }
 
 .pdf-viewer-frame {
-    border-radius: 8px;  /* Inner PDF frame */
+    border-radius: 8px; 
 }
 ```
 
@@ -160,10 +156,9 @@ Edit `PDFViewer.css`:
 Adjust display trigger in `PDFViewer.css`:
 
 ```css
-/* Desktop only */
 @media (max-width: 768px) {
     .pdf-viewer-container {
-        display: none;  /* Hide PDF viewer on screens ≤ 768px */
+        display: none;  
     }
 }
 ```
@@ -260,7 +255,6 @@ src/
 ## Example: Adding PDF Viewer to a New Article
 
 ```javascript
-// src/ArticlePages/MyArticle.js
 import React from 'react';
 import '../Styling/Journal.css';
 import PDFViewer from '../Components/PDFViewer';
@@ -289,7 +283,6 @@ function MyArticle() {
             </div>
             
             <footer className="article-footer">
-                {/* Author info */}
             </footer>
         </div>
     );

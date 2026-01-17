@@ -1,4 +1,3 @@
-// Utility function for custom smooth scrolling
 export const smoothScrollTo = (elementId, offset = 80) => {
     const element = document.getElementById(elementId);
     if (!element) {
@@ -32,7 +31,6 @@ export const smoothScrollTo = (elementId, offset = 80) => {
     requestAnimationFrame(animation);
 };
 
-// React hook for smooth scrolling
 export const useSmoothScroll = () => {
     const scrollTo = (elementId, offset = 80) => {
         smoothScrollTo(elementId, offset);

@@ -119,7 +119,6 @@ function About() {
                         </p>
                     </div>
 
-                    {/* Filter Buttons */}
                     <div className="filter-container">
                         <button 
                             className={`filter-button ${activeFilter === 'all' ? 'active' : ''}`}
@@ -182,7 +181,6 @@ function About() {
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
-                        {/* Executive Editor (Coming Soon) */}
                         <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
@@ -191,7 +189,6 @@ function About() {
                             </div>
                         </div>
 
-                        {/* Staff Editor */}
                         <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'staff-editor' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
@@ -200,7 +197,6 @@ function About() {
                             </div>
                         </div>
 
-                        {/* Internal Writers */}
                         <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'internal-writer' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
@@ -217,7 +213,6 @@ function About() {
                             </div>
                         </div>
 
-                        {/* Submission Writers */}
                         <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'submission-writer' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
@@ -234,7 +229,6 @@ function About() {
                             </div>
                         </div>
 
-                        {/* Event Coordinators */}
                         <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'event-coordinator' ? 'visible' : 'hidden'}`}>
                             <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
                             <div className="team-member-info">
