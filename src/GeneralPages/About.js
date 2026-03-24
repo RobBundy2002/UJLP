@@ -92,16 +92,6 @@ function About() {
                                 <p>Rob Bundy manages technical infrastructure and ensures seamless digital experiences for all platforms.</p>
                             </div>
                         </div>
-                        <div className="leader-card">
-                            <div className="leader-image">
-                                <img src={samImg} alt="Sam Burnett" />
-                            </div>
-                            <div className="leader-info">
-                                <h3>Sam Burnett</h3>
-                                <span className="leader-role">Editor Emeritus</span>
-                                <p>Sam Burnett is a journalist with years of editorial experience, now serving as Editor Emeritus after leading the team as Editor-in-Chief.</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </section>
@@ -170,14 +160,6 @@ function About() {
                             <img src={require('../ProfilePictures/Rishi.jpg')} alt="Rishi" className="team-member-photo"/>
                             <div className="team-member-info">
                                 <h3><Link to="/author/rishi" className="author-link">Rishi Chandra</Link></h3>
-                                <span className="team-member-role">Executive Editor</span>
-                            </div>
-                        </div>
-
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/Mia.jpg')} alt="Mia" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/mia" className="author-link">Mia Petersen</Link></h3>
                                 <span className="team-member-role">Executive Editor</span>
                             </div>
                         </div>
