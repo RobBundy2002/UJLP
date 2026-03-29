@@ -1,0 +1,1 @@
+.toast { position: fixed; bottom: 24px; right: 24px; background: rgba(0,0,0,0.8); color: white; padding: 0.6rem 1rem; border-radius: 6px; z-index: 10000; box-shadow: 0 6px 18px rgba(0,0,0,0.4); }

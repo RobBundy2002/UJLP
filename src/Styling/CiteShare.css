@@ -1,0 +1,16 @@
+.cite-popover-wrapper { display: inline-block; position: relative }
+.cite-trigger { padding: 0.45rem 0.6rem; border-radius: 8px; background: #ff6b35; color: #fff; border: none; cursor: pointer }
+
+.cite-popover { position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%); background: var(--background-light); padding: 0.75rem 1rem; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.06); z-index: 9999; min-width: 320px }
+.cite-popover-header { font-weight:600; margin-bottom:0.5rem; text-align:center; color: var(--text-primary) }
+.cite-popover-body { display:flex; justify-content:center }
+.cite-actions.center { display:flex; gap:0.5rem; justify-content:center; flex-wrap:wrap }
+.cite-btn { padding:0.6rem 0.9rem; border-radius:6px; border:1px solid rgba(0,0,0,0.05); cursor:pointer; background: transparent; color:inherit; font-weight:600 }
+.cite-btn.orange { background: var(--accent-color, #ff6b35); color: #fff; border-color: transparent }
+
+.cite-trigger.large { padding: 0.9rem 1.2rem; font-size: 1.05rem; border-radius: 10px }
+
+/* Hide on small screens */
+@media (max-width: 768px) {
+  .cite-popover-wrapper { display: none !important; }
+}
