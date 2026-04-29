@@ -64,12 +64,17 @@ function Home() {
                     <div className="articles-grid">
                         <article className="article-card">
                             <div className="article-content">
-                                <span className="article-category"><TypingText text="International Law" speed={80} /></span>
-                                <div className="article-issue-badge">2026 Issue 1</div>
-                                <h3>""</h3>
+                                <span className="article-category"><TypingText text="Civil Rights Law" speed={80} /></span>
+                                <div className="article-issue-badge">2026 Issue 2</div>
+                                <h3>Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960
+                                </h3>
                                 <p className="article-meta">By <Link to="/author/derek" className="author-link">Derek Tsai</Link> • January 2026</p>
                                 <p className="article-preview">
-                                    An examination of how corporate personhood doctrines impact democratic governance and political power structures.
+                                    This essay relies heavily on
+                                    the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law
+                                    to expose the limitations of legal measures in achieving equal opportunity in higher education, and to
+                                    highlight the importance of individual and social changes in bringing about a permanent pedagogical
+                                    shift.
                                 </p>
                                 <Link to="/dangerousimplications" className="article-link">Read more →</Link>
                             </div>

@@ -7,11 +7,8 @@ import '../Styling/IssueFilter.css';
 
 const issues = [
     { id: 'all', label: 'All Issues' },
+    { id: '2026-2', label: '2026 Issue 2' },
     { id: '2026-1', label: '2026 Issue 1' },
-    { id: '2025-2', label: '2025 Issue 2' },
-    { id: '2025-1', label: '2025 Issue 1' },
-    { id: '2024-2', label: '2024 Issue 2' },
-    { id: '2024-1', label: '2024 Issue 1' },
 ];
 
 const allArticles = [
