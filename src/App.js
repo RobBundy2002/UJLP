@@ -8,6 +8,8 @@ import Archives from './GeneralPages/Archives';
 import Announcements from './GeneralPages/Announcements';
 import Contact from './GeneralPages/Contact';
 import Footer from './Components/Footer';
+import Toast from './Components/Toast';
+import { emitToast } from './Components/Toast';
 import Derek from './Bios/Derek';
 import Mikayla from './Bios/Mikayla';
 import Rob from './Bios/Rob';
@@ -148,6 +150,7 @@ function App() {
         <Router>
             <div className="App">
                 <Navigation />
+                <Toast />
                 <main className="fade-in">
                     <ScrollToTop />
                     <Routes>
