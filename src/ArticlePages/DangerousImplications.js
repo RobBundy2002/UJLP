@@ -7,22 +7,29 @@ function DangerousImplications() {
     return (
         <div className="article-page fade-in">
             <h1>
-                Dangerous Implications: The application of corporate personhood and its threat to democracy
+                Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960
             </h1>
-            <p className="article-meta">By Derek Tsai • January 2026 • International Law • 2026 Issue 1</p>
+            <p className="article-meta">By Derek Tsai • June 2026 • Civil Rights Law • 2026 Issue 2</p>
 
             <div className="article-summary">
                 <h2>Summary</h2>
                 <p>
-                    This article explores the concept of corporate personhood and its influence on democratic processes.
-                    It examines the legal and political implications of granting corporations rights similar to those of
-                    individuals, and how this status can undermine democratic accountability and public interest.
+                    In the battle for equal educational opportunity, the law plays a major role in protecting the rights of minority populations; however,
+                    scholars often overemphasize the importance of legal progress since it is more concrete and easier to
+                    analyze. Indeed, it is the often-neglected history of social change and individuals’ perception that
+                    produces lasting improvements. This article aims to accurately document legal history while properly
+                    including the social and individual components of the Civil Rights Movement that played a major role
+                    in altering the landscape of American higher education. More specifically, this essay relies heavily on
+                    the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law
+                    to expose the limitations of legal measures in achieving equal opportunity in higher education, and to
+                    highlight the importance of individual and social changes in bringing about a permanent pedagogical
+                    shift.
                 </p>
             </div>
 
             <PDFViewer 
                 pdfPath="/ArticlePDFs/Untitled document.pdf"
-                title="Dangerous Implications: The application of corporate personhood and its threat to democracy"
+                title="Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"
                 author="Derek Tsai"
             />
 

@@ -66,7 +66,7 @@ function Home() {
                             <div className="article-content">
                                 <span className="article-category"><TypingText text="International Law" speed={80} /></span>
                                 <div className="article-issue-badge">2026 Issue 1</div>
-                                <h3>"Dangerous Implications: The application of corporate personhood and its threat to democracy"</h3>
+                                <h3>""</h3>
                                 <p className="article-meta">By <Link to="/author/derek" className="author-link">Derek Tsai</Link> • January 2026</p>
                                 <p className="article-preview">
                                     An examination of how corporate personhood doctrines impact democratic governance and political power structures.

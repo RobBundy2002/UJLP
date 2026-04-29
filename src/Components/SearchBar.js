@@ -5,7 +5,7 @@ import '../Styling/SearchBar.css';
 const searchData = {
     articles: [
         {
-            title: "Dangerous Implications: The application of corporate personhood and its threat to democracy",
+            title: "Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960",
             author: "Derek Tsai",
             category: "International Law",
             link: "/dangerousimplications",

@@ -16,13 +16,17 @@ const issues = [
 
 const allArticles = [
     {
-        title: "Dangerous Implications: The application of corporate personhood and its threat to democracy",
+        title: "Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960",
         author: "Derek Tsai",
         authorLink: "/author/derek",
-        category: "International Law",
-        date: "January 2026",
-        issue: "2026-1",
-        excerpt: "An examination of how corporate personhood doctrines impact democratic governance and political power structures.",
+        category: "Civil Rights Law",
+        date: "June 2026",
+        issue: "2026-2",
+        excerpt: "this essay relies heavily on\n" +
+            "                    the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law\n" +
+            "                    to expose the limitations of legal measures in achieving equal opportunity in higher education, and to\n" +
+            "                    highlight the importance of individual and social changes in bringing about a permanent pedagogical\n" +
+            "                    shift.",
         link: "/dangerousimplications"
     },
     {

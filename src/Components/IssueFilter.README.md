@@ -203,9 +203,11 @@ Edit `IssueFilter.css`:
 ## Current Implementation
 
 ### Articles Updated to 2026 Issue 1:
-1. **Dangerous Implications** by Derek Tsai
-2. **Schoolhouse Secrets** by Shelby Eliasek
+1.**Schoolhouse Secrets** by Shelby Eliasek
 
+### Articles Updated to 2026 Issue 2:
+1. **Unequal Opportunity** by Derek Tsai
+2. 
 ### All Issues Configured:
 - All Issues
 - 2026 Issue 1

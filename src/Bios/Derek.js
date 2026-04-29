@@ -54,10 +54,14 @@ function Derek() {
                     <h2>Publications</h2>
                     <div className="publications-list">
                         <div className="publication-item">
-                            <h3>"Dangerous Implications: The application of corporate personhood and its threat to democracy"</h3>
-                            <p className="publication-meta">International Law • July 2025</p>
+                            <h3>"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"</h3>
+                            <p className="publication-meta">Civil Rights Law • June 2026</p>
                             <p className="publication-excerpt">
-                                An examination of how corporate personhood doctrines impact democratic governance and political power structures.
+                                This essay relies heavily on
+                                the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law
+                                to expose the limitations of legal measures in achieving equal opportunity in higher education, and to
+                                highlight the importance of individual and social changes in bringing about a permanent pedagogical
+                                shift.
                             </p>
                         </div>
                     </div>
