@@ -18,7 +18,8 @@ function Shelby() {
                             <div className="author-details">
                                 <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
                                 <p><strong>Hometown:</strong> Charlotte, North Carolina</p>
-                                <p><strong>Major:</strong> Pre-Law Track with Studio Art Minor</p>
+                                <p><strong>Majors:</strong> Public Policy and Leadership (Frank Batten School); Political and Social Thought Studio</p>
+                                <p><strong>Minor:</strong> Studio Art</p>
                                 <p><strong>Research Interests:</strong> Constitutional Law, Separation of Powers</p>
                             </div>
                         </div>
@@ -31,14 +32,13 @@ function Shelby() {
                     <h2>About Shelby</h2>
                     <div className="bio-content">
                         <p>
-                            Shelby Eliasek is a second-year student at the University of Virginia on the pre-law track, 
-                            and pursuing a minor in Studio Art. She is from Charlotte, North Carolina and attended 
-                            Charlotte Country Day School (CCDS). While at CCDS, Shelby competed and led the Mock Trial 
-                            team during their 2022 and 2023 seasons, placing twice at regionals, advancing once to states, 
-                            and personally receiving the Outstanding Attorney Award.
+                            Shelby Eliasek is from Charlotte, North Carolina. She is majoring in Public Policy and
+                            Leadership in the Frank Batten School at the University of Virginia with a double major in
+                            Political and Social Thought and a Studio Art minor. Her areas of interest include constitutional
+                            law, social justice, and legal policy.
                         </p>
                         <p>
-                            Now at UVA, Shelby continues to hone her public speaking and research skills on the UVA 
+                            At UVA, Shelby continues to hone her public speaking and research skills on the UVA
                             Undergraduate Moot Court team. During her first season (2024-25), Shelby was the D.C Regional 
                             Moot Court Tournament quarter-finalist, and she advanced to compete at the University of Houston 
                             Nationals Preliminary Round Tournament, held at the University of Houston Law Center. Through 
@@ -57,10 +57,10 @@ function Shelby() {
                             the Journal's social media pages and aided in the initial creative design for the website.
                         </p>
                         <p>
-                            Shelby is currently writing her own piece for the Journal, which will focus on the separation 
-                            of powers within the United States, specifically Chevron Deference, the Loper Bright case, and 
-                            the intent of the founding fathers on the Supreme Court's involvement in such decisions. When 
-                            taking a break from writing, Shelby is an avid painter, runner, and reader.
+                            Shelby published her first piece in the Journal in January of 2026. Her research is an examination
+                            of cases on public school policies regarding the use of gender non-conforming names and pronouns
+                            for students, and the rights of parents to be notified of these changes. When taking a break from
+                            writing, Shelby is an avid painter, runner, and reader.
                         </p>
                     </div>
                 </div>

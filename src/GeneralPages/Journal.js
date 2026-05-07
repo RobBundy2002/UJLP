@@ -19,7 +19,7 @@ const articles = [
         category: "Civil Rights Law",
         date: "June 2026",
         issue: "2026-2",
-        excerpt: "this essay relies heavily on\n" +
+        excerpt: "This essay relies heavily on\n" +
             "                    the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law\n" +
             "                    to expose the limitations of legal measures in achieving equal opportunity in higher education, and to\n" +
             "                    highlight the importance of individual and social changes in bringing about a permanent pedagogical\n" +
@@ -35,25 +35,6 @@ const articles = [
         issue: "2026-1",
         excerpt: "An examination of cases on public school policies regarding the use of gender non-conforming names and pronouns for students, and the rights of parents to be notified of these changes.",
         pageLink: "/schoolhousesecrets"
-    },
-    {
-        title: "From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense",
-        author: "Mikayla Grady",
-        authorLink: "/author/mikayla",
-        category: "Criminal Law",
-        date: "June 2025",
-        issue: "2025-2",
-        excerpt: "A critical analysis of how modern mental health understanding should reshape legal approaches to insanity defense.",
-        pageLink: "/insanitydefense"
-    },
-    {
-        title: "This Article is in Progress",
-        author: "Sarah Johnson",
-        category: "International Law",
-        date: "Upcoming",
-        issue: "2026-2",
-        excerpt: "This piece is coming soon.",
-        pageLink: "#"
     },
 ];
 

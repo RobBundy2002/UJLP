@@ -3,7 +3,7 @@ import '../Styling/Journal.css';
 import profilePic from '../ProfilePictures/Derek.png';
 import PDFViewer from '../Components/PDFViewer';
 
-function DangerousImplications() {
+function UnequalOpportunity() {
     return (
         <div className="article-page fade-in">
             <h1>
@@ -28,7 +28,7 @@ function DangerousImplications() {
             </div>
 
             <PDFViewer 
-                pdfPath="/ArticlePDFs/Untitled document.pdf"
+                pdfPath="/ArticlePDFs/Unequal Opportunity Draft 1.pdf"
                 title="Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"
                 author="Derek Tsai"
             />
@@ -61,4 +61,4 @@ function DangerousImplications() {
     );
 }
 
-export default DangerousImplications;
+export default UnequalOpportunity;
