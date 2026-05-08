@@ -18,7 +18,7 @@ function Shelby() {
                             <div className="author-details">
                                 <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
                                 <p><strong>Hometown:</strong> Charlotte, North Carolina</p>
-                                <p><strong>Majors:</strong> Public Policy and Leadership (Frank Batten School); Political and Social Thought Studio</p>
+                                <p><strong>Majors:</strong> Public Policy and Leadership (Frank Batten School); Political and Social Thought</p>
                                 <p><strong>Minor:</strong> Studio Art</p>
                                 <p><strong>Research Interests:</strong> Constitutional Law, Separation of Powers</p>
                             </div>
