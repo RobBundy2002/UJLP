@@ -343,7 +343,7 @@
     align-items: center;
     background: #021b41; /* opaque dark-blue so page background (orange) doesn't bleed through */
     border: 1px solid rgba(255,255,255,0.12);
-    box-shadow: 0 8px 24px rgba(2,27,65,0.45);
+    /* removed box-shadow as requested */
     border-radius: 12px;
     padding: 0.75rem 1rem;
     min-width: 260px;
@@ -351,6 +351,18 @@
     color: white;
 }
 
+/* Editor-specific tweaks: left-align the content so the profile pic sits at the left edge */
+.editor-card {
+    align-items: flex-start;
+}
+
+.editor-card .person-info {
+    justify-content: flex-start;
+}
+
+.person-info img, .person-info .person-pic {
+    margin-right: 0.5rem;
+}
 .person-label {
     align-self: flex-start;
     font-size: 0.75rem;

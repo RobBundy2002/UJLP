@@ -61,7 +61,7 @@ function UnequalOpportunity() {
                     </div>
                 </div>
 
-                <div className="person-card">
+                <div className="person-card editor-card">
                     <span className="person-label">Editor</span>
                     <div className="person-info">
                         <img src={editorPic} alt="Will Olszewski" className="person-pic" />
