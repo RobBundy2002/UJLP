@@ -1,6 +1,7 @@
 import React from 'react';
 import '../Styling/Journal.css';
 import profilePic from '../ProfilePictures/Derek.png';
+import editorPic from '../ProfilePictures/Will.jpg';
 import PDFViewer from '../Components/PDFViewer';
 
 function UnequalOpportunity() {
@@ -45,16 +46,30 @@ function UnequalOpportunity() {
             </div>
 
             <footer className="article-footer">
-                <div className="author-info">
-                    <img
-                        src={profilePic}
-                        alt="Derek Tsai"
-                        className="author-profile-pic"
-                    />
-                    <span className="author-name">Derek Tsai</span>
+                <div className="person-card">
+                    <span className="person-label">Author</span>
+                    <div className="person-info">
+                        <img
+                            src={profilePic}
+                            alt="Derek Tsai"
+                            className="person-pic"
+                        />
+                        <div>
+                            <div className="person-name">Derek Tsai</div>
+                            <div className="person-details">Class of 2028 • International Law</div>
+                        </div>
+                    </div>
                 </div>
-                <div className="author-details">
-                    <span>Class of 2028 • International Law</span>
+
+                <div className="person-card">
+                    <span className="person-label">Editor</span>
+                    <div className="person-info">
+                        <img src={editorPic} alt="Will Olszewski" className="person-pic" />
+                        <div>
+                            <div className="person-name">Will Olszewski</div>
+                            <div className="person-details">Editor • Journal Team</div>
+                        </div>
+                    </div>
                 </div>
             </footer>
         </div>

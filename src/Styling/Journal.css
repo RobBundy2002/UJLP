@@ -290,7 +290,7 @@
     margin: 2rem 0;
     padding: 1rem 1.5rem;
     background: rgba(2, 27, 65, 0.2);
-    border-left: 4px solid #f97316;
+    /* removed orange left stripe so the author/editor cards aren't overlapped */
     border-radius: 12px;
     text-align: left;
     color: white;
@@ -302,7 +302,7 @@
 .article-summary h2 {
     font-size: 1.5rem;
     margin-bottom: 0.75rem;
-    color: #f97316;
+    color: white; /* neutral title color now that orange stripe is gone */
 }
 
 .article-summary p {
@@ -329,45 +329,78 @@
 
 .article-footer {
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    max-width: 300px;
+    justify-content: center;
+    gap: 1rem;
     margin: 2rem auto;
-    padding: 0.5rem 1.5rem;
-    background: rgba(2, 27, 65, 0.2);
-    color: white;
-    border-left: 4px solid #f97316;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    gap: 0.5rem;
+    max-width: 760px;
+    padding: 0;
 }
 
-.author-info {
+.person-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(2, 27, 65, 0.2);
+    border: 1px solid rgba(255,255,255,0.35);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    min-width: 260px;
+    gap: 0.5rem;
+    color: white;
+}
+
+.person-label {
+    align-self: flex-start;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+.person-info {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.author-profile-pic {
-    width: 40px;
-    height: 40px;
+.person-pic {
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #f97316;
+    border: 2px solid rgba(255,255,255,0.9);
 }
 
-.author-name {
+.person-name {
     font-weight: 600;
     color: white;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 
-.author-details {
+.person-details {
     font-weight: 400;
     color: white;
     font-size: 0.85rem;
-    margin-left: 0.75rem;
 }
+
+@media (max-width: 768px) {
+    .article-footer {
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: center;
+        padding: 0 1rem;
+        max-width: 95%;
+    }
+    .person-card {
+        width: 100%;
+        min-width: 0;
+        align-items: center;
+    }
+    .person-label {
+        align-self: center;
+    }
+}
+
 
 @media (max-width: 768px) {
     .article-footer {

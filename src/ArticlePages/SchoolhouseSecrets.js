@@ -55,16 +55,19 @@ function SchoolhouseSecrets() {
                 />
 
                 <footer className="article-footer">
-                    <div className="author-info">
-                        <img
-                            src={profilePic}
-                            alt="Shelby Eliasek"
-                            className="author-profile-pic"
-                        />
-                        <span className="author-name">Shelby Eliasek</span>
-                    </div>
-                    <div className="author-details">
-                        <span>Class of 2028 • Education Law</span>
+                    <div className="person-card">
+                        <span className="person-label">Author</span>
+                        <div className="person-info">
+                            <img
+                                src={profilePic}
+                                alt="Shelby Eliasek"
+                                className="person-pic"
+                            />
+                            <div>
+                                <div className="person-name">Shelby Eliasek</div>
+                                <div className="person-details">Class of 2028 • Education Law</div>
+                            </div>
+                        </div>
                     </div>
                 </footer>
             </div>
