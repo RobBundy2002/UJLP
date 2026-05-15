@@ -288,16 +288,22 @@
     align-items: center;
 }
 
+/* If there are exactly two visible cards, display them side-by-side centered */
+.team-members-grid.two-up {
+    grid-template-columns: repeat(2, minmax(220px, 280px));
+    justify-content: center;
+}
+
 .team-member-card {
     background: var(--background-white);
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
     border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px #0000001a;
     justify-self: center;
-    width: 100%;
     max-width: 250px;
+    overflow: hidden;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    width: 100%;
 }
 
 .team-member-card:hover {
@@ -305,32 +311,36 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.team-member-image {
-    width: 100%;
-    height: 116px;
-    overflow: hidden;
-    position: relative;
-}
+/* remove banner image area; only avatar should display */
+.team-member-image { display:none; }
 
-.team-member-image::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
-}
 
-.team-member-image img {
-    width: 100%;
-    height: 100%;
+/* do NOT hide banner images — show them */
+
+.team-member-photo {
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    display: block;
+    height: 8rem;
+    width: 8rem;
     object-fit: cover;
-    transition: transform var(--transition-speed) ease;
+    margin: 0.5rem auto 0; /* place avatar below banner without covering it */
+    background: var(--background-white);
 }
 
-.team-member-card:hover .team-member-image img {
-    transform: scale(1.05);
+.team-member-card:hover .team-member-photo {
+    transform: translateY(-4px);
+}
+
+/* reduce card height so not too tall */
+.team-member-card {
+    min-height: 300px;
+}
+
+/* push the name & role down so they don't crowd the avatar */
+.team-member-info { 
+    padding: 2rem 2rem 1.25rem;
 }
 
 .team-member-info {

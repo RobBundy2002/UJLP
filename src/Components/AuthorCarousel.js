@@ -5,7 +5,7 @@ import derekImg from '../ProfilePictures/Derek.png';
 import shelbyImg from '../ProfilePictures/Shelby.jpeg';
 import robImg from '../ProfilePictures/Rob.jpg';
 import evanImg from '../ProfilePictures/Evan.jpeg';
-import richardImg from '../ProfilePictures/Richard.jpg';
+import willImg from '../ProfilePictures/Will.jpg';
 
 const authors = [
     {
@@ -41,14 +41,13 @@ const authors = [
         link: '/author/evan'
     },
     {
-        id: 'richard',
-        name: 'Richard Xu',
+        id: 'will',
+        name: 'Will Olszewski',
         role: 'Director of Legal Writing & Research',
-        image: richardImg,
-        bio: 'Political Philosophy, Policy, and Law',
-        link: '/author/richard'
+        image: willImg,
+        bio: 'Constitutional Law & Legal Writing',
+        link: '/author/will'
     },
-    // {
     //     id: 'mikayla',
     //     name: 'Mikayla Grady',
     //     role: 'Staff Writer',

@@ -6,9 +6,9 @@ import Timeline from '../Components/Timeline';
 import samImg from '../ProfilePictures/Sam.png';
 import shelbyImg from '../ProfilePictures/Shelby.jpeg';
 import derekImg from '../ProfilePictures/Derek.png';
-import ruichongImg from '../ProfilePictures/Richard.jpg';
 import robImg from '../ProfilePictures/Rob.jpg';
 import evanImg from '../ProfilePictures/Evan.jpeg';
+import willImg from '../ProfilePictures/Will.jpg';
 
 function About() {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -74,12 +74,12 @@ function About() {
                         </div>
                         <div className="leader-card">
                             <div className="leader-image">
-                                <img src={ruichongImg} alt="Richard (Ruichong) Xu" />
+                                <img src={willImg} alt="Will Olszewski" />
                             </div>
                             <div className="leader-info">
-                                <h3><Link to="/author/richard" className="author-link">Richard Xu</Link></h3>
+                                <h3><Link to="/author/will" className="author-link">Will Olszewski</Link></h3>
                                 <span className="leader-role">Director of Legal Writing & Research</span>
-                                <p>Richard Xu leads legal research initiatives and ensures the accuracy and integrity of legal content.</p>
+                                <p>Will Olszewski leads legal research initiatives and ensures the accuracy and integrity of legal content.</p>
                             </div>
                         </div>
                         <div className="leader-card">
@@ -146,87 +146,58 @@ function About() {
                         >
                             Event Coordinators
                         </button>
+                        <button 
+                            className={`filter-button ${activeFilter === 'alumni' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('alumni')}
+                        >
+                            Alumni
+                        </button>
                     </div>
-                    <div className="team-members-grid">
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/Will.jpg')} alt="Will" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/will" className="author-link">Will Olszewski</Link></h3>
-                                <span className="team-member-role">Executive Editor</span>
-                            </div>
-                        </div>
+                    <div>
+                        {(() => {
+                            const teamMembers = [
+                                { id: 'rishi', img: require('../ProfilePictures/Rishi.jpg'), name: 'Rishi Chandra', link: '/author/rishi', types: ['executive-editor'], role: 'Executive Editor' },
+                                { id: 'comingsoon_new', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon_new', types: ['executive-editor'], role: 'Executive Editor' },
+                                { id: 'comingsoon1', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon1', types: ['executive-editor'], role: 'Executive Editor' },
+                                { id: 'comingsoon2', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon2', types: ['staff-editor'], role: 'Staff Editor' },
+                                { id: 'comingsoon21', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon2', types: ['staff-editor'], role: 'Staff Editor' },
+                                { id: 'comingsoon20', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon2', types: ['staff-editor'], role: 'Staff Editor' },
+                                { id: 'comingsoon3', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon3', types: ['internal-writer'], role: 'Internal Writer' },
+                                { id: 'comingsoon4', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon4', types: ['internal-writer'], role: 'Internal Writer' },
+                                { id: 'comingsoon5', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon5', types: ['submission-writer'], role: 'Submission Writer' },
+                                { id: 'comingsoon6', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon6', types: ['submission-writer'], role: 'Submission Writer' },
+                                { id: 'comingsoon7', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon7', types: ['event-coordinator'], role: 'Event Coordinator' },
+                                { id: 'comingsoon8', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon8', types: ['event-coordinator'], role: 'Event Coordinator' },
+                                { id: 'comingsoon14', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon8', types: ['event-coordinator'], role: 'Event Coordinator' },
+                                { id: 'comingsoon9', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon9', types: ['internal-writer'], role: 'Internal Writer' },
+                                { id: 'comingsoon10', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon10', types: ['submission-writer'], role: 'Submission Writer' },
+                                { id: 'comingsoon11', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon11', types: ['event-coordinator'], role: 'Event Coordinator' },
+                                { id: 'sam', img: require('../ProfilePictures/Sam.png'), name: 'Sam Burnett', types: ['alumni'], role: 'Founding Editor (2024–2025)' },
+                                { id: 'richard', img: require('../ProfilePictures/Richard.jpg'), name: 'Richard Xu', link: '/author/richard', types: ['alumni'], role: 'Director of Legal Writing & Research (2025–2026)' },
+                                { id: 'mia', img: require('../ProfilePictures/Mia.jpg'), name: 'Mia Petersen', link: '/author/mia', types: ['alumni'], role: 'Executive Editor (2025-2026)' },
+                            ];
 
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/Rishi.jpg')} alt="Rishi" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/rishi" className="author-link">Rishi Chandra</Link></h3>
-                                <span className="team-member-role">Executive Editor</span>
-                            </div>
-                        </div>
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'executive-editor' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/comingsoon1" className="author-link">Coming Soon</Link></h3>
-                                <span className="team-member-role">Executive Editor</span>
-                            </div>
-                        </div>
+                            const filtered = teamMembers.filter(m => activeFilter === 'all' || m.types.includes(activeFilter));
+                            const gridClass = `team-members-grid ${filtered.length === 2 ? 'two-up' : ''}`.trim();
 
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'staff-editor' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/comingsoon2" className="author-link">Coming Soon</Link></h3>
-                                <span className="team-member-role">Staff Editor</span>
-                            </div>
-                        </div>
-
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'internal-writer' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/comingsoon3" className="author-link">Coming Soon</Link></h3>
-                                <span className="team-member-role">Internal Writer</span>
-                            </div>
-                        </div>
-
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'internal-writer' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/comingsoon4" className="author-link">Coming Soon</Link></h3>
-                                <span className="team-member-role">Internal Writer</span>
-                            </div>
-                        </div>
-
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'submission-writer' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/comingsoon5" className="author-link">Coming Soon</Link></h3>
-                                <span className="team-member-role">Submission Writer</span>
-                            </div>
-                        </div>
-
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'submission-writer' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/comingsoon6" className="author-link">Coming Soon</Link></h3>
-                                <span className="team-member-role">Submission Writer</span>
-                            </div>
-                        </div>
-
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'event-coordinator' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/comingsoon7" className="author-link">Coming Soon</Link></h3>
-                                <span className="team-member-role">Event Coordinator</span>
-                            </div>
-                        </div>
-
-                        <div className={`team-member-card ${activeFilter === 'all' || activeFilter === 'event-coordinator' ? 'visible' : 'hidden'}`}>
-                            <img src={require('../ProfilePictures/ComingSoon.jpg')} alt="Coming Soon" className="team-member-photo"/>
-                            <div className="team-member-info">
-                                <h3><Link to="/author/comingsoon8" className="author-link">Coming Soon</Link></h3>
-                                <span className="team-member-role">Event Coordinator</span>
-                            </div>
-                        </div>
-
+                            return (
+                                <div className={gridClass}>
+                                    {filtered.map((m) => (
+                                        <div key={m.id} className={`team-member-card visible`}>
+                                            <img src={m.img} alt={m.name} className="team-member-photo" />
+                                            <div className="team-member-info">
+                                                {m.link ? (
+                                                    <h3><Link to={m.link} className="author-link">{m.name}</Link></h3>
+                                                ) : (
+                                                    <h3>{m.name}</h3>
+                                                )}
+                                                <span className="team-member-role">{m.role}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            );
+                        })()}
                     </div>
                 </div>
             </section>
