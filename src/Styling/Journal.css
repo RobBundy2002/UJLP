@@ -335,7 +335,13 @@
     max-width: 760px;
     padding: 0;
     background: transparent; /* ensure no underlying background overlays the cards */
-    transform: translateX(8px); /* nudge the author/editor cards slightly to the right */
+    transform: translateX(1.5rem); /* nudge the author/editor cards slightly to the right (use rem for scalable layout) */
+}
+
+@media (max-width: 768px) {
+    .article-footer {
+        transform: none; /* keep centered on small screens */
+    }
 }
 
 .person-card {
