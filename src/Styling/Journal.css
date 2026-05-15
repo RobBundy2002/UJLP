@@ -337,23 +337,24 @@
     background: transparent; /* ensure no underlying background overlays the cards */
 }
 
-/* Move only the labels (Author / Editor) to the right using rem */
 .person-label {
-    margin-left: 0.5rem; /* reduced per request */
-}
-
-/* Shelby-specific tweaks: move label left 0.75rem and the whole card left 1rem */
-.shelby-card .person-label {
-    margin-left: -0.7rem; /* moved 0.05rem to the right (less negative) */
+    margin-left: 0.4rem;
 }
 
 .shelby-card {
-    transform: translateX(-0.5rem); /* moved halfway back */
+    transform: translateX(-.25rem);
+}
+
+.shelby-card .person-label {
+    margin-left: -.5rem !important;
 }
 
 @media (max-width: 768px) {
     .shelby-card {
         transform: none;
+    }
+    .shelby-card .person-label {
+        margin-left: 0 !important;
     }
 }
 
@@ -361,8 +362,9 @@
     .article-footer {
         transform: none; /* keep centered on small screens */
     }
+    /* on mobile, nudge labels slightly right */
     .person-label {
-        margin-left: 0; /* center labels on small screens */
+        margin-left: 0.5rem; /* small right nudge on mobile */
         align-self: center;
     }
 }

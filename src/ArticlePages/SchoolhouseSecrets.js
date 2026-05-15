@@ -43,7 +43,7 @@ function SchoolhouseSecrets() {
                         rel="noopener noreferrer"
                         className="cta-button pdf-button"
                     >
-                        📄 Open Full PDF
+                        Open Full PDF
                     </a>
                 </div>
 
