@@ -29,7 +29,7 @@ function Richard() {
                     <h2>About Richard</h2>
                     <div className="bio-content">
                         <p>
-                            Richard (Ruichong) Xu is an Echols Scholar at the University of Virginia, Class of 2027,
+                            Richard (Ruichong) Xu is a former Echols Scholar at the University of Virginia, Class of 2026,
                             majoring in Political Philosophy, Policy, and Law (PPL). He is a published author of two books:
                             <em> Principles of a Normative Constitution</em> (iUniverse, 2025) and
                             <em> 法律小谈</em> (<em>A Brief Talk About the Law</em>, Chinese Publishing Inc., 2023).

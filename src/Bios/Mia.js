@@ -30,7 +30,7 @@ function Mia() {
                     <h2>About Mia</h2>
                     <div className="bio-content">
                         <p>
-                            Mia Petersen is a fourth year student at the University of Virginia with a strong interest in the intersection of technology, national security, and law.
+                            Mia Petersen is an alumni of the University of Virginia with a strong interest in the intersection of technology, national security, and law.
                         </p>
                         <p>
                             She has worked in various capacities at Lockheed Martin, including as a Cybersecurity and Systems Engineer Intern and as a Systems, Integration, and Test Intern, contributing to mission-critical defense projects across multiple programs. At UVA, Mia serves as a Research Assistant to Professor Danielle Citron at the School of Law, where she examines legal and policy frameworks governing digital privacy and security.
