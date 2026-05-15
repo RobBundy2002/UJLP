@@ -339,7 +339,7 @@
 
 /* Move only the labels (Author / Editor) to the right using rem */
 .person-label {
-    margin-left: 3rem;
+    margin-left: 1rem; /* reduced from 3rem per request */
 }
 
 @media (max-width: 768px) {
