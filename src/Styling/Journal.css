@@ -342,6 +342,21 @@
     margin-left: 0.5rem; /* reduced per request */
 }
 
+/* Shelby-specific tweaks: move label left 0.75rem and the whole card left 1rem */
+.shelby-card .person-label {
+    margin-left: -0.7rem; /* moved 0.05rem to the right (less negative) */
+}
+
+.shelby-card {
+    transform: translateX(-0.5rem); /* moved halfway back */
+}
+
+@media (max-width: 768px) {
+    .shelby-card {
+        transform: none;
+    }
+}
+
 @media (max-width: 768px) {
     .article-footer {
         transform: none; /* keep centered on small screens */

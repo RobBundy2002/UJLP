@@ -3,6 +3,7 @@ import '../Styling/Journal.css';
 import profilePic from '../ProfilePictures/Derek.png';
 import editorPic from '../ProfilePictures/Will.jpg';
 import PDFViewer from '../Components/PDFViewer';
+import CiteShare from '../Components/CiteShare';
 
 function UnequalOpportunity() {
     return (
@@ -41,9 +42,16 @@ function UnequalOpportunity() {
                     rel="noopener noreferrer"
                     className="cta-button pdf-button"
                 >
-                    📄 Open Full PDF
+                    Open Full PDF
                 </a>
             </div>
+
+            <CiteShare 
+                title={"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"}
+                author={"Derek Tsai"}
+                date={"2026-06-01"}
+                url={window.location.href}
+            />
 
             <footer className="article-footer">
                 <div className="person-card">
