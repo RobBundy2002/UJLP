@@ -13,9 +13,9 @@ function Mia() {
                         </div>
                         <div className="author-info">
                             <h1>Mia Petersen</h1>
-                            <span className="author-role">Executive Editor</span>
+                            <span className="author-role">Former Executive Editor</span>
                             <div className="author-details">
-                                <p><strong>4th Year at UVA:</strong> Class of 2026</p>
+                                <p><strong>UVA Alum:</strong> Class of 2026</p>
                                 <p><strong>Hometown:</strong> Arlington, TX</p>
                                 <p><strong>Major:</strong> Mechanical Engineering</p>
                                 <p><strong>Research Interests:</strong> Privacy Law, Technology Law, National Security Law</p>

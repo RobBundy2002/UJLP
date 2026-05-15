@@ -13,9 +13,9 @@ function Richard() {
                         </div>
                         <div className="author-info">
                             <h1>Richard (Ruichong) Xu</h1>
-                            <span className="author-role">Director of Legal Writing & Research</span>
+                            <span className="author-role">Former Director of Legal Writing & Research</span>
                             <div className="author-details">
-                                <p><strong>3rd Year at UVA:</strong> Class of 2027</p>
+                                <p><strong>UVA Alum:</strong> Class of 2026</p>
                                 <p><strong>Major:</strong> Political Philosophy, Policy, and Law (PPL)</p>
                                 <p><strong>Research Interests:</strong> Philosophy, History, Politics, International Relations</p>
                             </div>
