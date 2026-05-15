@@ -335,6 +335,7 @@
     max-width: 760px;
     padding: 0;
     background: transparent; /* ensure no underlying background overlays the cards */
+    transform: translateX(8px); /* nudge the author/editor cards slightly to the right */
 }
 
 .person-card {
