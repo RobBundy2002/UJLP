@@ -334,14 +334,16 @@
     margin: 2rem auto;
     max-width: 760px;
     padding: 0;
+    background: transparent; /* ensure no underlying background overlays the cards */
 }
 
 .person-card {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(2, 27, 65, 0.2);
-    border: 1px solid rgba(255,255,255,0.35);
+    background: #021b41; /* opaque dark-blue so page background (orange) doesn't bleed through */
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 8px 24px rgba(2,27,65,0.45);
     border-radius: 12px;
     padding: 0.75rem 1rem;
     min-width: 260px;
