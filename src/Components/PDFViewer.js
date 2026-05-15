@@ -6,7 +6,6 @@ const PDFViewer = ({ pdfPath, title, author }) => {
         <div className="pdf-viewer-container">
             <div className="pdf-viewer-header">
                 <div className="pdf-viewer-title">
-                    <span className="pdf-icon">📄</span>
                     <div className="pdf-title-text">
                         <h3>{title}</h3>
                         <p>By {author}</p>
@@ -18,7 +17,7 @@ const PDFViewer = ({ pdfPath, title, author }) => {
                     className="pdf-download-btn"
                     title="Download PDF"
                 >
-                    ⬇️ Download
+                    Download
                 </a>
             </div>
             <div className="pdf-viewer-frame">
@@ -36,9 +35,7 @@ const PDFViewer = ({ pdfPath, title, author }) => {
                 </object>
             </div>
             <div className="pdf-viewer-footer">
-                <span className="pdf-hint">
-                    💡 Use the toolbar above to zoom, navigate, or download
-                </span>
+
             </div>
         </div>
     );

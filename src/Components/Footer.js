@@ -28,7 +28,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className="footer-bottom">
-                <p>© 2025 Undergraduate Journal of Law and Politics at the University of Virginia. All Rights Reserved.</p>
+                <p>© 2026 Undergraduate Journal of Law and Politics at the University of Virginia. All Rights Reserved.</p>
                 <p>Website designed by <a href="https://www.linkedin.com/in/rob-bundy-192035223/" target="_blank" rel="noopener noreferrer">Rob Bundy</a></p>
             </div>
         </footer>

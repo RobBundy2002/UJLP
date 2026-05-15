@@ -56,7 +56,7 @@ function SchoolhouseSecrets() {
 
                 <footer className="article-footer">
                     <div className="person-card">
-                        <span className="person-label">Author</span>
+                        <span className="person-label">Author & Editor</span>
                         <div className="person-info">
                             <img
                                 src={profilePic}
