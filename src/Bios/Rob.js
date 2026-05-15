@@ -35,7 +35,7 @@ function Rob() {
                             His role is crucial in maintaining the Journal's online presence and digital operations.
                         </p>
                         <p>
-                            As a Computer Science major with a minor in Religious Studies at the University of Virginia, Rob brings 
+                            As a Computer Science graduate of the University of Virginia, Rob brings
                             a unique interdisciplinary perspective to the intersection of technology and law. He is currently pursuing 
                             an online Master's degree in Computer Science with a concentration in Human Computer Interaction at 
                             Georgia Institute of Technology. Alongside this his Master's program, Rob still resides in Charlottesville post-grad,
@@ -62,15 +62,34 @@ function Rob() {
                     <h2>Professional Experience</h2>
                     <div className="experience-list">
                         <div className="experience-item">
-                            <h3>Software Engineer</h3>
-                            <p className="experience-meta">GA-Intelligence • June 2025 - Present</p>
-                            <p className="experience-description">
-                                - Led migration of data converters into a centralized repository, adding strict validation and unit tests to improve data flow reliability.  <br />
-                                - Implemented ConfigMap integration within a Helm chart’s StatefulSet, enabling dynamic runtime configuration in Kubernetes.  <br />
-                                - Developed and integrated Spring Cloud Stream data converters, ensuring accurate data transformation and round-trip processing. <br />
-                                - Validated end-to-end data flows across our Kubernetes stack using k9s and Kafka topic inspection, ensuring system reliability. <br />
-                                - Recognized with a spotlight award for driving tracking initiatives and a software release through proactive repository ownership, rigorous MR governance, cross-team collaboration, and mentoring colleagues through pair programming and technical onboarding.
-                            </p>
+                            <h3>GA-Intelligence</h3>
+
+                            <div className="ga-tabs">
+                                <div className="ga-entry">
+                                    <h4>Software Engineer II</h4>
+                                    <p className="experience-meta">Mar 2026 - Present</p>
+                                    <p className="experience-description">
+                                        - Promoted to SE II; served as Lead Developer on the lowside analytics team, consistently delivering ~25 point sprints. <br />
+                                        - Transitioned ownership of a critical repository to senior leadership, delivering a technical presentation to the schema subteam. <br />
+                                        - Served as primary developer and repo authority for the schema subteam, acting as point of contact for leadership. <br />
+                                        - Independently built a GitLab CI/CD pipeline that auto-generates schema documentation on every commit via GitLab Pages; replacing manual tag checkouts  with diff visualization, backwards compatibility checks, and a metrics dashboard
+                                        for visibility into schema changes across formats. <br />
+                                    </p>
+                                </div>
+
+                                <div className="ga-entry">
+                                    <h4>Software Engineer I</h4>
+                                    <p className="experience-meta">Jun 2025 - Mar 2026</p>
+                                    <p className="experience-description">
+                                        - Led migration of data converters into a centralized repository with strict validation and unit tests, improving data flow reliability. <br />
+                                        - Owned release processes and MR queue for critical repositories, coordinating deployments end-to-end. <br />
+                                        - Served as secondary technical lead for data and conversion repos — guiding schema decisions, code reviews, and releases. <br />
+                                        - Drove strong team velocity averaging 16+ story points per sprint (79 merged MRs across 49 tickets in Q3–Q4 2025). <br />
+                                        - Mentored junior developers through onboarding and mob sessions; led sprint ceremonies and technical training. <br />
+                                        - Recognized with a Spotlight Award for contributions alongside a critical software release.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div className="experience-item">
                             <h3>Backend Software Engineering Intern</h3>
@@ -98,6 +117,15 @@ function Rob() {
                 <div className="section-content">
                     <h2>Notable Projects</h2>
                     <div className="projects-list">
+                        <div className="project-item">
+                            <h3><a href="https://robbundy2002.github.io/Website/#/Website" target="_blank" rel="noopener noreferrer" className="project-link">Personal Website</a></h3>
+                            <p className="project-meta">React.js • January 2024 - Present</p>
+                            <p className="project-description">
+                                Active personal website and portfolio for showcasing projects, education, and various academic papers.
+                                Built with React and custom components; continuously developed and maintained since January 2024.
+                            </p>
+                        </div>
+
                         <div className="project-item">
                             <h3><a href="https://matrix-madness-frontend.onrender.com/" target="_blank" rel="noopener noreferrer" className="project-link">College Hoops Matrix Madness</a></h3>
                             <p className="project-meta">React.js • October 2023 - January 2024</p>

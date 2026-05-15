@@ -15,7 +15,7 @@ function Evan() {
                             <h1>Evan Proudkii</h1>
                             <span className="author-role">Managing Editor</span>
                             <div className="author-details">
-                                <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
+                                <p><strong>3rd Year at UVA:</strong> Class of 2028</p>
                                 <p><strong>Majors:</strong> Public Policy & Economics</p>
                                 <p><strong>Hometown:</strong> Tysons Corner, Virginia</p>
                                 <p><strong>Research Interests:</strong> Constitutional Law, Politics & Law</p>
@@ -31,7 +31,7 @@ function Evan() {
                     <h2>About Evan</h2>
                     <div className="bio-content">
                         <p>
-                            Evan Proudkii is a second-year Echols Scholar at the University of Virginia pursuing a double major in public policy and economics on the pre-law track. Evan has lived in Tysons Corner, Virginia, his whole life, attending George C. Marshall High School, but his heritage is a blend of Ukrainian and Russian backgrounds.
+                            Evan Proudkii is a third-year Echols Scholar at the University of Virginia pursuing a double major in public policy and economics on the pre-law track. Evan has lived in Tysons Corner, Virginia, his whole life, attending George C. Marshall High School, but his heritage is a blend of Ukrainian and Russian backgrounds.
                         </p>
                         <p>
                             Evan has spent his first year at UVA primarily involved in political advocacy, interning on the Jay Jones for Virginia Attorney General campaign and working alongside other students to lobby for equitable legislation with Students for Equity and Reform in Virginia (SERV). He now hopes to explore legal scholarship with a focus on constitutional law, aiming to bridge his interests in politics and law, especially in light of the recent challenges to the Constitution amid the current turbulent political atmosphere.

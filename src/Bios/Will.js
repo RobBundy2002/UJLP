@@ -15,7 +15,7 @@ function Will() {
                             <h1>Will Olszewski</h1>
                             <span className="author-role">Executive Editor</span>
                             <div className="author-details">
-                                <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
+                                <p><strong>3rd Year at UVA:</strong> Class of 2028</p>
                                 <p><strong>Hometown:</strong> Hershey, Pennsylvania</p>
                                 <p><strong>Major:</strong> Pre-Law</p>
                                 <p><strong>Research Interests:</strong> Constitutional Law, Legal Writing</p>
@@ -30,7 +30,7 @@ function Will() {
                     <h2>About Will</h2>
                     <div className="bio-content">
                         <p>
-                            Will Olszewski is a second-year pre-law student at the University of Virginia. He is from Hershey, Pennsylvania, and graduated from Hershey High School.
+                            Will Olszewski is a third-year pre-law student at the University of Virginia. He is from Hershey, Pennsylvania, and graduated from Hershey High School.
                         </p>
                         <p>
                             Will discovered his passion for law in high school as a member of Pennsylvania's Youth and Government club. From teaching confused 7th graders how to write a legal brief to calmly responding to justices in the Pennsylvania Supreme Court, YAG exposed Will to many aspects of the judicial system that inspired his current path.
