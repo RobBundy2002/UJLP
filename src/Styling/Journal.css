@@ -335,12 +335,20 @@
     max-width: 760px;
     padding: 0;
     background: transparent; /* ensure no underlying background overlays the cards */
-    transform: translateX(3rem); /* nudge the author/editor cards slightly to the right (use rem for scalable layout) */
+}
+
+/* Move only the labels (Author / Editor) to the right using rem */
+.person-label {
+    margin-left: 3rem;
 }
 
 @media (max-width: 768px) {
     .article-footer {
         transform: none; /* keep centered on small screens */
+    }
+    .person-label {
+        margin-left: 0; /* center labels on small screens */
+        align-self: center;
     }
 }
 
