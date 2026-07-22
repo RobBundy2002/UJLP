@@ -9,7 +9,7 @@ function UnequalOpportunity() {
     return (
         <div className="article-page fade-in">
             <h1>
-                Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960
+                Unequal Opportunity:<br /><em>Desegregation at the University of Virginia School of Law, 1950–1960</em>
             </h1>
             <p className="article-meta">By Derek Tsai • June 2026 • Civil Rights Law • 2026 Issue 2</p>
 
@@ -64,7 +64,7 @@ function UnequalOpportunity() {
                         />
                         <div>
                             <div className="person-name">Derek Tsai</div>
-                            <div className="person-details">Class of 2028 • International Law</div>
+                            <div className="person-details">Class of 2027 • International Law</div>
                         </div>
                     </div>
                 </div>

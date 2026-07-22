@@ -1,14 +1,18 @@
 import React from 'react';
 import '../Styling/Archives.css';
 import '../Styling/Home.css';
+import '../Styling/EditorialPages.css';
 import { Link } from 'react-router-dom';
+import ParticleBackground from '../Components/ParticleBackground';
 
 function JoinTheTeam() {
     return (
-        <div className="archives-container fade-in">
+        <div className="archives-container jh-page jh-apply fade-in">
             <section className="archives-hero">
+                <ParticleBackground />
                 <div className="section-content">
-                    <h1>Join the Team</h1>
+                    <p className="jh-eyebrow jh-apply-kicker"><strong>UJLP</strong> · University of Virginia · Est. 2024</p>
+                    <h1>Join the<br /><em>team.</em></h1>
                     <p className="hero-content">
                         The Undergraduate Journal of Law & Politics seeks to recruit passionate undergraduate students each semester.
                         We welcome applicants from all majors & backgrounds who are eager to engage with the legal realm through research and writing.
@@ -18,15 +22,17 @@ function JoinTheTeam() {
 
             <section className="articles-section">
                 <div className="section-content">
+                    <p className="jh-apply-kicker">Ways to contribute</p>
                     <h2>Recruitment Overview</h2>
                     <p>
                         Recruitment occurs every semester for <strong>Staff Editors</strong>, <strong>Staff Writers</strong>,
-                        and <strong>Submission Writers</strong>. Details about these positions can be found below.
+                        and <strong>Submission Writer</strong>. Details about these positions can be found below.
                         Information about open leadership and executive positions will be available on our <Link to="/announcements">Announcements</Link> page.
                     </p>
 
                     <article className="article-card">
                         <div className="article-content">
+                            <span className="jh-apply-index">01</span>
                             <h3>Staff Editor</h3>
                             <p>
                                 Staff Editors work in an editorial cohort and help writers by conducting research, improving argumentation,
@@ -55,6 +61,7 @@ function JoinTheTeam() {
 
                     <article className="article-card">
                         <div className="article-content">
+                            <span className="jh-apply-index">02</span>
                             <h3>Staff Writer</h3>
                             <p>
                                 Staff Writers produce original law review articles with the support of an editorial cohort.
@@ -85,9 +92,10 @@ function JoinTheTeam() {
 
                     <article className="article-card">
                         <div className="article-content">
-                            <h3>Submission Writers</h3>
+                            <span className="jh-apply-index">03</span>
+                            <h3>Submission Writer</h3>
                             <p>
-                                Submission Writers submit an independently-produced law review article, research paper,
+                                A Submission Writer submits an independently-produced law review article, research paper,
                                 or coursework paper for publication. Submissions must have explicit permission from the proper authority
                                 if based on prior academic work. Once accepted, the Submission Writer will revise with an editorial cohort.
                             </p>

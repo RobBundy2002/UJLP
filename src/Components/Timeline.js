@@ -56,7 +56,14 @@ function Timeline() {
     return (
         <section className="timeline-section">
             <div className="section-content">
-                <h2>Our Journey</h2>
+                <div className="timeline-intro">
+                    <p>Our story</p>
+                    <h2>Built by<br /><em>curious people.</em></h2>
+                    <div>
+                        <p>The Undergraduate Journal of Law and Politics began in 2024 under the leadership of Sam Burnett, Derek Tsai, and Shelby Eliasek. Since then, the Journal has grown an undergraduate community committed to thoughtful legal research, writing, and conversation.</p>
+                        <p>We publish long-form legal scholarship, bring writers and editors together, and carry that work into public discussions, symposiums, and the wider UVA community.</p>
+                    </div>
+                </div>
                 <div className="timeline-container">
                     {timelineData.map((item, index) => (
                         <div key={index} className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}>
@@ -78,4 +85,4 @@ function Timeline() {
     );
 }
 
-export default Timeline; 
+export default Timeline;

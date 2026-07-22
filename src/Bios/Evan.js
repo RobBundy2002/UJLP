@@ -47,7 +47,9 @@ function Evan() {
                 <div className="section-content">
                     <h2>Publications</h2>
                     <div className="publications-list">
-                        <p>None yet.</p>
+                        <div className="publication-item">
+                            <p className="publication-meta">Publications coming soon...</p>
+                        </div>
                     </div>
                 </div>
             </section>

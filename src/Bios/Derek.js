@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../Styling/AuthorBio.css';
 import derekImg from '../ProfilePictures/Derek.png';
 
@@ -15,7 +16,7 @@ function Derek() {
                             <h1>Derek Tsai</h1>
                             <span className="author-role">Editor-in-Chief</span>
                             <div className="author-details">
-                                <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
+                                <p><strong>4th Year at UVA:</strong> Class of 2027</p>
                                 <p><strong>Hometown:</strong> Great Falls, Virginia</p>
                                 <p><strong>Major:</strong> History & Economics</p>
                                 <p><strong>Research Interests:</strong> Corporate and Constitutional Law</p>
@@ -30,7 +31,7 @@ function Derek() {
                     <h2>About Derek</h2>
                     <div className="bio-content">
                         <p>
-                            Derek Tsai is a second-year Echols Scholar at the University of Virginia studying economics and history on the pre-law track.
+                            Derek Tsai is a fourth-year Echols Scholar at the University of Virginia studying economics and history on the pre-law track.
                             Derek is from Great Falls, Virginia, and attended Langley High School, where he developed his love for law.
                         </p>
                         <p>
@@ -54,7 +55,7 @@ function Derek() {
                     <h2>Publications</h2>
                     <div className="publications-list">
                         <div className="publication-item">
-                            <h3>"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"</h3>
+                            <h3><Link to="/dangerousimplications" className="author-link">"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"</Link></h3>
                             <p className="publication-meta">Civil Rights Law • June 2026</p>
                             <p className="publication-excerpt">
                                 This essay relies heavily on

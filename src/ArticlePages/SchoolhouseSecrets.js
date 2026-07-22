@@ -9,7 +9,7 @@ function SchoolhouseSecrets() {
         <div className="article-page fade-in">
             <div id="article-content">
                 <h1>
-                    Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom
+                    Schoolhouse Secrets:<br /><em>Parental Rights and Gender Identity Disclosure in the American Classroom</em>
                 </h1>
                 <p className="article-meta">By Shelby Eliasek • January 2026 • Education Law • 2026 Issue 1</p>
 

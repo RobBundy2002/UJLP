@@ -16,7 +16,7 @@ function Shelby() {
                             <h1>Shelby Eliasek</h1>
                             <span className="author-role">Director of Operations</span>
                             <div className="author-details">
-                                <p><strong>2nd Year at UVA:</strong> Class of 2028</p>
+                                <p><strong>3rd Year at UVA:</strong> Class of 2028</p>
                                 <p><strong>Hometown:</strong> Charlotte, North Carolina</p>
                                 <p><strong>Majors:</strong> Public Policy and Leadership (Frank Batten School); Political and Social Thought</p>
                                 <p><strong>Minor:</strong> Studio Art</p>

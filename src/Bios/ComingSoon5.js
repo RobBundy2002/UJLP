@@ -45,6 +45,7 @@ function ComingSoon5() {
                     <h2>Publications</h2>
                     <div className="publications-list">
                         <div className="publication-item">
+                            <p className="publication-meta">Publications coming soon...</p>
                         </div>
                     </div>
                 </div>

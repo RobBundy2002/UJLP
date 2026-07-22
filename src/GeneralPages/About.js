@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../Styling/About.css';
 import '../Styling/Home.css';
+import '../Styling/EditorialPages.css';
 import Timeline from '../Components/Timeline';
+import ParticleBackground from '../Components/ParticleBackground';
 import samImg from '../ProfilePictures/Sam.png';
 import shelbyImg from '../ProfilePictures/Shelby.jpeg';
 import derekImg from '../ProfilePictures/Derek.png';
@@ -14,11 +16,13 @@ function About() {
     const [activeFilter, setActiveFilter] = useState('all');
 
     return (
-        <div className="about-container fade-in">
+        <div className="about-container jh-page jh-about fade-in">
             <section className="about-hero">
+                <ParticleBackground />
                 <div className="section-content">
                     <div className="hero-content">
-                        <h1>About UJLP</h1>
+                        <p className="jh-eyebrow jh-about-kicker"><strong>UJLP</strong> · University of Virginia · Est. 2024</p>
+                        <h1>Where questions<br /><em>become scholarship.</em></h1>
                         <p>Discover our mission, our team, and our commitment to excellence in legal journalism.</p>
                         <div className="cta-buttons">
                             <a href="#/journal" className="cta-button">View Our Work</a>
@@ -40,10 +44,14 @@ function About() {
 
             <section className="leadership-section">
                 <div className="section-content">
-                    <h2>Leadership Team</h2>
-                    <div className="leadership-grid">
+                    <div className="jh-people-heading">
+                        <p>Executive Leadership</p>
+                        <h2>The people<br /><em>setting the course.</em></h2>
+                        <span>Meet the students guiding the Journal’s editorial vision, operations, research, and digital work.</span>
+                    </div>
+                    <div className="leadership-grid jh-leadership-grid">
                         <div className="leader-card">
-                            <div className="leader-image">
+                            <div className="jh-leader-thumbnail">
                                 <img src={derekImg} alt="Derek Tsai" />
                             </div>
                             <div className="leader-info">
@@ -53,7 +61,7 @@ function About() {
                             </div>
                         </div>
                         <div className="leader-card">
-                            <div className="leader-image">
+                            <div className="jh-leader-thumbnail">
                                 <img src={shelbyImg} alt="Shelby Eliasek" />
                             </div>
                             <div className="leader-info">
@@ -63,7 +71,7 @@ function About() {
                             </div>
                         </div>
                         <div className="leader-card">
-                            <div className="leader-image">
+                            <div className="jh-leader-thumbnail">
                                 <img src={evanImg} alt="Evan Proudkii" />
                             </div>
                             <div className="leader-info">
@@ -73,7 +81,7 @@ function About() {
                             </div>
                         </div>
                         <div className="leader-card">
-                            <div className="leader-image">
+                            <div className="jh-leader-thumbnail">
                                 <img src={willImg} alt="Will Olszewski" />
                             </div>
                             <div className="leader-info">
@@ -83,7 +91,7 @@ function About() {
                             </div>
                         </div>
                         <div className="leader-card">
-                            <div className="leader-image">
+                            <div className="jh-leader-thumbnail">
                                 <img src={robImg} alt="Rob Bundy" />
                             </div>
                             <div className="leader-info">
@@ -98,7 +106,10 @@ function About() {
 
             <section className="team-section">
                 <div className="section-content">
-                    <h2>Our Team</h2>
+                    <div className="jh-people-heading jh-roster-heading">
+                        <p>Our wider team</p>
+                        <h2>A room full of<br /><em>sharp minds.</em></h2>
+                    </div>
                     <div className="team-content">
                         <p>
                             Our group is composed of executive leaders, writers, and editors. Leaders plan events, manage the
@@ -109,7 +120,7 @@ function About() {
                         </p>
                     </div>
 
-                    <div className="filter-container">
+                    <div className="filter-container" aria-label="Filter team members by role">
                         <button 
                             className={`filter-button ${activeFilter === 'all' ? 'active' : ''}`}
                             onClick={() => setActiveFilter('all')}
@@ -181,9 +192,9 @@ function About() {
                             const gridClass = `team-members-grid ${filtered.length === 2 ? 'two-up' : ''}`.trim();
 
                             return (
-                                <div className={gridClass}>
+                                <div className={`${gridClass} jh-roster-grid`}>
                                     {filtered.map((m) => (
-                                        <div key={m.id} className={`team-member-card visible`}>
+                                        <div key={m.id} className={`team-member-card jh-roster-member visible`}>
                                             <img src={m.img} alt={m.name} className="team-member-photo" />
                                             <div className="team-member-info">
                                                 {m.link ? (
@@ -203,47 +214,6 @@ function About() {
             </section>
 
             <Timeline />
-
-            <section className="history-section">
-                <div className="section-content">
-                    <h2>Our History</h2>
-                    <div className="history-content">
-                        <p>
-                            The Undergraduate Journal of Law and Politics began in 2024 under the leadership of Sam Burnett,
-                            Derek Tsai, and Shelby Eliasek. They desired to expand legal research opportunities and collaborate
-                            with other interested students at the University of Virginia. Since they began the group, the Journal
-                            has published work for many new writers and editors, and the legally interested undergraduate community
-                            has grown closer.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <section className="work-section">
-                <div className="section-content">
-                    <h2>Our Work</h2>
-                    <div className="work-content">
-                        <p>
-                            We publish student-produced, long-form law reviews that offer an in-depth analysis of contemporary
-                            and historical legal issues. Our writers present their research in public symposiums and discussions,
-                            often in collaboration with law school students and legal scholars. Beyond publishing, we support
-                            our writers through personalized editorial mentorship and writing guidance to help them grow as legal
-                            thinkers and scholars. We also maintain an active website and social media presence to promote our
-                            work and share pressing legal and political research with the public.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <section className="join-section">
-                <div className="section-content">
-                    <div className="cta-content">
-                        <h2>Join Our Team</h2>
-                        <p>We're always looking for talented individuals to join our team. If you're passionate about journalism and want to make a difference, we'd love to hear from you.</p>
-                        <a href="#/jointheteam" className="cta-button ">Join Our Team</a>
-                    </div>
-                </div>
-            </section>
         </div>
     );
 }

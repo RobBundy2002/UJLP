@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { HashRouter as Router, Route, Routes, Link, Navigate, useLocation } from 'react-router-dom';
 import './Styling/App.css';
+import './Styling/GlobalOverhaul.css';
 import Home from './GeneralPages/Home';
 import About from './GeneralPages/About';
 import Journal from './GeneralPages/Journal';
@@ -103,9 +104,11 @@ function Navigation() {
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
+    const heroRoutes = ['/', '/about', '/journal', '/announcements', '/contact', '/jointheteam'];
+    const isHeroRoute = heroRoutes.includes(location.pathname);
 
     return (
-        <header className={`App-header ${isScrolled ? 'scrolled' : ''}`}>
+        <header className={`App-header ${isHeroRoute ? 'over-hero' : ''} ${isScrolled ? 'scrolled' : ''}`}>
             <div className="header-container">
                 <Link to="/" className="App-title">
                     <img src={logo} alt="UJLP Logo"/>
@@ -117,21 +120,32 @@ function Navigation() {
 
                 <nav
                     ref={menuRef}
+                    id="primary-navigation"
                     className={`App-nav-top ${isMobileMenuOpen ? 'active' : ''}`}
                 >
+                    <div className="mobile-nav-header">
+                        <div><strong>UJLP</strong><span>Site index</span></div>
+                        <button type="button" className="mobile-nav-close" onClick={closeMobileMenu} aria-label="Close navigation">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                                <path d="M5 5l14 14M19 5L5 19" />
+                            </svg>
+                        </button>
+                    </div>
+                    <p className="mobile-nav-kicker">Explore the Journal</p>
                     <Link to="/" className={`App-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMobileMenu}>Home</Link>
                     <Link to="/about" className={`App-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMobileMenu}>About</Link>
                     <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`} onClick={closeMobileMenu}>Journal</Link>
                     <Link to="/announcements" className={`App-link ${location.pathname === '/announcements' ? 'active' : ''}`} onClick={closeMobileMenu}>Announcements</Link>
                     <Link to="/contact" className={`App-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={closeMobileMenu}>Contact</Link>
                     <Link to="/jointheteam" className={`App-link ${location.pathname === '/jointheteam' ? 'active' : ''}`} onClick={closeMobileMenu}>Apply</Link>
+                    <div className="mobile-nav-footer"><span>University of Virginia</span><span>Est. 2024</span></div>
                 </nav>
 
                 <div className="header-search">
                     <SearchBar />
                 </div>
 
-                <button className={`mobile-menu-button ${isMobileMenuOpen ? 'hidden' : ''}`} onClick={toggleMobileMenu}>
+                <button className={`mobile-menu-button ${isMobileMenuOpen ? 'hidden' : ''}`} onClick={toggleMobileMenu} aria-label="Open navigation" aria-expanded={isMobileMenuOpen} aria-controls="primary-navigation">
                     <svg className={`menu-icon ${isMobileMenuOpen ? 'active' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <path d="M3 6h18M3 12h18M3 18h18"/>
                     </svg>

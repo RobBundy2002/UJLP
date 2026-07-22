@@ -6,7 +6,7 @@ const Footer = () => {
         <footer className="footer">
             <div className="footer-content">
                 <div className="footer-section">
-                    <h3>Undergraduate Journal of Law and Politics</h3>
+                    <h3><span className="footer-kicker">UJLP</span>Undergraduate Journal of Law and Politics</h3>
                     <p>University of Virginia</p>
                     <p>Charlottesville, VA</p>
                 </div>

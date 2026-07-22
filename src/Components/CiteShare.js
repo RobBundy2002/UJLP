@@ -73,7 +73,7 @@ function CiteShare({ title, author, date, url }) {
 
   return (
     <div className="cite-popover-wrapper" ref={wrapperRef}>
-      <button ref={buttonRef} className="cite-trigger large" onClick={() => setOpen(o => !o)}>Quick Citations Here!</button>
+      <button ref={buttonRef} className="cite-trigger" onClick={() => setOpen(o => !o)}>Cite this article <span>↗</span></button>
 
       {open && (
         <div className="cite-popover" role="dialog" aria-label="Citation options">

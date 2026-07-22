@@ -1,0 +1,138 @@
+/* Shared editorial language for the internal UJLP pages. */
+.jh-page {
+    --jh-ink: #f7f1e7;
+    --jh-muted: #b8bcc9;
+    --jh-night: #07111f;
+    --jh-panel: #0c1b30;
+    --jh-line: rgba(231, 222, 203, .2);
+    --jh-ember: #f18c62;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    transform: none;
+    padding: 0;
+    overflow: hidden;
+    color: var(--jh-ink);
+    background: var(--jh-night);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.jh-page *, .jh-page *::before, .jh-page *::after { box-sizing: border-box; }
+.jh-page h1, .jh-page h2, .jh-page h3 { color: var(--jh-ink); font-family: "Playfair Display", Georgia, serif; font-weight: 400; }
+.jh-page p { color: var(--jh-muted); }
+.jh-page .section-content { width: min(1280px, 100%); margin: 0 auto; padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 7vw, 7rem); }
+.jh-page .section-content h2 { color: var(--jh-ink); font-size: clamp(2.3rem, 4.5vw, 4.75rem); font-weight: 400; letter-spacing: -.055em; line-height: .96; }
+.jh-page .section-content h2::after { display: none; }
+
+.jh-page .about-hero, .jh-page .journal-hero, .jh-page .announcements-hero, .jh-page .contact-hero, .jh-page .archives-hero {
+    min-height: min(580px, 65vh);
+    margin: 0;
+    padding: 7rem clamp(1.5rem, 7vw, 7rem) 4rem;
+    border-radius: 0;
+    border-bottom: 1px solid var(--jh-line);
+    background: radial-gradient(circle at 79% 20%, rgba(38, 83, 126, .67), transparent 28%), radial-gradient(circle at 20% 90%, rgba(156, 62, 41, .26), transparent 30%), #07111f;
+}
+.jh-page .about-hero::after, .jh-page .journal-hero::after, .jh-page .announcements-hero::after, .jh-page .contact-hero::after, .jh-page .archives-hero::after { content: ""; position: absolute; inset: 1.25rem; border: 1px solid rgba(236,227,210,.18); pointer-events: none; }
+.jh-page .about-hero::before, .jh-page .journal-hero::before, .jh-page .announcements-hero::before, .jh-page .contact-hero::before, .jh-page .archives-hero::before { width: min(70vw, 820px); height: min(70vw, 820px); inset: auto -25vw -44vw auto; border: 1px solid rgba(241,140,98,.36); border-radius: 50%; background: none; opacity: 1; }
+.jh-page .about-hero .section-content, .jh-page .journal-hero .section-content, .jh-page .announcements-hero .section-content, .jh-page .archives-hero .section-content { z-index: 3; padding: 0; }
+.jh-page .contact-hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+.jh-page .about-hero h1, .jh-page .journal-hero h1, .jh-page .announcements-hero h1, .jh-page .contact-hero h1, .jh-page .archives-hero h1 { margin-bottom: 1rem; color: var(--jh-ink); font-size: clamp(3.6rem, 8vw, 7rem); font-weight: 400; letter-spacing: -.07em; line-height: .85; }
+.jh-page .about-hero h1::after, .jh-page .journal-hero h1::after, .jh-page .announcements-hero h1::after, .jh-page .contact-hero h1::after, .jh-page .archives-hero h1::after { display: none; }
+.jh-page .about-hero .hero-content p, .jh-page .journal-hero .hero-content, .jh-page .announcements-hero .hero-content, .jh-page .contact-hero .hero-content, .jh-page .archives-hero .hero-content { max-width: 600px; margin: 0 auto; color: var(--jh-muted); font-size: 1.05rem; line-height: 1.7; }
+.jh-page .about-hero .cta-buttons { margin-top: 1.8rem; }
+
+.jh-page .cta-button, .jh-page .contact-card .cta-button { display: inline-flex; width: auto !important; align-items: center; justify-content: center; padding: .95rem 1.25rem; margin: 0; border: 1px solid #f18c62 !important; border-radius: 0; background: #bf4e2c !important; box-shadow: none; color: white !important; font-size: .75rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; transition: transform .2s ease, background .2s ease; }
+.jh-page .cta-button:hover { background: #f18c62 !important; transform: translateY(-3px); }
+
+/* Journal */
+.jh-journal .journal-intro .section-content { max-width: 950px; padding-bottom: 2rem; }
+.jh-journal .intro-content { max-width: 720px; text-align: left; }
+.jh-journal .intro-content p { font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.8rem, 3.2vw, 3rem); line-height: 1.2; color: var(--jh-ink); }
+.jh-journal .journal-articles { margin: 0; background: #07111f; border-top: 1px solid var(--jh-line); }
+.jh-journal .journal-articles .section-content { padding-top: 3rem; }
+.jh-journal .journal-articles h2 { margin: 2.5rem 0 3rem; text-align: left; }
+.jh-journal .articles-grid { gap: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--jh-line); }
+.jh-journal .article-card { border: 0; border-radius: 0; box-shadow: none; background: transparent; border-bottom: 1px solid var(--jh-line); }
+.jh-journal .article-card + .article-card { border-left: 1px solid var(--jh-line); }
+.jh-journal .article-card:hover { box-shadow: none; transform: none; background: rgba(255,255,255,.025); }
+.jh-journal .article-content { padding: 2rem; }
+.jh-journal .article-category, .jh-journal .article-issue-badge { padding: 0; margin: 0 0 1rem; background: none; border-radius: 0; color: var(--jh-ember); font-size: .68rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.jh-journal .article-issue-badge { color: #90a9bd; }
+.jh-journal .article-category + .article-issue-badge { margin-top: .5rem; }
+.jh-journal .article-issue-badge + h3 { margin-top: 2.8rem; }
+.jh-journal .article-content h3 { color: var(--jh-ink); font-size: clamp(1.65rem, 2.5vw, 2.65rem); font-weight: 400; letter-spacing: -.045em; line-height: 1.08; }
+.jh-journal .article-meta, .jh-journal .article-excerpt { color: var(--jh-muted); }
+.jh-journal .author-link { color: var(--jh-ember); }
+.jh-journal .article-link { color: var(--jh-ember); font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.jh-journal .journal-cta { margin: 0; border-radius: 0; background: radial-gradient(circle at 82% 15%, rgba(189, 78, 44, .28), transparent 30%), #07111f; border-top: 1px solid var(--jh-line); }
+.jh-journal .journal-cta::before { display: none; }
+.jh-journal .journal-cta h2 { color: var(--jh-ink); }
+.jh-journal .journal-cta p { color: var(--jh-muted); }
+
+/* About */
+.jh-about .mission-section .section-content, .jh-about .team-section .section-content, .jh-about .history-section .section-content, .jh-about .work-section .section-content { max-width: 1020px; }
+.jh-about .mission-content, .jh-about .team-content, .jh-about .history-content, .jh-about .work-content { max-width: 780px; margin: 0; padding: 0; text-align: left; }
+.jh-about .mission-content p, .jh-about .team-content p, .jh-about .history-content p, .jh-about .work-content p { color: var(--jh-muted); font-size: 1.04rem; line-height: 1.85; }
+.jh-about .leadership-section { margin: 0; padding: 0; border-radius: 0; background: #07111f; border-top: 1px solid var(--jh-line); }
+.jh-about .leadership-grid { grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 0; background: var(--jh-line); }
+.jh-about .leader-card { border: 0; border-radius: 0; box-shadow: none; background: var(--jh-night); }
+.jh-about .leader-card:hover { box-shadow: none; transform: none; }
+.jh-about .leader-image { height: 320px; }
+.jh-about .leader-info { min-height: 245px; padding: 1.6rem; background: var(--jh-night); }
+.jh-about .leader-info h3, .jh-about .author-link { color: var(--jh-ink); font-size: 1.45rem; }
+.jh-about .leader-role { color: var(--jh-ember); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+.jh-about .leader-info p { color: var(--jh-muted); font-size: .86rem; }
+.jh-about .filter-container { justify-content: flex-start; padding: 0; }
+.jh-about .filter-button { border: 1px solid var(--jh-line); border-radius: 0; background: transparent; color: var(--jh-muted); box-shadow: none; }
+.jh-about .filter-button.active { border-color: var(--jh-ember); background: var(--jh-ember); color: #07111f; }
+.jh-about .join-section { background: radial-gradient(circle at 82% 15%, rgba(189, 78, 44, .28), transparent 30%), #07111f; border-top: 1px solid var(--jh-line); }
+.jh-about .join-section h2 { color: var(--jh-ink); }
+.jh-about .join-section p { color: var(--jh-muted); }
+
+/* Announcements and Contact */
+.jh-announcements .announcements-section .section-content { padding-top: 4rem; }
+.jh-announcements .announcements-grid { grid-template-columns: 1fr; gap: 0; margin: 0; border-top: 1px solid var(--jh-line); }
+.jh-announcements .announcement-card { border: 0; border-radius: 0; box-shadow: none; background: transparent; border-bottom: 1px solid var(--jh-line); }
+.jh-announcements .announcement-card:hover { box-shadow: none; transform: none; background: rgba(255,255,255,.025); }
+.jh-announcements .announcement-content { max-width: 850px; padding: clamp(2rem, 5vw, 4rem) 0; }
+.jh-announcements .announcement-category { padding: 0; margin-bottom: 1.5rem; background: none; color: var(--jh-ember); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.jh-announcements .announcement-card h2 { color: var(--jh-ink); font-size: clamp(2rem, 4vw, 3.75rem); font-weight: 400; letter-spacing: -.055em; line-height: 1.05; }
+.jh-announcements .announcement-date { color: var(--jh-ember); }
+.jh-announcements .announcement-text { color: var(--jh-muted); font-size: 1rem; line-height: 1.8; }
+.jh-announcements .subscribe-section { border-radius: 0; background: var(--jh-panel); }
+.jh-announcements .subscribe-section h2 { color: var(--jh-ink); }
+.jh-announcements .subscribe-form { align-items: stretch; }
+.jh-announcements .subscribe-input { border: 1px solid var(--jh-line); border-radius: 0; background: #07111f; color: var(--jh-ink); }
+.jh-announcements .subscribe-form .cta-button { width: auto !important; }
+.jh-contact .contact-section { margin: 0; }
+.jh-contact .contact-grid { width: min(1280px, 100%); grid-template-columns: repeat(3, 1fr); gap: 1px; margin: 0 auto; background: var(--jh-line); }
+.jh-contact .contact-card { min-height: 370px; padding: clamp(1.7rem, 3vw, 3rem); border: 0; border-radius: 0; box-shadow: none; background: #07111f; }
+.jh-contact .contact-card:hover { box-shadow: none; transform: none; background: rgba(255,255,255,.025); }
+.jh-contact .contact-icon { margin-bottom: 2.3rem; text-align: left; font-size: 2rem; filter: grayscale(1); }
+.jh-contact .contact-card h2 { color: var(--jh-ink); font-size: 2rem; font-weight: 400; letter-spacing: -.04em; }
+.jh-contact .contact-card p { color: var(--jh-muted); }
+.jh-contact .contact-card .cta-button { width: 100% !important; margin-top: .75rem; }
+.jh-contact .contact-info { width: 100%; grid-template-columns: repeat(2, 1fr); gap: 1px; margin: 0; padding: 1px 0 0; border-radius: 0; background: var(--jh-line); }
+.jh-contact .info-card { padding: 3rem; border-radius: 0; background: #07111f; text-align: left; }
+.jh-contact .info-card h3 { color: var(--jh-ink); font-size: 1.65rem; font-weight: 400; }
+.jh-contact .info-card p { color: var(--jh-muted); }
+
+/* Application page */
+.jh-apply .articles-section { margin: 0; }
+.jh-apply .articles-section .section-content { max-width: 1000px; }
+.jh-apply .articles-section > .section-content > p { max-width: 760px; line-height: 1.8; }
+.jh-apply .article-card { margin: 2rem 0; border: 1px solid var(--jh-line); border-radius: 0; box-shadow: none; background: var(--jh-panel); }
+.jh-apply .article-card:hover { box-shadow: none; transform: translateX(5px); }
+.jh-apply .article-content { padding: clamp(1.7rem, 4vw, 3rem); }
+.jh-apply .article-content h3 { color: var(--jh-ink); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 400; }
+.jh-apply .article-content h4 { margin-top: 2rem; color: var(--jh-ember); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+.jh-apply .article-content p, .jh-apply .article-content li { color: var(--jh-muted); line-height: 1.75; }
+.jh-apply .article-link { color: var(--jh-ember); font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+
+@media (max-width: 780px) {
+    .jh-page .about-hero, .jh-page .journal-hero, .jh-page .announcements-hero, .jh-page .contact-hero, .jh-page .archives-hero { min-height: 480px; padding-top: 6rem; }
+    .jh-page .about-hero::after, .jh-page .journal-hero::after, .jh-page .announcements-hero::after, .jh-page .contact-hero::after, .jh-page .archives-hero::after { inset: .75rem; }
+    .jh-journal .articles-grid, .jh-about .leadership-grid, .jh-contact .contact-grid { grid-template-columns: 1fr; }
+    .jh-journal .article-card + .article-card { border-left: 0; }
+    .jh-contact .contact-info { grid-template-columns: 1fr; }
+    .jh-announcements .subscribe-form { flex-direction: column; }
+}
