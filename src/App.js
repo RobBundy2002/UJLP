@@ -38,6 +38,8 @@ import SearchBar from "./Components/SearchBar";
 import BackToTop from "./Components/BackToTop";
 import PublicationIndex from './GeneralPages/PublicationIndex';
 import ResearchArea from './GeneralPages/ResearchArea';
+import BioFrame from './Components/BioFrame';
+import { PrintingPressIntro } from './Components/JournalCinema';
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -165,6 +167,7 @@ function App() {
     return (
         <Router>
             <div className="App">
+                <PrintingPressIntro />
                 <Navigation />
                 <Toast />
                 <main className="fade-in">
@@ -178,17 +181,17 @@ function App() {
                         <Route path="/announcements" element={<Announcements />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/jointheteam" element={<JoinTheTeam />} />
-                        <Route path="/author/derek" element={<Derek />} />
-                        <Route path="/author/mikayla" element={<Mikayla />} />
-                        <Route path="/author/rob" element={<Rob />} />
-                        <Route path="/author/evan" element={<Evan />} />
-                        <Route path="/author/shelby" element={<Shelby />} />
-                        <Route path="/author/richard" element={<Richard />} />
-                        <Route path="/author/will" element={<Will />} />
-                        <Route path="/author/rishi" element={<Rishi />} />
-                        <Route path="/author/mia" element={<Mia />} />
-                        <Route path="/author/charlie" element={<Charlie />} />
-                        <Route path="/author/rhett" element={<Rhett />} />
+                        <Route path="/author/derek" element={<BioFrame initials="DT" name="Derek Tsai"><Derek /></BioFrame>} />
+                        <Route path="/author/mikayla" element={<BioFrame initials="MG" name="Mikayla Grady"><Mikayla /></BioFrame>} />
+                        <Route path="/author/rob" element={<BioFrame initials="RB" name="Rob Bundy"><Rob /></BioFrame>} />
+                        <Route path="/author/evan" element={<BioFrame initials="EP" name="Evan Proudkii"><Evan /></BioFrame>} />
+                        <Route path="/author/shelby" element={<BioFrame initials="SE" name="Shelby Eliasek"><Shelby /></BioFrame>} />
+                        <Route path="/author/richard" element={<BioFrame initials="RX" name="Richard Xu"><Richard /></BioFrame>} />
+                        <Route path="/author/will" element={<BioFrame initials="WO" name="Will Olszewski"><Will /></BioFrame>} />
+                        <Route path="/author/rishi" element={<BioFrame initials="RC" name="Rishi Chandra"><Rishi /></BioFrame>} />
+                        <Route path="/author/mia" element={<BioFrame initials="MP" name="Mia Petersen"><Mia /></BioFrame>} />
+                        <Route path="/author/charlie" element={<BioFrame initials="CH" name="Charlie Houck"><Charlie /></BioFrame>} />
+                        <Route path="/author/rhett" element={<BioFrame initials="RD" name="Rhett Deitz"><Rhett /></BioFrame>} />
                         <Route path="/author/comingsoon1" element={<ComingSoon1 />} />
                         <Route path="/author/comingsoon2" element={<ComingSoon2 />} />
                         <Route path="/author/comingsoon3" element={<ComingSoon3 />} />

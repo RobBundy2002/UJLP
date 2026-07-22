@@ -5,6 +5,7 @@ import '../Styling/Home.css';
 import '../Styling/EditorialPages.css';
 import IssueShelf from '../Components/IssueShelf';
 import ResearchConstellation from '../Components/ResearchConstellation';
+import { AnimatedJournalSeal } from '../Components/JournalCinema';
 import { articles, issues } from '../Data/journalData';
 
 function Journal() {
@@ -33,6 +34,7 @@ function Journal() {
                             politics, and society. Each article represents the culmination of months of research,
                             analysis, and scholarly debate.
                         </p>
+                        <AnimatedJournalSeal />
                     </div>
                 </div>
             </section>
