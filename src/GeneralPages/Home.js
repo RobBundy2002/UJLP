@@ -49,7 +49,7 @@ function Home() {
             <section className="jh-featured">
                 <div className="jh-featured-heading">
                     <div><p className="jh-section-label">From the latest issues</p><h2>Featured<br /><em>research.</em></h2></div>
-                    <Link to="/journal" className="jh-text-link">See all articles <span>→</span></Link>
+                    <Link to="/journal" className="jh-text-link">View the Journal <span>→</span></Link>
                 </div>
                 <div className="jh-articles">
                     <article className="jh-article jh-article-lead">

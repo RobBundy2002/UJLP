@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import '../Styling/Timeline.css';
 
 const timelineData = [
@@ -53,8 +53,27 @@ const timelineData = [
 ];
 
 function Timeline() {
+    const [activeIndex, setActiveIndex] = useState(1);
+    const trackRef = useRef(null);
+    const activeItem = timelineData[activeIndex];
+
+    const selectChapter = (index) => {
+        setActiveIndex(index);
+        const track = trackRef.current;
+        const item = track?.children[index];
+        if (track && item) {
+            const targetLeft = item.offsetLeft - (track.clientWidth - item.clientWidth) / 2;
+            track.scrollTo({ left: Math.max(0, targetLeft), behavior: 'smooth' });
+        }
+    };
+
+    const moveChapter = (direction) => {
+        const nextIndex = Math.min(Math.max(activeIndex + direction, 0), timelineData.length - 1);
+        selectChapter(nextIndex);
+    };
+
     return (
-        <section className="timeline-section">
+        <section className="timeline-section timeline-chapters">
             <div className="section-content">
                 <div className="timeline-intro">
                     <p>Our story</p>
@@ -64,20 +83,36 @@ function Timeline() {
                         <p>We publish long-form legal scholarship, bring writers and editors together, and carry that work into public discussions, symposiums, and the wider UVA community.</p>
                     </div>
                 </div>
-                <div className="timeline-container">
+
+                <div className="timeline-chapter-display">
+                    <div className="timeline-chapter-count">
+                        <span>{String(activeIndex + 1).padStart(2, '0')}</span>
+                        <small>/ {String(timelineData.length).padStart(2, '0')}</small>
+                    </div>
+                    <div className="timeline-chapter-copy" aria-live="polite">
+                        <span>{activeItem.category} · {activeItem.year}</span>
+                        <h3>{activeItem.title}</h3>
+                        <p>{activeItem.description}</p>
+                    </div>
+                    <div className="timeline-chapter-controls">
+                        <button type="button" onClick={() => moveChapter(-1)} disabled={activeIndex === 0} aria-label="Previous chapter">←</button>
+                        <button type="button" onClick={() => moveChapter(1)} disabled={activeIndex === timelineData.length - 1} aria-label="Next chapter">→</button>
+                    </div>
+                </div>
+
+                <div className="timeline-chapter-track" ref={trackRef} aria-label="Journal history chapters">
                     {timelineData.map((item, index) => (
-                        <div key={index} className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}>
-                            <div className="timeline-content">
-                                <div className="timeline-marker">
-                                    <span className="timeline-year">{item.year}</span>
-                                </div>
-                                <div className="timeline-card">
-                                    <span className="timeline-category">{item.category}</span>
-                                    <h3 className="timeline-title">{item.title}</h3>
-                                    <p className="timeline-description">{item.description}</p>
-                                </div>
-                            </div>
-                        </div>
+                        <button
+                            type="button"
+                            key={`${item.year}-${item.title}`}
+                            className={`timeline-chapter-tab ${activeIndex === index ? 'active' : ''}`}
+                            onClick={() => selectChapter(index)}
+                            aria-pressed={activeIndex === index}
+                        >
+                            <span>{String(index + 1).padStart(2, '0')}</span>
+                            <strong>{item.year}</strong>
+                            <small>{item.category}</small>
+                        </button>
                     ))}
                 </div>
             </div>

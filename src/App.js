@@ -36,6 +36,8 @@ import ComingSoon7 from "./Bios/ComingSoon7";
 import ComingSoon8 from "./Bios/ComingSoon8";
 import SearchBar from "./Components/SearchBar";
 import BackToTop from "./Components/BackToTop";
+import PublicationIndex from './GeneralPages/PublicationIndex';
+import ResearchArea from './GeneralPages/ResearchArea';
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -171,6 +173,8 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/journal" element={<Journal />} />
+                        <Route path="/journal/index" element={<PublicationIndex />} />
+                        <Route path="/research/:slug" element={<ResearchArea />} />
                         <Route path="/announcements" element={<Announcements />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/jointheteam" element={<JoinTheTeam />} />
