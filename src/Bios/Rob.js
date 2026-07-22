@@ -104,7 +104,7 @@ function Rob() {
                             <h3>Undergraduate Teaching Assistant</h3>
                             <p className="experience-meta">UVA Department of Computer Science • August 2023 - May 2025</p>
                             <p className="experience-description">
-                                - Assisting the teaching of various CS courses including Intro to Programming, Data Structures and Algorithms I,
+                                - Assisted the teaching of various CS courses including Intro to Programming, Data Structures and Algorithms I,
                                 Human Computer Interaction, and Intro to Cybersecurity. <br />
                                 - Served as Head Teaching Assistant for CS1112, managing Piazza discussions and course administration.
                             </p>

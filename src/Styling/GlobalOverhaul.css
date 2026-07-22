@@ -1038,7 +1038,8 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .author-bio-container .author-details p:nth-child(even) { padding-left: 1rem; }
 .author-bio-container .author-details strong { display: block; margin-bottom: .3rem; color: #f4a37d; font-size: .6rem; letter-spacing: .1em; text-transform: uppercase; }
 
-.author-bio-container .author-bio-section { background: #07111f; }
+.author-bio-container .author-bio-section { position: relative; overflow: hidden; border-top: 1px solid rgba(231,222,203,.16); background: #07111f; }
+.author-bio-container .author-bio-section::before { content: ""; position: absolute; top: -17rem; right: -13rem; width: 32rem; height: 32rem; border: 1px solid rgba(34,84,127,.16); border-radius: 50%; pointer-events: none; }
 .author-bio-container .author-bio-section .section-content,
 .author-bio-container .author-publications .section-content,
 .author-bio-container .author-experience .section-content,
@@ -1049,7 +1050,10 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .author-bio-container .author-experience h2,
 .author-bio-container .author-projects h2,
 .author-bio-container .author-contact h2 { position: sticky; top: 8rem; margin: 0; font-size: clamp(2.8rem, 5vw, 5.5rem); line-height: .86; }
-.author-bio-container .author-bio-section h2 { width: clamp(230px, 27vw, 370px); max-width: 100%; justify-self: end; text-align: center; transform: translateX(clamp(-3rem, -3vw, -1.5rem)); }
+.author-bio-container .author-bio-section .section-content { display: block; padding-top: clamp(6rem, 10vw, 9rem); padding-bottom: clamp(6rem, 11vw, 10rem); }
+.author-bio-container .author-bio-section h2 { position: relative; top: auto; width: 100%; max-width: none; margin: 0 0 clamp(3.5rem, 7vw, 6rem); padding: 0 0 clamp(1.75rem, 3vw, 2.5rem); color: #f7f1e7; font-family: "Playfair Display", Georgia, serif; font-size: clamp(2.8rem, 5vw, 5.5rem); font-weight: 400; letter-spacing: -.055em; line-height: .86; text-align: left; transform: none; }
+.author-bio-container .author-bio-section h2::before { content: "PROFILE  /  BIOGRAPHY"; display: block; margin-bottom: 1.25rem; color: #f18c62; font-family: Inter, sans-serif; font-size: .62rem; font-weight: 700; letter-spacing: .17em; line-height: 1.4; text-transform: uppercase; }
+.author-bio-container .author-bio-section h2::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; display: block; width: 100%; height: 1px; border-radius: 0; background: linear-gradient(90deg, #f18c62 0 8rem, rgba(231,222,203,.18) 8rem 100%); transform: none; animation: none; }
 .author-bio-container .bio-content,
 .author-bio-container .publications-list,
 .author-bio-container .experience-list,
@@ -1061,11 +1065,12 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .author-bio-container .projects-list,
 .author-bio-container .author-contact .contact-info { min-width: 0; }
 .author-bio-container .publications-list { width: calc(100% + clamp(1.5rem, 3vw, 3rem)); max-width: none; }
-.author-bio-container .bio-content { padding-top: .25rem; }
+.author-bio-container .bio-content { width: min(1100px, 100%); margin-left: auto; padding: 0 clamp(0rem, 2vw, 2rem); }
 .author-bio-container .publications-list, .author-bio-container .experience-list, .author-bio-container .projects-list { counter-reset: profile-entry; }
-.author-bio-container .bio-content { columns: 2; column-gap: clamp(2.5rem, 5vw, 5rem); column-rule: 1px solid rgba(231,222,203,.15); direction: ltr; }
-.author-bio-container .bio-content p { direction: ltr; margin: 0; padding: 0 0 1.8rem; color: #c4c7cf; font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.18rem, 2vw, 1.65rem); line-height: 1.55; text-align: left; }
+.author-bio-container .bio-content { columns: 2; column-gap: clamp(3rem, 7vw, 7rem); column-rule: 1px solid rgba(231,222,203,.14); direction: ltr; }
+.author-bio-container .bio-content p { direction: ltr; margin: 0; padding: 0 0 2rem; color: #c4c7cf; font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.12rem, 1.75vw, 1.48rem); line-height: 1.7; text-align: left; }
 .author-bio-container .bio-content p + p { padding-top: 0; border-top: 0; }
+.author-bio-container .bio-content p:first-child::first-letter { float: left; margin: .08em .12em 0 0; color: #f4a37d; font-size: 3.6em; line-height: .78; }
 .author-bio-container .publication-item,
 .author-bio-container .experience-item,
 .author-bio-container .project-item { position: relative; width: 100%; max-width: 100%; counter-increment: profile-entry; padding: 2.2rem 0 2.8rem 4.25rem; overflow: hidden; background: transparent; }
@@ -1083,6 +1088,48 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .author-bio-container .publication-excerpt,
 .author-bio-container .experience-description,
 .author-bio-container .project-description { max-width: 760px; }
+
+/* Publications read as a curated catalog rather than a stack of generic cards. */
+.author-bio-container .author-publications { position: relative; overflow: hidden; border-top: 1px solid rgba(231,222,203,.16); background: radial-gradient(circle 30rem at 88% 15%, rgba(34,84,127,.14), transparent 100%), #081421; }
+.author-bio-container .author-publications::after { content: ""; position: absolute; right: -9rem; bottom: -13rem; width: 25rem; height: 25rem; border: 1px solid rgba(241,140,98,.13); border-radius: 50%; pointer-events: none; }
+.author-bio-container .author-publications .section-content { position: relative; z-index: 1; display: block; padding-top: clamp(6rem, 10vw, 9rem); padding-bottom: clamp(6rem, 11vw, 10rem); }
+.author-bio-container .author-publications h2 { position: relative; top: auto; width: 100%; margin: 0 0 clamp(3.5rem, 7vw, 6rem); padding: 0 0 clamp(1.75rem, 3vw, 2.5rem); color: #f7f1e7; font-family: "Playfair Display", Georgia, serif; font-size: clamp(2.8rem, 5vw, 5.5rem); font-weight: 400; letter-spacing: -.055em; line-height: .86; text-align: left; }
+.author-bio-container .author-publications h2::before { content: "JOURNAL  /  PUBLISHED WORK"; display: block; margin-bottom: 1.25rem; color: #f18c62; font-family: Inter, sans-serif; font-size: .62rem; font-weight: 700; letter-spacing: .17em; line-height: 1.4; text-transform: uppercase; }
+.author-bio-container .author-publications h2::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; display: block; width: 100%; height: 1px; border-radius: 0; background: linear-gradient(90deg, #f18c62 0 8rem, rgba(231,222,203,.18) 8rem 100%); transform: none; animation: none; }
+.author-bio-container .publications-list { width: min(1100px, 100%); max-width: none; margin: 0 0 0 auto; border-top: 1px solid rgba(231,222,203,.18); }
+.author-bio-container .publication-item { position: relative; width: 100%; display: grid; grid-template-columns: 4.25rem minmax(0, 1fr); column-gap: clamp(1rem, 3vw, 2.5rem); align-items: start; margin: 0; padding: clamp(2.5rem, 5vw, 4.25rem) clamp(1rem, 2.5vw, 2rem); overflow: visible; border: 0; border-bottom: 1px solid rgba(231,222,203,.18); border-radius: 0; background: transparent; transition: background .2s ease; }
+.author-bio-container .publication-item:hover { background: rgba(255,255,255,.018); box-shadow: inset 2px 0 #f18c62; transform: none; }
+.author-bio-container .publication-item::before { position: static; grid-column: 1; grid-row: 1 / span 20; display: grid; width: 2.65rem; height: 2.65rem; place-items: center; margin: 0; border: 1px solid rgba(241,140,98,.48); border-radius: 50%; background: transparent; color: #f18c62; font-size: .61rem; }
+.author-bio-container .publication-item > * { grid-column: 2; min-width: 0; }
+.author-bio-container .publication-item h3 { max-width: 920px; margin: -.12em 0 1rem; color: #f7f1e7; font-size: clamp(1.8rem, 3.4vw, 3.5rem); line-height: 1.04; overflow-wrap: anywhere; }
+.author-bio-container .publication-item .publication-meta { margin: 0 0 1.4rem; color: #f18c62 !important; }
+.author-bio-container .publication-item .publication-excerpt { max-width: 800px; margin: 0; color: #aeb8c3; font-size: .96rem; line-height: 1.8; }
+.author-bio-container .publication-item > p:not([class]) { color: #aeb8c3; line-height: 1.75; }
+.author-bio-container .publication-item > ul { color: #aeb8c3; line-height: 1.7; }
+.author-bio-container .publication-item > ul li::marker { color: #f18c62; }
+.author-bio-container .publication-item:not(:has(h3)) { min-height: 150px; align-items: center; }
+.author-bio-container .publication-item:not(:has(h3)) .publication-meta { margin: 0; color: #8499ac !important; }
+
+/* Rob's experience becomes a featured career timeline with promotion history. */
+.author-bio-container .author-experience { position: relative; overflow: hidden; border-top: 1px solid rgba(231,222,203,.16); background: #07111f; }
+.author-bio-container .author-experience::before { content: ""; position: absolute; top: 7rem; left: -13rem; width: 27rem; height: 27rem; border: 1px solid rgba(34,84,127,.14); border-radius: 50%; pointer-events: none; }
+.author-bio-container .author-experience .section-content { position: relative; z-index: 1; display: block; padding-top: clamp(6rem, 10vw, 9rem); padding-bottom: clamp(6rem, 11vw, 10rem); }
+.author-bio-container .author-experience h2 { position: relative; top: auto; width: 100%; margin: 0 0 clamp(3.5rem, 7vw, 6rem); padding: 0 0 clamp(1.75rem, 3vw, 2.5rem); color: #f7f1e7; font-family: "Playfair Display", Georgia, serif; font-size: clamp(2.8rem, 5vw, 5.5rem); font-weight: 400; letter-spacing: -.055em; line-height: .86; text-align: left; }
+.author-bio-container .author-experience h2::before { content: "CAREER  /  EXPERIENCE"; display: block; margin-bottom: 1.25rem; color: #f18c62; font-family: Inter, sans-serif; font-size: .62rem; font-weight: 700; letter-spacing: .17em; line-height: 1.4; text-transform: uppercase; }
+.author-bio-container .author-experience h2::after { content: ""; position: absolute; right: 0; bottom: 0; left: 0; display: block; width: 100%; height: 1px; border-radius: 0; background: linear-gradient(90deg, #f18c62 0 8rem, rgba(231,222,203,.18) 8rem 100%); transform: none; animation: none; }
+.author-bio-container .author-experience .experience-list { width: min(1100px, 100%); max-width: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.5rem, 3vw, 2.5rem); margin: 0 0 0 auto; border: 0; background: transparent; }
+.author-bio-container .author-experience .experience-item { position: relative; min-width: 0; min-height: 310px; margin: 0; padding: clamp(2rem, 4vw, 3rem) clamp(1.35rem, 3vw, 2.4rem) clamp(2.25rem, 4vw, 3rem) clamp(4.75rem, 6vw, 6rem); overflow: hidden; border: 1px solid rgba(231,222,203,.17); border-radius: .6rem; background: #091625; box-shadow: none; transform: none; }
+.author-bio-container .author-experience .experience-item:hover { border-color: rgba(241,140,98,.34); background: #0a192a; box-shadow: none; transform: none; }
+.author-bio-container .author-experience .experience-item::before { position: absolute; top: clamp(2rem, 4vw, 3rem); left: clamp(1.25rem, 2.5vw, 2rem); display: grid; width: 2.55rem; height: 2.55rem; place-items: center; border: 1px solid rgba(241,140,98,.48); border-radius: 50%; background: transparent; }
+.author-bio-container .author-experience .experience-item:first-child { grid-column: 1 / -1; min-height: 0; padding-left: clamp(5rem, 7vw, 7rem); background: radial-gradient(circle at 88% 5%, rgba(34,84,127,.18), transparent 38%), #091625; }
+.author-bio-container .author-experience .experience-item h3 { max-width: 820px; margin: 0 0 1.5rem; color: #f7f1e7; font-size: clamp(1.75rem, 3vw, 3.15rem); line-height: 1.04; }
+.author-bio-container .author-experience .experience-item:first-child h3 { font-size: clamp(2.4rem, 4.5vw, 4.7rem); }
+.author-bio-container .author-experience .ga-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin-top: clamp(2.5rem, 5vw, 4.5rem); border-top: 1px solid rgba(231,222,203,.17); }
+.author-bio-container .author-experience .ga-entry { min-width: 0; padding: clamp(1.75rem, 3vw, 2.75rem) clamp(1rem, 3vw, 2.5rem) 0 0; }
+.author-bio-container .author-experience .ga-entry + .ga-entry { padding-right: 0; padding-left: clamp(1rem, 3vw, 2.5rem); border-left: 1px solid rgba(231,222,203,.17); }
+.author-bio-container .author-experience .ga-entry h4 { margin: 0 0 .6rem; color: #f7f1e7; font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.4rem, 2.5vw, 2.35rem); font-weight: 400; line-height: 1.08; }
+.author-bio-container .author-experience .experience-meta { margin: 0 0 1.4rem; color: #f18c62 !important; font-size: .64rem; letter-spacing: .11em; }
+.author-bio-container .author-experience .experience-description { margin: 0; color: #aeb8c3; font-size: .9rem; line-height: 1.85; }
 .author-bio-container .author-contact { background: #0a1728; }
 .author-bio-container .author-contact .contact-info { display: grid; grid-template-columns: 1fr; gap: 0; margin: 0; padding: 0; border: 0; border-top: 1px solid rgba(231,222,203,.18); border-radius: 0; background: transparent; box-shadow: none; }
 .author-bio-container .author-contact .contact-info p { min-width: 0; margin: 0; padding: 1.25rem 0; border-bottom: 1px solid rgba(231,222,203,.14); color: #b8bcc9; text-align: left; overflow-wrap: anywhere; }
@@ -1090,18 +1137,12 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .author-bio-container .author-contact .contact-info a { color: #f4a37d; text-decoration: none; }
 .author-bio-container .author-contact .contact-info a:hover { color: #f7f1e7; }
 
-/* Rob's longer résumé uses a spread rather than one continuous vertical stack. */
-.author-bio-container .author-experience .experience-list,
+/* Rob's project archive uses a spread rather than one continuous vertical stack. */
 .author-bio-container .author-projects .projects-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 2.5vw, 2.25rem); background: transparent; border: 0; }
-.author-bio-container .author-experience .experience-item,
 .author-bio-container .author-projects .project-item { min-width: 0; margin: 0; padding: 2rem 1.35rem 2.25rem 4rem; border: 1px solid rgba(231,222,203,.16); background: #091625; }
-.author-bio-container .author-experience .experience-item:first-child { grid-column: 1 / -1; }
-.author-bio-container .author-experience .experience-item::before,
 .author-bio-container .author-projects .project-item::before { left: 1.15rem; background: #091625; }
-.author-bio-container .author-experience .experience-item:not(:first-child) h3,
 .author-bio-container .author-projects .project-item h3 { max-width: 100%; font-size: clamp(1.25rem, 1.8vw, 1.85rem); line-height: 1.08; overflow-wrap: anywhere; hyphens: auto; }
 .author-bio-container .author-projects .project-item h3 a { overflow-wrap: anywhere; }
-.author-bio-container .author-experience .experience-description,
 .author-bio-container .author-projects .project-description { max-width: 100%; overflow-wrap: anywhere; }
 
 @media (max-width: 760px) {
@@ -1124,11 +1165,18 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
     .author-bio-container .author-experience h2,
     .author-bio-container .author-projects h2,
     .author-bio-container .author-contact h2 { position: static; margin-bottom: 2.5rem; }
-    .author-bio-container .author-bio-section h2 { width: 100%; max-width: none; text-align: left; transform: none; }
-    .author-bio-container .bio-content { columns: 1; column-rule: 0; direction: ltr; }
+    .author-bio-container .author-bio-section h2 { width: 100%; max-width: none; margin-bottom: 2.75rem; text-align: left; transform: none; }
+    .author-bio-container .bio-content { columns: 1; column-rule: 0; direction: ltr; padding: 0; }
+    .author-bio-container .author-publications h2 { margin-bottom: 2.75rem; }
+    .author-bio-container .publication-item { grid-template-columns: 2.9rem minmax(0, 1fr); gap: .75rem; padding: 2rem .25rem; }
+    .author-bio-container .publication-item::before { width: 2.15rem; height: 2.15rem; }
+    .author-bio-container .publication-item h3 { font-size: clamp(1.55rem, 7.5vw, 2.35rem); }
+    .author-bio-container .author-experience h2 { margin-bottom: 2.75rem; }
     .author-bio-container .author-experience .experience-list,
-    .author-bio-container .author-projects .projects-list { grid-template-columns: 1fr; }
+    .author-bio-container .author-experience .ga-tabs { grid-template-columns: 1fr; }
     .author-bio-container .author-experience .experience-item:first-child { grid-column: auto; }
+    .author-bio-container .author-experience .ga-entry + .ga-entry { margin-top: 2rem; padding-top: 2rem; padding-left: 0; border-top: 1px solid rgba(231,222,203,.17); border-left: 0; }
+    .author-bio-container .author-projects .projects-list { grid-template-columns: 1fr; }
 }
 
 /* Article reader finale: centered masthead and an editorial document desk. */
