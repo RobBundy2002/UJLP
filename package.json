@@ -16,6 +16,8 @@
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
+    "build:preview": "PUBLIC_URL=/preview react-scripts build",
+    "deploy:preview": "npm run build:preview && gh-pages -d build -e preview --add",
     "start": "react-scripts start --host 192.168.0.91",
     "build": "react-scripts build",
     "test": "react-scripts test",
