@@ -181,17 +181,17 @@ function App() {
                         <Route path="/announcements" element={<Announcements />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/jointheteam" element={<JoinTheTeam />} />
-                        <Route path="/author/derek" element={<BioFrame initials="DT" name="Derek Tsai"><Derek /></BioFrame>} />
-                        <Route path="/author/mikayla" element={<BioFrame initials="MG" name="Mikayla Grady"><Mikayla /></BioFrame>} />
-                        <Route path="/author/rob" element={<BioFrame initials="RB" name="Rob Bundy"><Rob /></BioFrame>} />
-                        <Route path="/author/evan" element={<BioFrame initials="EP" name="Evan Proudkii"><Evan /></BioFrame>} />
-                        <Route path="/author/shelby" element={<BioFrame initials="SE" name="Shelby Eliasek"><Shelby /></BioFrame>} />
-                        <Route path="/author/richard" element={<BioFrame initials="RX" name="Richard Xu"><Richard /></BioFrame>} />
-                        <Route path="/author/will" element={<BioFrame initials="WO" name="Will Olszewski"><Will /></BioFrame>} />
-                        <Route path="/author/rishi" element={<BioFrame initials="RC" name="Rishi Chandra"><Rishi /></BioFrame>} />
-                        <Route path="/author/mia" element={<BioFrame initials="MP" name="Mia Petersen"><Mia /></BioFrame>} />
-                        <Route path="/author/charlie" element={<BioFrame initials="CH" name="Charlie Houck"><Charlie /></BioFrame>} />
-                        <Route path="/author/rhett" element={<BioFrame initials="RD" name="Rhett Deitz"><Rhett /></BioFrame>} />
+                        <Route path="/author/derek" element={<BioFrame name="Derek Tsai"><Derek /></BioFrame>} />
+                        <Route path="/author/mikayla" element={<BioFrame name="Mikayla Grady"><Mikayla /></BioFrame>} />
+                        <Route path="/author/rob" element={<BioFrame name="Rob Bundy"><Rob /></BioFrame>} />
+                        <Route path="/author/evan" element={<BioFrame name="Evan Proudkii"><Evan /></BioFrame>} />
+                        <Route path="/author/shelby" element={<BioFrame name="Shelby Eliasek"><Shelby /></BioFrame>} />
+                        <Route path="/author/richard" element={<BioFrame name="Richard Xu"><Richard /></BioFrame>} />
+                        <Route path="/author/will" element={<BioFrame name="Will Olszewski"><Will /></BioFrame>} />
+                        <Route path="/author/rishi" element={<BioFrame name="Rishi Chandra"><Rishi /></BioFrame>} />
+                        <Route path="/author/mia" element={<BioFrame name="Mia Petersen"><Mia /></BioFrame>} />
+                        <Route path="/author/charlie" element={<BioFrame name="Charlie Houck"><Charlie /></BioFrame>} />
+                        <Route path="/author/rhett" element={<BioFrame name="Rhett Deitz"><Rhett /></BioFrame>} />
                         <Route path="/author/comingsoon1" element={<ComingSoon1 />} />
                         <Route path="/author/comingsoon2" element={<ComingSoon2 />} />
                         <Route path="/author/comingsoon3" element={<ComingSoon3 />} />

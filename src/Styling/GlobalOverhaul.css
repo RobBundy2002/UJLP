@@ -1435,22 +1435,56 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .jh-journal .constellation-stage { min-height: 580px; }
 .jh-journal .constellation-core { top: 50%; }
 
-/* Biography initials and expandable contributor signatures. */
+/* Biography signatures: static, cursive, and non-interactive. */
 .bio-frame { position: relative; width: 100%; background: #07111f; }
 .bio-frame .author-bio-section { position: relative; isolation: isolate; overflow: hidden; }
-.bio-frame .author-bio-section::before { content: var(--bio-initial); position: absolute; top: 50%; left: 50%; z-index: -1; color: rgba(241,140,98,.045); font-family: "Playfair Display",Georgia,serif; font-size: clamp(13rem,38vw,38rem); letter-spacing: -.13em; line-height: .7; transform: translate(-50%,-48%); animation: bio-initial-drift 10s ease-in-out infinite alternate; pointer-events: none; }
-@keyframes bio-initial-drift { from { transform: translate(-52%,-49%) rotate(-2deg); } to { transform: translate(-47%,-46%) rotate(2deg); } }
-.bio-signature-dossier { width: min(1280px,calc(100% - 3rem)); margin: clamp(4rem,8vw,8rem) auto; border-top: 1px solid rgba(231,222,203,.18); border-bottom: 1px solid rgba(231,222,203,.18); }
-.bio-signature-dossier > button { display: grid; width: 100%; grid-template-columns: 1fr auto 2rem; align-items: center; gap: 1rem; padding: 1.5rem 0; border: 0; background: transparent; color: #f7f1e7; text-align: left; }
-.bio-signature-dossier button > span { color: #718397; font-size: .56rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
-.bio-signature-dossier button > strong { font-family: "Playfair Display",Georgia,serif; font-size: 1.25rem; font-style: italic; font-weight: 400; }
-.bio-signature-dossier button > i { color: #f18c62; font-size: 1.4rem; font-style: normal; text-align: right; }
-.bio-signature-reveal { display: grid; max-height: 0; grid-template-columns: minmax(110px,.3fr) 1fr; align-items: center; overflow: hidden; opacity: 0; transition: max-height .5s ease, opacity .35s ease, padding .5s ease; }
-.bio-signature-dossier.open .bio-signature-reveal { max-height: 320px; padding: 2rem 0 3rem; opacity: 1; }
-.bio-signature-reveal > span { color: rgba(241,140,98,.28); font-family: "Playfair Display",Georgia,serif; font-size: clamp(5rem,12vw,10rem); font-style: italic; letter-spacing: -.12em; }
-.bio-signature-reveal p { margin: 0; color: #f7f1e7; font-family: "Playfair Display",Georgia,serif; font-size: clamp(1.6rem,3vw,3rem); font-style: italic; line-height: 1.2; }
-.bio-signature-reveal small { display: block; margin-bottom: 1rem; color: #f18c62; font-family: Inter,sans-serif; font-size: .55rem; font-style: normal; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
-.bio-signature-reveal em { color: #718397; font-family: Inter,sans-serif; font-size: .58rem; font-style: normal; letter-spacing: .1em; text-transform: uppercase; }
+.bio-frame .author-bio-section::before {
+    content: var(--bio-signature);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: -1;
+    color: rgba(241,140,98,.045);
+    font-family: "Great Vibes", "Brush Script MT", "Snell Roundhand", cursive;
+    font-size: clamp(7rem, 26vw, 18rem);
+    font-weight: 400;
+    font-style: normal;
+    font-variant-ligatures: common-ligatures;
+    letter-spacing: -.02em;
+    line-height: .8;
+    transform: translate(-50%,-48%) rotate(-4deg);
+    pointer-events: none;
+}
+.bio-signature-dossier {
+    width: min(1280px,calc(100% - 3rem));
+    margin: clamp(4rem,8vw,8rem) auto;
+    padding: 1.3rem 0 1.8rem;
+    border-top: 1px solid rgba(231,222,203,.18);
+    border-bottom: 1px solid rgba(231,222,203,.18);
+}
+.bio-signature-label {
+    display: block;
+    color: #718397;
+    font-size: .56rem;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+.bio-signature-mark {
+    display: block;
+    margin-top: .8rem;
+    position: relative;
+    top: 1.75rem;
+    color: #f7f1e7;
+    font-family: "Great Vibes", "Brush Script MT", "Snell Roundhand", cursive;
+    font-size: clamp(2.4rem, 4.5vw, 5rem);
+    font-weight: 400;
+    font-style: normal;
+    font-variant-ligatures: common-ligatures;
+    letter-spacing: 0;
+    line-height: .85;
+    text-shadow: 0 1px 0 rgba(0,0,0,.08);
+}
 
 @media (max-width: 760px) {
     .jh-journal-statement .animated-journal-seal { grid-template-columns: 1fr; }
@@ -1461,14 +1495,13 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
     .constellation-detail button { grid-column: 1; grid-row: auto; margin-top: .6rem; text-align: left; }
     .jh-journal .constellation-stage { min-height: 610px; }
     .jh-journal .constellation-core { top: 42%; }
-    .bio-signature-dossier > button { grid-template-columns: 1fr 2rem; }
-    .bio-signature-dossier button > strong { grid-column: 1; grid-row: 2; }
-    .bio-signature-dossier button > i { grid-column: 2; grid-row: 1 / span 2; }
+    .bio-signature-dossier { width: calc(100% - 2rem); padding: 1rem 0 1.35rem; }
+    .bio-signature-mark { font-size: clamp(2rem, 10vw, 3.5rem); top: 1.25rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .printing-press-intro { display: none; }
-    .animated-journal-seal::before, .animated-journal-seal .seal-orbit, .bio-frame .author-bio-section::before { animation: none; }
+    .animated-journal-seal::before, .animated-journal-seal .seal-orbit { animation: none; }
     .constellation-stage.departing .constellation-transition { animation-duration: .01s; }
 }
 
