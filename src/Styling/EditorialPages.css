@@ -136,3 +136,332 @@
     .jh-contact .contact-info { grid-template-columns: 1fr; }
     .jh-announcements .subscribe-form { flex-direction: column; }
 }
+
+/* Issue landing page */
+.jh-issue .issue-edition-page {
+    --issue-accent: #f18c62;
+}
+
+.jh-issue .issue-edition-hero,
+.jh-issue .issue-edition-body,
+.jh-issue .issue-edition-footer {
+    margin: 0;
+    background: #07111f;
+}
+
+.jh-issue .issue-edition-hero {
+    position: relative;
+    min-height: min(78vh, 820px);
+    display: grid;
+    place-items: center;
+    padding: 7.5rem clamp(1.5rem, 7vw, 7rem) 5rem;
+    overflow: hidden;
+    border-bottom: 1px solid var(--jh-line);
+    background:
+        radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--issue-accent) 22%, transparent), transparent 36%),
+        radial-gradient(circle at 82% 18%, rgba(38, 83, 126, .7), transparent 22%),
+        radial-gradient(circle at 18% 82%, rgba(156, 62, 41, .22), transparent 28%),
+        linear-gradient(180deg, #07111f 0%, #06101c 100%);
+}
+
+.jh-issue .issue-edition-hero::before {
+    content: "";
+    position: absolute;
+    inset: clamp(1rem, 2vw, 1.5rem);
+    border: 1px solid rgba(236, 227, 210, .18);
+    pointer-events: none;
+}
+
+.jh-issue .issue-edition-hero::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: clamp(1.2rem, 2vw, 1.7rem);
+    width: min(56rem, 86vw);
+    height: 1px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, transparent, rgba(241, 140, 98, .35), transparent);
+    pointer-events: none;
+}
+
+.jh-issue .issue-edition-hero .section-content {
+    position: relative;
+    z-index: 2;
+    width: min(1100px, 100%);
+    display: grid;
+    justify-items: center;
+    gap: 0;
+    text-align: center;
+}
+
+.jh-issue .issue-edition-kicker {
+    margin: 0 0 1.4rem;
+    color: #9fb4c6;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+}
+
+.jh-issue .issue-edition-kicker strong {
+    color: var(--jh-ink);
+    font-weight: 800;
+}
+
+.jh-issue .issue-edition-hero h1 {
+    margin: 0;
+    color: var(--jh-ink);
+    font-size: clamp(4.2rem, 10vw, 8.8rem);
+    font-weight: 400;
+    letter-spacing: -.09em;
+    line-height: .86;
+}
+
+.jh-issue .issue-edition-subtitle {
+    max-width: 44rem;
+    margin: 1rem auto 0;
+    color: var(--jh-muted);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.15rem, 2vw, 1.9rem);
+    line-height: 1.45;
+}
+
+.jh-issue .issue-edition-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .75rem;
+    margin-top: 2rem;
+}
+
+.jh-issue .issue-edition-meta span {
+    padding: .72rem .95rem;
+    border: 1px solid var(--jh-line);
+    background: rgba(7, 17, 31, .62);
+    color: var(--jh-ink);
+    font-size: .62rem;
+    font-weight: 700;
+    letter-spacing: .17em;
+    text-transform: uppercase;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.jh-issue .issue-edition-body {
+    border-top: 1px solid var(--jh-line);
+}
+
+.jh-issue .issue-edition-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(310px, .85fr);
+    gap: 1px;
+    padding: 0;
+    background: var(--jh-line);
+}
+
+.jh-issue .issue-edition-featured,
+.jh-issue .issue-edition-contents {
+    position: relative;
+    min-width: 0;
+    padding: clamp(2.1rem, 4.8vw, 4rem);
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.02), transparent 20%),
+        #07111f;
+}
+
+.jh-issue .issue-edition-featured::before,
+.jh-issue .issue-edition-contents::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.jh-issue .issue-edition-featured::before {
+    border-right: 1px solid rgba(231,222,203,.08);
+    background: radial-gradient(circle at 8% 14%, rgba(241,140,98,.08), transparent 18%);
+}
+
+.jh-issue .issue-edition-contents::before {
+    border-left: 1px solid rgba(231,222,203,.08);
+    background: radial-gradient(circle at 92% 12%, rgba(143,174,200,.08), transparent 20%);
+}
+
+.jh-issue .issue-section-kicker {
+    position: relative;
+    margin: 0 0 1rem;
+    color: var(--jh-ember);
+    font-size: .66rem;
+    font-weight: 700;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+}
+
+.jh-issue .issue-section-kicker::after {
+    content: "";
+    display: block;
+    width: 3.2rem;
+    height: 1px;
+    margin-top: .65rem;
+    background: linear-gradient(90deg, rgba(241,140,98,.9), transparent);
+}
+
+.jh-issue .issue-edition-featured h2 {
+    margin: 0;
+    color: var(--jh-ink);
+    font-size: clamp(2.35rem, 4.9vw, 4.9rem);
+    font-weight: 400;
+    letter-spacing: -.07em;
+    line-height: .95;
+}
+
+.jh-issue .issue-edition-featured h2 a,
+.jh-issue .issue-edition-list h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.jh-issue .issue-edition-featured h2 a:hover,
+.jh-issue .issue-edition-list h3 a:hover {
+    color: var(--jh-ember);
+}
+
+.jh-issue .issue-edition-byline {
+    margin: 1rem 0 0;
+    color: #9fb4c6;
+    font-size: .74rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.jh-issue .issue-edition-byline a {
+    color: var(--jh-ink);
+}
+
+.jh-issue .issue-edition-excerpt {
+    max-width: 44rem;
+    margin: 1.35rem 0 0;
+    color: var(--jh-muted);
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+.jh-issue .issue-edition-actions,
+.jh-issue .issue-edition-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-top: 2rem;
+}
+
+.jh-issue .issue-edition-button,
+.jh-issue .issue-edition-footer-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .92rem 1.15rem;
+    border: 1px solid rgba(231,222,203,.16);
+    background: rgba(7, 17, 31, .45);
+    color: var(--jh-ink);
+    font-size: .66rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.jh-issue .issue-edition-button:hover,
+.jh-issue .issue-edition-footer-link:hover {
+    border-color: var(--jh-ember);
+    background: rgba(241, 140, 98, .08);
+    transform: translateY(-2px);
+}
+
+.jh-issue .issue-edition-button.secondary {
+    color: var(--jh-muted);
+}
+
+.jh-issue .issue-edition-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.jh-issue .issue-edition-list li {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.05rem 0;
+    border-top: 1px solid rgba(231,222,203,.14);
+}
+
+.jh-issue .issue-edition-list li:first-child {
+    padding-top: 0;
+    border-top: 0;
+}
+
+.jh-issue .issue-edition-number {
+    color: var(--jh-ember);
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+.jh-issue .issue-edition-list h3 {
+    margin: 0;
+    color: var(--jh-ink);
+    font-size: 1.12rem;
+    font-weight: 400;
+    letter-spacing: -.03em;
+    line-height: 1.2;
+}
+
+.jh-issue .issue-edition-list p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin: .5rem 0 0;
+    color: #9fb4c6;
+    font-size: .72rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.jh-issue .issue-edition-footer {
+    border-top: 1px solid var(--jh-line);
+    border-bottom: 1px solid var(--jh-line);
+}
+
+.jh-issue .issue-edition-footer-links {
+    justify-content: center;
+}
+
+@media (max-width: 780px) {
+    .jh-issue .issue-edition-hero {
+        min-height: 0;
+        padding: 6.75rem 1.25rem 3.75rem;
+    }
+
+    .jh-issue .issue-edition-hero::before {
+        inset: .75rem;
+    }
+
+    .jh-issue .issue-edition-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .jh-issue .issue-edition-featured,
+    .jh-issue .issue-edition-contents {
+        padding: 1.7rem 1.25rem;
+    }
+
+    .jh-issue .issue-edition-featured::before,
+    .jh-issue .issue-edition-contents::before {
+        display: none;
+    }
+
+    .jh-issue .issue-edition-list li {
+        grid-template-columns: 1fr;
+    }
+}
