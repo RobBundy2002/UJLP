@@ -102,6 +102,16 @@ html, body {
   flex-direction: column;
 }
 
+.title-line-1,
+.title-line-2 {
+  font-size: clamp(1.3rem, 2vw, 2.2rem);
+  line-height: 1.05;
+}
+
+.title-line-2 {
+  font-size: clamp(1.7rem, 2.55vw, 2.9rem);
+}
+
 .title-line-1 {
   line-height: 1.1;
 }
@@ -431,7 +441,7 @@ footer {
     }
 
     .title-line-2 {
-        font-size: 1rem;
+        font-size: 1.28rem;
         line-height: 1.1;
     }
 
