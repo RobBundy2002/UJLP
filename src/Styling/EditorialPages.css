@@ -20,7 +20,7 @@
 .jh-page h1, .jh-page h2, .jh-page h3 { color: var(--jh-ink); font-family: "Playfair Display", Georgia, serif; font-weight: 400; }
 .jh-page p { color: var(--jh-muted); }
 .jh-page .section-content { width: min(1280px, 100%); margin: 0 auto; padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 7vw, 7rem); }
-.jh-page .section-content h2 { color: var(--jh-ink); font-size: clamp(2.3rem, 4.5vw, 4.75rem); font-weight: 400; letter-spacing: -.055em; line-height: .96; }
+.jh-page .section-content h2 { color: var(--jh-ink); font-size: clamp(2.3rem, 4.5vw, 4.75rem); font-weight: 400; letter-spacing: -.055em; line-height: .96; margin-left: -4vh;}
 .jh-page .section-content h2::after { display: none; }
 
 .jh-page .about-hero, .jh-page .journal-hero, .jh-page .announcements-hero, .jh-page .contact-hero, .jh-page .archives-hero {

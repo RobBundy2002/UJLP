@@ -42,7 +42,7 @@ function Home() {
                 <div className="jh-stats" aria-label="Journal at a glance">
                     <div><strong>02</strong><span>Articles published</span></div>
                     <div><strong>06</strong><span>Team members</span></div>
-                    <div><strong>02</strong><span>Research areas</span></div>
+                    <div><strong>04</strong><span>Research areas</span></div>
                 </div>
             </section>
 
