@@ -30,14 +30,14 @@ function UnequalOpportunity() {
             </div>
 
             <PDFViewer 
-                pdfPath="/ArticlePDFs/Unequal Opportunity Draft 1.pdf"
+                pdfPath="/ArticlePDFs/Unequal Opportunity Draft 4 (3).pdf"
                 title="Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"
                 author="Derek Tsai"
             />
 
             <div className="pdf-actions">
                 <a
-                    href="/ArticlePDFs/Unequal%20Opportunity%20Draft%201.pdf"
+                    href="/ArticlePDFs/Unequal%20Opportunity%20Draft%204%20(3).pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="cta-button pdf-button"
