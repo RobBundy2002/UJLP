@@ -1,234 +1,95 @@
-# Undergraduate Journal of Law and Politics (UJLP) Website
+# Undergraduate Journal of Law & Politics
 
-A modern, responsive website for the Undergraduate Journal of Law and Politics at the University of Virginia. Built with React and featuring a clean, professional design.
+> **Ideas that move the world.**
 
-## 🚀 Features
+The Undergraduate Journal of Law & Politics (UJLP) is a University of Virginia publication dedicated to serious inquiry, open horizons, and the next generation of legal and political thinkers.
 
-- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- **Modern UI**: Clean, professional interface with smooth animations
-- **Dark/Light Theme**: Toggle between themes for better user experience
-- **Team Management**: Dynamic team member display with role-based organization
-- **Journal Articles**: Dedicated section for publishing legal research
-- **Announcements**: News and updates section
-- **Contact Integration**: Multiple contact methods including forms and social media
+We create space for undergraduate writers to ask difficult questions, follow evidence wherever it leads, and connect legal doctrine to the larger worlds of history, philosophy, economics, public policy, and human experience. The result is scholarship that is rigorous without being narrow—and a community that believes thoughtful disagreement is part of the work.
 
-## 📁 Project Structure
-
-```
-my-app/
-├── public/
-│   ├── index.html
-│   └── favicon.ico
-├── src/
-│   ├── components/
-│   │   ├── About.js          # About page with team information
-│   │   ├── Home.js           # Landing page
-│   │   ├── Journal.js        # Journal articles section
-│   │   ├── Announcements.js  # News and updates
-│   │   ├── Contact.js        # Contact information
-│   │   ├── Footer.js         # Site footer
-│   │   └── App.js           # Main application component
-│   ├── styles/
-│   │   ├── About.css        # About page styles
-│   │   ├── Home.css         # Home page styles
-│   │   ├── Journal.css      # Journal page styles
-│   │   ├── Contact.css      # Contact page styles
-│   │   ├── Footer.css       # Footer styles
-│   │   ├── App.css          # Global styles and theme
-│   │   └── Announcements.css # Announcements styles
-│   └── assets/
-│       └── images/          # Team member photos and logos
-```
-
-## 🛠️ Technologies Used
-
-- **React 18**: Modern JavaScript library for building user interfaces
-- **React Router**: Client-side routing for single-page application
-- **CSS3**: Custom styling with CSS Grid and Flexbox
-- **Responsive Design**: Mobile-first approach with media queries
-- **Modern JavaScript**: ES6+ features and hooks
-
-## 🎨 Design Features
-
-### Color Scheme
-- **Primary**: Deep blue (#2c5282)
-- **Secondary**: Dark blue (#1a365d)
-- **Accent**: Orange (#ff6b35)
-- **Background**: Light orange (#ff8c61)
-- **Text**: White and light colors for contrast
-
-### Typography
-- **Headings**: Playfair Display (serif)
-- **Body**: Inter (sans-serif)
-- **Responsive**: Scales appropriately across devices
-
-### Components
-- **Navigation**: Sticky header with smooth scrolling
-- **Hero Sections**: Eye-catching landing areas
-- **Cards**: Consistent card design for content
-- **Grid Layouts**: Responsive grid systems
-- **Animations**: Smooth transitions and hover effects
-
-## 👥 Team Structure
-
-The website supports a comprehensive team organization:
-
-### Leadership Team
-- Editor-in-Chief
-- Managing Editor
-- Director of Media
-- Director of Technology
-- Director of Legal Writing & Research
-- Director of Communications
-
-### Staff Members
-- **5 Executive Editors**
-- **15 Staff Writers**
-- **15 Staff Editors**
-- **3 Event Coordinators**
-
-## 📱 Responsive Design
-
-### Breakpoints
-- **Desktop**: 1200px and above
-- **Tablet**: 769px - 1024px
-- **Mobile**: 768px and below
-- **Small Mobile**: 480px and below
-
-### Mobile Features
-- 2-column grid layout for team members
-- Collapsible navigation
-- Optimized touch targets
-- Reduced font sizes for readability
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js (version 14 or higher)
-- npm or yarn package manager
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone [repository-url]
-   cd react-gh-pagess
-   ```
-
-2. **Install dependencies**
-   ```bash
-npm install
-```
-
-3. **Start the development server**
-   ```bash
-   npm start
-```
-
-4. **Open your browser**
-   Navigate to `http://localhost:3000`
-
-### Build for Production
-
-```bash
-npm run build
-```
-
-## 📄 Pages
-
-### Home (`/`)
-- Hero section with mission statement
-- Featured content and statistics
-- Call-to-action buttons
-
-### About (`/about`)
-- Mission and history
-- Leadership team with photos
-- Complete team roster
-- Work description
-
-### Journal (`/journal`)
-- Published articles grid
-- Article categories
-- Call-to-action for submissions
-
-### Announcements (`/announcements`)
-- Latest news and updates
-- Event announcements
-- Team updates
-
-### Contact (`/contact`)
-- Contact form link
-- Social media links
-- Email contact information
-
-## 🎯 Key Features
-
-### Theme Toggle
-- Switch between light and dark themes
-- Persistent theme selection
-- Smooth transitions
-
-### Navigation
-- Responsive navigation menu
-- Active page highlighting
-- Smooth scrolling
-
-### Team Management
-- Dynamic team member display
-- Role-based organization
-- Responsive grid layouts
-
-### Content Management
-- Easy content updates
-- Modular component structure
-- SEO-friendly structure
-
-## 🔧 Customization
-
-### Adding Team Members
-1. Update the team members array in `About.js`
-2. Add corresponding photos to the assets folder
-3. Import and reference the images
-
-### Updating Content
-- Edit the respective component files
-- Update CSS for styling changes
-- Test responsiveness across devices
-
-### Theme Customization
-- Modify CSS variables in `App.css`
-- Update color schemes in `:root` selector
-- Test both light and dark themes
-
-## 📞 Contact Information
-
-- **Email**: ujlawandpolitics@gmail.com
-- **Instagram**: @ujlawandpoliticsatuva
-- **LinkedIn**: Undergraduate Journal of Law and Politics
-- **Contact Form**: [Office Forms Link]
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test across different devices
-5. Submit a pull request
-
-## 📝 License
-
-This project is maintained by the Undergraduate Journal of Law and Politics at the University of Virginia.
-
-## 🙏 Acknowledgments
-
-- **Design**: Modern, accessible design principles
-- **Development**: React community and documentation
-- **Team**: UJLP leadership and members
-- **University**: University of Virginia support
+**[Explore the journal](https://ujlp.org/#/journal)** · **[Join the team](https://ujlp.org/#/jointheteam)** · **[Follow us on Instagram](https://www.instagram.com/ujlawandpoliticsatuva/)**
 
 ---
 
-**Website designed by [Rob Bundy](https://www.linkedin.com/in/rob-bundy-192035223/)**
+## Our purpose
 
-For questions or support, contact the UJLP team at ujlawandpolitics@gmail.com
+UJLP expands opportunities for undergraduate legal research and writing at the University of Virginia. We publish long-form articles, cultivate editorial craft, and bring students together around the questions that shape institutions and public life.
+
+Our work is grounded in a few simple convictions:
+
+- Curiosity should be taken seriously.
+- Strong arguments begin with careful research.
+- Law is inseparable from politics, history, culture, and lived experience.
+- Undergraduate scholarship deserves a real audience.
+- Good editing is collaboration, not gatekeeping.
+
+## What we publish
+
+Our journal explores the intersection of law and politics across a growing range of subjects, including:
+
+**Civil rights and constitutional law** · **Education law** · **Public policy** · **Legal history** · **Political theory** · **Criminal law** · **Economics and institutions**
+
+Recent work includes Derek Tsai’s *Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960* and Shelby Eliasek’s *Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom*.
+
+Read the latest work in the [journal](https://ujlp.org/#/journal), browse the [archives](https://ujlp.org/#/archives), or visit an author’s profile to learn more about the research behind each piece.
+
+## A student-led editorial community
+
+UJLP is built by students who care about both ideas and the craft required to communicate them well. Writers develop original research and arguments. Editors test claims, sharpen structure, verify authorities, and help each piece reach its fullest form. Our leadership team supports the editorial process, organizes the Journal’s operations, and creates opportunities for members to learn from one another.
+
+The Journal is a place to publish, but it is also a place to practice: close reading, source evaluation, citation, persuasive writing, constructive criticism, project management, and intellectual generosity.
+
+## Find your place in the conversation
+
+Whether you are developing your first research question, polishing a draft, looking for an editorial community, or simply interested in the ideas our members are pursuing, there is a place for you here.
+
+**[Meet the team](https://ujlp.org/#/about)** · **[Submit your work or apply](https://ujlp.org/#/jointheteam)** · **[Contact UJLP](mailto:ujlawandpolitics@gmail.com)**
+
+## Visit the publication
+
+The live journal is available at **[ujlp.org](https://ujlp.org/)**.
+
+You can also find UJLP on [Instagram](https://www.instagram.com/ujlawandpoliticsatuva/) and [LinkedIn](https://www.linkedin.com/company/undergraduate-journal-of-law-politics/).
+
+---
+
+## For contributors
+
+This repository contains the React application that powers the UJLP website. The site includes the journal, article pages, author profiles, announcements, team information, and contact pages.
+
+### Run locally
+
+```bash
+npm install
+npm start
+```
+
+The development server runs at `http://localhost:3000`.
+
+### Build and deploy
+
+```bash
+npm run build
+npm run deploy
+```
+
+`npm run deploy` builds the production application and publishes the `build/` directory to the `gh-pages` branch. Article PDFs and other static assets live in `public/`.
+
+### Project notes
+
+- `src/Data/journalData.js` contains shared issue, article, and research-area metadata.
+- `src/ArticlePages/` contains full article views and PDF readers.
+- `src/GeneralPages/` contains the primary public-facing pages.
+- `src/Components/` contains reusable navigation, search, journal, and editorial components.
+- `src/Styling/` contains the site’s visual system and responsive layouts.
+
+## Contact
+
+For submissions, partnerships, questions, or general correspondence:
+
+**ujlawandpolitics@gmail.com**
+
+---
+
+© 2026 Undergraduate Journal of Law & Politics at the University of Virginia. All rights reserved.
+
+Website designed by [Rob Bundy](https://www.linkedin.com/in/rob-bundy-192035223/).
