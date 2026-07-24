@@ -24,7 +24,7 @@ const allArticles = [
             "                    to expose the limitations of legal measures in achieving equal opportunity in higher education, and to\n" +
             "                    highlight the importance of individual and social changes in bringing about a permanent pedagogical\n" +
             "                    shift.",
-        link: "/dangerousimplications"
+        link: "/unequalopportunity"
     },
     {
         title: "From 'Wild Beasts' to Human Beings: Rethinking the Insanity Defense in the Age of Mental Health Awareness",

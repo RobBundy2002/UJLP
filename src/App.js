@@ -21,7 +21,7 @@ import Mia from './Bios/Mia';
 import Charlie from './Bios/Charlie'
 import Rhett from './Bios/Rhett';
 import logo from "./ProfilePictures/HeaderLogo.png";
-import DangerousImplications from "./ArticlePages/DangerousImplications";
+import UnequalOpportunity from "./ArticlePages/UnequalOpportunity";
 import SchoolhouseSecrets from "./ArticlePages/SchoolhouseSecrets";
 import JoinTheTeam from "./GeneralPages/JoinTheTeam";
 import ComingSoon1 from "./Bios/ComingSoon1";
@@ -200,7 +200,7 @@ function App() {
                         <Route path="/author/comingsoon6" element={<ComingSoon6 />} />
                         <Route path="/author/comingsoon7" element={<ComingSoon7 />} />
                         <Route path="/author/comingsoon8" element={<ComingSoon8 />} />
-                        <Route path="/dangerousimplications" element={<DangerousImplications />} />
+                        <Route path="/unequalopportunity" element={<UnequalOpportunity />} />
                         <Route path="/schoolhousesecrets" element={<SchoolhouseSecrets />} />
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>

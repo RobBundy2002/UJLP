@@ -8,7 +8,7 @@ const topics = [
         short: 'Civil Rights',
         article: 'Unequal Opportunity',
         author: 'Derek Tsai',
-        to: '/dangerousimplications',
+        to: '/unequalopportunity',
         researchTo: '/research/civil-rights-law',
         position: { left: '14%', top: '23%' }
     },
@@ -28,7 +28,7 @@ const topics = [
         short: 'Equality',
         article: 'Unequal Opportunity',
         author: 'Derek Tsai',
-        to: '/dangerousimplications',
+        to: '/unequalopportunity',
         researchTo: '/research/civil-rights-law',
         position: { left: '8%', top: '67%' }
     },

@@ -14,7 +14,7 @@ export const articles = [
         date: 'June 2026',
         issue: '2026-2',
         excerpt: 'This essay uses the experiences of Gregory Swanson and John Merchant at the University of Virginia School of Law to examine the limits of legal measures and the role of social change in achieving equal opportunity in higher education.',
-        pageLink: '/dangerousimplications'
+        pageLink: '/unequalopportunity'
     },
     {
         title: 'Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom',

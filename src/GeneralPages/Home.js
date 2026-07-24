@@ -66,7 +66,7 @@ function Home() {
                                     highlight the importance of individual and social changes in bringing about a permanent pedagogical
                                     shift.
                                 </p>
-                            <Link to="/dangerousimplications" className="jh-read-link">Read article <span>→</span></Link>
+                            <Link to="/unequalopportunity" className="jh-read-link">Read article <span>→</span></Link>
                         </div>
                     </article>
                     <article className="jh-article jh-article-secondary">

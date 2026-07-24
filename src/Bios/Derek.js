@@ -55,7 +55,7 @@ function Derek() {
                     <h2>Publications</h2>
                     <div className="publications-list">
                         <div className="publication-item">
-                            <h3><Link to="/dangerousimplications" className="author-link">"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"</Link></h3>
+                            <h3><Link to="/unequalopportunity" className="author-link">"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"</Link></h3>
                             <p className="publication-meta">Civil Rights Law • June 2026</p>
                             <p className="publication-excerpt">
                                 This essay relies heavily on
