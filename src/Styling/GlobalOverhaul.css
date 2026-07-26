@@ -927,6 +927,87 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
     .jh-journal .issue-tab { flex: 0 0 auto; }
 }
 
+.article-page .article-summary {
+    display: grid;
+    grid-template-columns: minmax(7rem, .32fr) minmax(0, 1.68fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    text-align: left;
+}
+.article-page .article-summary h2 {
+    margin: 0;
+}
+.article-page .article-summary h2::before {
+    content: "01";
+    display: grid;
+    width: 2.35rem;
+    height: 2.35rem;
+    place-items: center;
+    margin-bottom: 1.2rem;
+    border: 1px solid rgba(241,140,98,.45);
+    border-radius: 50%;
+    color: #f18c62;
+    font-family: Inter, sans-serif;
+    font-size: .58rem;
+    letter-spacing: .08em;
+}
+.article-page .article-summary > p {
+    grid-column: 2;
+    margin: 0;
+}
+.article-page .article-summary-heading {
+    grid-column: 1;
+    align-self: start;
+}
+.article-page .article-topics {
+    margin: 1.5rem 0 0;
+}
+.article-page .article-topics > span {
+    display: block;
+    margin-bottom: .6rem;
+    color: #f18c62;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+.article-page .article-topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem .9rem;
+}
+.article-page .article-topic-list strong {
+    color: #9aabba;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+@media (max-width: 760px) {
+    .article-page .article-summary {
+        display: block;
+    }
+    .article-page .article-summary-heading {
+        margin-bottom: 1.5rem;
+    }
+    .article-page .article-summary > p {
+        grid-column: auto;
+    }
+    .article-page .article-topics {
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(231,222,203,.16);
+    }
+    .article-page .article-topic-list {
+        display: grid;
+        gap: .35rem;
+    }
+    .article-page .article-topic-list strong + strong {
+        margin-top: 0;
+    }
+}
+
 /* Announcements shares Home's exact top-level rhythm and ember handoff. */
 .jh-announcements .announcements-hero { min-height: min(730px, 79vh); padding: 7rem clamp(1.5rem, 7vw, 8rem) 5rem; background: radial-gradient(circle at 76% 21%, rgba(34,84,127,.58), transparent 28%), radial-gradient(circle 26rem at 30% 100%, rgba(144,52,34,.27), transparent 100%), #07111f !important; }
 .jh-announcements .announcements-hero + .announcements-section { background: radial-gradient(circle 26rem at 30% 0, rgba(144,52,34,.27), transparent 100%), #07111f !important; }
@@ -1547,7 +1628,8 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .index-entry-main h2 a:hover { color: #f18c62; }
 .index-byline { display: flex; flex-direction: column; align-self: end; gap: .35rem; padding-left: 1.2rem; border-left: 1px solid rgba(231,222,203,.16); }
 .index-byline small { color: #718397; font-size: .54rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-.index-byline a { color: #f7f1e7; font-family: "Playfair Display", Georgia, serif; font-size: 1.15rem; }
+.index-byline a { color: #f7f1e7; font-family: "Playfair Display", Georgia, serif; font-size: 1.15rem; transition: color .2s ease; }
+.index-byline a:hover, .index-byline a:focus-visible { color: #f18c62; }
 .index-byline span { color: #f18c62; font-size: .6rem; }
 .index-empty { padding: 5rem 0; color: #8999a7; text-align: center; }
 .research-area-hero h1 { max-width: 1100px; }

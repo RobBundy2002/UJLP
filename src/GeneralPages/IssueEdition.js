@@ -13,7 +13,9 @@ function IssueEdition() {
         return <Navigate to="/journal/index" replace />;
     }
 
-    const issueArticles = articles.filter(article => article.issue === issueId);
+    const issueArticles = articles
+        .filter(article => article.issue === issueId)
+        .sort((left, right) => left.articleNumber - right.articleNumber);
     const featuredArticle = issueArticles[0];
     const issuePublished = issue.publicationDate || issue.label;
 

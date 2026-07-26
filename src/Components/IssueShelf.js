@@ -34,7 +34,9 @@ function IssueShelf({ issues, articles }) {
             <div className="reading-room-atmosphere" aria-hidden="true"><span>UJLP</span><i /><b>Est. 2024</b></div>
             <div className="issue-volumes">
                 {publishedIssues.map((issue, index) => {
-                    const issueArticles = articles.filter(article => article.issue === issue.id);
+                    const issueArticles = articles
+                        .filter(article => article.issue === issue.id)
+                        .sort((left, right) => left.articleNumber - right.articleNumber);
                     return (
                         <button
                             type="button"

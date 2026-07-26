@@ -11,12 +11,12 @@ function UnequalOpportunity() {
             <h1>
                 Unequal Opportunity:<br /><em>Desegregation at the University of Virginia School of Law</em>
             </h1>
-            <p className="article-meta">By Derek Tsai • Volume 1 · Issue 1 • May 2026</p>
+            <p className="article-meta">Derek Tsai • Volume 1 · Issue 1 • May 2026</p>
 
             <div className="article-summary">
                 <div className="article-summary-heading">
-                    <div><span>Topics</span><div className="article-topic-list"><strong>Civil Rights Law</strong><strong>Education Law</strong><strong>Law and Society</strong></div></div>
                     <h2>Abstract</h2>
+                    <div className="article-topics"><span>Topics</span><div className="article-topic-list"><strong>Civil Rights Law</strong><strong>Education Law</strong><strong>Law and Society</strong></div></div>
                 </div>
                 <p>
                     In the battle for equal educational opportunity, the law plays a major role in protecting the rights of minority populations; however,
@@ -67,7 +67,7 @@ function UnequalOpportunity() {
                         />
                         <div>
                             <div className="person-name">Derek Tsai</div>
-                            <div className="person-details">Class of 2027 • International Law</div>
+                            <div className="person-details">Editor-in-Chief • Executive Team</div>
                         </div>
                     </div>
                 </div>

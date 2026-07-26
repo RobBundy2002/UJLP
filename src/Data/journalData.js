@@ -12,7 +12,7 @@ export const articles = [
         researchSlug: 'education-law',
         date: 'May 2026',
         issue: '2026-1',
-        articleNumber: 1,
+        articleNumber: 2,
         pageRange: '15–24',
         excerpt: 'An examination of cases concerning public-school policies, gender-nonconforming names and pronouns, and the rights of parents to be informed of these changes.',
         pageLink: '/schoolhousesecrets'
@@ -25,7 +25,7 @@ export const articles = [
         researchSlug: 'civil-rights-law',
         date: 'May 2026',
         issue: '2026-1',
-        articleNumber: 2,
+        articleNumber: 1,
         pageRange: '1–14',
         excerpt: 'This essay uses the experiences of Gregory Swanson and John Merchant at the University of Virginia School of Law to examine the limits of legal measures and the role of social change in achieving equal opportunity in higher education.',
         pageLink: '/unequalopportunity'

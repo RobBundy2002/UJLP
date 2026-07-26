@@ -9,11 +9,13 @@ function PublicationIndex() {
     const [query, setQuery] = useState('');
     const [issue, setIssue] = useState(issues.some(item => item.id === requestedIssue) ? requestedIssue : 'all');
     const normalizedQuery = query.trim().toLowerCase();
-    const visibleArticles = useMemo(() => articles.filter(article => {
-        const matchesIssue = issue === 'all' || article.issue === issue;
-        const searchable = `${article.title} ${article.author} ${article.category}`.toLowerCase();
-        return matchesIssue && (!normalizedQuery || searchable.includes(normalizedQuery));
-    }), [issue, normalizedQuery]);
+    const visibleArticles = useMemo(() => articles
+        .filter(article => {
+            const matchesIssue = issue === 'all' || article.issue === issue;
+            const searchable = `${article.title} ${article.author} ${article.category}`.toLowerCase();
+            return matchesIssue && (!normalizedQuery || searchable.includes(normalizedQuery));
+        })
+        .sort((left, right) => left.articleNumber - right.articleNumber), [issue, normalizedQuery]);
 
     return (
         <div className="publication-index-page jh-page fade-in">
@@ -30,8 +32,8 @@ function PublicationIndex() {
                 </div>
                 <div className="index-count"><span>{String(visibleArticles.length).padStart(2, '0')}</span> published works</div>
                 <div className="index-ledger">
-                    {visibleArticles.map((article, index) => <article key={article.pageLink}>
-                        <span className="index-number">{String(index + 1).padStart(2, '0')}</span>
+                    {visibleArticles.map(article => <article key={article.pageLink}>
+                        <span className="index-number">{String(article.articleNumber).padStart(2, '0')}</span>
                         <div className="index-entry-main"><div><Link to={`/research/${article.researchSlug}`}>{article.category}</Link><span>{getIssueLabel(article.issue)}</span></div><h2><Link to={article.pageLink}>{article.title}</Link></h2></div>
                         <div className="index-byline"><small>Published by</small><Link to={article.authorLink}>{article.author}</Link><span>{article.date}</span></div>
                     </article>)}

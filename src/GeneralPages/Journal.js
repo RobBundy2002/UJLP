@@ -50,7 +50,9 @@ function Journal() {
                             <Link to="/journal/index">Open complete index <span>↗</span></Link>
                         </div>
                         {issues.filter(issue => issue.id !== 'all').map(issue => {
-                            const issueArticles = articles.filter(article => article.issue === issue.id);
+                            const issueArticles = articles
+                                .filter(article => article.issue === issue.id)
+                                .sort((left, right) => left.articleNumber - right.articleNumber);
                             return (
                                 <section className="journal-issue-group" key={issue.id}>
                                     <div className="journal-issue-label">
