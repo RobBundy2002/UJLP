@@ -19,16 +19,7 @@ function UnequalOpportunity() {
                     <div className="article-topics"><span>Topics</span><div className="article-topic-list"><strong>Civil Rights Law</strong><strong>Education Law</strong><strong>Law and Society</strong></div></div>
                 </div>
                 <p>
-                    In the battle for equal educational opportunity, the law plays a major role in protecting the rights of minority populations; however,
-                    scholars often overemphasize the importance of legal progress since it is more concrete and easier to
-                    analyze. Indeed, it is the often-neglected history of social change and individuals’ perception that
-                    produces lasting improvements. This article aims to accurately document legal history while properly
-                    including the social and individual components of the Civil Rights Movement that played a major role
-                    in altering the landscape of American higher education. More specifically, this essay relies heavily on
-                    the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law
-                    to expose the limitations of legal measures in achieving equal opportunity in higher education, and to
-                    highlight the importance of individual and social changes in bringing about a permanent pedagogical
-                    shift.
+                    From its founding in 1819 until 1950, the University of Virginia remained a segregated, white-only institution. The judiciary played a crucial role in the desegregation of the University and other historically segregated schools. Indeed, legal precedent and the courts forced the University to admit its first black student, Gregory Swanson; however, the law is limited in its effect, as Swanson left the school due to the substantial social barriers that remained. Five years later, John Merchant entered the University and became the first black student to earn a Juris Doctor from the School of Law. This essay analyzes the legal history that led to Swanson’s matriculation at the University of Virginia and compares the two case studies of Swanson and Merchant that illustrate the limitations of the judiciary and highlight the necessity of a “dual approach” through legal and social change to achieve equal opportunity in education.
                 </p>
             </div>
 
