@@ -15,7 +15,7 @@ function IssueEdition() {
 
     const issueArticles = articles.filter(article => article.issue === issueId);
     const featuredArticle = issueArticles[0];
-    const issuePublished = featuredArticle?.date || issueArticles.find(article => article.date)?.date || issue.label;
+    const issuePublished = issue.publicationDate || issue.label;
 
     return (
         <div className="issue-edition-page jh-page jh-issue fade-in" style={{ '--issue-accent': issue.accent || '#f18c62' }}>
@@ -80,6 +80,7 @@ function IssueEdition() {
                                                 )}
                                             </span>
                                             <span>{article.date}</span>
+                                            <span>pp. {article.pageRange}</span>
                                         </p>
                                     </div>
                                 </li>

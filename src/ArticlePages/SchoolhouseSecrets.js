@@ -11,7 +11,7 @@ function SchoolhouseSecrets() {
                 <h1>
                     Schoolhouse Secrets:<br /><em>Parental Rights and Gender Identity Disclosure in the American Classroom</em>
                 </h1>
-                <p className="article-meta">By Shelby Eliasek • January 2026 • Education Law • 2026 Issue 1</p>
+                <p className="article-meta">By Shelby Eliasek • May 2026 • Education Law • 2026 Issue 1 · Article 2</p>
 
                 <div className="article-summary">
                     <h2>Summary</h2>
@@ -31,14 +31,14 @@ function SchoolhouseSecrets() {
                 </div>
 
                 <PDFViewer 
-                    pdfPath="/ArticlePDFs/Eliasek_Fall2025_Classroom_Gender.pdf"
+                    pdfPath="/ArticlePDFs/Schoolhouse Secrets Final Manuscript.pdf"
                     title="Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"
                     author="Shelby Eliasek"
                 />
 
                 <div className="pdf-actions">
                     <a
-                        href="/ArticlePDFs/Eliasek_Fall2025_Classroom_Gender.pdf"
+                        href="/ArticlePDFs/Schoolhouse Secrets Final Manuscript.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="cta-button pdf-button"
@@ -50,7 +50,7 @@ function SchoolhouseSecrets() {
                 <CiteShare 
                     title={"Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"}
                     author={"Shelby Eliasek"}
-                    date={"2026-01-01"}
+                    date={"2026-05-01"}
                     url={window.location.href}
                 />
 

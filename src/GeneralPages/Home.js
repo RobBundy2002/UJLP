@@ -2,6 +2,8 @@ import React from 'react';
 import '../Styling/Home.css';
 import { Link } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
+import IssueShelf from '../Components/IssueShelf';
+import { articles, issues } from '../Data/journalData';
 
 function Home() {
     return (
@@ -46,6 +48,12 @@ function Home() {
                 </div>
             </section>
 
+            <section className="home-desktop-issue">
+                <div className="section-content">
+                    <IssueShelf issues={issues} articles={articles} />
+                </div>
+            </section>
+
             <section className="jh-featured">
                 <div className="jh-featured-heading">
                     <div><p className="jh-section-label">From the latest issues</p><h2>Featured<br /><em>research.</em></h2></div>
@@ -55,10 +63,10 @@ function Home() {
                     <article className="jh-article jh-article-lead">
                         <div className="jh-article-number">01</div>
                         <div className="jh-article-content">
-                            <div className="jh-article-topline"><span>Civil Rights Law</span><span>2026 · Issue 2</span></div>
+                            <div className="jh-article-topline"><span>Civil Rights Law</span><span>2026 · Issue 1 · Article 1</span></div>
                                 <h3>Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960
                                 </h3>
-                            <p className="jh-article-meta">By <Link to="/author/derek">Derek Tsai</Link> · January 2026</p>
+                            <p className="jh-article-meta">By <Link to="/author/derek">Derek Tsai</Link> · May 2026</p>
                             <p className="jh-article-preview">
                                     This essay relies heavily on
                                     the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law
@@ -72,9 +80,9 @@ function Home() {
                     <article className="jh-article jh-article-secondary">
                         <div className="jh-article-number">02</div>
                         <div className="jh-article-content">
-                            <div className="jh-article-topline"><span>Education Law</span><span>2026 · Issue 1</span></div>
+                            <div className="jh-article-topline"><span>Education Law</span><span>2026 · Issue 1 · Article 2</span></div>
                                 <h3>"Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"</h3>
-                            <p className="jh-article-meta">By <Link to="/author/shelby">Shelby Eliasek</Link> · January 2026</p>
+                            <p className="jh-article-meta">By <Link to="/author/shelby">Shelby Eliasek</Link> · May 2026</p>
                             <p className="jh-article-preview">
                                     An examination of cases on public school policies regarding the use of gender non-conforming names and pronouns for students, and the rights of parents to be notified of these changes.
                                 </p>

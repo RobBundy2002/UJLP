@@ -1,7 +1,6 @@
 export const issues = [
     { id: 'all', label: 'All Issues' },
-    { id: '2026-2', label: '2026 Issue 2', accent: '#8faec8', tone: 'blue' },
-    { id: '2026-1', label: '2026 Issue 1', accent: '#f18c62', tone: 'ember' },
+    { id: '2026-1', label: '2026 Issue 1', publicationDate: 'May 2026', accent: '#f18c62', tone: 'ember' },
 ];
 
 export const articles = [
@@ -11,8 +10,10 @@ export const articles = [
         authorLink: '/author/derek',
         category: 'Civil Rights Law',
         researchSlug: 'civil-rights-law',
-        date: 'June 2026',
-        issue: '2026-2',
+        date: 'May 2026',
+        issue: '2026-1',
+        articleNumber: 1,
+        pageRange: '1–14',
         excerpt: 'This essay uses the experiences of Gregory Swanson and John Merchant at the University of Virginia School of Law to examine the limits of legal measures and the role of social change in achieving equal opportunity in higher education.',
         pageLink: '/unequalopportunity'
     },
@@ -22,8 +23,10 @@ export const articles = [
         authorLink: '/author/shelby',
         category: 'Education Law',
         researchSlug: 'education-law',
-        date: 'January 2026',
+        date: 'May 2026',
         issue: '2026-1',
+        articleNumber: 2,
+        pageRange: '15–24',
         excerpt: 'An examination of cases concerning public-school policies, gender-nonconforming names and pronouns, and the rights of parents to be informed of these changes.',
         pageLink: '/schoolhousesecrets'
     },

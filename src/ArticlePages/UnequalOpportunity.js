@@ -11,7 +11,7 @@ function UnequalOpportunity() {
             <h1>
                 Unequal Opportunity:<br /><em>Desegregation at the University of Virginia School of Law, 1950–1960</em>
             </h1>
-            <p className="article-meta">By Derek Tsai • June 2026 • Civil Rights Law • 2026 Issue 2</p>
+            <p className="article-meta">By Derek Tsai • May 2026 • Civil Rights Law • 2026 Issue 1 · Article 1</p>
 
             <div className="article-summary">
                 <h2>Summary</h2>
@@ -30,14 +30,14 @@ function UnequalOpportunity() {
             </div>
 
             <PDFViewer 
-                pdfPath="/ArticlePDFs/Unequal Opportunity Draft 4 (3).pdf"
+                pdfPath="/ArticlePDFs/Unequal Opportunity Final Manuscript.pdf"
                 title="Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"
                 author="Derek Tsai"
             />
 
             <div className="pdf-actions">
                 <a
-                    href="/ArticlePDFs/Unequal%20Opportunity%20Draft%204%20(3).pdf"
+                    href="/ArticlePDFs/Unequal%20Opportunity%20Final%20Manuscript.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="cta-button pdf-button"
@@ -49,7 +49,7 @@ function UnequalOpportunity() {
             <CiteShare 
                 title={"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"}
                 author={"Derek Tsai"}
-                date={"2026-06-01"}
+                date={"2026-05-01"}
                 url={window.location.href}
             />
 

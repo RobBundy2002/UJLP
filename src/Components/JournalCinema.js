@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export function PrintingPressIntro() {
+export function PrintingPressIntro({ embedded = false }) {
     const phrase = 'Ideas that move the world.';
     const keys = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M'];
     const [activeKey, setActiveKey] = useState('');
@@ -8,14 +8,20 @@ export function PrintingPressIntro() {
     useEffect(() => {
         let interval;
         let index = 0;
+        let pause = 0;
         const start = window.setTimeout(() => {
             interval = window.setInterval(() => {
+                if (pause > 0) {
+                    pause -= 1;
+                    return;
+                }
                 const character = phrase[index];
                 setActiveKey(character === ' ' ? 'SPACE' : character?.toUpperCase() || '');
                 index += 1;
                 if (index >= phrase.length) {
-                    window.clearInterval(interval);
-                    window.setTimeout(() => setActiveKey(''), 90);
+                    index = 0;
+                    pause = 12;
+                    setActiveKey('');
                 }
             }, 85);
         }, 1200);
@@ -26,7 +32,7 @@ export function PrintingPressIntro() {
         };
     }, []);
 
-    return <div className="printing-press-intro" aria-hidden="true">
+    return <div className={`printing-press-intro ${embedded ? 'title-screen-typewriter' : ''}`} aria-hidden="true">
         <div className="workstation-atmosphere" />
         <div className="editorial-workstation">
             <div className="workstation-monitor">
@@ -40,7 +46,7 @@ export function PrintingPressIntro() {
                             <strong>UJLP</strong>
                             <div className="screen-typed-line"><span>Ideas that move the world.</span><i /></div>
                             <p>THE UNDERGRADUATE JOURNAL<br />OF LAW &amp; POLITICS</p>
-                            <div className="screen-status"><span>ISSUE 02 / 2026</span><span>READY TO PUBLISH</span></div>
+                            <div className="screen-status"><span>ISSUE 01 / 2026</span><span>READY TO PUBLISH</span></div>
                         </div>
                     </div>
                     <span className="screen-scan" />
@@ -64,22 +70,26 @@ export function PrintingPressIntro() {
     </div>;
 }
 
-export function AnimatedJournalSeal() {
-    return <div className="animated-journal-seal" aria-label="Undergraduate Journal of Law and Politics seal">
-        <div className="seal-graphic">
+export function JournalSealGraphic() {
+    return <span className="seal-graphic">
             <span className="seal-aura" aria-hidden="true" />
             <span className="seal-orbit seal-orbit-one" aria-hidden="true" />
             <span className="seal-orbit seal-orbit-two" aria-hidden="true" />
             <span className="seal-crosshair" aria-hidden="true" />
-            <div className="seal-center">
+            <span className="seal-center">
                 <small>University of Virginia</small>
                 <strong>UJLP</strong>
                 <span aria-hidden="true">◆</span>
                 <em>Law · Politics · 2024</em>
-            </div>
+            </span>
             <span className="seal-engraving seal-engraving-top">UNDERGRADUATE JOURNAL</span>
             <span className="seal-engraving seal-engraving-bottom">CHARLOTTESVILLE · VIRGINIA</span>
-        </div>
+        </span>;
+}
+
+export function AnimatedJournalSeal() {
+    return <div className="animated-journal-seal" aria-label="Undergraduate Journal of Law and Politics seal">
+        <JournalSealGraphic />
         <div className="seal-companion">
             <span>Our editorial imprint</span>
             <h3>Rigorous work,<br /><em>distinctly ours.</em></h3>

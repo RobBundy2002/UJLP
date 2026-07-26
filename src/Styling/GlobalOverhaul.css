@@ -1233,7 +1233,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .reading-room-atmosphere b { font-weight: 700; }
 .issue-volumes { display: flex; min-height: 580px; align-items: flex-end; justify-content: center; gap: clamp(1.8rem, 5vw, 4.2rem); padding: clamp(3rem, 6vw, 5.5rem) clamp(2rem, 8vw, 8rem) 62px; border-right: 1px solid rgba(231,222,203,.14); border-left: 1px solid rgba(231,222,203,.14); background: radial-gradient(ellipse at 50% 105%, rgba(34,84,127,.3), transparent 48%), linear-gradient(180deg, rgba(255,255,255,.018), transparent); perspective: 1600px; perspective-origin: 50% 45%; }
 .issue-volume { position: relative; width: clamp(220px, 27vw, 330px); min-height: clamp(390px, 41vw, 510px); flex: 0 1 330px; padding: 0; overflow: visible; border: 0; border-radius: .2rem .5rem .08rem .08rem; background: #d9d0bf; color: #f7f1e7; text-align: left; box-shadow: 25px 24px 30px rgba(0,0,0,.28); cursor: pointer; transform: rotateY(-18deg) rotateZ(-1deg); transform-origin: bottom left; transform-style: preserve-3d; }
-.issue-book-pages { position: absolute; inset: 5px 1px 2px 2px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(1.2rem, 3vw, 2.3rem); overflow: hidden; border: 1px solid rgba(66,59,50,.35); border-radius: .28rem .42rem .25rem .32rem; background: linear-gradient(90deg, rgba(88,73,55,.16), transparent 8%), repeating-linear-gradient(90deg, #eee5d5 0 2px, #d8cebd 2px 3px); box-shadow: inset -14px 0 18px rgba(74,61,47,.18); color: #17202a; text-align: center; }
+.issue-book-pages { position: absolute; inset: 3px -10px 0 1px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(1.2rem, 3vw, 2.3rem); overflow: hidden; border: 1px solid rgba(66,59,50,.35); border-radius: .28rem .72rem .25rem .32rem; background: linear-gradient(90deg, rgba(88,73,55,.16), transparent 8%), repeating-linear-gradient(90deg, #eee5d5 0 2px, #d8cebd 2px 3px); box-shadow: inset -14px 0 18px rgba(74,61,47,.18); color: #17202a; text-align: center; }
 .issue-book-pages::before { content: ""; position: absolute; inset: 1rem; border: 1px solid rgba(77,63,47,.28); pointer-events: none; }
 .issue-book-pages small { color: #6b5946; font-size: .47rem; font-weight: 700; letter-spacing: .12em; line-height: 1.45; text-transform: uppercase; }
 .issue-book-pages i { margin: .85rem 0; color: #9b4f38; font-size: .52rem; font-style: normal; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
@@ -1242,9 +1242,14 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .issue-book-pages > span { width: 100%; margin-top: auto; color: #8d4d38; font-size: .46rem; font-weight: 700; letter-spacing: .08em; text-align: center; text-transform: uppercase; }
 .issue-book-pages > span u { display: inline-block; font-size: .78rem; line-height: .5; text-decoration: none; transform: translateY(.08rem); }
 .issue-book-pages b { margin-top: .55rem; color: #786b5d; font-size: .45rem; letter-spacing: .1em; text-align: center; text-transform: uppercase; }
+.issue-book-contents { display: grid; width: 100%; gap: .58rem; margin: .75rem 0 0; padding: 0; list-style: none; text-align: left; }
+.issue-book-contents li { display: grid; grid-template-columns: 1.2rem minmax(0, 1fr); gap: .35rem; align-items: start; }
+.issue-book-contents li > span { color: #9b4f38; font-size: .48rem; font-weight: 700; letter-spacing: .08em; }
+.issue-book-contents li > strong { display: block; overflow: hidden; color: #17202a; font-family: "Playfair Display", Georgia, serif; font-size: .62rem; font-weight: 500; line-height: 1.12; }
+.issue-book-contents li > em { grid-column: 2; margin: -.18rem 0 0; color: #713f30; font-family: inherit; font-size: .42rem; font-style: normal; }
 .issue-book-cover { position: absolute; inset: 0; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr); border: 1px solid color-mix(in srgb, var(--issue-accent) 52%, rgba(231,222,203,.2)); border-radius: .2rem .5rem .08rem .08rem; background: linear-gradient(105deg, rgba(255,255,255,.12), transparent 9% 88%, rgba(0,0,0,.28)), radial-gradient(circle at 78% 20%, color-mix(in srgb, var(--issue-accent) 28%, transparent), transparent 38%), #0a192a; box-shadow: inset -10px 0 18px rgba(0,0,0,.24); transform: rotateY(0); transform-origin: left center; transform-style: preserve-3d; transition: transform 2.15s cubic-bezier(.22,.72,.18,1), box-shadow .2s ease, border-color .2s ease; }
 .issue-volume:hover .issue-book-cover, .issue-volume:focus-visible .issue-book-cover { border: 4px solid var(--issue-accent); box-shadow: inset -10px 0 18px rgba(0,0,0,.24), 0 0 0 4px color-mix(in srgb, var(--issue-accent) 55%, transparent), 0 0 42px color-mix(in srgb, var(--issue-accent) 42%, transparent); }
-.issue-volume::before { content: ""; position: absolute; top: 1px; right: -11px; bottom: -11px; width: 11px; border: 1px solid rgba(89,78,64,.42); border-left: 0; border-radius: 0 .52rem .58rem 0; background: repeating-linear-gradient(90deg, #d8d0c2 0 1px, #827f78 1px 2px, #eee4d3 2px 3px); pointer-events: none; }
+.issue-volume::before { content: ""; position: absolute; top: 3px; right: -12px; bottom: -11px; width: 13px; border: 1px solid rgba(89,78,64,.42); border-left: 0; border-radius: 0 .72rem .72rem 0; background: linear-gradient(90deg, #d8d0c2 0%, #827f78 42%, #eee4d3 78%, #b7ad9d 100%), repeating-linear-gradient(90deg, #d8d0c2 0 1px, #827f78 1px 2px, #eee4d3 2px 3px); box-shadow: inset -2px 0 3px rgba(255,255,255,.3), inset 3px 0 4px rgba(74,61,47,.2); pointer-events: none; }
 .issue-volume::after { content: ""; position: absolute; right: -11px; bottom: -11px; left: 0; height: 11px; border: 1px solid rgba(89,78,64,.42); border-top-color: rgba(238,228,211,.42); border-radius: 0 0 .62rem .32rem; background: repeating-linear-gradient(#e4dac9 0 1px, #8e8980 1px 2px, #f0e7d7 2px 3px); pointer-events: none; }
 .issue-volume:nth-child(even) { min-height: clamp(365px, 38vw, 475px); transform: rotateY(-13deg) rotateZ(1.25deg) translateY(3px); transform-origin: bottom left; }
 .issue-volume:nth-child(even) .issue-book-cover { background: linear-gradient(105deg, rgba(255,255,255,.1), transparent 9% 88%, rgba(0,0,0,.3)), radial-gradient(circle at 78% 20%, color-mix(in srgb, var(--issue-accent) 25%, transparent), transparent 38%), #111b2a; }
@@ -1256,8 +1261,15 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .issue-cover-frame::after { right: .6rem; bottom: .6rem; border-right: 1px solid; border-bottom: 1px solid; }
 .issue-spine { display: grid; height: 100%; place-items: center; border-right: 1px solid rgba(231,222,203,.15); color: #8498a9; font-size: .55rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
 .issue-volume-copy { position: relative; z-index: 1; display: flex; min-width: 0; height: 100%; flex-direction: column; justify-content: center; align-items: center; gap: .18rem; padding: clamp(1.85rem, 3.3vw, 2.35rem) clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3rem); text-align: center; }
-.issue-volume-copy small { position: absolute; top: 20%; left: 50%; transform: translateX(-50%); width: calc(100% - 2rem); color: #8498a9; font-size: .72rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; margin-top: 0; }
-.issue-cover-mark { display: grid; width: clamp(4.8rem, 8.8vw, 6.9rem); aspect-ratio: 1; place-items: center; margin: .85rem 0 .55rem; border: 1px solid color-mix(in srgb, var(--issue-accent) 78%, rgba(231,222,203,.22)); border-radius: 50%; background: radial-gradient(circle at 34% 30%, rgba(255,255,255,.14), transparent 36%), radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--issue-accent) 14%, transparent), transparent 66%), rgba(5,12,21,.18); color: #f7f1e7; font-family: "Inter", sans-serif; font-size: clamp(.78rem, 1.4vw, 1.05rem); font-weight: 800; letter-spacing: .18em; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), 0 0 0 8px color-mix(in srgb, var(--issue-accent) 7%, transparent); }
+.issue-volume-copy small { position: static; width: 100%; margin: 0 0 1.15rem; transform: none; color: #8498a9; font-size: .62rem; font-weight: 700; letter-spacing: .14em; line-height: 1.45; text-align: center; text-transform: uppercase; }
+.issue-volume-copy .issue-cover-university { margin-top: auto; margin-bottom: 0; }
+.issue-volume-copy .issue-volume-count { margin-top: .45rem; }
+.issue-cover-mark { position: relative; display: flex; width: clamp(5.8rem, 10vw, 8rem); aspect-ratio: 1.09; flex-direction: column; align-items: center; justify-content: center; gap: .22rem; margin: .55rem 0 .75rem; overflow: visible; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.issue-cover-mark::before { display: none; }
+.issue-cover-mark::after { content: ""; position: absolute; top: .35rem; right: .35rem; width: .75rem; height: .75rem; border-top: 1px solid #f18c62; border-right: 1px solid #f18c62; opacity: .8; }
+.issue-logo-kicker, .issue-logo-footer { position: relative; z-index: 1; color: #91a5b7; font-family: "Inter", sans-serif; font-size: .34rem; font-weight: 700; letter-spacing: .2em; line-height: 1; }
+.issue-cover-mark strong { position: relative; z-index: 1; margin: 0; color: #f7f1e7; font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.8rem, 3.4vw, 2.8rem); font-weight: 400; letter-spacing: -.08em; line-height: .8; }
+.issue-cover-mark i { position: relative; z-index: 1; width: 2.3rem; height: 1px; margin: .12rem 0 .05rem; background: #f18c62; }
 .issue-volume-copy strong { max-width: 360px; margin-top: .1rem; color: #f7f1e7; font-family: "Playfair Display", Georgia, serif; font-size: clamp(1.8rem, 3.5vw, 3.7rem); font-weight: 400; letter-spacing: -.045em; line-height: .95; }
 .issue-volume-copy em { margin-top: .45rem; color: #f18c62; font-size: .62rem; font-style: normal; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .issue-volume-count { margin-top: auto; color: #8498a9; font-size: .52rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
@@ -1962,3 +1974,31 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
     .author-bio-container .publication-item { grid-template-columns: 2.1rem minmax(0,1fr); }
     .index-ledger article { grid-template-columns: 2.2rem minmax(0,1fr); }
 }
+
+@media (max-width: 760px) {
+    .issue-volume-copy .issue-cover-university { margin-top: auto; margin-bottom: 0; }
+    .issue-cover-mark { gap: .06rem; }
+    .issue-cover-mark strong { font-size: .42rem; }
+    .issue-logo-kicker, .issue-logo-footer { font-size: .07rem; letter-spacing: .14em; }
+    .issue-cover-mark i { width: .55rem; margin: .02rem 0; }
+}
+
+/* Publication numbers recede into the editorial composition; the published-works count stays legible. */
+.jh-article-number,
+.journal-article-number,
+.index-number,
+.constellation-node > span {
+    display: block;
+    width: auto;
+    height: auto;
+    border: 0;
+    border-radius: 0;
+    color: rgba(244,163,125,.22);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 400;
+    letter-spacing: -.08em;
+    line-height: .8;
+}
+.index-count > span,
+.constellation-core strong { color: #f18c62; font-family: "Playfair Display", Georgia, serif; font-weight: 400; }

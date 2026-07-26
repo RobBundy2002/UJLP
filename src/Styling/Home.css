@@ -675,6 +675,80 @@
 .jh-hero-index { position: absolute; z-index: 4; bottom: 2.5rem; right: clamp(2rem, 5vw, 5rem); display: flex; align-items: center; gap: .7rem; color: rgba(247,241,231,.7); font-size: .68rem; letter-spacing: .12em; }
 .jh-hero-index i { width: 58px; height: 1px; background: rgba(247,241,231,.45); }
 
+/* The typewriter now lives as a quiet piece of the title screen instead of
+   blocking the site as a loading overlay. */
+.title-screen-typewriter {
+    position: absolute;
+    right: clamp(.5rem, 4vw, 4rem);
+    bottom: -1.5rem;
+    z-index: 2;
+    display: block;
+    width: min(460px, 42vw);
+    height: 290px;
+    overflow: visible;
+    background: none;
+    pointer-events: none;
+    animation: none;
+}
+.title-screen-typewriter .workstation-atmosphere,
+.title-screen-typewriter .workstation-progress,
+.title-screen-typewriter .workstation-notecard { display: none; }
+.title-screen-typewriter .editorial-workstation {
+    width: 100%;
+    height: 100%;
+    animation: none;
+    transform: scale(.55);
+    transform-origin: right bottom;
+}
+.title-screen-typewriter .workstation-monitor { width: 680px; height: 410px; }
+.title-screen-typewriter .workstation-desk { width: 850px; }
+.title-screen-typewriter .workstation-mouse { right: 2rem; }
+.title-screen-typewriter .screen-typed-line span { width: auto; animation: workstation-type-loop 5.8s steps(26, end) infinite; }
+@keyframes workstation-type-loop { 0%, 12% { clip-path: inset(0 100% 0 0); } 48%, 72% { clip-path: inset(0 0 0 0); } 88%, 100% { clip-path: inset(0 100% 0 0); } }
+
+.jh-typewriter-section {
+    position: relative;
+    display: grid;
+    min-height: 430px;
+    grid-template-columns: minmax(0, .8fr) minmax(420px, 1.2fr);
+    align-items: center;
+    gap: clamp(1rem, 5vw, 5rem);
+    padding: clamp(3rem, 7vw, 6rem) clamp(1.5rem, 7vw, 7rem);
+    overflow: hidden;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: radial-gradient(circle at 78% 50%, rgba(34,84,127,.22), transparent 38%), #081421;
+}
+.jh-typewriter-copy { position: relative; z-index: 2; max-width: 25rem; }
+.jh-typewriter-copy h2 { margin: 1.2rem 0 1.5rem; color: var(--ink); font-family: "Playfair Display", Georgia, serif; font-size: clamp(3rem, 6vw, 6rem); font-weight: 400; letter-spacing: -.06em; line-height: .88; }
+.jh-typewriter-copy h2 em { color: #f18c62; font-weight: 400; }
+.jh-typewriter-copy > p:last-child { max-width: 22rem; color: var(--muted); line-height: 1.75; }
+.jh-typewriter-section .title-screen-typewriter {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    z-index: 1;
+    width: min(560px, 48vw);
+    height: 340px;
+    margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+    .title-screen-typewriter {
+        right: -.5rem;
+        bottom: -1rem;
+        width: 220px;
+        height: 150px;
+        opacity: .7;
+    }
+    .title-screen-typewriter .editorial-workstation { transform: scale(.27); }
+    .jh-typewriter-section { display: block; min-height: 390px; padding: 4rem 1.5rem 0; }
+    .jh-typewriter-copy { max-width: 20rem; }
+    .jh-typewriter-section .title-screen-typewriter { width: 220px; height: 150px; margin: 1rem 0 -1rem auto; }
+    .home-desktop-issue { display: none; }
+    .jh-home > .jh-featured { display: block; }
+}
+
 .jh-introduction { max-width: 1280px; margin: 0 auto; padding: clamp(4rem, 8vw, 8rem) clamp(1.5rem, 7vw, 7rem) 0; background: radial-gradient(circle 26rem at 30% 0, rgba(144, 52, 34, .27), transparent 100%); }
 .jh-intro-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(3rem, 9vw, 10rem); margin-top: 1.3rem; }
 .jh-intro-grid h2, .jh-featured h2, .jh-join h2 { font-size: clamp(2.9rem, 5.5vw, 5.8rem); font-weight: 400; letter-spacing: -.06em; line-height: .92; }
@@ -688,6 +762,16 @@
 .jh-stats span { max-width: 7rem; color: var(--muted); font-size: .72rem; letter-spacing: .06em; line-height: 1.4; text-transform: uppercase; }
 
 .jh-featured { padding: clamp(6rem, 11vw, 11rem) clamp(1.5rem, 7vw, 7rem); background: #07111f; border-top: 1px solid var(--line); }
+.home-desktop-issue { display: block; border-top: 1px solid var(--line); background: #07111f; }
+.home-desktop-issue .section-content { width: min(1280px, 100%); max-width: none; padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 7vw, 7rem); }
+.home-desktop-issue .section-content { padding-top: 3.5rem; padding-bottom: 4rem; }
+.home-desktop-issue .issue-shelf { width: min(860px, 100%); margin: 0 auto; }
+.home-desktop-issue .issue-shelf-heading { padding: 0 .25rem 1.1rem; }
+.home-desktop-issue .reading-room-atmosphere { border: 1px solid rgba(231,222,203,.2); border-bottom: 0; border-radius: .45rem .45rem 0 0; background: linear-gradient(180deg, rgba(34,84,127,.18), rgba(8,19,31,.96)); }
+.home-desktop-issue .issue-volumes { min-height: 480px; padding: 2.5rem 2rem 46px; border: 1px solid rgba(231,222,203,.2); border-top: 0; border-radius: 0 0 .45rem .45rem; background: radial-gradient(ellipse at 50% 105%, rgba(34,84,127,.3), transparent 52%), linear-gradient(180deg, rgba(255,255,255,.035), rgba(7,17,31,.9)); }
+.home-desktop-issue .issue-shelf-base { border-radius: 0 0 .3rem .3rem; }
+.home-desktop-issue .issue-volume { width: clamp(205px, 23vw, 285px); min-height: clamp(350px, 35vw, 435px); flex-basis: 285px; }
+.jh-home > .jh-featured { display: none; }
 .jh-featured-heading { max-width: 1280px; margin: 0 auto clamp(3rem, 6vw, 5rem); display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; }
 .jh-featured-heading .jh-section-label { margin-bottom: 1.25rem; }
 .jh-featured-heading h2 { margin-bottom: 0; }
@@ -711,7 +795,7 @@
 .jh-read-link { color: #f4a37d !important; margin-top: .4rem; }
 
 .jh-join { position: relative; min-height: 570px; display: grid; place-items: center; isolation: isolate; padding: 7rem 2rem; overflow: hidden; background: #07111f; color: var(--ink); border-top: 1px solid var(--line); }
-.jh-join::before { content: ""; position: absolute; width: min(75vw, 1000px); aspect-ratio: 1; border: 1px solid rgba(241,140,98,.28); border-radius: 50%; top: -66%; right: -18%; }
+.jh-join::before { display: none; }
 .jh-join-mark { position: absolute; z-index: -1; left: 50%; top: 50%; color: rgba(244, 163, 125, .07); font-family: "Playfair Display", Georgia, serif; font-size: clamp(8rem, 25vw, 25rem); letter-spacing: -.12em; transform: translate(-52%, -54%); }
 .jh-join-content { max-width: 720px; text-align: center; }
 .jh-join .jh-section-label { color: #be4d29 !important; margin-bottom: 1.4rem; }
@@ -736,4 +820,9 @@
     .jh-article-tertiary .jh-article-meta { margin-bottom: 1rem; }
     .jh-article-topline { margin-bottom: 2.5rem; flex-direction: column; gap: .4rem; }
     .jh-article-secondary { border-top: 0; }
+}
+
+@media (max-width: 760px) {
+    .jh-home .home-desktop-issue { display: none !important; }
+    .jh-home > .jh-featured { display: block !important; }
 }

@@ -1,9 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import '../Styling/Journal.css';
 import '../Styling/Home.css';
 import '../Styling/EditorialPages.css';
-import IssueShelf from '../Components/IssueShelf';
 import ResearchConstellation from '../Components/ResearchConstellation';
 import { AnimatedJournalSeal } from '../Components/JournalCinema';
 import { articles, issues } from '../Data/journalData';
@@ -41,10 +41,40 @@ function Journal() {
 
             <section className="journal-articles">
                 <div className="section-content">
-                    <IssueShelf
-                        issues={issues}
-                        articles={articles}
-                    />
+                    <div className="journal-publication-ledger">
+                        <div className="journal-ledger-heading">
+                            <div>
+                                <p>Published issues</p>
+                                <h2>The Journal,<br /><em>in full.</em></h2>
+                            </div>
+                            <Link to="/journal/index">Open complete index <span>↗</span></Link>
+                        </div>
+                        {issues.filter(issue => issue.id !== 'all').map(issue => {
+                            const issueArticles = articles.filter(article => article.issue === issue.id);
+                            return (
+                                <section className="journal-issue-group" key={issue.id}>
+                                    <div className="journal-issue-label">
+                                        <span>Volume 1</span>
+                                        <strong>{issue.label}</strong>
+                                        <em>{issue.publicationDate || 'Publication date forthcoming'}</em>
+                                    </div>
+                                    <div className="journal-issue-articles">
+                                        {issueArticles.map((article, index) => (
+                                            <article key={article.pageLink}>
+                                                <span className="journal-article-number">{String(index + 1).padStart(2, '0')}</span>
+                                                <div>
+                                                    <div className="journal-article-topline"><span>{article.category}</span><span>pp. {article.pageRange}</span></div>
+                                                    <h3><Link to={article.pageLink}>{article.title}</Link></h3>
+                                                    <p>By <Link to={article.authorLink}>{article.author}</Link> · {article.date}</p>
+                                                    <span className="journal-article-excerpt">{article.excerpt}</span>
+                                                </div>
+                                            </article>
+                                        ))}
+                                    </div>
+                                </section>
+                            );
+                        })}
+                    </div>
                 </div>
             </section>
 

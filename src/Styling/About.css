@@ -200,6 +200,74 @@
     color: var(--text-secondary);
 }
 
+/* Mission statement and editorial desk share one balanced spread. */
+.jh-about .mission-section .section-content {
+    grid-template-columns: minmax(0, 1.35fr) minmax(360px, .9fr);
+    align-items: center;
+    min-height: 610px;
+    padding-top: clamp(5rem, 9vw, 8rem);
+    padding-bottom: clamp(5rem, 9vw, 8rem);
+}
+.jh-about .mission-copy { position: relative; z-index: 2; display: grid; max-width: none; grid-template-columns: minmax(11rem, .52fr) minmax(0, 1.48fr); column-gap: clamp(1.5rem, 4vw, 4rem); align-items: start; }
+.jh-about .mission-copy > p { grid-column: 1 / -1; margin: 0 0 1.2rem; color: #f18c62; font-size: .68rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.jh-about .mission-copy h2 { margin: 0; font-size: clamp(3.8rem, 7vw, 7rem); line-height: .84; }
+.jh-about .mission-copy h2 em { color: #f18c62; font-weight: 400; }
+.jh-about .mission-copy .mission-content { max-width: 580px; margin: .15rem 0 0; padding: 0; text-align: left; }
+.jh-about .mission-copy .mission-content p { max-width: 38rem; color: #b8bcc9; font-family: "Inter", sans-serif; font-size: 1.02rem; line-height: 1.85; }
+.jh-about .mission-section .title-screen-typewriter { position: relative; right: auto; bottom: auto; z-index: 1; width: min(480px, 38vw); height: 340px; margin: 0 auto; }
+
+/* Final mission composition: generous text field, compact active workstation. */
+.jh-about .mission-section .section-content {
+    grid-template-columns: minmax(0, 1.7fr) minmax(320px, .8fr);
+    gap: clamp(3rem, 7vw, 7rem);
+}
+.jh-about .mission-copy {
+    grid-template-columns: minmax(12rem, .42fr) minmax(0, 1.58fr);
+    column-gap: clamp(2rem, 5vw, 5rem);
+}
+.jh-about .mission-copy .mission-content { width: 100%; max-width: none; }
+.jh-about .mission-copy .mission-content p { max-width: none; }
+.jh-about .mission-section .title-screen-typewriter { width: min(430px, 31vw); height: 330px; }
+
+@media (min-width: 761px) {
+    .jh-about .mission-section .title-screen-typewriter .editorial-workstation { transform: scale(.48); transform-origin: center center; }
+}
+
+@media (max-width: 760px) {
+    .jh-about .mission-section .section-content { display: block; min-height: 0; padding-top: 4rem; padding-bottom: 0; }
+    .jh-about .mission-copy { display: block; }
+    .jh-about .mission-copy h2 { margin-bottom: 1.6rem; }
+    .jh-about .mission-section .title-screen-typewriter { width: 220px; height: 150px; margin: 1rem 0 -1rem auto; }
+}
+
+/* The mission reads as a proper editorial statement: heading first, paragraph below. */
+.jh-about .mission-copy { display: block; max-width: 760px; }
+.jh-about .mission-copy > p { margin-bottom: 1.35rem; }
+.jh-about .mission-copy h2 { margin-bottom: 2rem; }
+.jh-about .mission-copy .mission-content { width: 100%; max-width: 700px; margin: 0; }
+.jh-about .mission-copy .mission-content p { width: 100%; max-width: 700px; }
+
+@media (max-width: 760px) {
+    .jh-about .mission-section { overflow: visible; }
+    .jh-about .mission-section .section-content { width: 100%; padding-right: 1.25rem; padding-left: 1.25rem; text-align: left !important; }
+    .jh-about .mission-copy { width: 100%; max-width: 34rem; margin: 0 auto; text-align: left !important; }
+    .jh-about .mission-copy > p,
+    .jh-about .mission-copy .mission-content p { text-align: left; }
+    .jh-about .mission-copy h2 { text-align: center; }
+    .jh-about .mission-copy h2,
+    .jh-about .jh-people-heading h2 { transform: translateX(1.5rem); }
+    .jh-about .mission-copy .mission-content { width: 100%; max-width: 34rem; margin: 0 auto; }
+    .jh-about .mission-section .title-screen-typewriter { display: block; width: 320px; height: 280px; margin: -6rem auto 0; opacity: 1; overflow: visible; }
+    .jh-about .mission-section .title-screen-typewriter .editorial-workstation { width: 100%; height: 100%; transform: scale(.34); transform-origin: center bottom; }
+    .jh-about .filter-container { display: flex; width: 100%; flex-wrap: wrap !important; justify-content: center; gap: .55rem; overflow: visible !important; }
+    .jh-about .filter-button { flex: 0 1 auto !important; min-width: 0; max-width: 100%; white-space: normal; text-align: center; }
+    .jh-about .jh-roster-heading,
+    .jh-about .jh-roster-heading h2,
+    .jh-about .jh-roster-heading > p { text-align: center; }
+    .jh-about .team-content { margin-right: auto; margin-left: auto; text-align: center; }
+    .jh-about .timeline-intro h2 { transform: translateX(1.5rem); }
+}
+
 .filter-container {
     display: flex;
     flex-wrap: wrap;

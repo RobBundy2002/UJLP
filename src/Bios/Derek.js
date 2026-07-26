@@ -56,7 +56,7 @@ function Derek() {
                     <div className="publications-list">
                         <div className="publication-item">
                             <h3><Link to="/unequalopportunity" className="author-link">"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"</Link></h3>
-                            <p className="publication-meta">Civil Rights Law • June 2026</p>
+                            <p className="publication-meta">Civil Rights Law • May 2026</p>
                             <p className="publication-excerpt">
                                 This essay relies heavily on
                                 the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law

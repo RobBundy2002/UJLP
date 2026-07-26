@@ -38,7 +38,6 @@ import PublicationIndex from './GeneralPages/PublicationIndex';
 import IssueEdition from './GeneralPages/IssueEdition';
 import ResearchArea from './GeneralPages/ResearchArea';
 import BioFrame from './Components/BioFrame';
-import { PrintingPressIntro } from './Components/JournalCinema';
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -166,7 +165,6 @@ function App() {
     return (
         <Router>
             <div className="App">
-                <PrintingPressIntro />
                 <Navigation />
                 <Toast />
                 <main className="fade-in">

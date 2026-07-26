@@ -72,7 +72,7 @@ function Shelby() {
                     <div className="publications-list">
                         <div className="publication-item">
                             <h3><Link to="/schoolhousesecrets" className="author-link">"Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"</Link></h3>
-                            <p className="publication-meta">Education Law • January 2026</p>
+                            <p className="publication-meta">Education Law • May 2026</p>
                             <p className="publication-excerpt">
                                 An examination of cases on public school policies regarding the use of gender non-conforming
                                 names and pronouns for students, and the rights of parents to be notified of these changes.

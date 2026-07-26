@@ -4,6 +4,7 @@ import '../Styling/About.css';
 import '../Styling/Home.css';
 import '../Styling/EditorialPages.css';
 import Timeline from '../Components/Timeline';
+import { PrintingPressIntro } from '../Components/JournalCinema';
 import ParticleBackground from '../Components/ParticleBackground';
 import samImg from '../ProfilePictures/Sam.png';
 import shelbyImg from '../ProfilePictures/Shelby.jpeg';
@@ -33,12 +34,16 @@ function About() {
 
             <section className="mission-section">
                 <div className="section-content">
-                    <h2>Our Mission</h2>
-                    <div className="mission-content">
-                        <p>
-                            The Undergraduate Journal of Law & Politics aims to expand opportunities for undergraduate legal research and writing at the University of Virginia. We publish long-form legal articles that explore the intersection of law and politics, including philosophy, economics, and history. Our goal is to foster academic inquiry and connect legal doctrine with broader humanistic perspectives.
-                        </p>
+                    <div className="mission-copy">
+                        <p className="jh-section-label">What guides us</p>
+                        <h2>Our<br /><em>Mission</em></h2>
+                        <div className="mission-content">
+                            <p>
+                                The Undergraduate Journal of Law & Politics aims to expand opportunities for undergraduate legal research and writing at the University of Virginia. We publish long-form legal articles that explore the intersection of law and politics, including philosophy, economics, and history. Our goal is to foster academic inquiry and connect legal doctrine with broader humanistic perspectives.
+                            </p>
+                        </div>
                     </div>
+                    <PrintingPressIntro embedded />
                 </div>
             </section>
 

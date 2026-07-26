@@ -7,7 +7,6 @@ import '../Styling/IssueFilter.css';
 
 const issues = [
     { id: 'all', label: 'All Issues' },
-    { id: '2026-2', label: '2026 Issue 2' },
     { id: '2026-1', label: '2026 Issue 1' },
 ];
 
@@ -17,8 +16,8 @@ const allArticles = [
         author: "Derek Tsai",
         authorLink: "/author/derek",
         category: "Civil Rights Law",
-        date: "June 2026",
-        issue: "2026-2",
+        date: "May 2026",
+        issue: "2026-1",
         excerpt: "this essay relies heavily on\n" +
             "                    the case study of Gregory Swanson and John Merchant at the University of Virginia School of Law\n" +
             "                    to expose the limitations of legal measures in achieving equal opportunity in higher education, and to\n" +
@@ -41,7 +40,7 @@ const allArticles = [
         author: "Sarah Johnson",
         category: "International Law",
         date: "Upcoming",
-        issue: "2026-2",
+        issue: "2026-1",
         excerpt: "This piece is coming soon.",
         link: "#"
     },
@@ -50,7 +49,7 @@ const allArticles = [
         author: "John Smith",
         category: "Environmental Law",
         date: "Upcoming",
-        issue: "2026-2",
+        issue: "2026-1",
         excerpt: "This piece is coming soon.",
         link: "#"
     },
@@ -59,7 +58,7 @@ const allArticles = [
         author: "Jane Doe",
         category: "Constitutional Law",
         date: "Upcoming",
-        issue: "2026-2",
+        issue: "2026-1",
         excerpt: "This piece is coming soon.",
         link: "#"
     }
