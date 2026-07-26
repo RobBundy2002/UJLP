@@ -66,9 +66,9 @@ function IssueEdition() {
                     <aside className="issue-edition-contents">
                         <p className="issue-section-kicker">Contents</p>
                         <ol className="issue-edition-list">
-                            {issueArticles.map((article, index) => (
-                                <li key={article.pageLink || `${issueId}-${index}`}>
-                                    <span className="issue-edition-number">{String(index + 1).padStart(2, '0')}</span>
+                            {issueArticles.map((article) => (
+                                <li key={article.pageLink || `${issueId}-${article.articleNumber}`}>
+                                    <span className="issue-edition-number">{String(article.articleNumber).padStart(2, '0')}</span>
                                     <div>
                                         <h3><Link to={article.pageLink}>{article.title}</Link></h3>
                                         <p>

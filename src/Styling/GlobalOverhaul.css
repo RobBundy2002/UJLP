@@ -2002,3 +2002,17 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 }
 .index-count > span,
 .constellation-core strong { color: #f18c62; font-family: "Playfair Display", Georgia, serif; font-weight: 400; }
+
+.article-page .article-summary-heading { grid-column: 1; align-self: start; }
+.article-page .article-summary-heading > div span { display: block; margin-bottom: .55rem; color: #9aabba; font-size: .6rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.article-page .article-summary-heading > div strong { display: block; color: #f18c62; font-size: .78rem; font-weight: 700; letter-spacing: .08em; line-height: 1.4; text-transform: uppercase; }
+.article-page .article-topic-list strong + strong { margin-top: .4rem; }
+.article-page .article-summary-heading h2 { margin-top: 2.4rem; }
+.article-page .article-summary-heading h2::before { display: none; }
+.article-page .article-summary > p { grid-column: 2; }
+
+@media (max-width: 760px) {
+    .article-page .article-summary-heading { margin-bottom: 1.5rem; }
+    .article-page .article-summary-heading h2 { margin-top: 1.5rem; }
+    .article-page .article-summary > p { grid-column: auto; }
+}

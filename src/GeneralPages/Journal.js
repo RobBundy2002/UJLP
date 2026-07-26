@@ -59,9 +59,9 @@ function Journal() {
                                         <em>{issue.publicationDate || 'Publication date forthcoming'}</em>
                                     </div>
                                     <div className="journal-issue-articles">
-                                        {issueArticles.map((article, index) => (
+                                        {issueArticles.map((article) => (
                                             <article key={article.pageLink}>
-                                                <span className="journal-article-number">{String(index + 1).padStart(2, '0')}</span>
+                                                <span className="journal-article-number">{String(article.articleNumber).padStart(2, '0')}</span>
                                                 <div>
                                                     <div className="journal-article-topline"><span>{article.category}</span><span>pp. {article.pageRange}</span></div>
                                                     <h3><Link to={article.pageLink}>{article.title}</Link></h3>

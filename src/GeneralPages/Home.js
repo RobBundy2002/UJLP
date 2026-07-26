@@ -63,8 +63,8 @@ function Home() {
                     <article className="jh-article jh-article-lead">
                         <div className="jh-article-number">01</div>
                         <div className="jh-article-content">
-                            <div className="jh-article-topline"><span>Civil Rights Law</span><span>2026 · Issue 1 · Article 1</span></div>
-                                <h3>Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960
+                            <div className="jh-article-topline"><span>Civil Rights Law</span><span>2026 · Volume 1 · Issue 1 · Article 2</span></div>
+                            <h3>Unequal Opportunity: Desegregation at the University of Virginia School of Law
                                 </h3>
                             <p className="jh-article-meta">By <Link to="/author/derek">Derek Tsai</Link> · May 2026</p>
                             <p className="jh-article-preview">
@@ -80,7 +80,7 @@ function Home() {
                     <article className="jh-article jh-article-secondary">
                         <div className="jh-article-number">02</div>
                         <div className="jh-article-content">
-                            <div className="jh-article-topline"><span>Education Law</span><span>2026 · Issue 1 · Article 2</span></div>
+                            <div className="jh-article-topline"><span>Education Law</span><span>2026 · Volume 1 · Issue 1 · Article 1</span></div>
                                 <h3>"Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"</h3>
                             <p className="jh-article-meta">By <Link to="/author/shelby">Shelby Eliasek</Link> · May 2026</p>
                             <p className="jh-article-preview">

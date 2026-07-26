@@ -5,19 +5,6 @@ export const issues = [
 
 export const articles = [
     {
-        title: 'Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960',
-        author: 'Derek Tsai',
-        authorLink: '/author/derek',
-        category: 'Civil Rights Law',
-        researchSlug: 'civil-rights-law',
-        date: 'May 2026',
-        issue: '2026-1',
-        articleNumber: 1,
-        pageRange: '1–14',
-        excerpt: 'This essay uses the experiences of Gregory Swanson and John Merchant at the University of Virginia School of Law to examine the limits of legal measures and the role of social change in achieving equal opportunity in higher education.',
-        pageLink: '/unequalopportunity'
-    },
-    {
         title: 'Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom',
         author: 'Shelby Eliasek',
         authorLink: '/author/shelby',
@@ -25,14 +12,31 @@ export const articles = [
         researchSlug: 'education-law',
         date: 'May 2026',
         issue: '2026-1',
-        articleNumber: 2,
+        articleNumber: 1,
         pageRange: '15–24',
         excerpt: 'An examination of cases concerning public-school policies, gender-nonconforming names and pronouns, and the rights of parents to be informed of these changes.',
         pageLink: '/schoolhousesecrets'
     },
+    {
+        title: 'Unequal Opportunity: Desegregation at the University of Virginia School of Law',
+        author: 'Derek Tsai',
+        authorLink: '/author/derek',
+        category: 'Civil Rights Law',
+        researchSlug: 'civil-rights-law',
+        date: 'May 2026',
+        issue: '2026-1',
+        articleNumber: 2,
+        pageRange: '1–14',
+        excerpt: 'This essay uses the experiences of Gregory Swanson and John Merchant at the University of Virginia School of Law to examine the limits of legal measures and the role of social change in achieving equal opportunity in higher education.',
+        pageLink: '/unequalopportunity'
+    },
 ];
 
-export const getIssueLabel = (issueId) => issues.find(issue => issue.id === issueId)?.label || 'Latest Issue';
+export const getIssueLabel = (issueId) => {
+    const issue = issues.find(item => item.id === issueId);
+    if (!issue || issue.id === 'all') return issue?.label || 'Latest Issue';
+    return `${issue.label.replace(/^(\d{4})\s+/, '$1 Volume 1 ')}`;
+};
 
 export const researchAreas = {
     'civil-rights-law': {

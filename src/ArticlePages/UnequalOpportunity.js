@@ -9,12 +9,15 @@ function UnequalOpportunity() {
     return (
         <div className="article-page fade-in">
             <h1>
-                Unequal Opportunity:<br /><em>Desegregation at the University of Virginia School of Law, 1950–1960</em>
+                Unequal Opportunity:<br /><em>Desegregation at the University of Virginia School of Law</em>
             </h1>
-            <p className="article-meta">By Derek Tsai • May 2026 • Civil Rights Law • 2026 Issue 1 · Article 1</p>
+            <p className="article-meta">By Derek Tsai • Volume 1 · Issue 1 • May 2026</p>
 
             <div className="article-summary">
-                <h2>Summary</h2>
+                <div className="article-summary-heading">
+                    <div><span>Topics</span><div className="article-topic-list"><strong>Civil Rights Law</strong><strong>Education Law &amp; Society</strong></div></div>
+                    <h2>Abstract</h2>
+                </div>
                 <p>
                     In the battle for equal educational opportunity, the law plays a major role in protecting the rights of minority populations; however,
                     scholars often overemphasize the importance of legal progress since it is more concrete and easier to
@@ -31,7 +34,7 @@ function UnequalOpportunity() {
 
             <PDFViewer 
                 pdfPath="/ArticlePDFs/Unequal Opportunity Final Manuscript.pdf"
-                title="Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"
+                title="Unequal Opportunity: Desegregation at the University of Virginia School of Law"
                 author="Derek Tsai"
             />
 
@@ -47,7 +50,7 @@ function UnequalOpportunity() {
             </div>
 
             <CiteShare 
-                title={"Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960"}
+                title={"Unequal Opportunity: Desegregation at the University of Virginia School of Law"}
                 author={"Derek Tsai"}
                 date={"2026-05-01"}
                 url={window.location.href}

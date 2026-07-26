@@ -5,7 +5,7 @@ import '../Styling/SearchBar.css';
 const searchData = {
     articles: [
         {
-            title: "Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960",
+            title: "Unequal Opportunity: Desegregation at the University of Virginia School of Law",
             author: "Derek Tsai",
             category: "Civil Rights Law",
             link: "/unequalopportunity",

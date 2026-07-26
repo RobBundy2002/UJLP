@@ -12,7 +12,7 @@ const issues = [
 
 const allArticles = [
     {
-        title: "Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960",
+        title: "Unequal Opportunity: Desegregation at the University of Virginia School of Law",
         author: "Derek Tsai",
         authorLink: "/author/derek",
         category: "Civil Rights Law",

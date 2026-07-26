@@ -11,10 +11,13 @@ function SchoolhouseSecrets() {
                 <h1>
                     Schoolhouse Secrets:<br /><em>Parental Rights and Gender Identity Disclosure in the American Classroom</em>
                 </h1>
-                <p className="article-meta">By Shelby Eliasek • May 2026 • Education Law • 2026 Issue 1 · Article 2</p>
+                <p className="article-meta">By Shelby Eliasek • Volume 1 · Issue 1 • May 2026</p>
 
                 <div className="article-summary">
-                    <h2>Summary</h2>
+                    <div className="article-summary-heading">
+                        <div><span>Topic</span><div className="article-topic-list"><strong>Education Law</strong></div></div>
+                        <h2>Abstract</h2>
+                    </div>
                     <p>
                         In 2025, two key cases reviewed school policies on a parent's right to be informed of
                         their student's use of a gender-nonconforming name or pronoun. The first case, Foote v. Ludlow School

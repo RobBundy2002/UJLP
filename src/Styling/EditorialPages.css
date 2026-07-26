@@ -334,7 +334,17 @@
 }
 
 .jh-issue .issue-edition-byline a {
+    color: var(--jh-ember);
+    text-decoration: underline;
+    text-decoration-color: rgba(241, 140, 98, .45);
+    text-underline-offset: 3px;
+    transition: color .2s ease, text-decoration-color .2s ease;
+}
+
+.jh-issue .issue-edition-byline a:hover,
+.jh-issue .issue-edition-byline a:focus-visible {
     color: var(--jh-ink);
+    text-decoration-color: currentColor;
 }
 
 .jh-issue .issue-edition-excerpt {

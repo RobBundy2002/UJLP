@@ -49,9 +49,9 @@ function IssueShelf({ issues, articles }) {
                                         <i>Volume 1 · {issue.label.replace(/^\d{4}\s*/, '')}</i>
                                         <strong>Table of Contents</strong>
                                         <ol className="issue-book-contents">
-                                            {issueArticles.map((article, articleIndex) => (
+                                            {issueArticles.map((article) => (
                                                 <li key={article.pageLink || article.title}>
-                                                    <span>{String(articleIndex + 1).padStart(2, '0')}</span>
+                                                    <span>{String(article.articleNumber).padStart(2, '0')}</span>
                                                     <strong>{article.title}</strong>
                                                     <em>{article.author} · pp. {article.pageRange}</em>
                                                 </li>
