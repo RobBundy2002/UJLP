@@ -15,7 +15,7 @@ function UnequalOpportunity() {
 
             <div className="article-summary">
                 <div className="article-summary-heading">
-                    <div><span>Topics</span><div className="article-topic-list"><strong>Civil Rights Law</strong><strong>Education Law &amp; Society</strong></div></div>
+                    <div><span>Topics</span><div className="article-topic-list"><strong>Civil Rights Law</strong><strong>Education Law</strong><strong>Law and Society</strong></div></div>
                     <h2>Abstract</h2>
                 </div>
                 <p>
