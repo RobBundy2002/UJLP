@@ -18,7 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "validate": "node scripts/validate-content.js"
+    "validate": "node scripts/validate-content.js",
+    "screenshots": "node scripts/capture-screenshots.js"
   },
   "eslintConfig": {
     "extends": [
@@ -39,6 +40,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2"
+    "@babel/plugin-proposal-private-property-in-object": "7.21.0-placeholder-for-preset-env.2",
+    "playwright": "^1.62.1"
   }
 }

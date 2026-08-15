@@ -14,6 +14,24 @@ We create space for undergraduate writers to ask difficult questions, follow evi
 
 ---
 
+## Screenshots
+
+### Home
+
+![UJLP home page](docs/screenshots/home-desktop.png)
+
+### Journal
+
+![UJLP journal page](docs/screenshots/journal-desktop.png)
+
+### Article reader
+
+![UJLP article page](docs/screenshots/article-desktop.png)
+
+### Mobile
+
+![UJLP mobile home page](docs/screenshots/home-mobile.png)
+
 ## Our purpose
 
 UJLP expands opportunities for undergraduate legal research and writing at the University of Virginia. We publish long-form articles, cultivate editorial craft, and bring students together around the questions that shape institutions and public life.
@@ -137,6 +155,7 @@ GitHub Pages should be configured in the repository settings to use **GitHub Act
 - `src/Components/` contains reusable navigation, search, journal, and editorial components.
 - `src/Styling/` contains the site’s visual system and responsive layouts.
 - `scripts/validate-content.js` guards against broken journal metadata and missing PDF assets.
+- `scripts/capture-screenshots.js` captures README screenshots from a locally served production build.
 
 ### Repository maintenance
 
