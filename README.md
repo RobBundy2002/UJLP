@@ -125,7 +125,7 @@ GitHub Pages artifact upload
 GitHub Pages deployment
 ```
 
-Pull requests to `main` run the same validation, test, and build checks without deploying.
+Direct pushes to `main` run the standalone CI checks and the production deployment workflow. Pull requests to `main` run validation, test, and build checks without deploying.
 
 GitHub Pages should be configured in the repository settings to use **GitHub Actions** as the Pages source. The custom domain is stored in `public/CNAME`, so Create React App copies it into `build/CNAME` during production builds and the Pages artifact includes it automatically.
 
