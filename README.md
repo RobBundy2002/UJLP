@@ -4,13 +4,13 @@
 
 [![CI](https://github.com/RobBundy2002/UJLP/actions/workflows/ci.yml/badge.svg)](https://github.com/RobBundy2002/UJLP/actions/workflows/ci.yml)
 [![Build and Deploy UJLP](https://github.com/RobBundy2002/UJLP/actions/workflows/deploy.yml/badge.svg)](https://github.com/RobBundy2002/UJLP/actions/workflows/deploy.yml)
-[![Website](https://img.shields.io/badge/website-ujlp.org-0a1728)](https://ujlp.org/)
+[![Website](https://img.shields.io/badge/website-ujlawandpolitics.org-0a1728)](https://ujlawandpolitics.org/)
 
 The Undergraduate Journal of Law & Politics (UJLP) is a University of Virginia publication dedicated to serious inquiry, open horizons, and the next generation of legal and political thinkers.
 
 We create space for undergraduate writers to ask difficult questions, follow evidence wherever it leads, and connect legal doctrine to the larger worlds of history, philosophy, economics, public policy, and human experience. The result is scholarship that is rigorous without being narrow—and a community that believes thoughtful disagreement is part of the work.
 
-**[Explore the journal](https://ujlp.org/#/journal)** · **[Join the team](https://ujlp.org/#/jointheteam)** · **[Follow us on Instagram](https://www.instagram.com/ujlawandpoliticsatuva/)**
+**[Explore the journal](https://ujlawandpolitics.org/#/journal)** · **[Join the team](https://ujlawandpolitics.org/#/jointheteam)** · **[Follow us on Instagram](https://www.instagram.com/ujlawandpoliticsatuva/)**
 
 ---
 
@@ -34,7 +34,7 @@ Our journal explores the intersection of law and politics across a growing range
 
 Recent work includes Derek Tsai’s *Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960* and Shelby Eliasek’s *Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom*.
 
-Read the latest work in the [journal](https://ujlp.org/#/journal), browse the [archives](https://ujlp.org/#/archives), or visit an author’s profile to learn more about the research behind each piece.
+Read the latest work in the [journal](https://ujlawandpolitics.org/#/journal), browse the [archives](https://ujlawandpolitics.org/#/archives), or visit an author’s profile to learn more about the research behind each piece.
 
 ## A student-led editorial community
 
@@ -46,11 +46,11 @@ The Journal is a place to publish, but it is also a place to practice: close rea
 
 Whether you are developing your first research question, polishing a draft, looking for an editorial community, or simply interested in the ideas our members are pursuing, there is a place for you here.
 
-**[Meet the team](https://ujlp.org/#/about)** · **[Submit your work or apply](https://ujlp.org/#/jointheteam)** · **[Contact UJLP](mailto:ujlawandpolitics@gmail.com)**
+**[Meet the team](https://ujlawandpolitics.org/#/about)** · **[Submit your work or apply](https://ujlawandpolitics.org/#/jointheteam)** · **[Contact UJLP](mailto:ujlawandpolitics@gmail.com)**
 
 ## Visit the publication
 
-The live journal is available at **[ujlp.org](https://ujlp.org/)**.
+The live journal is available at **[ujlawandpolitics.org](https://ujlawandpolitics.org/)**.
 
 You can also find UJLP on [Instagram](https://www.instagram.com/ujlawandpoliticsatuva/) and [LinkedIn](https://www.linkedin.com/company/undergraduate-journal-of-law-politics/).
 
@@ -70,7 +70,7 @@ This repository contains the React application that powers the UJLP website. The
 | Deployment | GitHub Pages |
 | CI/CD | GitHub Actions |
 | Content | Structured JavaScript metadata and static PDFs |
-| Domain | ujlp.org / ujlawandpolitics.org |
+| Domain | ujlawandpolitics.org |
 
 ### Architecture
 
