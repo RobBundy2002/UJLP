@@ -6,7 +6,6 @@ import '../Styling/EditorialPages.css';
 import Timeline from '../Components/Timeline';
 import { PrintingPressIntro } from '../Components/JournalCinema';
 import ParticleBackground from '../Components/ParticleBackground';
-import samImg from '../ProfilePictures/Sam.png';
 import shelbyImg from '../ProfilePictures/Shelby.jpeg';
 import derekImg from '../ProfilePictures/Derek.png';
 import robImg from '../ProfilePictures/Rob.jpg';

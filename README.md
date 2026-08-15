@@ -2,6 +2,10 @@
 
 > **Ideas that move the world.**
 
+[![CI](https://github.com/RobBundy2002/UJLP/actions/workflows/ci.yml/badge.svg)](https://github.com/RobBundy2002/UJLP/actions/workflows/ci.yml)
+[![Build and Deploy UJLP](https://github.com/RobBundy2002/UJLP/actions/workflows/deploy.yml/badge.svg)](https://github.com/RobBundy2002/UJLP/actions/workflows/deploy.yml)
+[![Website](https://img.shields.io/badge/website-ujlp.org-0a1728)](https://ujlp.org/)
+
 The Undergraduate Journal of Law & Politics (UJLP) is a University of Virginia publication dedicated to serious inquiry, open horizons, and the next generation of legal and political thinkers.
 
 We create space for undergraduate writers to ask difficult questions, follow evidence wherever it leads, and connect legal doctrine to the larger worlds of history, philosophy, economics, public policy, and human experience. The result is scholarship that is rigorous without being narrow—and a community that believes thoughtful disagreement is part of the work.
@@ -56,6 +60,37 @@ You can also find UJLP on [Instagram](https://www.instagram.com/ujlawandpolitics
 
 This repository contains the React application that powers the UJLP website. The site includes the journal, article pages, author profiles, announcements, team information, and contact pages.
 
+### Technology
+
+| Area | Stack |
+| --- | --- |
+| Frontend | React 18 |
+| Routing | React Router |
+| Build tooling | Create React App / react-scripts |
+| Deployment | GitHub Pages |
+| CI/CD | GitHub Actions |
+| Content | Structured JavaScript metadata and static PDFs |
+| Domain | ujlp.org / ujlawandpolitics.org |
+
+### Architecture
+
+```text
+src/Data/journalData.js
+        |
+        |-- issues
+        |-- authors
+        |-- articles
+        |-- research areas
+        |
+        v
+     React UI
+   /    |     \
+Journal Search Article pages
+                 |
+                 v
+            PDF assets
+```
+
 ### Run locally
 
 ```bash
@@ -65,14 +100,34 @@ npm start
 
 The development server runs at `http://localhost:3000`.
 
-### Build and deploy
+### Validate and build
 
 ```bash
+npm run validate
+npm test -- --watchAll=false
 npm run build
-npm run deploy
 ```
 
-`npm run deploy` builds the production application and publishes the `build/` directory to the `gh-pages` branch. Article PDFs and other static assets live in `public/`.
+`npm run validate` checks the journal metadata, article routes, author routes, research-area references, and PDF asset references before production builds run.
+
+### Deployment
+
+Production deploys are handled by GitHub Actions, not by a local `gh-pages` publish command.
+
+Every push to `main` runs:
+
+```text
+npm ci
+npm run validate
+npm test -- --watchAll=false
+npm run build
+GitHub Pages artifact upload
+GitHub Pages deployment
+```
+
+Pull requests to `main` run the same validation, test, and build checks without deploying.
+
+GitHub Pages should be configured in the repository settings to use **GitHub Actions** as the Pages source. The custom domain is stored in `public/CNAME`, so Create React App copies it into `build/CNAME` during production builds and the Pages artifact includes it automatically.
 
 ### Project notes
 
@@ -81,6 +136,13 @@ npm run deploy
 - `src/GeneralPages/` contains the primary public-facing pages.
 - `src/Components/` contains reusable navigation, search, journal, and editorial components.
 - `src/Styling/` contains the site’s visual system and responsive layouts.
+- `scripts/validate-content.js` guards against broken journal metadata and missing PDF assets.
+
+### Repository maintenance
+
+- Dependency update PRs are managed monthly by Dependabot.
+- The `main` branch is intended to be the source of truth for production.
+- Generated dependencies, local IDE files, and production build output are ignored by Git.
 
 ## Contact
 
