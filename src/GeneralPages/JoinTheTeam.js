@@ -53,7 +53,7 @@ function JoinTheTeam() {
                                 <li>Resume (optional)</li>
                                 <li>List of legal and scholarly interests</li>
                             </ul>
-                            <a href="https://forms.gle/anwNuRKKupevNakG7" target="_blank" rel="noopener noreferrer" className="article-link">
+                            <a href="https://forms.gle/QU4sLoSK3JzcbAt29" target="_blank" rel="noopener noreferrer" className="article-link">
                                 Apply Here →
                             </a>
                         </div>
@@ -84,7 +84,7 @@ function JoinTheTeam() {
                                 <li>Proposed Abstract (~150 words)</li>
                                 <li>Proposed Outline (with section titles and bullet points)</li>
                             </ul>
-                            <a href="https://forms.gle/ds2EUWvnHh5xa1Et9" target="_blank" rel="noopener noreferrer" className="article-link">
+                            <a href="https://forms.gle/7QCbLqKpDkUNwuYh9" target="_blank" rel="noopener noreferrer" className="article-link">
                                 Apply Here →
                             </a>
                         </div>
@@ -113,7 +113,7 @@ function JoinTheTeam() {
                                 <li>Thesis Statement</li>
                                 <li>Copy of Article</li>
                             </ul>
-                            <a href="https://forms.gle/rNBdf16vNDMYUCRM9" target="_blank" rel="noopener noreferrer" className="article-link">
+                            <a href="https://forms.gle/dUxygZAQeUeNU8Es5" target="_blank" rel="noopener noreferrer" className="article-link">
                                 Apply Here →
                             </a>
                         </div>
