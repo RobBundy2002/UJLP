@@ -6,6 +6,7 @@ const ALUMNI_ADMIN_EMAILS = (process.env.REACT_APP_ALUMNI_ADMIN_EMAILS || '')
     .split(',')
     .map(email => email.trim().toLowerCase())
     .filter(Boolean);
+const PREVIEW_PROFILE_INVITE_CODE = (process.env.REACT_APP_ALUMNI_PREVIEW_INVITE_CODE || '').trim();
 const SESSION_KEY = 'ujlp_alumni_session';
 const PREVIEW_ACCOUNTS_KEY = 'ujlp_alumni_preview_accounts';
 const PREVIEW_PROFILES_KEY = 'ujlp_alumni_preview_profiles';
@@ -15,6 +16,10 @@ export const getAlumniBackendMode = () => (isSupabaseConfigured ? 'supabase' : '
 export const isAlumniAdmin = (session) => Boolean(
     session?.user?.email && ALUMNI_ADMIN_EMAILS.includes(session.user.email.toLowerCase())
 );
+export const isAlumniProfileInviteCodeValid = (inviteCode) => Boolean(
+    PREVIEW_PROFILE_INVITE_CODE && inviteCode.trim() === PREVIEW_PROFILE_INVITE_CODE
+);
+export const isAlumniProfileInviteConfigured = Boolean(PREVIEW_PROFILE_INVITE_CODE);
 
 const readJson = (key, fallback) => {
     try {
@@ -218,6 +223,17 @@ export const saveAlumniProfile = async (profile, session) => {
     }
 
     if (isSupabaseConfigured) {
+        if (profile.isNewProfile && !editingAnotherMember && !isAlumniAdmin(session)) {
+            const row = await supabaseRequest('/rest/v1/rpc/create_alumni_profile', {
+                method: 'POST',
+                body: JSON.stringify({
+                    invite_code: profile.inviteCode || '',
+                    profile_data: toDatabaseProfile(profile, session)
+                })
+            }, session);
+            return normalizeProfile(row);
+        }
+
         const rows = await supabaseRequest('/rest/v1/alumni_profiles?on_conflict=user_id', {
             method: 'POST',
             headers: {
@@ -228,9 +244,14 @@ export const saveAlumniProfile = async (profile, session) => {
         return normalizeProfile(Array.isArray(rows) ? rows[0] : rows);
     }
 
+    if (profile.isNewProfile && isAlumniProfileInviteConfigured && !isAlumniProfileInviteCodeValid(profile.inviteCode || '')) {
+        throw new Error('That invite code is not valid.');
+    }
+
     const profiles = readJson(PREVIEW_PROFILES_KEY, []);
     const saved = normalizeProfile({
         ...profile,
+        isNewProfile: false,
         id: profile.id || `profile-${targetUserId}`,
         userId: targetUserId,
         email: profile.email || session.user.email,

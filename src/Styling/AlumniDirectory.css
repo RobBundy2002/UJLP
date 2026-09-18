@@ -590,6 +590,10 @@
     padding: 1.25rem;
 }
 
+.alumni-profile-section .section-content {
+    max-width: 1120px;
+}
+
 .alumni-form-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -602,20 +606,24 @@
 }
 
 .alumni-profile-view {
+    max-width: 980px;
+    margin: 0 auto;
     padding: 1.25rem;
 }
 
 .alumni-profile-view-header {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: 1fr;
     gap: 1.25rem;
-    align-items: center;
+    justify-items: center;
+    text-align: center;
 }
 
 .alumni-profile-view-actions {
-    display: grid;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: .65rem;
-    min-width: 12rem;
 }
 
 .alumni-profile-save-message {
@@ -627,6 +635,12 @@
     grid-template-columns: minmax(0, .72fr) minmax(320px, 1fr);
     gap: 1rem;
     margin-top: 1.25rem;
+}
+
+.alumni-profile-view .alumni-profile-title,
+.alumni-profile-view .alumni-profile-contact div,
+.alumni-profile-view .alumni-profile-tags {
+    justify-content: center;
 }
 
 .alumni-profile-bio,
@@ -649,6 +663,79 @@
     display: flex;
 }
 
+.alumni-editor-heading,
+.alumni-empty-profile {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
+.alumni-empty-profile {
+    max-width: 620px;
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.25rem, 4vw, 2rem);
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-panel);
+}
+
+.alumni-empty-profile h2 {
+    margin: 0;
+    color: var(--alumni-ink);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 3rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1;
+}
+
+.alumni-empty-profile p {
+    margin: 0;
+    color: var(--alumni-muted);
+    line-height: 1.6;
+}
+
+.alumni-invite-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .75rem;
+    align-items: end;
+}
+
+.alumni-invite-form label {
+    display: grid;
+    gap: .45rem;
+    text-align: left;
+}
+
+.alumni-invite-form span {
+    color: var(--alumni-faint);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-invite-form input {
+    width: 100%;
+    min-height: 2.85rem;
+    padding: .72rem .85rem;
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 6px;
+    background: #11100d;
+    color: var(--alumni-ink);
+    font: inherit;
+    font-size: .92rem;
+    letter-spacing: 0;
+    outline: none;
+}
+
+.alumni-invite-form input:focus {
+    border-color: var(--alumni-gold);
+    box-shadow: 0 0 0 3px rgba(201, 163, 91, .14);
+}
+
 @media (max-width: 1040px) {
     .alumni-hero-grid,
     .alumni-auth-layout,
@@ -660,11 +747,6 @@
 
     .alumni-profile-footer {
         grid-column: 1;
-    }
-
-    .alumni-profile-view-actions {
-        min-width: 0;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .alumni-tools {
@@ -705,7 +787,7 @@
     .alumni-profile-details,
     .alumni-profile-facts,
     .alumni-form-grid,
-    .alumni-profile-view-actions {
+    .alumni-invite-form {
         grid-template-columns: 1fr;
     }
 
@@ -718,7 +800,8 @@
 
     .alumni-session-actions,
     .alumni-contact-actions,
-    .alumni-form-actions {
+    .alumni-form-actions,
+    .alumni-profile-view-actions {
         width: 100%;
     }
 
@@ -726,7 +809,8 @@
     .alumni-contact-actions a,
     .alumni-contact-actions span,
     .alumni-contact-actions button,
-    .alumni-form-actions button {
+    .alumni-form-actions button,
+    .alumni-profile-view-actions button {
         flex: 1;
     }
 }

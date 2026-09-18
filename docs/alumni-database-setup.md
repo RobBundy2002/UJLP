@@ -99,7 +99,7 @@ add column if not exists photo_key text not null default 'blank';
 
 ## Row Level Security
 
-These policies lock the directory to signed-in users. Any authenticated member can read visible profiles, and members can always read their own profile even if they hide it from the directory. Each member can create or edit only their own profile.
+These policies lock the directory to signed-in users. Any authenticated member can read visible profiles, and members can always read their own profile even if they hide it from the directory. Each member can edit only their own existing profile. New profile creation goes through the invite-code RPC in the next section.
 
 ```sql
 alter table public.alumni_profiles enable row level security;
@@ -115,12 +115,6 @@ for select
 to authenticated
 using (directory_visible = true or auth.uid() = user_id);
 
-create policy "Members can create their own alumni profile"
-on public.alumni_profiles
-for insert
-to authenticated
-with check (auth.uid() = user_id);
-
 create policy "Members can update their own alumni profile"
 on public.alumni_profiles
 for update
@@ -133,6 +127,110 @@ on public.alumni_profiles
 for delete
 to authenticated
 using (auth.uid() = user_id);
+```
+
+## Profile Invite Codes
+
+Signed-in users can view the directory immediately, but they need a valid invite code before creating a profile. Do not put the production invite code in a React environment variable; React variables are public in the built JavaScript. Store the real invite code as a hash in Supabase and create profiles through a security-definer RPC.
+
+Replace `replace-with-real-invite-code` with the code you want to distribute, then run this SQL in Supabase.
+
+```sql
+create table if not exists public.alumni_profile_invite_codes (
+  code_hash text primary key,
+  label text not null default 'Alumni profile invite',
+  is_active boolean not null default true,
+  created_at timestamptz not null default now()
+);
+
+alter table public.alumni_profile_invite_codes enable row level security;
+
+insert into public.alumni_profile_invite_codes (code_hash, label)
+values (
+  encode(digest('replace-with-real-invite-code', 'sha256'), 'hex'),
+  'Initial alumni profile invite'
+)
+on conflict (code_hash) do update set is_active = true;
+
+create or replace function public.create_alumni_profile(invite_code text, profile_data jsonb)
+returns public.alumni_profiles
+language plpgsql
+security definer
+set search_path = public, extensions
+as $$
+declare
+  created_profile public.alumni_profiles;
+begin
+  if auth.uid() is null then
+    raise exception 'You need to be signed in to create a profile.';
+  end if;
+
+  if not exists (
+    select 1
+    from public.alumni_profile_invite_codes
+    where code_hash = encode(digest(invite_code, 'sha256'), 'hex')
+      and is_active = true
+  ) then
+    raise exception 'That invite code is not valid.';
+  end if;
+
+  insert into public.alumni_profiles (
+    user_id,
+    full_name,
+    photo_key,
+    status,
+    class_year,
+    ujlp_role,
+    current_title,
+    current_org,
+    location,
+    industry,
+    path_type,
+    law_school,
+    grad_school,
+    undergrad_major,
+    preferred_email,
+    linkedin_url,
+    willing_to_chat,
+    interests,
+    bio,
+    directory_visible
+  )
+  values (
+    auth.uid(),
+    coalesce(profile_data ->> 'full_name', ''),
+    coalesce(profile_data ->> 'photo_key', 'blank'),
+    coalesce(profile_data ->> 'status', 'alumni'),
+    coalesce(profile_data ->> 'class_year', ''),
+    coalesce(profile_data ->> 'ujlp_role', ''),
+    coalesce(profile_data ->> 'current_title', ''),
+    coalesce(profile_data ->> 'current_org', ''),
+    coalesce(profile_data ->> 'location', ''),
+    coalesce(profile_data ->> 'industry', ''),
+    coalesce(profile_data ->> 'path_type', 'other'),
+    coalesce(profile_data ->> 'law_school', ''),
+    coalesce(profile_data ->> 'grad_school', ''),
+    coalesce(profile_data ->> 'undergrad_major', ''),
+    coalesce(profile_data ->> 'preferred_email', ''),
+    coalesce(profile_data ->> 'linkedin_url', ''),
+    coalesce((profile_data ->> 'willing_to_chat')::boolean, true),
+    array(select jsonb_array_elements_text(coalesce(profile_data -> 'interests', '[]'::jsonb))),
+    coalesce(profile_data ->> 'bio', ''),
+    coalesce((profile_data ->> 'directory_visible')::boolean, true)
+  )
+  on conflict (user_id) do nothing
+  returning * into created_profile;
+
+  if created_profile.id is null then
+    raise exception 'A profile already exists for this account.';
+  end if;
+
+  return created_profile;
+end;
+$$;
+
+revoke all on function public.create_alumni_profile(text, jsonb) from public;
+grant execute on function public.create_alumni_profile(text, jsonb) to authenticated;
 ```
 
 ## Admin Editing
@@ -221,4 +319,4 @@ REACT_APP_ALUMNI_ADMIN_EMAILS
 
 Set them in GitHub under Settings -> Secrets and variables -> Actions -> Repository secrets before pushing a deploy commit. If those secrets are missing, the deployed build will fall back to local preview mode and will not persist profile changes to Postgres.
 
-For local testing without Supabase, leave the variables unset and create a preview account on `/alumni`.
+For local testing without Supabase, leave the Supabase variables unset and create a preview account on `/alumni`. If you want the local preview to validate a profile invite code, set `REACT_APP_ALUMNI_PREVIEW_INVITE_CODE`; do not use this for production.

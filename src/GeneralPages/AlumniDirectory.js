@@ -8,6 +8,8 @@ import {
     getAlumniBackendMode,
     getStoredAlumniSession,
     isAlumniAdmin,
+    isAlumniProfileInviteCodeValid,
+    isAlumniProfileInviteConfigured,
     saveAlumniProfile,
     signInAlumni,
     signOutAlumni,
@@ -90,6 +92,8 @@ function AlumniDirectory() {
     const [editingProfileUserId, setEditingProfileUserId] = useState(null);
     const [profileDraft, setProfileDraft] = useState(null);
     const [profileMessage, setProfileMessage] = useState('');
+    const [profileInviteCode, setProfileInviteCode] = useState('');
+    const [profileInviteMessage, setProfileInviteMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
 
@@ -119,7 +123,7 @@ function AlumniDirectory() {
 
     const ownProfile = useMemo(() => {
         if (!session?.user?.id) return null;
-        return profiles.find(profile => profile.userId === session.user.id) || createBlankAlumniProfile(session);
+        return profiles.find(profile => profile.userId === session.user.id) || null;
     }, [profiles, session]);
 
     const activeProfile = useMemo(() => {
@@ -171,11 +175,23 @@ function AlumniDirectory() {
     }, [profiles, filters]);
 
     const metrics = useMemo(() => {
+        const classYearCount = new Set(profiles.map(profile => profile.classYear).filter(Boolean)).size;
+        const pathCount = new Set(
+            profiles
+                .map(profile => profile.pathType)
+                .filter(pathType => pathType && pathType !== 'current-student' && pathType !== 'other')
+        ).size;
+        const schoolOrgCount = new Set(
+            profiles
+                .map(profile => profile.lawSchool || profile.gradSchool || profile.currentOrg)
+                .filter(Boolean)
+        ).size;
         const values = [
             ['Profiles', profiles.length],
             ['Alumni', profiles.filter(profile => profile.status === 'alumni').length],
-            ['Current', profiles.filter(profile => profile.status === 'current').length],
-            ['Open to email', profiles.filter(profile => profile.email && profile.willingToChat).length]
+            ['Class years', classYearCount],
+            ['Paths listed', pathCount],
+            ['Schools / orgs', schoolOrgCount]
         ];
 
         if (isAdmin) {
@@ -232,6 +248,7 @@ function AlumniDirectory() {
         setActiveView('directory');
         setProfileMode('view');
         setProfileMessage('');
+        setProfileInviteMessage('');
     };
 
     const openOwnProfile = (mode = 'view') => {
@@ -239,6 +256,7 @@ function AlumniDirectory() {
         setActiveView('profile');
         setProfileMode(mode);
         setProfileMessage('');
+        setProfileInviteMessage('');
     };
 
     const openProfileView = (profile) => {
@@ -246,6 +264,7 @@ function AlumniDirectory() {
         setActiveView('profile');
         setProfileMode('view');
         setProfileMessage('');
+        setProfileInviteMessage('');
     };
 
     const openProfileEditor = (profile) => {
@@ -255,6 +274,33 @@ function AlumniDirectory() {
         setActiveView('profile');
         setProfileMode('edit');
         setProfileMessage('');
+        setProfileInviteMessage('');
+    };
+
+    const handleCreateProfileRequest = (event) => {
+        event.preventDefault();
+        setProfileInviteMessage('');
+
+        if (!profileInviteCode.trim()) {
+            setProfileInviteMessage('Enter the alumni invite code to create a profile.');
+            return;
+        }
+
+        if (backendMode === 'preview' && isAlumniProfileInviteConfigured && !isAlumniProfileInviteCodeValid(profileInviteCode)) {
+            setProfileInviteMessage('That invite code is not valid.');
+            return;
+        }
+
+        const draft = createBlankAlumniProfile(session);
+        setProfileDraft({
+            ...draft,
+            inviteCode: profileInviteCode.trim(),
+            interestsText: '',
+            isNewProfile: true
+        });
+        setEditingProfileUserId(session.user.id);
+        setProfileMode('edit');
+        setProfileInviteCode('');
     };
 
     const handleProfileSave = async (event) => {
@@ -460,7 +506,30 @@ function AlumniDirectory() {
             return (
                 <section className="alumni-profile-section">
                     <div className="section-content">
-                        <p className="alumni-form-message">Profile unavailable.</p>
+                        {editingProfileUserId === session?.user?.id || !editingProfileUserId ? (
+                            <div className="alumni-empty-profile">
+                                <p className="jh-section-label">My profile</p>
+                                <h2>You do not have a profile yet.</h2>
+                                <p>
+                                    Use the UJLP alumni invite code to create your directory profile.
+                                </p>
+                                <form className="alumni-invite-form" onSubmit={handleCreateProfileRequest}>
+                                    <label>
+                                        <span>Invite code</span>
+                                        <input
+                                            type="password"
+                                            value={profileInviteCode}
+                                            onChange={(event) => setProfileInviteCode(event.target.value)}
+                                            placeholder="Enter invite code"
+                                        />
+                                    </label>
+                                    <button type="submit" className="alumni-primary-action">Create profile</button>
+                                </form>
+                                {profileInviteMessage && <p className="alumni-form-message">{profileInviteMessage}</p>}
+                            </div>
+                        ) : (
+                            <p className="alumni-form-message">Profile unavailable.</p>
+                        )}
                     </div>
                 </section>
             );
