@@ -2,12 +2,19 @@ import { alumniDemoProfiles } from '../Data/alumniDemoData';
 
 const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY;
+const ALUMNI_ADMIN_EMAILS = (process.env.REACT_APP_ALUMNI_ADMIN_EMAILS || '')
+    .split(',')
+    .map(email => email.trim().toLowerCase())
+    .filter(Boolean);
 const SESSION_KEY = 'ujlp_alumni_session';
 const PREVIEW_ACCOUNTS_KEY = 'ujlp_alumni_preview_accounts';
 const PREVIEW_PROFILES_KEY = 'ujlp_alumni_preview_profiles';
 
 export const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 export const getAlumniBackendMode = () => (isSupabaseConfigured ? 'supabase' : 'preview');
+export const isAlumniAdmin = (session) => Boolean(
+    session?.user?.email && ALUMNI_ADMIN_EMAILS.includes(session.user.email.toLowerCase())
+);
 
 const readJson = (key, fallback) => {
     try {
@@ -54,7 +61,7 @@ const normalizeProfile = (profile) => ({
 });
 
 const toDatabaseProfile = (profile, session) => ({
-    user_id: session.user.id,
+    user_id: profile.userId || profile.user_id || session.user.id,
     full_name: profile.fullName,
     photo_key: profile.photoKey || 'blank',
     status: profile.status,
@@ -180,8 +187,11 @@ export const signOutAlumni = async (session) => {
 
 export const fetchAlumniProfiles = async (session) => {
     if (isSupabaseConfigured) {
+        const path = isAlumniAdmin(session)
+            ? '/rest/v1/alumni_profiles?select=*&order=updated_at.desc'
+            : `/rest/v1/alumni_profiles?select=*&or=(directory_visible.eq.true,user_id.eq.${session.user.id})&order=updated_at.desc`;
         const rows = await supabaseRequest(
-            `/rest/v1/alumni_profiles?select=*&or=(directory_visible.eq.true,user_id.eq.${session.user.id})&order=updated_at.desc`,
+            path,
             { method: 'GET' },
             session
         );
@@ -201,6 +211,12 @@ export const saveAlumniProfile = async (profile, session) => {
         throw new Error('You need to be signed in to save a profile.');
     }
 
+    const targetUserId = profile.userId || profile.user_id || session.user.id;
+    const editingAnotherMember = targetUserId !== session.user.id;
+    if (editingAnotherMember && !isAlumniAdmin(session)) {
+        throw new Error('You do not have permission to edit that profile.');
+    }
+
     if (isSupabaseConfigured) {
         const rows = await supabaseRequest('/rest/v1/alumni_profiles?on_conflict=user_id', {
             method: 'POST',
@@ -215,12 +231,12 @@ export const saveAlumniProfile = async (profile, session) => {
     const profiles = readJson(PREVIEW_PROFILES_KEY, []);
     const saved = normalizeProfile({
         ...profile,
-        id: profile.id || `profile-${session.user.id}`,
-        userId: session.user.id,
+        id: profile.id || `profile-${targetUserId}`,
+        userId: targetUserId,
         email: profile.email || session.user.email,
         updatedAt: new Date().toISOString()
     });
-    const withoutExisting = profiles.filter(item => item.userId !== session.user.id && item.id !== saved.id);
+    const withoutExisting = profiles.filter(item => item.userId !== targetUserId && item.id !== saved.id);
     writeJson(PREVIEW_PROFILES_KEY, [saved, ...withoutExisting]);
     return saved;
 };

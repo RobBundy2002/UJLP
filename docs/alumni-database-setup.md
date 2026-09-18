@@ -5,6 +5,7 @@ The alumni directory is built so the public site can stay on GitHub Pages. GitHu
 ```bash
 REACT_APP_SUPABASE_URL=https://your-project.supabase.co
 REACT_APP_SUPABASE_ANON_KEY=your-public-publishable-or-anon-key
+REACT_APP_ALUMNI_ADMIN_EMAILS=admin-one@example.com,admin-two@example.com
 ```
 
 Without those variables, `/alumni` runs in local preview mode using browser `localStorage` and placeholder profiles.
@@ -134,6 +135,53 @@ to authenticated
 using (auth.uid() = user_id);
 ```
 
+## Admin Editing
+
+The React UI shows master edit controls only when the signed-in email appears in:
+
+```bash
+REACT_APP_ALUMNI_ADMIN_EMAILS=your-email@example.com
+```
+
+That frontend variable is only a UI allowlist. Real permissions must also be enforced in Supabase RLS. Replace `your-email@example.com` with the same lowercase admin email list you use in the React environment variable, then run this SQL in Supabase.
+
+```sql
+create or replace function public.is_alumni_directory_admin()
+returns boolean
+language sql
+stable
+as $$
+  select lower(auth.jwt() ->> 'email') = any (
+    array[
+      'your-email@example.com'
+    ]
+  );
+$$;
+
+drop policy if exists "Directory admins can read all alumni profiles" on public.alumni_profiles;
+drop policy if exists "Directory admins can create alumni profiles" on public.alumni_profiles;
+drop policy if exists "Directory admins can update all alumni profiles" on public.alumni_profiles;
+
+create policy "Directory admins can read all alumni profiles"
+on public.alumni_profiles
+for select
+to authenticated
+using (public.is_alumni_directory_admin());
+
+create policy "Directory admins can create alumni profiles"
+on public.alumni_profiles
+for insert
+to authenticated
+with check (public.is_alumni_directory_admin());
+
+create policy "Directory admins can update all alumni profiles"
+on public.alumni_profiles
+for update
+to authenticated
+using (public.is_alumni_directory_admin())
+with check (public.is_alumni_directory_admin());
+```
+
 ## Auth Settings
 
 - Use Supabase Email Auth.
@@ -159,6 +207,7 @@ GitHub Pages will only serve the static React build. Before building for product
 ```bash
 REACT_APP_SUPABASE_URL=...
 REACT_APP_SUPABASE_ANON_KEY=...
+REACT_APP_ALUMNI_ADMIN_EMAILS=...
 npm run build
 ```
 
@@ -167,6 +216,7 @@ The GitHub Pages deploy workflow reads these values from repository secrets:
 ```text
 REACT_APP_SUPABASE_URL
 REACT_APP_SUPABASE_ANON_KEY
+REACT_APP_ALUMNI_ADMIN_EMAILS
 ```
 
 Set them in GitHub under Settings -> Secrets and variables -> Actions -> Repository secrets before pushing a deploy commit. If those secrets are missing, the deployed build will fall back to local preview mode and will not persist profile changes to Postgres.

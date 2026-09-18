@@ -1,139 +1,190 @@
 .alumni-directory {
+    --alumni-bg: #11100d;
+    --alumni-bg-soft: #171611;
+    --alumni-panel: #1d1b16;
+    --alumni-panel-raised: #242118;
     --alumni-ink: #f7f1e7;
-    --alumni-muted: #aab8c5;
-    --alumni-faint: #718397;
-    --alumni-night: #07111f;
-    --alumni-panel: #0c1b30;
-    --alumni-panel-strong: #102540;
-    --alumni-line: rgba(231, 222, 203, .19);
-    --alumni-ember: #f18c62;
-    background: var(--alumni-night);
+    --alumni-muted: #b9b09f;
+    --alumni-faint: #7f786b;
+    --alumni-line: rgba(247, 241, 231, .14);
+    --alumni-line-strong: rgba(247, 241, 231, .24);
+    --alumni-red: #b94834;
+    --alumni-red-deep: #8d3528;
+    --alumni-gold: #c9a35b;
+    --alumni-green: #78936d;
+    background: var(--alumni-bg);
+    color: var(--alumni-ink);
 }
 
 .alumni-directory .section-content {
     width: min(1280px, 100%);
     margin: 0 auto;
-    padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 7vw, 7rem);
+    padding: 4.75rem 2rem;
+}
+
+.alumni-directory .jh-eyebrow,
+.alumni-directory .jh-section-label {
+    letter-spacing: 0;
 }
 
 .alumni-hero {
     position: relative;
-    min-height: min(610px, 70vh);
-    display: grid;
-    place-items: center;
     isolation: isolate;
     overflow: hidden;
-    padding: 7rem clamp(1.5rem, 7vw, 7rem) 4rem;
+    padding-top: 5.75rem;
     border-bottom: 1px solid var(--alumni-line);
     background:
-        radial-gradient(circle at 76% 20%, rgba(34, 84, 127, .7), transparent 27%),
-        radial-gradient(circle at 18% 90%, rgba(156, 62, 41, .24), transparent 32%),
-        #07111f;
+        linear-gradient(135deg, rgba(185, 72, 52, .22), transparent 42%),
+        linear-gradient(180deg, #171611 0%, #11100d 100%);
 }
 
 .alumni-hero::after {
     content: "";
     position: absolute;
-    inset: 1.25rem;
-    z-index: 1;
-    border: 1px solid rgba(236, 227, 210, .18);
+    inset: auto 0 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201, 163, 91, .8), transparent);
     pointer-events: none;
 }
 
-.alumni-hero .section-content {
+.alumni-hero .particle-background {
+    opacity: .34;
+}
+
+.alumni-hero-grid {
     position: relative;
-    z-index: 3;
-    padding: 0;
-    text-align: center;
-}
-
-.alumni-hero h1 {
-    margin: 0 auto 1rem;
-    color: var(--alumni-ink);
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(4rem, 9vw, 8.2rem);
-    font-weight: 400;
-    letter-spacing: -.08em;
-    line-height: .84;
-}
-
-.alumni-hero h1 em {
-    color: #f4a37d;
-    font-style: italic;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(280px, .58fr);
+    gap: 2rem;
+    align-items: end;
+    min-height: 25rem;
 }
 
 .alumni-hero-copy {
-    max-width: 660px;
-    margin: 0 auto;
+    max-width: 720px;
+}
+
+.alumni-hero h1 {
+    margin: .75rem 0 1rem;
+    color: var(--alumni-ink);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 5.6rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: .95;
+}
+
+.alumni-hero-copy p:last-child {
+    max-width: 640px;
+    margin: 0;
     color: var(--alumni-muted);
-    font-size: 1.02rem;
+    font-size: 1rem;
     line-height: 1.75;
+}
+
+.alumni-hero-panel {
+    display: grid;
+    gap: .55rem;
+    padding: 1.15rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: rgba(29, 27, 22, .86);
+    box-shadow: 0 22px 60px rgba(0, 0, 0, .24);
+}
+
+.alumni-hero-panel span,
+.alumni-session-bar span,
+.alumni-profile-title span,
+.alumni-profile-title b,
+.alumni-auth-panel label,
+.alumni-tools label,
+.alumni-profile-form label,
+.alumni-profile-details span,
+.alumni-profile-facts span,
+.alumni-profile-bio span,
+.alumni-profile-contact > span {
+    color: var(--alumni-faint);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-hero-panel strong {
+    color: var(--alumni-ink);
+    font-size: 1rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.alumni-hero-panel p {
+    margin: 0;
+    color: var(--alumni-muted);
+    font-size: .88rem;
+    line-height: 1.55;
 }
 
 .alumni-auth-section,
 .alumni-dashboard,
 .alumni-directory-section,
-.alumni-profile-editor {
+.alumni-profile-section {
     border-bottom: 1px solid var(--alumni-line);
-    background: #07111f;
+    background: var(--alumni-bg);
 }
 
 .alumni-auth-layout {
     display: grid;
-    grid-template-columns: minmax(0, .95fr) minmax(330px, .7fr);
-    gap: clamp(2rem, 7vw, 7rem);
+    grid-template-columns: minmax(0, .9fr) minmax(320px, .58fr);
+    gap: 2.5rem;
     align-items: start;
 }
 
 .alumni-auth-copy h2,
-.alumni-editor-heading h2 {
-    margin: 1rem 0 1.5rem;
+.alumni-editor-heading h2,
+.alumni-profile-view h2 {
+    margin: .75rem 0 1.25rem;
     color: var(--alumni-ink);
     font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(3rem, 6vw, 5.8rem);
-    font-weight: 400;
-    letter-spacing: -.06em;
-    line-height: .92;
-}
-
-.alumni-auth-copy h2 em,
-.alumni-editor-heading h2 em {
-    color: #f4a37d;
-    font-style: italic;
+    font-size: 3.55rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1;
 }
 
 .alumni-lock-list {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-    margin-top: 2.5rem;
-    background: var(--alumni-line);
+    gap: .7rem;
+    margin-top: 2rem;
 }
 
 .alumni-lock-list span {
-    min-height: 5rem;
+    min-height: 4.5rem;
     display: flex;
     align-items: center;
-    padding: 1rem;
-    background: #07111f;
+    padding: .9rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
     color: var(--alumni-muted);
-    font-size: .72rem;
+    font-size: .78rem;
     font-weight: 700;
-    letter-spacing: .08em;
     line-height: 1.35;
-    text-transform: uppercase;
 }
 
 .alumni-auth-panel,
-.alumni-profile-form {
+.alumni-profile-form,
+.alumni-profile-view {
     border: 1px solid var(--alumni-line);
-    background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.01));
+    border-radius: 8px;
+    background: var(--alumni-panel);
 }
 
 .alumni-auth-panel {
     display: grid;
     gap: 1rem;
-    padding: clamp(1.25rem, 3vw, 2rem);
+    padding: 1.25rem;
 }
 
 .alumni-auth-tabs,
@@ -141,8 +192,24 @@
     display: flex;
     gap: .35rem;
     padding: .35rem;
-    border: 1px solid rgba(231, 222, 203, .14);
-    background: rgba(255,255,255,.025);
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
+}
+
+.alumni-auth-tabs button,
+.alumni-session-actions button,
+.alumni-results-heading button,
+.alumni-secondary-action,
+.alumni-primary-action {
+    min-height: 2.55rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    transition: border-color .18s ease, background .18s ease, color .18s ease, transform .18s ease;
 }
 
 .alumni-auth-tabs button,
@@ -151,36 +218,18 @@
     border: 0;
     background: transparent;
     color: var(--alumni-muted);
-    cursor: pointer;
-    font-size: .68rem;
-    font-weight: 800;
-    letter-spacing: .09em;
-    text-transform: uppercase;
 }
 
 .alumni-auth-tabs button,
 .alumni-session-actions button {
     flex: 1;
-    min-height: 2.55rem;
     padding: .65rem .85rem;
 }
 
 .alumni-auth-tabs button.active,
 .alumni-session-actions button.active {
-    background: var(--alumni-ember);
-    color: #07111f;
-}
-
-.alumni-auth-panel label,
-.alumni-tools label,
-.alumni-profile-form label {
-    display: grid;
-    gap: .45rem;
-    color: var(--alumni-faint);
-    font-size: .62rem;
-    font-weight: 800;
-    letter-spacing: .12em;
-    text-transform: uppercase;
+    background: var(--alumni-gold);
+    color: #16120c;
 }
 
 .alumni-auth-panel input,
@@ -190,16 +239,23 @@
 .alumni-profile-form select,
 .alumni-profile-form textarea {
     width: 100%;
-    min-height: 2.8rem;
-    padding: .75rem .85rem;
-    border: 1px solid rgba(231, 222, 203, .2);
-    border-radius: 0;
-    background: #07111f;
+    min-height: 2.85rem;
+    padding: .72rem .85rem;
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 6px;
+    background: #11100d;
     color: var(--alumni-ink);
     font: inherit;
-    font-size: .86rem;
+    font-size: .92rem;
     letter-spacing: 0;
     outline: none;
+}
+
+.alumni-auth-panel label,
+.alumni-tools label,
+.alumni-profile-form label {
+    display: grid;
+    gap: .45rem;
 }
 
 .alumni-auth-panel input:focus,
@@ -208,7 +264,8 @@
 .alumni-profile-form input:focus,
 .alumni-profile-form select:focus,
 .alumni-profile-form textarea:focus {
-    border-color: var(--alumni-ember);
+    border-color: var(--alumni-gold);
+    box-shadow: 0 0 0 3px rgba(201, 163, 91, .14);
 }
 
 .alumni-profile-form textarea {
@@ -217,16 +274,15 @@
 }
 
 .alumni-primary-action {
-    min-height: 3rem;
-    padding: .9rem 1.2rem;
-    border: 1px solid var(--alumni-ember);
-    background: #bf4e2c;
+    padding: .7rem 1.05rem;
+    border: 1px solid var(--alumni-red);
+    background: var(--alumni-red);
     color: #fff;
-    cursor: pointer;
-    font-size: .72rem;
-    font-weight: 800;
-    letter-spacing: .1em;
-    text-transform: uppercase;
+}
+
+.alumni-primary-action:hover,
+.alumni-edit-action:hover {
+    transform: translateY(-1px);
 }
 
 .alumni-primary-action:disabled {
@@ -234,16 +290,38 @@
     opacity: .65;
 }
 
+.alumni-secondary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .65rem .9rem;
+    border: 1px solid var(--alumni-line-strong);
+    background: transparent;
+    color: var(--alumni-muted);
+    text-decoration: none;
+}
+
+.alumni-secondary-action:hover,
+.alumni-results-heading button:hover {
+    border-color: var(--alumni-gold);
+    color: var(--alumni-ink);
+}
+
+.alumni-edit-action {
+    border-color: rgba(201, 163, 91, .5);
+    color: var(--alumni-gold);
+}
+
 .alumni-system-note,
 .alumni-form-message {
     margin: 0;
     color: var(--alumni-faint);
-    font-size: .76rem;
+    font-size: .82rem;
     line-height: 1.55;
 }
 
 .alumni-form-message {
-    color: #f4a37d;
+    color: var(--alumni-gold);
 }
 
 .alumni-session-bar {
@@ -251,88 +329,89 @@
     justify-content: space-between;
     gap: 1rem;
     align-items: center;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--alumni-line);
-}
-
-.alumni-session-bar span {
-    display: block;
-    margin-bottom: .35rem;
-    color: var(--alumni-faint);
-    font-size: .62rem;
-    font-weight: 800;
-    letter-spacing: .14em;
-    text-transform: uppercase;
 }
 
 .alumni-session-bar strong {
+    display: block;
     color: var(--alumni-ink);
-    font-size: .95rem;
-    font-weight: 600;
+    font-size: 1rem;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.alumni-session-bar b {
+    display: inline-flex;
+    margin-top: .55rem;
+    padding: .25rem .55rem;
+    border: 1px solid rgba(120, 147, 109, .55);
+    border-radius: 999px;
+    color: #d3e7c5;
+    font-size: .75rem;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
 }
 
 .alumni-metrics {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin-top: 2rem;
-    border-top: 1px solid var(--alumni-line);
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .8rem;
+    margin-top: 1.75rem;
 }
 
 .alumni-metrics div {
-    min-height: 7.5rem;
-    display: flex;
-    align-items: baseline;
-    gap: .75rem;
-    padding: 1.55rem 1.25rem 1.25rem 0;
-    border-right: 1px solid var(--alumni-line);
-}
-
-.alumni-metrics div:last-child {
-    border-right: 0;
+    min-height: 6.5rem;
+    display: grid;
+    align-content: center;
+    gap: .35rem;
+    padding: 1rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
 }
 
 .alumni-metrics strong {
-    color: #f4a37d;
+    color: var(--alumni-gold);
     font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(2.2rem, 4vw, 3.8rem);
-    font-weight: 400;
-    letter-spacing: -.06em;
+    font-size: 2.8rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1;
 }
 
 .alumni-metrics span {
-    max-width: 7rem;
     color: var(--alumni-muted);
-    font-size: .67rem;
+    font-size: .8rem;
     font-weight: 800;
-    letter-spacing: .08em;
-    line-height: 1.35;
+    letter-spacing: 0;
     text-transform: uppercase;
 }
 
 .alumni-tools {
     display: grid;
-    grid-template-columns: minmax(260px, 1.4fr) repeat(3, minmax(150px, .55fr)) minmax(155px, .55fr);
-    gap: .8rem;
+    grid-template-columns: minmax(260px, 1.25fr) repeat(3, minmax(140px, .5fr)) minmax(150px, .5fr);
+    gap: .85rem;
     align-items: end;
 }
 
 .alumni-checkbox {
-    min-height: 2.8rem;
+    min-height: 2.85rem;
     display: flex !important;
-    grid-template-columns: auto minmax(0, 1fr);
     flex-direction: row;
     align-items: center;
     gap: .7rem !important;
     padding: .7rem .85rem;
-    border: 1px solid rgba(231, 222, 203, .2);
-    background: #07111f;
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 6px;
+    background: #11100d;
 }
 
 .alumni-checkbox input {
     width: 1rem !important;
     min-height: 1rem !important;
     padding: 0 !important;
-    accent-color: var(--alumni-ember);
+    accent-color: var(--alumni-red);
 }
 
 .alumni-results-heading {
@@ -346,36 +425,40 @@
 .alumni-results-heading p {
     margin: 0;
     color: var(--alumni-muted);
-    font-size: .78rem;
+    font-size: .88rem;
     font-weight: 800;
-    letter-spacing: .1em;
+    letter-spacing: 0;
     text-transform: uppercase;
-}
-
-.alumni-results-heading button {
-    color: var(--alumni-ember);
 }
 
 .alumni-results {
     display: grid;
-    border-top: 1px solid var(--alumni-line);
+    gap: 1rem;
 }
 
 .alumni-profile-row {
     display: grid;
-    grid-template-columns: 5.4rem minmax(220px, .75fr) minmax(0, 1.35fr);
-    gap: clamp(1.25rem, 4vw, 3rem);
-    padding: clamp(1.5rem, 3vw, 2.4rem) 0;
-    border-bottom: 1px solid var(--alumni-line);
+    grid-template-columns: 5.25rem minmax(210px, .72fr) minmax(0, 1.3fr);
+    gap: 1.5rem;
+    padding: 1.15rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-panel);
 }
 
 .alumni-profile-photo {
-    width: 5.4rem;
-    height: 5.4rem;
+    width: 5.25rem;
+    height: 5.25rem;
     align-self: start;
     overflow: hidden;
-    border: 1px solid rgba(241, 140, 98, .45);
-    background: #0c1b30;
+    border: 1px solid rgba(201, 163, 91, .45);
+    border-radius: 8px;
+    background: var(--alumni-panel-raised);
+}
+
+.alumni-profile-photo-large {
+    width: 7.25rem;
+    height: 7.25rem;
 }
 
 .alumni-profile-photo img {
@@ -387,72 +470,75 @@
 }
 
 .alumni-profile-main h3 {
-    margin: .6rem 0 .75rem;
+    margin: .5rem 0 .6rem;
     color: var(--alumni-ink);
     font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(1.65rem, 3vw, 2.55rem);
-    font-weight: 400;
-    letter-spacing: -.045em;
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: 0;
     line-height: 1.05;
 }
 
-.alumni-profile-main p {
+.alumni-profile-main p,
+.alumni-profile-view-header p,
+.alumni-profile-bio p {
     margin: 0;
     color: var(--alumni-muted);
-    line-height: 1.55;
+    line-height: 1.6;
 }
 
 .alumni-profile-title {
     display: flex;
     flex-wrap: wrap;
-    gap: .55rem;
+    gap: .45rem;
     align-items: center;
 }
 
 .alumni-profile-title span,
 .alumni-profile-title b {
-    color: var(--alumni-ember);
-    font-size: .62rem;
-    font-style: normal;
-    font-weight: 800;
-    letter-spacing: .12em;
-    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.55rem;
+    padding: .25rem .5rem;
+    border: 1px solid rgba(201, 163, 91, .38);
+    border-radius: 999px;
+    color: var(--alumni-gold);
+    background: rgba(201, 163, 91, .08);
 }
 
 .alumni-profile-title b {
-    color: #07111f;
-    padding: .24rem .42rem;
-    background: #f4a37d;
+    border-color: rgba(120, 147, 109, .48);
+    color: #d3e7c5;
+    background: rgba(120, 147, 109, .1);
 }
 
-.alumni-profile-details {
+.alumni-profile-details,
+.alumni-profile-facts {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1px;
-    background: rgba(231, 222, 203, .14);
+    overflow: hidden;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-line);
 }
 
-.alumni-profile-details div {
-    min-height: 5rem;
+.alumni-profile-details div,
+.alumni-profile-facts div {
+    min-height: 4.5rem;
     display: grid;
-    gap: .45rem;
+    gap: .35rem;
     align-content: start;
-    padding: .95rem;
-    background: #07111f;
+    padding: .85rem;
+    background: var(--alumni-bg-soft);
 }
 
-.alumni-profile-details span {
-    color: var(--alumni-faint);
-    font-size: .56rem;
-    font-weight: 800;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-}
-
-.alumni-profile-details strong {
+.alumni-profile-details strong,
+.alumni-profile-facts strong,
+.alumni-profile-contact strong {
     color: var(--alumni-ink);
-    font-size: .88rem;
-    font-weight: 600;
+    font-size: .92rem;
+    font-weight: 650;
     line-height: 1.35;
 }
 
@@ -465,37 +551,43 @@
 }
 
 .alumni-tags,
-.alumni-contact-actions {
+.alumni-contact-actions,
+.alumni-profile-contact div,
+.alumni-form-actions {
     display: flex;
     flex-wrap: wrap;
-    gap: .45rem;
+    gap: .5rem;
 }
 
 .alumni-tags span,
 .alumni-contact-actions a,
-.alumni-contact-actions span {
+.alumni-contact-actions span,
+.alumni-profile-contact a {
     display: inline-flex;
     align-items: center;
-    min-height: 2rem;
+    min-height: 2.15rem;
     padding: .46rem .68rem;
-    border: 1px solid rgba(231, 222, 203, .2);
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 999px;
     color: var(--alumni-muted);
-    font-size: .68rem;
+    font-size: .78rem;
     line-height: 1.2;
+    text-decoration: none;
 }
 
-.alumni-contact-actions a {
-    border-color: rgba(241, 140, 98, .46);
-    color: #f4a37d;
+.alumni-contact-actions a,
+.alumni-profile-contact a {
+    border-color: rgba(185, 72, 52, .48);
+    color: #e4a092;
 }
 
 .alumni-editor-heading {
     max-width: 760px;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .alumni-profile-form {
-    padding: clamp(1.25rem, 3vw, 2rem);
+    padding: 1.25rem;
 }
 
 .alumni-form-grid {
@@ -509,19 +601,70 @@
     grid-column: 1 / -1;
 }
 
-@media (max-width: 980px) {
-    .alumni-auth-layout,
-    .alumni-profile-row {
-        grid-template-columns: 1fr;
-    }
+.alumni-profile-view {
+    padding: 1.25rem;
+}
 
-    .alumni-profile-photo {
-        width: 4.8rem;
-        height: 4.8rem;
+.alumni-profile-view-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 1.25rem;
+    align-items: center;
+}
+
+.alumni-profile-view-actions {
+    display: grid;
+    gap: .65rem;
+    min-width: 12rem;
+}
+
+.alumni-profile-save-message {
+    margin-top: 1rem;
+}
+
+.alumni-profile-view-grid {
+    display: grid;
+    grid-template-columns: minmax(0, .72fr) minmax(320px, 1fr);
+    gap: 1rem;
+    margin-top: 1.25rem;
+}
+
+.alumni-profile-bio,
+.alumni-profile-contact,
+.alumni-profile-tags {
+    display: grid;
+    gap: .65rem;
+    align-content: start;
+    padding: 1rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
+}
+
+.alumni-profile-facts {
+    grid-row: span 3;
+}
+
+.alumni-profile-tags {
+    display: flex;
+}
+
+@media (max-width: 1040px) {
+    .alumni-hero-grid,
+    .alumni-auth-layout,
+    .alumni-profile-row,
+    .alumni-profile-view-header,
+    .alumni-profile-view-grid {
+        grid-template-columns: 1fr;
     }
 
     .alumni-profile-footer {
         grid-column: 1;
+    }
+
+    .alumni-profile-view-actions {
+        min-width: 0;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .alumni-tools {
@@ -533,29 +676,37 @@
     }
 }
 
-@media (max-width: 700px) {
-    .alumni-hero {
-        min-height: 540px;
-        padding-top: 6rem;
+@media (max-width: 720px) {
+    .alumni-directory .section-content {
+        padding: 3.25rem 1rem;
     }
 
-    .alumni-directory .section-content {
-        padding-right: 1rem;
-        padding-left: 1rem;
+    .alumni-hero {
+        padding-top: 5rem;
+    }
+
+    .alumni-hero-grid {
+        min-height: 0;
+    }
+
+    .alumni-hero h1 {
+        font-size: 3.2rem;
+    }
+
+    .alumni-auth-copy h2,
+    .alumni-editor-heading h2,
+    .alumni-profile-view h2 {
+        font-size: 2.45rem;
     }
 
     .alumni-lock-list,
     .alumni-metrics,
     .alumni-tools,
     .alumni-profile-details,
-    .alumni-form-grid {
+    .alumni-profile-facts,
+    .alumni-form-grid,
+    .alumni-profile-view-actions {
         grid-template-columns: 1fr;
-    }
-
-    .alumni-metrics div {
-        min-height: 5.4rem;
-        border-right: 0;
-        border-bottom: 1px solid var(--alumni-line);
     }
 
     .alumni-session-bar,
@@ -565,7 +716,17 @@
         flex-direction: column;
     }
 
-    .alumni-session-actions {
-        flex-wrap: wrap;
+    .alumni-session-actions,
+    .alumni-contact-actions,
+    .alumni-form-actions {
+        width: 100%;
+    }
+
+    .alumni-session-actions button,
+    .alumni-contact-actions a,
+    .alumni-contact-actions span,
+    .alumni-contact-actions button,
+    .alumni-form-actions button {
+        flex: 1;
     }
 }

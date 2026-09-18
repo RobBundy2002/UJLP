@@ -43,6 +43,7 @@ jobs:
         env:
           REACT_APP_SUPABASE_URL: ${{ secrets.REACT_APP_SUPABASE_URL }}
           REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
+          REACT_APP_ALUMNI_ADMIN_EMAILS: ${{ secrets.REACT_APP_ALUMNI_ADMIN_EMAILS }}
         run: npm run build
 
       - name: Configure GitHub Pages
