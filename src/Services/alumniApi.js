@@ -1,0 +1,250 @@
+import { alumniDemoProfiles } from '../Data/alumniDemoData';
+
+const SUPABASE_URL = process.env.REACT_APP_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.REACT_APP_SUPABASE_ANON_KEY;
+const SESSION_KEY = 'ujlp_alumni_session';
+const PREVIEW_ACCOUNTS_KEY = 'ujlp_alumni_preview_accounts';
+const PREVIEW_PROFILES_KEY = 'ujlp_alumni_preview_profiles';
+
+export const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+export const getAlumniBackendMode = () => (isSupabaseConfigured ? 'supabase' : 'preview');
+
+const readJson = (key, fallback) => {
+    try {
+        const value = window.localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+    } catch {
+        return fallback;
+    }
+};
+
+const writeJson = (key, value) => {
+    window.localStorage.setItem(key, JSON.stringify(value));
+};
+
+const createId = () => {
+    if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+    return `local-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+};
+
+const normalizeProfile = (profile) => ({
+    id: profile.id || createId(),
+    userId: profile.userId || profile.user_id || '',
+    fullName: profile.fullName || profile.full_name || '',
+    photoKey: profile.photoKey || profile.photo_key || 'blank',
+    status: profile.status || 'alumni',
+    classYear: profile.classYear || profile.class_year || '',
+    ujlpRole: profile.ujlpRole || profile.ujlp_role || '',
+    currentTitle: profile.currentTitle || profile.current_title || '',
+    currentOrg: profile.currentOrg || profile.current_org || '',
+    location: profile.location || '',
+    industry: profile.industry || '',
+    pathType: profile.pathType || profile.path_type || 'other',
+    lawSchool: profile.lawSchool || profile.law_school || '',
+    gradSchool: profile.gradSchool || profile.grad_school || '',
+    undergradMajor: profile.undergradMajor || profile.undergrad_major || '',
+    email: profile.email || profile.preferred_email || '',
+    linkedinUrl: profile.linkedinUrl || profile.linkedin_url || '',
+    willingToChat: Boolean(profile.willingToChat ?? profile.willing_to_chat),
+    interests: Array.isArray(profile.interests) ? profile.interests : [],
+    bio: profile.bio || '',
+    directoryVisible: profile.directoryVisible ?? profile.directory_visible ?? true,
+    isExample: Boolean(profile.isExample || profile.is_example),
+    updatedAt: profile.updatedAt || profile.updated_at || new Date().toISOString()
+});
+
+const toDatabaseProfile = (profile, session) => ({
+    user_id: session.user.id,
+    full_name: profile.fullName,
+    photo_key: profile.photoKey || 'blank',
+    status: profile.status,
+    class_year: profile.classYear,
+    ujlp_role: profile.ujlpRole,
+    current_title: profile.currentTitle,
+    current_org: profile.currentOrg,
+    location: profile.location,
+    industry: profile.industry,
+    path_type: profile.pathType,
+    law_school: profile.lawSchool,
+    grad_school: profile.gradSchool,
+    undergrad_major: profile.undergradMajor,
+    preferred_email: profile.email,
+    linkedin_url: profile.linkedinUrl,
+    willing_to_chat: profile.willingToChat,
+    interests: profile.interests,
+    bio: profile.bio,
+    directory_visible: profile.directoryVisible,
+    updated_at: new Date().toISOString()
+});
+
+const supabaseHeaders = (session) => ({
+    apikey: SUPABASE_ANON_KEY,
+    Authorization: `Bearer ${session?.access_token || SUPABASE_ANON_KEY}`,
+    'Content-Type': 'application/json'
+});
+
+const supabaseRequest = async (path, options = {}, session = null) => {
+    const response = await fetch(`${SUPABASE_URL}${path}`, {
+        ...options,
+        headers: {
+            ...supabaseHeaders(session),
+            ...(options.headers || {})
+        }
+    });
+    const text = await response.text();
+    const payload = text ? JSON.parse(text) : null;
+
+    if (!response.ok) {
+        throw new Error(payload?.msg || payload?.message || 'The alumni service returned an error.');
+    }
+
+    return payload;
+};
+
+export const getStoredAlumniSession = () => {
+    if (typeof window === 'undefined') return null;
+    const session = readJson(SESSION_KEY, null);
+    if (!session?.user?.email) return null;
+    return session;
+};
+
+export const clearStoredAlumniSession = () => {
+    window.localStorage.removeItem(SESSION_KEY);
+};
+
+export const signInAlumni = async ({ email, password }) => {
+    if (isSupabaseConfigured) {
+        const session = await supabaseRequest('/auth/v1/token?grant_type=password', {
+            method: 'POST',
+            body: JSON.stringify({ email, password })
+        });
+        writeJson(SESSION_KEY, session);
+        return { session };
+    }
+
+    const accounts = readJson(PREVIEW_ACCOUNTS_KEY, []);
+    const account = accounts.find(item => item.email.toLowerCase() === email.toLowerCase());
+    if (!account || account.password !== password) {
+        throw new Error('No preview account matches that email and password.');
+    }
+
+    const session = {
+        access_token: 'preview-token',
+        user: { id: account.id, email: account.email }
+    };
+    writeJson(SESSION_KEY, session);
+    return { session };
+};
+
+export const signUpAlumni = async ({ email, password }) => {
+    if (isSupabaseConfigured) {
+        const payload = await supabaseRequest('/auth/v1/signup', {
+            method: 'POST',
+            body: JSON.stringify({ email, password })
+        });
+
+        if (payload.session) {
+            writeJson(SESSION_KEY, payload.session);
+            return { session: payload.session };
+        }
+
+        return { session: null, needsEmailConfirmation: true };
+    }
+
+    const accounts = readJson(PREVIEW_ACCOUNTS_KEY, []);
+    if (accounts.some(item => item.email.toLowerCase() === email.toLowerCase())) {
+        throw new Error('That preview account already exists.');
+    }
+
+    const account = { id: createId(), email, password };
+    writeJson(PREVIEW_ACCOUNTS_KEY, [...accounts, account]);
+
+    const session = {
+        access_token: 'preview-token',
+        user: { id: account.id, email: account.email }
+    };
+    writeJson(SESSION_KEY, session);
+    return { session };
+};
+
+export const signOutAlumni = async (session) => {
+    if (isSupabaseConfigured && session?.access_token) {
+        try {
+            await supabaseRequest('/auth/v1/logout', { method: 'POST' }, session);
+        } catch {
+            // Local session cleanup should still happen even if the remote logout call fails.
+        }
+    }
+    clearStoredAlumniSession();
+};
+
+export const fetchAlumniProfiles = async (session) => {
+    if (isSupabaseConfigured) {
+        const rows = await supabaseRequest(
+            `/rest/v1/alumni_profiles?select=*&or=(directory_visible.eq.true,user_id.eq.${session.user.id})&order=updated_at.desc`,
+            { method: 'GET' },
+            session
+        );
+        return rows.map(normalizeProfile);
+    }
+
+    const localProfiles = readJson(PREVIEW_PROFILES_KEY, []);
+    const localIds = new Set(localProfiles.map(profile => profile.id));
+    return [
+        ...localProfiles.map(normalizeProfile),
+        ...alumniDemoProfiles.filter(profile => !localIds.has(profile.id)).map(normalizeProfile)
+    ];
+};
+
+export const saveAlumniProfile = async (profile, session) => {
+    if (!session?.user?.id) {
+        throw new Error('You need to be signed in to save a profile.');
+    }
+
+    if (isSupabaseConfigured) {
+        const rows = await supabaseRequest('/rest/v1/alumni_profiles?on_conflict=user_id', {
+            method: 'POST',
+            headers: {
+                Prefer: 'resolution=merge-duplicates,return=representation'
+            },
+            body: JSON.stringify(toDatabaseProfile(profile, session))
+        }, session);
+        return normalizeProfile(Array.isArray(rows) ? rows[0] : rows);
+    }
+
+    const profiles = readJson(PREVIEW_PROFILES_KEY, []);
+    const saved = normalizeProfile({
+        ...profile,
+        id: profile.id || `profile-${session.user.id}`,
+        userId: session.user.id,
+        email: profile.email || session.user.email,
+        updatedAt: new Date().toISOString()
+    });
+    const withoutExisting = profiles.filter(item => item.userId !== session.user.id && item.id !== saved.id);
+    writeJson(PREVIEW_PROFILES_KEY, [saved, ...withoutExisting]);
+    return saved;
+};
+
+export const createBlankAlumniProfile = (session) => normalizeProfile({
+    id: session?.user?.id ? `profile-${session.user.id}` : createId(),
+    userId: session?.user?.id || '',
+    fullName: '',
+    photoKey: 'blank',
+    status: 'alumni',
+    classYear: '',
+    ujlpRole: '',
+    currentTitle: '',
+    currentOrg: '',
+    location: '',
+    industry: '',
+    pathType: 'other',
+    lawSchool: '',
+    gradSchool: '',
+    undergradMajor: '',
+    email: session?.user?.email || '',
+    linkedinUrl: '',
+    willingToChat: true,
+    interests: [],
+    bio: '',
+    directoryVisible: true
+});
