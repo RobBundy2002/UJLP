@@ -40,6 +40,9 @@ jobs:
         run: CI=true npm test -- --watchAll=false
 
       - name: Build production site
+        env:
+          REACT_APP_SUPABASE_URL: ${{ secrets.REACT_APP_SUPABASE_URL }}
+          REACT_APP_SUPABASE_ANON_KEY: ${{ secrets.REACT_APP_SUPABASE_ANON_KEY }}
         run: npm run build
 
       - name: Configure GitHub Pages

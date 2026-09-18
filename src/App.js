@@ -5,6 +5,7 @@ import './Styling/GlobalOverhaul.css';
 import Home from './GeneralPages/Home';
 import About from './GeneralPages/About';
 import Journal from './GeneralPages/Journal';
+import AlumniDirectory from './GeneralPages/AlumniDirectory';
 import Announcements from './GeneralPages/Announcements';
 import Contact from './GeneralPages/Contact';
 import Footer from './Components/Footer';
@@ -105,7 +106,7 @@ function Navigation() {
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
-    const heroRoutes = ['/', '/about', '/journal', '/announcements', '/contact', '/jointheteam'];
+    const heroRoutes = ['/', '/about', '/journal', '/alumni', '/announcements', '/contact', '/jointheteam'];
     const isHeroRoute = heroRoutes.includes(location.pathname);
 
     return (
@@ -172,6 +173,7 @@ function App() {
                         <Route path="/" element={<Home />} />
                         <Route path="/about" element={<About />} />
                         <Route path="/journal" element={<Journal />} />
+                        <Route path="/alumni" element={<AlumniDirectory />} />
                         <Route path="/journal/index" element={<PublicationIndex />} />
                         <Route path="/journal/issue/:issueId" element={<IssueEdition />} />
                         <Route path="/research/:slug" element={<ResearchArea />} />
