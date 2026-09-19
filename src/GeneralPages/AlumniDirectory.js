@@ -155,6 +155,23 @@ const toTags = (value) => value
     .map(item => item.trim())
     .filter(Boolean);
 
+const getMentionHandle = (profile) => getProfileName(profile)
+    .replace(/[^a-zA-Z0-9\s]/g, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .join('')
+    .toLowerCase();
+
+const getMentionHandlesFromText = (value) => Array.from(
+    new Set(
+        String(value || '')
+            .match(/@[a-zA-Z0-9._-]+/g)
+            ?.map(handle => handle.slice(1).replace(/[^a-zA-Z0-9]/g, '').toLowerCase())
+            .filter(Boolean) || []
+    )
+);
+
 const defaultFeedDraft = {
     id: '',
     title: '',
@@ -306,32 +323,44 @@ function AlumniDirectory() {
         });
     }, [profiles, filters]);
 
-    const metrics = useMemo(() => {
-        const classYearCount = new Set(profiles.map(profile => profile.classYear).filter(Boolean)).size;
-        const pathCount = new Set(
-            profiles
-                .map(profile => profile.pathType)
-                .filter(pathType => pathType && pathType !== 'current-student' && pathType !== 'other')
-        ).size;
-        const schoolOrgCount = new Set(
-            profiles
-                .map(profile => profile.lawSchool || profile.gradSchool || profile.currentOrg)
-                .filter(Boolean)
-        ).size;
-        const values = [
-            ['Profiles', profiles.length],
-            ['Alumni', profiles.filter(profile => profile.status === 'alumni' && profile.profileType !== 'unaffiliated').length],
-            ['Class years', classYearCount],
-            ['Paths listed', pathCount],
-            ['Schools / orgs', schoolOrgCount]
+    const classYearDistribution = useMemo(() => {
+        const counts = profiles.reduce((accumulator, profile) => {
+            if (!profile.classYear) return accumulator;
+            accumulator[profile.classYear] = (accumulator[profile.classYear] || 0) + 1;
+            return accumulator;
+        }, {});
+        return Object.entries(counts).sort(([left], [right]) => left.localeCompare(right));
+    }, [profiles]);
+
+    const dashboardMetrics = useMemo(() => {
+        const alumniCount = profiles.filter(profile => profile.status === 'alumni' && profile.profileType !== 'unaffiliated').length;
+        const currentCount = profiles.filter(profile => profile.status === 'current').length;
+        const locationCount = new Set(profiles.map(profile => profile.location).filter(Boolean)).size;
+        const yearValues = classYearDistribution.map(([year]) => year);
+        const yearSpread = yearValues.length ? `${yearValues[0]}-${yearValues[yearValues.length - 1]}` : 'No years yet';
+
+        return [
+            { label: 'Profiles', value: profiles.length, detail: `${currentCount} current members` },
+            { label: 'Alumni', value: alumniCount, detail: `${Math.max(profiles.length - alumniCount, 0)} current or external` },
+            { label: 'Class-year spread', value: classYearDistribution.length, detail: yearSpread },
+            { label: 'Locations', value: locationCount, detail: locationCount ? 'standardized places' : 'not listed yet' }
         ];
+    }, [classYearDistribution, profiles]);
 
-        if (isAdmin) {
-            values.push(['Hidden', profiles.filter(profile => !profile.directoryVisible).length]);
-        }
+    const profileMentionLookup = useMemo(() => {
+        const lookup = new Map();
+        profiles.forEach(profile => {
+            const handle = getMentionHandle(profile);
+            if (handle) lookup.set(handle, profile);
+            const firstName = getProfileName(profile).split(/\s+/)[0]?.toLowerCase();
+            if (firstName && !lookup.has(firstName)) lookup.set(firstName, profile);
+        });
+        return lookup;
+    }, [profiles]);
 
-        return values;
-    }, [profiles, isAdmin]);
+    const notificationCount = useMemo(() => (
+        (portalContent.announcements || []).length + (portalContent.tasks || []).length
+    ), [portalContent.announcements, portalContent.tasks]);
 
     const updateFilter = (key, value) => {
         setFilters(current => ({ ...current, [key]: value }));
@@ -586,10 +615,32 @@ function AlumniDirectory() {
     const renderDashboard = () => (
         <section className="alumni-dashboard">
             <div className="section-content">
-                <div className="alumni-metrics" aria-label="Directory summary">
-                    {metrics.map(([label, value]) => (
-                        <div key={label}><strong>{value}</strong><span>{label}</span></div>
-                    ))}
+                <div className="alumni-dashboard-overview">
+                    <div className="alumni-panel-heading">
+                        <span>Network snapshot</span>
+                        <strong>Profiles, alumni, and class-year reach</strong>
+                    </div>
+                    <div className="alumni-metrics" aria-label="Directory summary">
+                        {dashboardMetrics.map(metric => (
+                            <div key={metric.label}>
+                                <strong>{metric.value}</strong>
+                                <span>{metric.label}</span>
+                                <p>{metric.detail}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="alumni-class-year-spread" aria-label="Class year distribution">
+                        {classYearDistribution.length > 0 ? classYearDistribution.map(([year, count]) => {
+                            const maxCount = Math.max(...classYearDistribution.map(([, value]) => value), 1);
+                            return (
+                                <div key={year}>
+                                    <span>{year}</span>
+                                    <i style={{ '--year-share': `${Math.max((count / maxCount) * 100, 12)}%` }} />
+                                    <b>{count}</b>
+                                </div>
+                            );
+                        }) : <p className="alumni-system-note">Class years will appear as profiles are added.</p>}
+                    </div>
                 </div>
             </div>
         </section>
@@ -862,33 +913,73 @@ function AlumniDirectory() {
         })
     ), [portalContent.feedPosts]);
 
+    const getFeedAuthorProfile = (post) => profiles.find(profile => (
+        profile.userId === post.authorUserId || normalizeText(profile.fullName) === normalizeText(post.authorName)
+    )) || null;
+
+    const getPostMentionProfiles = (post) => {
+        const handles = [
+            ...getMentionHandlesFromText(post.body),
+            ...getMentionHandlesFromText((post.tags || []).join(' '))
+        ];
+        return Array.from(new Set(handles))
+            .map(handle => profileMentionLookup.get(handle))
+            .filter(Boolean);
+    };
+
+    const renderPostBody = (post) => {
+        const parts = String(post.body || '').split(/(@[a-zA-Z0-9._-]+)/g);
+        return parts.map((part, index) => {
+            if (!part.startsWith('@')) return part;
+            const profile = profileMentionLookup.get(part.slice(1).replace(/[^a-zA-Z0-9]/g, '').toLowerCase());
+            if (!profile) return part;
+            return (
+                <button type="button" className="alumni-inline-mention" key={`${post.id}-mention-${index}`} onClick={() => openProfileView(profile)}>
+                    @{getMentionHandle(profile)}
+                </button>
+            );
+        });
+    };
+
     const renderFeedCard = (post) => (
-        <article className="alumni-feed-card" key={post.id}>
-            <div className="alumni-feed-author">
-                <img src={getAlumniPhoto(post.authorPhotoKey)} alt="" />
-                <div>
-                    <span>{post.category}</span>
-                    <strong>{post.authorName || 'UJLP'}</strong>
-                </div>
-                {post.pinned && <b>Pinned</b>}
-            </div>
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-            <div className="alumni-tags">
-                {(post.tags || []).map(tag => <span key={tag}>{tag}</span>)}
-                {post.eventDate && <span>Event {formatShortDate(post.eventDate)}</span>}
-                {post.deadlineDate && <span>Due {formatShortDate(post.deadlineDate)}</span>}
-            </div>
-            {isAdmin && (
-                <div className="alumni-feed-admin-actions">
-                    <button type="button" className="alumni-secondary-action" onClick={() => handleFeedEdit(post)}>Edit</button>
-                    <button type="button" className="alumni-secondary-action" onClick={() => handleFeedTogglePin(post)}>
-                        {post.pinned ? 'Unpin' : 'Pin'}
-                    </button>
-                    <button type="button" className="alumni-secondary-action" onClick={() => handleFeedDelete(post.id)}>Delete</button>
-                </div>
-            )}
-        </article>
+        (() => {
+            const authorProfile = getFeedAuthorProfile(post);
+            const mentionProfiles = getPostMentionProfiles(post);
+            return (
+                <article className="alumni-feed-card" key={post.id}>
+                    <div className="alumni-feed-author">
+                        <img src={getAlumniPhoto(authorProfile?.photoKey || post.authorPhotoKey || 'blank')} alt="" />
+                        <div>
+                            <span>{post.category}</span>
+                            <strong>{authorProfile ? getProfileName(authorProfile) : post.authorName || 'UJLP'}</strong>
+                            <time>{formatUpdatedDate(post.createdAt)}</time>
+                        </div>
+                        {post.pinned && <b>Pinned</b>}
+                    </div>
+                    <h3>{post.title}</h3>
+                    <p>{renderPostBody(post)}</p>
+                    <div className="alumni-tags">
+                        {(post.tags || []).map(tag => <span key={tag}>{tag}</span>)}
+                        {mentionProfiles.map(profile => (
+                            <button type="button" key={profile.userId || profile.id} onClick={() => openProfileView(profile)}>
+                                @{getMentionHandle(profile)}
+                            </button>
+                        ))}
+                        {post.eventDate && <span>Event {formatShortDate(post.eventDate)}</span>}
+                        {post.deadlineDate && <span>Due {formatShortDate(post.deadlineDate)}</span>}
+                    </div>
+                    {isAdmin && (
+                        <div className="alumni-feed-admin-actions">
+                            <button type="button" className="alumni-secondary-action" onClick={() => handleFeedEdit(post)}>Edit</button>
+                            <button type="button" className="alumni-secondary-action" onClick={() => handleFeedTogglePin(post)}>
+                                {post.pinned ? 'Unpin' : 'Pin'}
+                            </button>
+                            <button type="button" className="alumni-secondary-action" onClick={() => handleFeedDelete(post.id)}>Delete</button>
+                        </div>
+                    )}
+                </article>
+            );
+        })()
     );
 
     const renderCalendarEventCard = (eventItem, compact = false) => (
@@ -1037,7 +1128,13 @@ function AlumniDirectory() {
                         </label>
                         <label className="alumni-wide">
                             <span>Post</span>
-                            <textarea value={feedDraft.body} onChange={(event) => setFeedDraft(current => ({ ...current, body: event.target.value }))} required rows="3" />
+                            <textarea
+                                value={feedDraft.body}
+                                onChange={(event) => setFeedDraft(current => ({ ...current, body: event.target.value }))}
+                                required
+                                rows="3"
+                                placeholder={profiles.length ? `Use @${getMentionHandle(profiles[0])} to mention a member` : 'Use @name to mention a member'}
+                            />
                         </label>
                         <label>
                             <span>Type</span>
@@ -1057,7 +1154,7 @@ function AlumniDirectory() {
                         </label>
                         <label>
                             <span>Tags</span>
-                            <input value={feedDraft.tagsText} onChange={(event) => setFeedDraft(current => ({ ...current, tagsText: event.target.value }))} placeholder="jobs, events, alumni" />
+                            <input value={feedDraft.tagsText} onChange={(event) => setFeedDraft(current => ({ ...current, tagsText: event.target.value }))} placeholder="jobs, events, @memberhandle" />
                         </label>
                         {isAdmin && (
                             <label className="alumni-checkbox">
@@ -1161,7 +1258,10 @@ function AlumniDirectory() {
             </div>
             <div className="alumni-account-actions">
                 <Link to="/alumni/profile">
-                    <img src={getAlumniPhoto(ownProfile?.photoKey || 'blank')} alt="" />
+                    <span className="alumni-account-avatar">
+                        <img src={getAlumniPhoto(ownProfile?.photoKey || 'blank')} alt="" />
+                        {notificationCount > 0 && <b>{Math.min(notificationCount, 9)}</b>}
+                    </span>
                     <span>{accountName}</span>
                 </Link>
             </div>
@@ -1208,15 +1308,37 @@ function AlumniDirectory() {
         <div className="alumni-notification-list">
             <div className="alumni-panel-heading">
                 <span>Notifications</span>
-                <strong>Portal activity</strong>
+                <strong>Portal activity and feed-aligned updates</strong>
             </div>
             {portalContent.announcements.slice(0, 4).map(announcement => (
                 <article className="alumni-notification-card" key={announcement.id}>
-                    <span>{announcement.category}</span>
-                    <strong>{announcement.title}</strong>
-                    <time>{formatShortDate(announcement.publishDate)}</time>
+                    <div className="alumni-feed-author">
+                        <img src={getAlumniPhoto('blank')} alt="" />
+                        <div>
+                            <span>{announcement.category}</span>
+                            <strong>UJLP</strong>
+                            <time>{formatShortDate(announcement.publishDate)}</time>
+                        </div>
+                    </div>
+                    <h3>{announcement.title}</h3>
+                    <p>{announcement.body}</p>
                 </article>
             ))}
+            {portalContent.tasks.slice(0, 3).map(task => (
+                <article className="alumni-notification-card" key={`task-notification-${task.id}`}>
+                    <div className="alumni-feed-author">
+                        <img src={getAlumniPhoto('blank')} alt="" />
+                        <div>
+                            <span>{task.role}</span>
+                            <strong>Weekly task</strong>
+                            <time>{formatShortDate(task.dueDate)}</time>
+                        </div>
+                    </div>
+                    <h3>{task.title}</h3>
+                    <p>{task.details}</p>
+                </article>
+            ))}
+            {notificationCount === 0 && <p className="alumni-system-note">No notifications yet.</p>}
         </div>
     );
 

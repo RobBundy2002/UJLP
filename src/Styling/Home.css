@@ -704,6 +704,7 @@
 .title-screen-typewriter .workstation-desk { width: 850px; }
 .title-screen-typewriter .workstation-mouse { right: 2rem; }
 .title-screen-typewriter .screen-typed-line span { width: auto; animation: workstation-type-loop 5.8s steps(26, end) infinite; }
+.title-screen-typewriter .screen-typed-line.is-live-typed span { width: auto; animation: none; clip-path: none; }
 @keyframes workstation-type-loop { 0%, 12% { clip-path: inset(0 100% 0 0); } 48%, 72% { clip-path: inset(0 0 0 0); } 88%, 100% { clip-path: inset(0 100% 0 0); } }
 
 .jh-typewriter-section {

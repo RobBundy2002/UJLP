@@ -199,6 +199,7 @@ function AlumniProfile() {
     const [profileInviteCode, setProfileInviteCode] = useState('');
     const [profileMessage, setProfileMessage] = useState('');
     const [profileInviteMessage, setProfileInviteMessage] = useState('');
+    const [showProfileTypeQuestionnaire, setShowProfileTypeQuestionnaire] = useState(false);
     const [photoCropSource, setPhotoCropSource] = useState('');
     const [photoCropImageSize, setPhotoCropImageSize] = useState(null);
     const [photoCrop, setPhotoCrop] = useState({ cropX: 50, cropY: 50, zoom: 1 });
@@ -260,6 +261,7 @@ function AlumniProfile() {
 
             return { ...ownProfile, interestsText: toInterestText(ownProfile.interests) };
         });
+        setShowProfileTypeQuestionnaire(false);
     }, [ownProfile?.id, ownProfile?.updatedAt, ownProfile]);
 
     const accountName = getCompactAlumniName(ownProfile, session?.user);
@@ -287,6 +289,7 @@ function AlumniProfile() {
                 inviteCode: current?.inviteCode || profileInviteCode.trim()
             };
         });
+        setShowProfileTypeQuestionnaire(false);
         setProfileMessage('');
     };
 
@@ -411,6 +414,7 @@ function AlumniProfile() {
             interestsText: '',
             isNewProfile: true
         });
+        setShowProfileTypeQuestionnaire(true);
         setProfileInviteCode('');
     };
 
@@ -588,8 +592,8 @@ function AlumniProfile() {
     const renderProfileTypeQuestionnaire = () => (
         <div className="alumni-profile-type alumni-wide">
             <div>
-                <span>Questionnaire</span>
-                <strong>Please select one option.</strong>
+                <span>Stage of life</span>
+                <strong>Choose the option that matches your current profile.</strong>
             </div>
             <div className="alumni-profile-type-grid">
                 {profileTypeOptions.map(option => (
@@ -606,6 +610,20 @@ function AlumniProfile() {
             </div>
         </div>
     );
+
+    const renderProfileTypeSummary = () => {
+        if (!profileDraft.profileType || showProfileTypeQuestionnaire) return renderProfileTypeQuestionnaire();
+
+        return (
+            <div className="alumni-profile-type-summary alumni-wide">
+                <div>
+                    <span>Stage of life</span>
+                    <strong>{getAlumniProfileTypeLabel(profileDraft)}</strong>
+                </div>
+                <button type="button" className="alumni-secondary-action" onClick={() => setShowProfileTypeQuestionnaire(true)}>Change</button>
+            </div>
+        );
+    };
 
     const renderRoleSelect = (required = true) => (
         <label>
@@ -1033,7 +1051,7 @@ function AlumniProfile() {
                         <h2>{previewProfile.fullName ? `Editing ${previewProfile.fullName}` : 'Build the member profile'}</h2>
                     </div>
                     <div className="alumni-form-grid">
-                        {renderProfileTypeQuestionnaire()}
+                        {renderProfileTypeSummary()}
                         {renderProfileFields()}
                     </div>
                     <div className="alumni-form-actions">

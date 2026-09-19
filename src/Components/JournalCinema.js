@@ -4,9 +4,11 @@ export function PrintingPressIntro({ embedded = false }) {
     const phrase = 'Ideas that move the world.';
     const keys = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','G','H','J','K','L','Z','X','C','V','B','N','M'];
     const [activeKey, setActiveKey] = useState('');
+    const [typedPhrase, setTypedPhrase] = useState('');
 
     useEffect(() => {
         let interval;
+        let resetTimeout;
         let index = 0;
         let pause = 0;
         const start = window.setTimeout(() => {
@@ -18,16 +20,19 @@ export function PrintingPressIntro({ embedded = false }) {
                 const character = phrase[index];
                 setActiveKey(character === ' ' ? 'SPACE' : character?.toUpperCase() || '');
                 index += 1;
+                setTypedPhrase(phrase.slice(0, index));
                 if (index >= phrase.length) {
                     index = 0;
                     pause = 12;
                     setActiveKey('');
+                    resetTimeout = window.setTimeout(() => setTypedPhrase(''), 900);
                 }
             }, 85);
         }, 1200);
 
         return () => {
             window.clearTimeout(start);
+            window.clearTimeout(resetTimeout);
             window.clearInterval(interval);
         };
     }, []);
@@ -44,7 +49,7 @@ export function PrintingPressIntro({ embedded = false }) {
                         <div className="screen-copy">
                             <small>UNIVERSITY OF VIRGINIA · EST. 2024</small>
                             <strong>UJLP</strong>
-                            <div className="screen-typed-line"><span>Ideas that move the world.</span><i /></div>
+                            <div className="screen-typed-line is-live-typed"><span>{typedPhrase}</span><i /></div>
                             <p>THE UNDERGRADUATE JOURNAL<br />OF LAW &amp; POLITICS</p>
                             <div className="screen-status"><span>ISSUE 01 / 2026</span><span>READY TO PUBLISH</span></div>
                         </div>
