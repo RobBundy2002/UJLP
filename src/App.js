@@ -38,6 +38,14 @@ import PublicationIndex from './GeneralPages/PublicationIndex';
 import IssueEdition from './GeneralPages/IssueEdition';
 import ResearchArea from './GeneralPages/ResearchArea';
 import BioFrame from './Components/BioFrame';
+import {
+    ALUMNI_SESSION_EVENT,
+    fetchAlumniProfiles,
+    getStoredAlumniSession,
+    isAlumniAdmin,
+    signOutAlumni
+} from './Services/alumniApi';
+import { getAlumniPhoto } from './Data/alumniPhotoRegistry';
 
 function ScrollToTop() {
     const { pathname } = useLocation();
@@ -76,6 +84,8 @@ function ScrollToTop() {
 function Navigation() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [alumniSession, setAlumniSession] = useState(() => getStoredAlumniSession());
+    const [navProfile, setNavProfile] = useState(null);
     const location = useLocation();
     const menuRef = useRef(null);
 
@@ -88,6 +98,38 @@ function Navigation() {
     useEffect(() => {
         setIsMobileMenuOpen(false);
     }, [location]);
+
+    useEffect(() => {
+        const syncSession = () => setAlumniSession(getStoredAlumniSession());
+        window.addEventListener(ALUMNI_SESSION_EVENT, syncSession);
+        window.addEventListener('storage', syncSession);
+        window.addEventListener('focus', syncSession);
+        return () => {
+            window.removeEventListener(ALUMNI_SESSION_EVENT, syncSession);
+            window.removeEventListener('storage', syncSession);
+            window.removeEventListener('focus', syncSession);
+        };
+    }, []);
+
+    useEffect(() => {
+        let isMounted = true;
+        setNavProfile(null);
+
+        if (!alumniSession?.user?.id) return undefined;
+
+        fetchAlumniProfiles(alumniSession)
+            .then(rows => {
+                if (!isMounted) return;
+                setNavProfile(rows.find(profile => profile.userId === alumniSession.user.id) || null);
+            })
+            .catch(() => {
+                if (isMounted) setNavProfile(null);
+            });
+
+        return () => {
+            isMounted = false;
+        };
+    }, [alumniSession]);
 
     useEffect(() => {
         if (isMobileMenuOpen) {
@@ -106,8 +148,16 @@ function Navigation() {
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
+    const handleGlobalSignOut = async () => {
+        await signOutAlumni(alumniSession);
+        setAlumniSession(null);
+        setNavProfile(null);
+    };
     const heroRoutes = ['/', '/about', '/journal', '/alumni', '/announcements', '/contact', '/jointheteam'];
     const isHeroRoute = heroRoutes.includes(location.pathname);
+    const isSignedIn = Boolean(alumniSession?.user?.email);
+    const isAdmin = isAlumniAdmin(alumniSession);
+    const accountName = navProfile?.fullName || alumniSession?.user?.email || '';
 
     return (
         <header className={`App-header ${isHeroRoute ? 'over-hero' : ''} ${isScrolled ? 'scrolled' : ''}`}>
@@ -137,7 +187,7 @@ function Navigation() {
                     <Link to="/" className={`App-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMobileMenu}>Home</Link>
                     <Link to="/about" className={`App-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMobileMenu}>About</Link>
                     <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`} onClick={closeMobileMenu}>Journal</Link>
-                    <Link to="/alumni" className={`App-link ${location.pathname === '/alumni' ? 'active' : ''}`} onClick={closeMobileMenu}>Alumni</Link>
+                    {isSignedIn && <Link to="/alumni" className={`App-link ${location.pathname === '/alumni' ? 'active' : ''}`} onClick={closeMobileMenu}>Alumni</Link>}
                     <Link to="/announcements" className={`App-link ${location.pathname === '/announcements' ? 'active' : ''}`} onClick={closeMobileMenu}>Announcements</Link>
                     <Link to="/contact" className={`App-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={closeMobileMenu}>Contact</Link>
                     <Link to="/jointheteam" className={`App-link ${location.pathname === '/jointheteam' ? 'active' : ''}`} onClick={closeMobileMenu}>Apply</Link>
@@ -147,6 +197,17 @@ function Navigation() {
                 <div className="header-search">
                     <SearchBar />
                 </div>
+
+                {isSignedIn && (
+                    <div className="header-account">
+                        <Link to="/alumni" className="header-account-profile" aria-label="Open alumni profile">
+                            <img src={getAlumniPhoto(navProfile?.photoKey || 'blank')} alt="" />
+                            <span>{accountName}</span>
+                            {isAdmin && <b>Admin</b>}
+                        </Link>
+                        <button type="button" onClick={handleGlobalSignOut}>Sign out</button>
+                    </div>
+                )}
 
                 <button className={`mobile-menu-button ${isMobileMenuOpen ? 'hidden' : ''}`} onClick={toggleMobileMenu} aria-label="Open navigation" aria-expanded={isMobileMenuOpen} aria-controls="primary-navigation">
                     <svg className={`menu-icon ${isMobileMenuOpen ? 'active' : ''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

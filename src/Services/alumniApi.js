@@ -10,6 +10,7 @@ const PREVIEW_PROFILE_INVITE_CODE = (process.env.REACT_APP_ALUMNI_PREVIEW_INVITE
 const SESSION_KEY = 'ujlp_alumni_session';
 const PREVIEW_ACCOUNTS_KEY = 'ujlp_alumni_preview_accounts';
 const PREVIEW_PROFILES_KEY = 'ujlp_alumni_preview_profiles';
+export const ALUMNI_SESSION_EVENT = 'ujlp-alumni-session-change';
 
 export const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
 export const getAlumniBackendMode = () => (isSupabaseConfigured ? 'supabase' : 'preview');
@@ -32,6 +33,12 @@ const readJson = (key, fallback) => {
 
 const writeJson = (key, value) => {
     window.localStorage.setItem(key, JSON.stringify(value));
+};
+
+const notifyAlumniSessionChange = () => {
+    if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event(ALUMNI_SESSION_EVENT));
+    }
 };
 
 const createId = () => {
@@ -122,6 +129,7 @@ export const getStoredAlumniSession = () => {
 
 export const clearStoredAlumniSession = () => {
     window.localStorage.removeItem(SESSION_KEY);
+    notifyAlumniSessionChange();
 };
 
 export const signInAlumni = async ({ email, password }) => {
@@ -131,6 +139,7 @@ export const signInAlumni = async ({ email, password }) => {
             body: JSON.stringify({ email, password })
         });
         writeJson(SESSION_KEY, session);
+        notifyAlumniSessionChange();
         return { session };
     }
 
@@ -145,6 +154,7 @@ export const signInAlumni = async ({ email, password }) => {
         user: { id: account.id, email: account.email }
     };
     writeJson(SESSION_KEY, session);
+    notifyAlumniSessionChange();
     return { session };
 };
 
@@ -157,6 +167,7 @@ export const signUpAlumni = async ({ email, password }) => {
 
         if (payload.session) {
             writeJson(SESSION_KEY, payload.session);
+            notifyAlumniSessionChange();
             return { session: payload.session };
         }
 
@@ -176,6 +187,7 @@ export const signUpAlumni = async ({ email, password }) => {
         user: { id: account.id, email: account.email }
     };
     writeJson(SESSION_KEY, session);
+    notifyAlumniSessionChange();
     return { session };
 };
 

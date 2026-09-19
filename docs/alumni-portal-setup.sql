@@ -69,6 +69,9 @@ alter table public.public_announcements enable row level security;
 alter table public.alumni_weekly_tasks enable row level security;
 
 drop policy if exists "Authenticated members can read feed posts" on public.alumni_feed_posts;
+drop policy if exists "Authenticated members can create feed posts" on public.alumni_feed_posts;
+drop policy if exists "Members can update their own feed posts" on public.alumni_feed_posts;
+drop policy if exists "Members can delete their own feed posts" on public.alumni_feed_posts;
 drop policy if exists "Directory admins can manage feed posts" on public.alumni_feed_posts;
 drop policy if exists "Anyone can read public announcements" on public.public_announcements;
 drop policy if exists "Authenticated members can read portal announcements" on public.public_announcements;
@@ -78,6 +81,19 @@ drop policy if exists "Directory admins can manage weekly tasks" on public.alumn
 
 create policy "Authenticated members can read feed posts"
 on public.alumni_feed_posts for select to authenticated using (true);
+
+create policy "Authenticated members can create feed posts"
+on public.alumni_feed_posts for insert to authenticated
+with check (auth.uid() = author_user_id);
+
+create policy "Members can update their own feed posts"
+on public.alumni_feed_posts for update to authenticated
+using (auth.uid() = author_user_id)
+with check (auth.uid() = author_user_id);
+
+create policy "Members can delete their own feed posts"
+on public.alumni_feed_posts for delete to authenticated
+using (auth.uid() = author_user_id);
 
 create policy "Directory admins can manage feed posts"
 on public.alumni_feed_posts for all to authenticated

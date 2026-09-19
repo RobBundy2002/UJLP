@@ -124,6 +124,16 @@ function AlumniDirectory() {
     const [profileInviteCode, setProfileInviteCode] = useState('');
     const [profileInviteMessage, setProfileInviteMessage] = useState('');
     const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [] });
+    const [feedDraft, setFeedDraft] = useState({
+        title: '',
+        body: '',
+        category: 'Network',
+        postType: 'update',
+        eventDate: '',
+        deadlineDate: '',
+        tagsText: ''
+    });
+    const [feedMessage, setFeedMessage] = useState('');
     const [editorType, setEditorType] = useState('announcements');
     const [editorMessage, setEditorMessage] = useState('');
     const [editorDraft, setEditorDraft] = useState({
@@ -444,6 +454,44 @@ function AlumniDirectory() {
             setEditorMessage('Deleted.');
         } catch (error) {
             setEditorMessage(error.message);
+        }
+    };
+
+    const handleFeedSave = async (event) => {
+        event.preventDefault();
+        if (!session) return;
+
+        setFeedMessage('');
+        try {
+            const saved = await savePortalItem('feedPosts', {
+                title: feedDraft.title,
+                body: feedDraft.body,
+                category: feedDraft.category,
+                postType: feedDraft.postType,
+                eventDate: feedDraft.eventDate,
+                deadlineDate: feedDraft.deadlineDate,
+                authorUserId: session.user.id,
+                authorName: ownProfile?.fullName || session.user.email,
+                authorPhotoKey: ownProfile?.photoKey || 'blank',
+                pinned: false,
+                tags: toTags(feedDraft.tagsText)
+            }, session);
+            setPortalContent(current => ({
+                ...current,
+                feedPosts: [saved, ...current.feedPosts.filter(item => item.id !== saved.id)]
+            }));
+            setFeedDraft({
+                title: '',
+                body: '',
+                category: 'Network',
+                postType: 'update',
+                eventDate: '',
+                deadlineDate: '',
+                tagsText: ''
+            });
+            setFeedMessage('Posted to the alumni feed.');
+        } catch (error) {
+            setFeedMessage(error.message);
         }
     };
 
@@ -885,6 +933,44 @@ function AlumniDirectory() {
                     <span>Alumni network</span>
                     <strong>Member updates and opportunities</strong>
                 </div>
+                <form className="alumni-feed-composer" onSubmit={handleFeedSave}>
+                    <div className="alumni-form-grid">
+                        <label>
+                            <span>Title</span>
+                            <input value={feedDraft.title} onChange={(event) => setFeedDraft(current => ({ ...current, title: event.target.value }))} required />
+                        </label>
+                        <label>
+                            <span>Category</span>
+                            <input value={feedDraft.category} onChange={(event) => setFeedDraft(current => ({ ...current, category: event.target.value }))} />
+                        </label>
+                        <label className="alumni-wide">
+                            <span>Post</span>
+                            <textarea value={feedDraft.body} onChange={(event) => setFeedDraft(current => ({ ...current, body: event.target.value }))} required rows="3" />
+                        </label>
+                        <label>
+                            <span>Type</span>
+                            <select value={feedDraft.postType} onChange={(event) => setFeedDraft(current => ({ ...current, postType: event.target.value }))}>
+                                <option value="update">Update</option>
+                                <option value="event">Event</option>
+                                <option value="deadline">Deadline</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Event date</span>
+                            <input type="date" value={feedDraft.eventDate} onChange={(event) => setFeedDraft(current => ({ ...current, eventDate: event.target.value }))} />
+                        </label>
+                        <label>
+                            <span>Deadline date</span>
+                            <input type="date" value={feedDraft.deadlineDate} onChange={(event) => setFeedDraft(current => ({ ...current, deadlineDate: event.target.value }))} />
+                        </label>
+                        <label>
+                            <span>Tags</span>
+                            <input value={feedDraft.tagsText} onChange={(event) => setFeedDraft(current => ({ ...current, tagsText: event.target.value }))} placeholder="jobs, events, alumni" />
+                        </label>
+                    </div>
+                    <button type="submit" className="alumni-primary-action">Post to feed</button>
+                    {feedMessage && <p className="alumni-form-message">{feedMessage}</p>}
+                </form>
                 {portalContent.feedPosts.map(renderFeedCard)}
             </section>
             <aside className="alumni-home-rail">
@@ -906,15 +992,10 @@ function AlumniDirectory() {
     const renderPortalAccountBar = () => (
         <div className="alumni-portal-account-bar">
             <div className="alumni-portal-context">
-                <span>{activeView === 'admin' ? 'Internal team' : 'Alumni network'}</span>
-                <strong>{activeView === 'admin' ? 'Manage announcements and tasks' : 'Member workspace'}</strong>
+                <span>Alumni network</span>
+                <strong>Member workspace</strong>
             </div>
             <div className="alumni-account-actions">
-                {isAdmin && (
-                    <button type="button" className={activeView === 'admin' ? 'active' : ''} onClick={() => setActiveView('admin')}>
-                        Internal team
-                    </button>
-                )}
                 <button type="button" className={activeView === 'profile' && editingProfileUserId === session.user.id ? 'active' : ''} onClick={() => openOwnProfile('view')}>
                     <img src={getAlumniPhoto(ownProfile?.photoKey || 'blank')} alt="" />
                     <span>{ownProfile?.fullName || session.user.email}</span>

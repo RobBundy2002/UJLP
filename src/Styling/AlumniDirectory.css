@@ -244,6 +244,9 @@
 .alumni-profile-form input,
 .alumni-profile-form select,
 .alumni-profile-form textarea,
+.alumni-feed-composer input,
+.alumni-feed-composer select,
+.alumni-feed-composer textarea,
 .alumni-admin-form input,
 .alumni-admin-form select,
 .alumni-admin-form textarea {
@@ -263,6 +266,7 @@
 .alumni-auth-panel label,
 .alumni-tools label,
 .alumni-profile-form label,
+.alumni-feed-composer label,
 .alumni-admin-form label {
     display: grid;
     gap: .45rem;
@@ -874,6 +878,7 @@
 .alumni-home-rail,
 .alumni-task-list,
 .alumni-notification-list,
+.alumni-feed-composer,
 .alumni-admin-form,
 .alumni-admin-list {
     display: grid;
@@ -994,6 +999,16 @@
 }
 
 .alumni-admin-form textarea {
+    resize: vertical;
+}
+
+.alumni-feed-composer {
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
+}
+
+.alumni-feed-composer textarea {
     resize: vertical;
 }
 

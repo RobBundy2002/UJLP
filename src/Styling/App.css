@@ -462,6 +462,29 @@ footer {
         display: none;
     }
 
+    .header-search {
+        display: none;
+    }
+
+    .header-account {
+        position: absolute;
+        right: 3.15rem;
+        bottom: 2.05rem;
+        margin: 0;
+        max-width: calc(100vw - 12rem);
+    }
+
+    .header-account-profile {
+        max-width: 9.5rem;
+        padding: .25rem .4rem;
+    }
+
+    .header-account-profile span,
+    .header-account-profile b,
+    .header-account button {
+        display: none;
+    }
+
     .App-nav-top {
         position: fixed;
         top: 0;
@@ -938,6 +961,61 @@ footer {
     margin-top: .75rem;
     margin-left: 1rem;
     flex-shrink: 0;
+}
+
+.header-account {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    margin-top: .72rem;
+    margin-left: .75rem;
+    flex-shrink: 0;
+}
+
+.header-account-profile,
+.header-account button {
+    min-height: 2.45rem;
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    padding: .35rem .55rem;
+    border: 1px solid rgba(255, 255, 255, .22);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, .08);
+    color: var(--text-secondary);
+    font: inherit;
+    font-size: .78rem;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header-account-profile {
+    max-width: 15rem;
+}
+
+.header-account-profile img {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    object-fit: cover;
+}
+
+.header-account-profile span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.header-account-profile b {
+    padding: .18rem .35rem;
+    border-radius: 999px;
+    background: rgba(255, 107, 53, .18);
+    color: var(--primary-color);
+    font-size: .65rem;
+    text-transform: uppercase;
 }
 
 .App-nav-top {
