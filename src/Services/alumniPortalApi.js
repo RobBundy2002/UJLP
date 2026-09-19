@@ -82,10 +82,40 @@ const fallbackTasks = [
     }
 ];
 
+const fallbackCalendarEvents = [
+    {
+        id: 'calendar-welcome-meetup',
+        title: 'Alumni portal office hours',
+        details: 'Drop in for questions about profiles, directory access, and upcoming UJLP alumni features.',
+        category: 'Office Hours',
+        eventDate: '2026-10-02',
+        startTime: '17:00',
+        endTime: '18:00',
+        location: 'Virtual',
+        linkUrl: '',
+        pinned: true,
+        createdAt: '2026-09-18T00:00:00.000Z'
+    },
+    {
+        id: 'calendar-editor-checkpoint',
+        title: 'Fall editorial checkpoint',
+        details: 'Editors and writers should confirm topic scope, source lists, and first-draft timing.',
+        category: 'Deadline',
+        eventDate: '2026-10-15',
+        startTime: '',
+        endTime: '',
+        location: 'UJLP Portal',
+        linkUrl: '',
+        pinned: false,
+        createdAt: '2026-09-18T00:00:00.000Z'
+    }
+];
+
 const emptyPortalContent = {
     feedPosts: fallbackFeedPosts,
     announcements: fallbackAnnouncements,
-    tasks: fallbackTasks
+    tasks: fallbackTasks,
+    calendarEvents: fallbackCalendarEvents
 };
 
 const readLocalPortalContent = () => {
@@ -170,6 +200,20 @@ const normalizeTask = (task) => ({
     status: task.status || 'open'
 });
 
+const normalizeCalendarEvent = (event) => ({
+    id: event.id || createId('calendar'),
+    title: event.title || '',
+    details: event.details || event.body || event.description || '',
+    category: event.category || 'Event',
+    eventDate: event.eventDate || event.event_date || '',
+    startTime: event.startTime || event.start_time || '',
+    endTime: event.endTime || event.end_time || '',
+    location: event.location || '',
+    linkUrl: event.linkUrl || event.link_url || '',
+    pinned: Boolean(event.pinned),
+    createdAt: event.createdAt || event.created_at || new Date().toISOString()
+});
+
 const toFeedPostRow = (post) => ({
     id: post.id?.startsWith('feed-') ? undefined : post.id,
     title: post.title,
@@ -206,26 +250,42 @@ const toTaskRow = (task) => ({
     status: task.status
 });
 
+const toCalendarEventRow = (event) => ({
+    id: event.id?.startsWith('calendar-') ? undefined : event.id,
+    title: event.title,
+    details: event.details,
+    category: event.category,
+    event_date: event.eventDate || null,
+    start_time: event.startTime || '',
+    end_time: event.endTime || '',
+    location: event.location || '',
+    link_url: event.linkUrl || '',
+    pinned: event.pinned
+});
+
 const localCollectionKey = {
     feedPosts: 'feedPosts',
     announcements: 'announcements',
-    tasks: 'tasks'
+    tasks: 'tasks',
+    calendarEvents: 'calendarEvents'
 };
 
 export const fetchPortalContent = async (session) => {
     if (!isSupabaseConfigured) return readLocalPortalContent();
 
     try {
-        const [feedPosts, announcements, tasks] = await Promise.all([
+        const [feedPosts, announcements, tasks, calendarEvents] = await Promise.all([
             supabaseRequest('/rest/v1/alumni_feed_posts?select=*&order=pinned.desc,created_at.desc', { method: 'GET' }, session),
             supabaseRequest('/rest/v1/public_announcements?select=*&order=pinned.desc,publish_date.desc', { method: 'GET' }, session),
-            supabaseRequest('/rest/v1/alumni_weekly_tasks?select=*&order=due_date.asc', { method: 'GET' }, session)
+            supabaseRequest('/rest/v1/alumni_weekly_tasks?select=*&order=due_date.asc', { method: 'GET' }, session),
+            supabaseRequest('/rest/v1/alumni_calendar_events?select=*&order=pinned.desc,event_date.asc,start_time.asc', { method: 'GET' }, session)
         ]);
 
         return {
             feedPosts: feedPosts.map(normalizeFeedPost),
             announcements: announcements.map(normalizeAnnouncement),
-            tasks: tasks.map(normalizeTask)
+            tasks: tasks.map(normalizeTask),
+            calendarEvents: calendarEvents.map(normalizeCalendarEvent)
         };
     } catch {
         return readLocalPortalContent();
@@ -250,14 +310,16 @@ export const savePortalItem = async (collection, item, session) => {
     const normalized = {
         feedPosts: normalizeFeedPost,
         announcements: normalizeAnnouncement,
-        tasks: normalizeTask
+        tasks: normalizeTask,
+        calendarEvents: normalizeCalendarEvent
     }[collection](item);
 
     if (isSupabaseConfigured) {
         const config = {
             feedPosts: ['/rest/v1/alumni_feed_posts', toFeedPostRow],
             announcements: ['/rest/v1/public_announcements', toAnnouncementRow],
-            tasks: ['/rest/v1/alumni_weekly_tasks', toTaskRow]
+            tasks: ['/rest/v1/alumni_weekly_tasks', toTaskRow],
+            calendarEvents: ['/rest/v1/alumni_calendar_events', toCalendarEventRow]
         }[collection];
         const [path, toRow] = config;
         const row = toRow(normalized);
@@ -270,7 +332,8 @@ export const savePortalItem = async (collection, item, session) => {
         return {
             feedPosts: normalizeFeedPost,
             announcements: normalizeAnnouncement,
-            tasks: normalizeTask
+            tasks: normalizeTask,
+            calendarEvents: normalizeCalendarEvent
         }[collection](Array.isArray(rows) ? rows[0] : rows);
     }
 
@@ -286,7 +349,8 @@ export const deletePortalItem = async (collection, id, session) => {
         const table = {
             feedPosts: 'alumni_feed_posts',
             announcements: 'public_announcements',
-            tasks: 'alumni_weekly_tasks'
+            tasks: 'alumni_weekly_tasks',
+            calendarEvents: 'alumni_calendar_events'
         }[collection];
         await supabaseRequest(`/rest/v1/${table}?id=eq.${id}`, { method: 'DELETE' }, session);
         return;

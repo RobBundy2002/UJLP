@@ -1,3 +1,7 @@
+-- UJLP alumni portal + calendar setup
+-- Paste this whole file into the Supabase SQL editor for the deploy you want to update.
+-- This combines the alumni portal setup with the new editable calendar setup.
+
 create extension if not exists pgcrypto;
 
 create or replace function public.is_alumni_directory_admin()
@@ -149,3 +153,4 @@ create policy "Directory admins can manage calendar events"
 on public.alumni_calendar_events for all to authenticated
 using (public.is_alumni_directory_admin())
 with check (public.is_alumni_directory_admin());
+

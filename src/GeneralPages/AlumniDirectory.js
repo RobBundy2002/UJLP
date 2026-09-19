@@ -56,6 +56,7 @@ const getPathLabel = (profile) => pathTypeLabels[profile?.pathType] || 'Other';
 const portalTabs = [
     ['home', 'Home', 'M6 10.5 12 5l6 5.5v7.5a1 1 0 0 1-1 1h-3.5v-5h-3v5H7a1 1 0 0 1-1-1v-7.5Z'],
     ['feed', 'Feed', 'M5 6h14M5 12h14M5 18h9'],
+    ['calendar', 'Calendar', 'M7 3v3M17 3v3M4 8h16M6 5h12a2 2 0 0 1 2 2v12H4V7a2 2 0 0 1 2-2ZM8 12h3M13 12h3M8 16h3M13 16h3'],
     ['directory', 'Directory', 'M8 7a3 3 0 1 0 0 .1M4 19a4 4 0 0 1 8 0M17 8a2.5 2.5 0 1 0 0 .1M14 19a3.5 3.5 0 0 1 6 0'],
     ['resources', 'Resources', 'M6 5h12v14H6zM9 8h6M9 12h6M9 16h4'],
     ['tasks', 'Weekly Tasks', 'M7 7h10M7 12h10M7 17h6M4 7l1 1 2-2M4 12l1 1 2-2M4 17l1 1 2-2'],
@@ -73,6 +74,22 @@ const formatShortDate = (value) => {
     const date = new Date(`${value}T00:00:00`);
     if (Number.isNaN(date.getTime())) return value;
     return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+};
+
+const formatCalendarTime = (startTime, endTime) => {
+    const formatOne = (value) => {
+        if (!value) return '';
+        const [hours, minutes] = value.split(':');
+        const hourNumber = Number(hours);
+        if (Number.isNaN(hourNumber)) return value;
+        const suffix = hourNumber >= 12 ? 'PM' : 'AM';
+        const hour = hourNumber % 12 || 12;
+        return `${hour}:${minutes || '00'} ${suffix}`;
+    };
+    const start = formatOne(startTime);
+    const end = formatOne(endTime);
+    if (start && end) return `${start} - ${end}`;
+    return start || end || 'Time pending';
 };
 
 const toTags = (value) => value
@@ -95,6 +112,19 @@ const defaultFeedDraft = {
     authorPhotoKey: ''
 };
 
+const defaultCalendarDraft = {
+    id: '',
+    title: '',
+    details: '',
+    category: 'Event',
+    eventDate: '',
+    startTime: '',
+    endTime: '',
+    location: '',
+    linkUrl: '',
+    pinned: false
+};
+
 function AlumniDirectory() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -107,9 +137,11 @@ function AlumniDirectory() {
     const [filters, setFilters] = useState(defaultFilters);
     const [activeView, setActiveView] = useState('home');
     const [editingProfileUserId, setEditingProfileUserId] = useState(null);
-    const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [] });
+    const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [], calendarEvents: [] });
     const [feedDraft, setFeedDraft] = useState(defaultFeedDraft);
     const [feedMessage, setFeedMessage] = useState('');
+    const [calendarDraft, setCalendarDraft] = useState(defaultCalendarDraft);
+    const [calendarMessage, setCalendarMessage] = useState('');
     const [editorType, setEditorType] = useState('announcements');
     const [editorMessage, setEditorMessage] = useState('');
     const [editorDraft, setEditorDraft] = useState({
@@ -435,6 +467,68 @@ function AlumniDirectory() {
         }
     };
 
+    const handleCalendarSave = async (event) => {
+        event.preventDefault();
+        if (!isAdmin) return;
+
+        setCalendarMessage('');
+        try {
+            const saved = await savePortalItem('calendarEvents', {
+                id: calendarDraft.id || undefined,
+                title: calendarDraft.title,
+                details: calendarDraft.details,
+                category: calendarDraft.category,
+                eventDate: calendarDraft.eventDate,
+                startTime: calendarDraft.startTime,
+                endTime: calendarDraft.endTime,
+                location: calendarDraft.location,
+                linkUrl: calendarDraft.linkUrl,
+                pinned: Boolean(calendarDraft.pinned)
+            }, session);
+            setPortalContent(current => ({
+                ...current,
+                calendarEvents: [saved, ...current.calendarEvents.filter(item => item.id !== saved.id)]
+            }));
+            setCalendarDraft(defaultCalendarDraft);
+            setCalendarMessage(calendarDraft.id ? 'Calendar event updated.' : 'Calendar event added.');
+        } catch (error) {
+            setCalendarMessage(error.message);
+        }
+    };
+
+    const handleCalendarEdit = (eventItem) => {
+        setCalendarDraft({
+            id: eventItem.id,
+            title: eventItem.title,
+            details: eventItem.details,
+            category: eventItem.category,
+            eventDate: eventItem.eventDate,
+            startTime: eventItem.startTime,
+            endTime: eventItem.endTime,
+            location: eventItem.location,
+            linkUrl: eventItem.linkUrl,
+            pinned: Boolean(eventItem.pinned)
+        });
+        setCalendarMessage('');
+        setActiveView('calendar');
+    };
+
+    const handleCalendarDelete = async (id) => {
+        if (!isAdmin) return;
+        setCalendarMessage('');
+        try {
+            await deletePortalItem('calendarEvents', id, session);
+            setPortalContent(current => ({
+                ...current,
+                calendarEvents: current.calendarEvents.filter(item => item.id !== id)
+            }));
+            if (calendarDraft.id === id) setCalendarDraft(defaultCalendarDraft);
+            setCalendarMessage('Calendar event deleted.');
+        } catch (error) {
+            setCalendarMessage(error.message);
+        }
+    };
+
     const renderAuthPanel = () => (
         <section className="alumni-auth-section">
             <div className="section-content alumni-auth-layout">
@@ -705,12 +799,16 @@ function AlumniDirectory() {
         );
     };
 
-    const upcomingItems = useMemo(() => (
-        [...portalContent.feedPosts]
-            .filter(post => post.eventDate || post.deadlineDate)
-            .sort((left, right) => String(left.eventDate || left.deadlineDate).localeCompare(String(right.eventDate || right.deadlineDate)))
-            .slice(0, 4)
-    ), [portalContent.feedPosts]);
+    const sortedCalendarEvents = useMemo(() => (
+        [...(portalContent.calendarEvents || [])].sort((left, right) => {
+            if (left.pinned !== right.pinned) return left.pinned ? -1 : 1;
+            const leftDate = `${left.eventDate || '9999-12-31'}T${left.startTime || '23:59'}`;
+            const rightDate = `${right.eventDate || '9999-12-31'}T${right.startTime || '23:59'}`;
+            return leftDate.localeCompare(rightDate);
+        })
+    ), [portalContent.calendarEvents]);
+
+    const upcomingItems = useMemo(() => sortedCalendarEvents.slice(0, 4), [sortedCalendarEvents]);
 
     const sortedFeedPosts = useMemo(() => (
         [...portalContent.feedPosts].sort((left, right) => {
@@ -748,6 +846,29 @@ function AlumniDirectory() {
         </article>
     );
 
+    const renderCalendarEventCard = (eventItem, compact = false) => (
+        <article className={compact ? 'alumni-upcoming-card' : 'alumni-calendar-card'} key={eventItem.id}>
+            <span>{eventItem.category || 'Event'}</span>
+            <strong>{eventItem.title}</strong>
+            {!compact && <p>{eventItem.details || 'Details pending.'}</p>}
+            <div className="alumni-calendar-meta">
+                <time>{formatShortDate(eventItem.eventDate)}</time>
+                <span>{formatCalendarTime(eventItem.startTime, eventItem.endTime)}</span>
+                {eventItem.location && <span>{eventItem.location}</span>}
+                {eventItem.pinned && <b>Pinned</b>}
+            </div>
+            {!compact && eventItem.linkUrl && (
+                <a className="alumni-calendar-link" href={eventItem.linkUrl} target="_blank" rel="noopener noreferrer">Open link</a>
+            )}
+            {!compact && isAdmin && (
+                <div className="alumni-feed-admin-actions">
+                    <button type="button" className="alumni-secondary-action" onClick={() => handleCalendarEdit(eventItem)}>Edit</button>
+                    <button type="button" className="alumni-secondary-action" onClick={() => handleCalendarDelete(eventItem.id)}>Delete</button>
+                </div>
+            )}
+        </article>
+    );
+
     const renderHome = () => (
         <div className="alumni-portal-stack">
             {renderDashboard()}
@@ -764,14 +885,8 @@ function AlumniDirectory() {
                         <span>Upcoming</span>
                         <strong>Events and deadlines</strong>
                     </div>
-                    {upcomingItems.map(item => (
-                        <article className="alumni-upcoming-card" key={item.id}>
-                            <span>{item.postType === 'deadline' ? 'Deadline' : 'Event'}</span>
-                            <strong>{item.title}</strong>
-                            <time>{formatShortDate(item.eventDate || item.deadlineDate)}</time>
-                        </article>
-                    ))}
-                    {upcomingItems.length === 0 && <p className="alumni-system-note">No dated items are posted.</p>}
+                    {upcomingItems.map(item => renderCalendarEventCard(item, true))}
+                    {upcomingItems.length === 0 && <p className="alumni-system-note">No calendar events are posted.</p>}
                 </aside>
             </div>
         </div>
@@ -844,14 +959,75 @@ function AlumniDirectory() {
                     <span>Calendar</span>
                     <strong>Coming up</strong>
                 </div>
-                {upcomingItems.map(item => (
-                    <article className="alumni-upcoming-card" key={item.id}>
-                        <span>{item.category}</span>
-                        <strong>{item.title}</strong>
-                        <time>{formatShortDate(item.eventDate || item.deadlineDate)}</time>
-                    </article>
-                ))}
+                {upcomingItems.map(item => renderCalendarEventCard(item, true))}
+                {upcomingItems.length === 0 && <p className="alumni-system-note">No calendar events are posted.</p>}
             </aside>
+        </div>
+    );
+
+    const renderCalendar = () => (
+        <div className="alumni-calendar-layout">
+            {isAdmin && (
+                <form className="alumni-calendar-form" onSubmit={handleCalendarSave}>
+                    <div className="alumni-panel-heading">
+                        <span>{calendarDraft.id ? 'Editing calendar event' : 'New calendar event'}</span>
+                        <strong>{calendarDraft.id ? calendarDraft.title || 'Untitled event' : 'Add to the calendar'}</strong>
+                    </div>
+                    <div className="alumni-form-grid">
+                        <label>
+                            <span>Title</span>
+                            <input value={calendarDraft.title} onChange={(event) => setCalendarDraft(current => ({ ...current, title: event.target.value }))} required />
+                        </label>
+                        <label>
+                            <span>Category</span>
+                            <input value={calendarDraft.category} onChange={(event) => setCalendarDraft(current => ({ ...current, category: event.target.value }))} placeholder="Event, Deadline, Meeting" />
+                        </label>
+                        <label>
+                            <span>Date</span>
+                            <input type="date" value={calendarDraft.eventDate} onChange={(event) => setCalendarDraft(current => ({ ...current, eventDate: event.target.value }))} required />
+                        </label>
+                        <label>
+                            <span>Start time</span>
+                            <input type="time" value={calendarDraft.startTime} onChange={(event) => setCalendarDraft(current => ({ ...current, startTime: event.target.value }))} />
+                        </label>
+                        <label>
+                            <span>End time</span>
+                            <input type="time" value={calendarDraft.endTime} onChange={(event) => setCalendarDraft(current => ({ ...current, endTime: event.target.value }))} />
+                        </label>
+                        <label>
+                            <span>Location</span>
+                            <input value={calendarDraft.location} onChange={(event) => setCalendarDraft(current => ({ ...current, location: event.target.value }))} placeholder="Virtual, Charlottesville, etc." />
+                        </label>
+                        <label className="alumni-wide">
+                            <span>Details</span>
+                            <textarea value={calendarDraft.details} onChange={(event) => setCalendarDraft(current => ({ ...current, details: event.target.value }))} rows="3" />
+                        </label>
+                        <label>
+                            <span>Link URL</span>
+                            <input type="url" value={calendarDraft.linkUrl} onChange={(event) => setCalendarDraft(current => ({ ...current, linkUrl: event.target.value }))} placeholder="https://..." />
+                        </label>
+                        <label className="alumni-checkbox">
+                            <input type="checkbox" checked={calendarDraft.pinned} onChange={(event) => setCalendarDraft(current => ({ ...current, pinned: event.target.checked }))} />
+                            <span>Pin calendar event</span>
+                        </label>
+                    </div>
+                    <div className="alumni-form-actions">
+                        <button type="submit" className="alumni-primary-action">{calendarDraft.id ? 'Save event' : 'Add event'}</button>
+                        {calendarDraft.id && (
+                            <button type="button" className="alumni-secondary-action" onClick={() => setCalendarDraft(defaultCalendarDraft)}>New event</button>
+                        )}
+                    </div>
+                    {calendarMessage && <p className="alumni-form-message">{calendarMessage}</p>}
+                </form>
+            )}
+            <section className="alumni-calendar-list">
+                <div className="alumni-panel-heading">
+                    <span>Calendar</span>
+                    <strong>Upcoming events and deadlines</strong>
+                </div>
+                {sortedCalendarEvents.map(eventItem => renderCalendarEventCard(eventItem))}
+                {sortedCalendarEvents.length === 0 && <p className="alumni-system-note">No calendar events are posted.</p>}
+            </section>
         </div>
     );
 
@@ -1007,6 +1183,7 @@ function AlumniDirectory() {
     const renderActivePortalView = () => {
         if (activeView === 'home') return renderHome();
         if (activeView === 'feed') return renderFeed();
+        if (activeView === 'calendar') return renderCalendar();
         if (activeView === 'directory') return renderDirectory();
         if (activeView === 'resources') return renderResources();
         if (activeView === 'tasks') return renderTasks();

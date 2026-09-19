@@ -33,11 +33,13 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-top: 2.1rem;
-    border-bottom: 1px solid var(--alumni-line);
+    min-height: min(560px, 64vh);
+    padding: 5.5rem clamp(1.5rem, 7vw, 8rem) 3.5rem;
+    border-bottom: 1px solid rgba(247, 241, 231, .14);
     background:
-        linear-gradient(135deg, rgba(79, 142, 197, .36), transparent 42%),
-        linear-gradient(180deg, #0b1b2f 0%, #07111f 100%);
+        radial-gradient(circle at 76% 21%, rgba(34, 84, 127, .58), transparent 28%),
+        radial-gradient(circle 26rem at 30% 100%, rgba(144, 52, 34, .27), transparent 100%),
+        #07111f;
 }
 
 .alumni-hero::after {
@@ -89,9 +91,9 @@
     display: grid;
     gap: .55rem;
     padding: 1.15rem;
-    border: 1px solid var(--alumni-line);
+    border: 1px solid rgba(247, 241, 231, .14);
     border-radius: 8px;
-    background: rgba(16, 37, 64, .86);
+    background: rgba(17, 16, 13, .78);
     box-shadow: 0 22px 60px rgba(0, 0, 0, .24);
 }
 
@@ -253,6 +255,9 @@
 .alumni-feed-composer input,
 .alumni-feed-composer select,
 .alumni-feed-composer textarea,
+.alumni-calendar-form input,
+.alumni-calendar-form select,
+.alumni-calendar-form textarea,
 .alumni-admin-form input,
 .alumni-admin-form select,
 .alumni-admin-form textarea {
@@ -273,6 +278,7 @@
 .alumni-tools label,
 .alumni-profile-form label,
 .alumni-feed-composer label,
+.alumni-calendar-form label,
 .alumni-admin-form label {
     display: grid;
     gap: .45rem;
@@ -283,7 +289,10 @@
 .alumni-tools select:focus,
 .alumni-profile-form input:focus,
 .alumni-profile-form select:focus,
-.alumni-profile-form textarea:focus {
+.alumni-profile-form textarea:focus,
+.alumni-calendar-form input:focus,
+.alumni-calendar-form select:focus,
+.alumni-calendar-form textarea:focus {
     border-color: var(--alumni-blue);
     box-shadow: 0 0 0 3px rgba(79, 142, 197, .18);
 }
@@ -997,6 +1006,8 @@
 .alumni-resource-card,
 .alumni-task-list,
 .alumni-notification-list,
+.alumni-calendar-form,
+.alumni-calendar-list,
 .alumni-admin-form,
 .alumni-admin-list {
     border: 1px solid var(--alumni-line);
@@ -1015,6 +1026,7 @@
 .alumni-panel-heading span,
 .alumni-feed-author span,
 .alumni-upcoming-card span,
+.alumni-calendar-card > span,
 .alumni-resource-card span,
 .alumni-task-card span,
 .alumni-notification-card span,
@@ -1176,6 +1188,8 @@
 .alumni-task-list,
 .alumni-notification-list,
 .alumni-feed-composer,
+.alumni-calendar-form,
+.alumni-calendar-list,
 .alumni-admin-form,
 .alumni-admin-list {
     display: grid;
@@ -1192,6 +1206,7 @@
 
 .alumni-feed-card,
 .alumni-upcoming-card,
+.alumni-calendar-card,
 .alumni-task-card,
 .alumni-notification-card,
 .alumni-admin-item {
@@ -1232,6 +1247,7 @@
 }
 
 .alumni-feed-card h3,
+.alumni-calendar-card strong,
 .alumni-task-card h3 {
     margin: 0;
     color: var(--alumni-ink);
@@ -1240,6 +1256,7 @@
 }
 
 .alumni-feed-card p,
+.alumni-calendar-card p,
 .alumni-resource-card p,
 .alumni-task-card p {
     margin: 0;
@@ -1268,6 +1285,7 @@
 }
 
 .alumni-upcoming-card time,
+.alumni-calendar-meta time,
 .alumni-task-card time,
 .alumni-notification-card time {
     color: var(--alumni-gold);
@@ -1312,6 +1330,11 @@
     resize: vertical;
 }
 
+.alumni-calendar-layout {
+    display: grid;
+    gap: 1rem;
+}
+
 .alumni-feed-composer {
     border: 1px solid var(--alumni-line);
     border-radius: 8px;
@@ -1324,6 +1347,48 @@
 
 .alumni-feed-composer textarea {
     resize: vertical;
+}
+
+.alumni-calendar-form textarea {
+    resize: vertical;
+}
+
+.alumni-calendar-card {
+    align-content: start;
+}
+
+.alumni-calendar-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    align-items: center;
+}
+
+.alumni-calendar-meta span,
+.alumni-calendar-meta b,
+.alumni-calendar-link {
+    min-height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    padding: .42rem .62rem;
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 999px;
+    color: var(--alumni-muted);
+    font-size: .78rem;
+    font-style: normal;
+    line-height: 1.2;
+    text-decoration: none;
+}
+
+.alumni-calendar-meta b {
+    border-color: rgba(201, 163, 91, .45);
+    color: var(--alumni-gold);
+}
+
+.alumni-calendar-link {
+    width: fit-content;
+    border-color: rgba(79, 142, 197, .55);
+    color: #b9daf3;
 }
 
 .alumni-editor-heading,
