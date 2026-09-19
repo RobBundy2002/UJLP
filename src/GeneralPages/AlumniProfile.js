@@ -396,7 +396,7 @@ function AlumniProfile() {
         setProfileInviteMessage('');
 
         if (!profileInviteCode.trim()) {
-            setProfileInviteMessage('Enter the alumni invite code to create your profile.');
+            setProfileInviteMessage('Enter the member invite code to create your profile.');
             return;
         }
 
@@ -445,7 +445,6 @@ function AlumniProfile() {
                 lawSchool: '',
                 gradSchool: '',
                 undergraduateSchool: '',
-                degreeTitle: '',
                 affiliatedWithUjlp: true
             };
         }
@@ -459,7 +458,7 @@ function AlumniProfile() {
                 industry: primaryJob.industry || 'Law School',
                 pathType: 'law-school',
                 lawSchool: 'University of Virginia School of Law',
-                degreeTitle: 'Juris Doctor',
+                degreeTitle: profileDraft.degreeTitle || 'Juris Doctor',
                 ujlpRole: profileDraft.affiliatedWithUjlp ? profileDraft.ujlpRole : ''
             };
         }
@@ -619,6 +618,18 @@ function AlumniProfile() {
                 <option value="">Select role</option>
                 {getSelectOptions(ujlpRoleOptions, profileDraft.ujlpRole).map(role => (
                     <option key={role} value={role}>{role}</option>
+                ))}
+            </select>
+        </label>
+    );
+
+    const renderDegreeTitleSelect = (required = false, label = 'Highest Degree') => (
+        <label>
+            <span>{label}{required ? '*' : ''}</span>
+            <select value={profileDraft.degreeTitle || ''} onChange={(event) => updateDraft('degreeTitle', event.target.value)} required={required}>
+                <option value="">Select degree</option>
+                {getSelectOptions(degreeTitleOptions, profileDraft.degreeTitle).map(degree => (
+                    <option key={degree} value={degree}>{degree}</option>
                 ))}
             </select>
         </label>
@@ -818,6 +829,7 @@ function AlumniProfile() {
                         ))}
                     </select>
                 </label>
+                {renderDegreeTitleSelect()}
                 <label>
                     <span>Anticipated Path*</span>
                     <select value={profileDraft.pathType || ''} onChange={(event) => updateDraft('pathType', event.target.value)} required>
@@ -861,6 +873,7 @@ function AlumniProfile() {
                     <span>Undergraduate Major*</span>
                     <input value={profileDraft.undergradMajor || ''} onChange={(event) => updateDraft('undergradMajor', event.target.value)} required />
                 </label>
+                {renderDegreeTitleSelect()}
                 <label className="alumni-checkbox alumni-wide">
                     <input
                         type="checkbox"
@@ -911,15 +924,7 @@ function AlumniProfile() {
                     <span>Full Name*</span>
                     <input value={profileDraft.fullName || ''} onChange={(event) => updateDraft('fullName', event.target.value)} required />
                 </label>
-                <label>
-                    <span>Title of Highest Degree*</span>
-                    <select value={profileDraft.degreeTitle || ''} onChange={(event) => updateDraft('degreeTitle', event.target.value)} required>
-                        <option value="">Select degree</option>
-                        {getSelectOptions(degreeTitleOptions, profileDraft.degreeTitle).map(degree => (
-                            <option key={degree} value={degree}>{degree}</option>
-                        ))}
-                    </select>
-                </label>
+                {renderDegreeTitleSelect(true, 'Title of Highest Degree')}
                 <label>
                     <span>Undergraduate School</span>
                     <input value={profileDraft.undergraduateSchool || ''} onChange={(event) => updateDraft('undergraduateSchool', event.target.value)} />
