@@ -266,16 +266,34 @@ export const saveAlumniProfile = async (profile, session) => {
             return normalizeProfile(row);
         }
 
-        const rows = await supabaseRequest(`/rest/v1/alumni_profiles?user_id=eq.${encodeURIComponent(targetUserId)}&select=*`, {
-            method: 'PATCH',
-            headers: {
-                Prefer: 'return=representation'
-            },
-            body: JSON.stringify(toDatabaseProfile(profile, session))
-        }, session);
+        const databaseProfile = toDatabaseProfile(profile, session);
+        const updateProfileByFilter = async (filter) => {
+            const rows = await supabaseRequest(`/rest/v1/alumni_profiles?${filter}&select=*`, {
+                method: 'PATCH',
+                headers: {
+                    Prefer: 'return=representation'
+                },
+                body: JSON.stringify(databaseProfile)
+            }, session);
 
-        const savedRow = Array.isArray(rows) ? rows[0] : rows;
+            return Array.isArray(rows) ? rows[0] : rows;
+        };
+        const profileIdFilter = profile.id ? `id=eq.${encodeURIComponent(profile.id)}` : '';
+        const userIdFilter = `user_id=eq.${encodeURIComponent(targetUserId)}`;
+        const savedRow = (
+            (profileIdFilter ? await updateProfileByFilter(profileIdFilter) : null) ||
+            (profileIdFilter ? await updateProfileByFilter(userIdFilter) : await updateProfileByFilter(userIdFilter))
+        );
         if (!savedRow) {
+            const existingProfileRows = await supabaseRequest(
+                `/rest/v1/alumni_profiles?${profileIdFilter || userIdFilter}&select=id,user_id&limit=1`,
+                { method: 'GET' },
+                session
+            );
+            if (Array.isArray(existingProfileRows) && existingProfileRows.length > 0) {
+                throw new Error('This profile exists, but Supabase blocked the admin update. Run the directory-admin update policy SQL before editing another member profile.');
+            }
+
             throw new Error('No existing profile was found to update. Create the profile with the invite code first.');
         }
 
