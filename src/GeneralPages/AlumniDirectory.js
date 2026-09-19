@@ -74,6 +74,66 @@ const formatShortDate = (value) => {
     return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 };
 
+const parseCalendarDate = (value) => {
+    if (!value) return null;
+    const [year, month, day] = value.split('-').map(Number);
+    if (!year || !month || !day) return null;
+    const date = new Date(year, month - 1, day);
+    if (Number.isNaN(date.getTime())) return null;
+    date.setHours(0, 0, 0, 0);
+    return date;
+};
+
+const toCalendarDateValue = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
+const addCalendarDays = (date, days) => {
+    const nextDate = new Date(date);
+    nextDate.setDate(nextDate.getDate() + days);
+    return nextDate;
+};
+
+const getCalendarWeekStart = (date) => {
+    const weekStart = new Date(date);
+    weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+    weekStart.setHours(0, 0, 0, 0);
+    return weekStart;
+};
+
+const getDefaultCalendarWeekStart = (events) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const datedEvents = events
+        .map(eventItem => parseCalendarDate(eventItem.eventDate))
+        .filter(Boolean)
+        .sort((left, right) => left - right);
+    const upcomingDate = datedEvents.find(date => date >= today);
+    return toCalendarDateValue(getCalendarWeekStart(upcomingDate || datedEvents[0] || today));
+};
+
+const formatWeekRange = (days) => {
+    if (!days.length) return 'Week';
+    const start = days[0].date;
+    const end = days[days.length - 1].date;
+    const sameMonth = start.getMonth() === end.getMonth();
+    const sameYear = start.getFullYear() === end.getFullYear();
+    const startLabel = start.toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        ...(sameYear ? {} : { year: 'numeric' })
+    });
+    const endLabel = end.toLocaleDateString(undefined, {
+        ...(sameMonth ? {} : { month: 'short' }),
+        day: 'numeric',
+        year: 'numeric'
+    });
+    return `${startLabel} - ${endLabel}`;
+};
+
 const formatCalendarTime = (startTime, endTime) => {
     const formatOne = (value) => {
         if (!value) return '';
@@ -137,6 +197,7 @@ function AlumniDirectory() {
     const [feedMessage, setFeedMessage] = useState('');
     const [calendarDraft, setCalendarDraft] = useState(defaultCalendarDraft);
     const [calendarMessage, setCalendarMessage] = useState('');
+    const [calendarWeekStart, setCalendarWeekStart] = useState('');
     const [editorType, setEditorType] = useState('announcements');
     const [editorMessage, setEditorMessage] = useState('');
     const [editorDraft, setEditorDraft] = useState({
@@ -475,6 +536,10 @@ function AlumniDirectory() {
                 calendarEvents: [saved, ...current.calendarEvents.filter(item => item.id !== saved.id)]
             }));
             setCalendarDraft(defaultCalendarDraft);
+            if (saved.eventDate) {
+                const savedDate = parseCalendarDate(saved.eventDate);
+                if (savedDate) setCalendarWeekStart(toCalendarDateValue(getCalendarWeekStart(savedDate)));
+            }
             setCalendarMessage(calendarDraft.id ? 'Calendar event updated.' : 'Calendar event added.');
         } catch (error) {
             setCalendarMessage(error.message);
@@ -494,6 +559,8 @@ function AlumniDirectory() {
             linkUrl: eventItem.linkUrl,
             pinned: Boolean(eventItem.pinned)
         });
+        const eventDate = parseCalendarDate(eventItem.eventDate);
+        if (eventDate) setCalendarWeekStart(toCalendarDateValue(getCalendarWeekStart(eventDate)));
         setCalendarMessage('');
         setActiveView('calendar');
     };
@@ -731,6 +798,55 @@ function AlumniDirectory() {
 
     const upcomingItems = useMemo(() => sortedCalendarEvents.slice(0, 4), [sortedCalendarEvents]);
 
+    const calendarWeekDays = useMemo(() => {
+        const fallbackWeekStart = getDefaultCalendarWeekStart(portalContent.calendarEvents || []);
+        const startDate = parseCalendarDate(calendarWeekStart || fallbackWeekStart) || new Date();
+        const todayValue = toCalendarDateValue(new Date());
+        return Array.from({ length: 7 }, (_, index) => {
+            const date = addCalendarDays(startDate, index);
+            const dateValue = toCalendarDateValue(date);
+            return {
+                date,
+                dateValue,
+                weekday: date.toLocaleDateString(undefined, { weekday: 'short' }),
+                dayNumber: date.toLocaleDateString(undefined, { day: 'numeric' }),
+                month: date.toLocaleDateString(undefined, { month: 'short' }),
+                isToday: dateValue === todayValue
+            };
+        });
+    }, [calendarWeekStart, portalContent.calendarEvents]);
+
+    const calendarWeekLabel = useMemo(() => formatWeekRange(calendarWeekDays), [calendarWeekDays]);
+
+    const calendarEventsByDate = useMemo(() => {
+        const grouped = {};
+        calendarWeekDays.forEach(day => {
+            grouped[day.dateValue] = [];
+        });
+
+        [...(portalContent.calendarEvents || [])]
+            .filter(eventItem => grouped[eventItem.eventDate])
+            .sort((left, right) => {
+                const leftDate = `${left.eventDate || '9999-12-31'}T${left.startTime || '23:59'}`;
+                const rightDate = `${right.eventDate || '9999-12-31'}T${right.startTime || '23:59'}`;
+                return leftDate.localeCompare(rightDate);
+            })
+            .forEach(eventItem => {
+                grouped[eventItem.eventDate].push(eventItem);
+            });
+
+        return grouped;
+    }, [calendarWeekDays, portalContent.calendarEvents]);
+
+    const moveCalendarWeek = (direction) => {
+        const currentStart = calendarWeekDays[0]?.date || new Date();
+        setCalendarWeekStart(toCalendarDateValue(addCalendarDays(currentStart, direction * 7)));
+    };
+
+    const resetCalendarWeek = () => {
+        setCalendarWeekStart('');
+    };
+
     const sortedFeedPosts = useMemo(() => (
         [...portalContent.feedPosts].sort((left, right) => {
             if (left.pinned !== right.pinned) return left.pinned ? -1 : 1;
@@ -788,6 +904,51 @@ function AlumniDirectory() {
                 </div>
             )}
         </article>
+    );
+
+    const renderWeeklyCalendar = () => (
+        <section className="alumni-calendar-board">
+            <div className="alumni-calendar-board-header">
+                <div className="alumni-panel-heading">
+                    <span>Weekly calendar</span>
+                    <strong>{calendarWeekLabel}</strong>
+                </div>
+                <div className="alumni-week-controls" aria-label="Calendar week controls">
+                    <button type="button" className="alumni-secondary-action" onClick={() => moveCalendarWeek(-1)}>Previous week</button>
+                    <button type="button" className="alumni-secondary-action" onClick={resetCalendarWeek}>Next event</button>
+                    <button type="button" className="alumni-secondary-action" onClick={() => moveCalendarWeek(1)}>Next week</button>
+                </div>
+            </div>
+            <div className="alumni-week-grid" aria-label="Weekly calendar">
+                {calendarWeekDays.map(day => {
+                    const dayEvents = calendarEventsByDate[day.dateValue] || [];
+                    return (
+                        <div className={`alumni-week-day${day.isToday ? ' is-today' : ''}`} key={day.dateValue}>
+                            <div className="alumni-week-day-heading">
+                                <span>{day.weekday}</span>
+                                <strong>{day.dayNumber}</strong>
+                                <em>{day.month}</em>
+                            </div>
+                            <div className="alumni-week-events">
+                                {dayEvents.map(eventItem => (
+                                    <article className="alumni-week-event" key={eventItem.id}>
+                                        <span>{eventItem.category || 'Event'}</span>
+                                        <strong>{eventItem.title}</strong>
+                                        <time>{formatCalendarTime(eventItem.startTime, eventItem.endTime)}</time>
+                                        {eventItem.location && <small>{eventItem.location}</small>}
+                                        {eventItem.pinned && <b>Pinned</b>}
+                                        {isAdmin && (
+                                            <button type="button" onClick={() => handleCalendarEdit(eventItem)}>Edit</button>
+                                        )}
+                                    </article>
+                                ))}
+                                {dayEvents.length === 0 && <p>No events</p>}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </section>
     );
 
     const renderHome = () => (
@@ -943,9 +1104,10 @@ function AlumniDirectory() {
             )}
             <section className="alumni-calendar-list">
                 <div className="alumni-panel-heading">
-                    <span>Calendar</span>
-                    <strong>Upcoming events and deadlines</strong>
+                    <span>Agenda</span>
+                    <strong>All events and deadlines</strong>
                 </div>
+                {renderWeeklyCalendar()}
                 {sortedCalendarEvents.map(eventItem => renderCalendarEventCard(eventItem))}
                 {sortedCalendarEvents.length === 0 && <p className="alumni-system-note">No calendar events are posted.</p>}
             </section>

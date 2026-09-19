@@ -1006,6 +1006,7 @@
 .alumni-resource-card,
 .alumni-task-list,
 .alumni-notification-list,
+.alumni-calendar-board,
 .alumni-calendar-form,
 .alumni-calendar-list,
 .alumni-admin-form,
@@ -1188,6 +1189,7 @@
 .alumni-task-list,
 .alumni-notification-list,
 .alumni-feed-composer,
+.alumni-calendar-board,
 .alumni-calendar-form,
 .alumni-calendar-list,
 .alumni-admin-form,
@@ -1333,6 +1335,143 @@
 .alumni-calendar-layout {
     display: grid;
     gap: 1rem;
+}
+
+.alumni-calendar-board {
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.alumni-calendar-board-header {
+    display: flex;
+    gap: 1rem;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.alumni-calendar-board-header .alumni-panel-heading {
+    flex: 1;
+}
+
+.alumni-week-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    justify-content: flex-end;
+}
+
+.alumni-week-controls .alumni-secondary-action {
+    min-height: 2.35rem;
+    padding: .5rem .7rem;
+    font-size: .68rem;
+}
+
+.alumni-week-grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    overflow: hidden;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-line);
+}
+
+.alumni-week-day {
+    min-height: 16rem;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    background: var(--alumni-bg-soft);
+}
+
+.alumni-week-day + .alumni-week-day {
+    border-left: 1px solid var(--alumni-line);
+}
+
+.alumni-week-day.is-today {
+    background: linear-gradient(180deg, rgba(79, 142, 197, .16), var(--alumni-bg-soft));
+}
+
+.alumni-week-day-heading {
+    min-height: 4.35rem;
+    display: grid;
+    gap: .18rem;
+    padding: .75rem;
+    border-bottom: 1px solid var(--alumni-line);
+}
+
+.alumni-week-day-heading span,
+.alumni-week-day-heading em,
+.alumni-week-event span,
+.alumni-week-event b {
+    color: var(--alumni-faint);
+    font-size: .62rem;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-week-day-heading strong {
+    color: var(--alumni-ink);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: .95;
+}
+
+.alumni-week-events {
+    display: grid;
+    align-content: start;
+    gap: .55rem;
+    padding: .65rem;
+}
+
+.alumni-week-events > p {
+    margin: 0;
+    color: var(--alumni-faint);
+    font-size: .76rem;
+    line-height: 1.45;
+}
+
+.alumni-week-event {
+    display: grid;
+    gap: .35rem;
+    padding: .65rem;
+    border: 1px solid rgba(166, 195, 223, .18);
+    border-left-color: rgba(201, 163, 91, .65);
+    border-radius: 6px;
+    background: #071827;
+}
+
+.alumni-week-event strong {
+    color: var(--alumni-ink);
+    font-size: .82rem;
+    line-height: 1.25;
+}
+
+.alumni-week-event time,
+.alumni-week-event small {
+    color: var(--alumni-muted);
+    font-size: .72rem;
+    line-height: 1.35;
+}
+
+.alumni-week-event b {
+    color: var(--alumni-gold);
+}
+
+.alumni-week-event button {
+    justify-self: start;
+    min-height: 1.85rem;
+    padding: .28rem .45rem;
+    border: 1px solid rgba(79, 142, 197, .45);
+    border-radius: 6px;
+    background: transparent;
+    color: #b9daf3;
+    cursor: pointer;
+    font-size: .66rem;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
 .alumni-feed-composer {
@@ -1598,6 +1737,7 @@
 .alumni-directory-page .alumni-home-rail,
 .alumni-directory-page .alumni-task-list,
 .alumni-directory-page .alumni-notification-list,
+.alumni-directory-page .alumni-calendar-board,
 .alumni-directory-page .alumni-calendar-form,
 .alumni-directory-page .alumni-calendar-list,
 .alumni-directory-page .alumni-admin-form,
@@ -1643,6 +1783,7 @@
 .alumni-directory-page .alumni-task-list,
 .alumni-directory-page .alumni-notification-list,
 .alumni-directory-page .alumni-feed-composer,
+.alumni-directory-page .alumni-calendar-board,
 .alumni-directory-page .alumni-calendar-form,
 .alumni-directory-page .alumni-calendar-list,
 .alumni-directory-page .alumni-admin-form,
@@ -1665,6 +1806,22 @@
     border-color: rgba(166, 195, 223, .16);
     background: rgba(7, 24, 39, .78);
     box-shadow: inset 0 1px 0 rgba(247, 241, 231, .05);
+}
+
+.alumni-directory-page .alumni-calendar-board {
+    background:
+        linear-gradient(180deg, rgba(20, 53, 87, .28), transparent 16rem),
+        rgba(12, 30, 51, .92);
+}
+
+.alumni-directory-page .alumni-week-grid {
+    border-color: rgba(166, 195, 223, .2);
+    background: rgba(166, 195, 223, .14);
+}
+
+.alumni-directory-page .alumni-week-day,
+.alumni-directory-page .alumni-week-event {
+    background: rgba(7, 24, 39, .78);
 }
 
 .alumni-directory-page .alumni-resource-grid {
@@ -1819,6 +1976,20 @@
     .alumni-directory-page .alumni-profile-details {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .alumni-calendar-board-header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .alumni-week-controls {
+        justify-content: flex-start;
+    }
+
+    .alumni-week-grid {
+        grid-template-columns: repeat(7, minmax(9.5rem, 1fr));
+        overflow-x: auto;
+    }
 }
 
 @media (max-width: 720px) {
@@ -1939,11 +2110,24 @@
     .alumni-directory-page .alumni-task-list,
     .alumni-directory-page .alumni-notification-list,
     .alumni-directory-page .alumni-feed-composer,
+    .alumni-directory-page .alumni-calendar-board,
     .alumni-directory-page .alumni-calendar-form,
     .alumni-directory-page .alumni-calendar-list,
     .alumni-directory-page .alumni-admin-form,
     .alumni-directory-page .alumni-admin-list,
     .alumni-directory-page .alumni-tools {
         padding: .85rem;
+    }
+
+    .alumni-week-grid {
+        grid-template-columns: repeat(7, minmax(8.75rem, 1fr));
+    }
+
+    .alumni-week-day {
+        min-height: 14rem;
+    }
+
+    .alumni-week-controls .alumni-secondary-action {
+        flex: 1 1 8rem;
     }
 }
