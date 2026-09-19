@@ -87,8 +87,7 @@ const portalTabs = [
     ['directory', 'Directory', 'M8 7a3 3 0 1 0 0 .1M4 19a4 4 0 0 1 8 0M17 8a2.5 2.5 0 1 0 0 .1M14 19a3.5 3.5 0 0 1 6 0'],
     ['resources', 'Resources', 'M6 5h12v14H6zM9 8h6M9 12h6M9 16h4'],
     ['tasks', 'Weekly Tasks', 'M7 7h10M7 12h10M7 17h6M4 7l1 1 2-2M4 12l1 1 2-2M4 17l1 1 2-2'],
-    ['notifications', 'Notifications', 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 20h4'],
-    ['profile', 'My Profile', 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 20a7 7 0 0 1 14 0']
+    ['notifications', 'Notifications', 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 20h4']
 ];
 
 const Icon = ({ path }) => (
@@ -125,7 +124,7 @@ function AlumniDirectory() {
     const [profileInviteCode, setProfileInviteCode] = useState('');
     const [profileInviteMessage, setProfileInviteMessage] = useState('');
     const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [] });
-    const [editorType, setEditorType] = useState('feedPosts');
+    const [editorType, setEditorType] = useState('announcements');
     const [editorMessage, setEditorMessage] = useState('');
     const [editorDraft, setEditorDraft] = useState({
         title: '',
@@ -402,21 +401,12 @@ function AlumniDirectory() {
                 title: editorDraft.title,
                 body: editorDraft.body,
                 category: editorDraft.category,
-                pinned: editorDraft.pinned,
-                tags: toTags(editorDraft.tagsText)
+                pinned: editorDraft.pinned
             };
             const itemByType = {
-                feedPosts: {
-                    ...baseItem,
-                    postType: editorDraft.postType,
-                    eventDate: editorDraft.eventDate,
-                    deadlineDate: editorDraft.deadlineDate,
-                    authorUserId: session.user.id,
-                    authorName: ownProfile?.fullName || session.user.email,
-                    authorPhotoKey: ownProfile?.photoKey || 'blank'
-                },
                 announcements: {
                     ...baseItem,
+                    tags: toTags(editorDraft.tagsText),
                     publishDate: editorDraft.publishDate,
                     audience: 'public',
                     taggedUserIds: []
@@ -524,19 +514,6 @@ function AlumniDirectory() {
     const renderDashboard = () => (
         <section className="alumni-dashboard">
             <div className="section-content">
-                <div className="alumni-session-bar">
-                    <div>
-                        <span>Signed in</span>
-                        <strong>{session.user.email}</strong>
-                        {isAdmin && <b>Admin</b>}
-                    </div>
-                    <div className="alumni-session-actions">
-                        <button type="button" className={activeView === 'directory' ? 'active' : ''} onClick={openDirectory}>Directory</button>
-                        <button type="button" className={activeView === 'profile' && editingProfileUserId === session.user.id ? 'active' : ''} onClick={() => openOwnProfile('view')}>My profile</button>
-                        <button type="button" onClick={handleSignOut}>Sign out</button>
-                    </div>
-                </div>
-
                 <div className="alumni-metrics" aria-label="Directory summary">
                     {metrics.map(([label, value]) => (
                         <div key={label}><strong>{value}</strong><span>{label}</span></div>
@@ -905,8 +882,8 @@ function AlumniDirectory() {
         <div className="alumni-home-grid">
             <section className="alumni-home-feed">
                 <div className="alumni-panel-heading">
-                    <span>Member feed</span>
-                    <strong>Updates, events, and deadlines</strong>
+                    <span>Alumni network</span>
+                    <strong>Member updates and opportunities</strong>
                 </div>
                 {portalContent.feedPosts.map(renderFeedCard)}
             </section>
@@ -923,6 +900,27 @@ function AlumniDirectory() {
                     </article>
                 ))}
             </aside>
+        </div>
+    );
+
+    const renderPortalAccountBar = () => (
+        <div className="alumni-portal-account-bar">
+            <div className="alumni-portal-context">
+                <span>{activeView === 'admin' ? 'Internal team' : 'Alumni network'}</span>
+                <strong>{activeView === 'admin' ? 'Manage announcements and tasks' : 'Member workspace'}</strong>
+            </div>
+            <div className="alumni-account-actions">
+                {isAdmin && (
+                    <button type="button" className={activeView === 'admin' ? 'active' : ''} onClick={() => setActiveView('admin')}>
+                        Internal team
+                    </button>
+                )}
+                <button type="button" className={activeView === 'profile' && editingProfileUserId === session.user.id ? 'active' : ''} onClick={() => openOwnProfile('view')}>
+                    <img src={getAlumniPhoto(ownProfile?.photoKey || 'blank')} alt="" />
+                    <span>{ownProfile?.fullName || session.user.email}</span>
+                </button>
+                <button type="button" onClick={handleSignOut}>Sign out</button>
+            </div>
         </div>
     );
 
@@ -986,11 +984,10 @@ function AlumniDirectory() {
             <div className="alumni-admin-grid">
                 <form className="alumni-admin-form" onSubmit={handleEditorSave}>
                     <div className="alumni-panel-heading">
-                        <span>Feed editor</span>
-                        <strong>Create portal content</strong>
+                        <span>Internal team</span>
+                        <strong>Create announcements and tasks</strong>
                     </div>
                     <div className="alumni-auth-tabs" aria-label="Editor type">
-                        <button type="button" className={editorType === 'feedPosts' ? 'active' : ''} onClick={() => setEditorType('feedPosts')}>Feed</button>
                         <button type="button" className={editorType === 'announcements' ? 'active' : ''} onClick={() => setEditorType('announcements')}>Announcements</button>
                         <button type="button" className={editorType === 'tasks' ? 'active' : ''} onClick={() => setEditorType('tasks')}>Tasks</button>
                     </div>
@@ -1009,15 +1006,9 @@ function AlumniDirectory() {
                                 <input value={editorDraft.category} onChange={(event) => setEditorDraft(current => ({ ...current, category: event.target.value }))} />
                             </label>
                             <label>
-                                <span>{editorType === 'announcements' ? 'Publish date' : 'Event date'}</span>
-                                <input type="date" value={editorType === 'announcements' ? editorDraft.publishDate : editorDraft.eventDate} onChange={(event) => setEditorDraft(current => editorType === 'announcements' ? { ...current, publishDate: event.target.value } : { ...current, eventDate: event.target.value })} />
+                                <span>Publish date</span>
+                                <input type="date" value={editorDraft.publishDate} onChange={(event) => setEditorDraft(current => ({ ...current, publishDate: event.target.value }))} />
                             </label>
-                            {editorType === 'feedPosts' && (
-                                <label>
-                                    <span>Deadline date</span>
-                                    <input type="date" value={editorDraft.deadlineDate} onChange={(event) => setEditorDraft(current => ({ ...current, deadlineDate: event.target.value }))} />
-                                </label>
-                            )}
                             <label>
                                 <span>Tags</span>
                                 <input value={editorDraft.tagsText} onChange={(event) => setEditorDraft(current => ({ ...current, tagsText: event.target.value }))} placeholder="writers, events, alumni" />
@@ -1051,7 +1042,7 @@ function AlumniDirectory() {
                 <div className="alumni-admin-list">
                     <div className="alumni-panel-heading">
                         <span>Manage</span>
-                        <strong>{editorType === 'feedPosts' ? 'Feed posts' : editorType === 'announcements' ? 'Announcements' : 'Tasks'}</strong>
+                        <strong>{editorType === 'announcements' ? 'Announcements' : 'Tasks'}</strong>
                     </div>
                     {currentItems.map(item => (
                         <article className="alumni-admin-item" key={item.id}>
@@ -1083,28 +1074,18 @@ function AlumniDirectory() {
         <section className="alumni-portal-section">
             <div className="section-content alumni-portal-shell">
                 <aside className="alumni-portal-sidebar">
-                    <div className="alumni-portal-identity">
-                        <span>Private portal</span>
-                        <strong>{ownProfile?.fullName || session.user.email}</strong>
-                        {isAdmin && <b>Super user</b>}
-                    </div>
                     <nav className="alumni-portal-nav" aria-label="Alumni portal">
                         {portalTabs.map(([key, label, iconPath]) => (
-                            <button key={key} type="button" className={activeView === key ? 'active' : ''} onClick={() => key === 'profile' ? openOwnProfile('view') : setActiveView(key)}>
+                            <button key={key} type="button" className={activeView === key ? 'active' : ''} onClick={() => setActiveView(key)}>
                                 <Icon path={iconPath} />
                                 <span>{label}</span>
                             </button>
                         ))}
-                        {isAdmin && (
-                            <button type="button" className={activeView === 'admin' ? 'active' : ''} onClick={() => setActiveView('admin')}>
-                                <Icon path="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z" />
-                                <span>Admin</span>
-                            </button>
-                        )}
                     </nav>
                     <a className="alumni-sidebar-mail" href="mailto:ujlawandpolitics@gmail.com">Contact UJLP</a>
                 </aside>
                 <div className="alumni-portal-main">
+                    {renderPortalAccountBar()}
                     {renderActivePortalView()}
                 </div>
             </div>

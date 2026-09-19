@@ -95,6 +95,7 @@
 
 .alumni-hero-panel span,
 .alumni-session-bar span,
+.alumni-portal-context span,
 .alumni-profile-title span,
 .alumni-profile-title b,
 .alumni-auth-panel label,
@@ -188,7 +189,8 @@
 }
 
 .alumni-auth-tabs,
-.alumni-session-actions {
+.alumni-session-actions,
+.alumni-account-actions {
     display: flex;
     gap: .35rem;
     padding: .35rem;
@@ -199,6 +201,7 @@
 
 .alumni-auth-tabs button,
 .alumni-session-actions button,
+.alumni-account-actions button,
 .alumni-results-heading button,
 .alumni-secondary-action,
 .alumni-primary-action {
@@ -214,6 +217,7 @@
 
 .alumni-auth-tabs button,
 .alumni-session-actions button,
+.alumni-account-actions button,
 .alumni-results-heading button {
     border: 0;
     background: transparent;
@@ -221,13 +225,15 @@
 }
 
 .alumni-auth-tabs button,
-.alumni-session-actions button {
+.alumni-session-actions button,
+.alumni-account-actions button {
     flex: 1;
     padding: .65rem .85rem;
 }
 
 .alumni-auth-tabs button.active,
-.alumni-session-actions button.active {
+.alumni-session-actions button.active,
+.alumni-account-actions button.active {
     background: var(--alumni-gold);
     color: #16120c;
 }
@@ -395,7 +401,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: .8rem;
-    margin-top: 1.75rem;
 }
 
 .alumni-metrics div {
@@ -715,6 +720,7 @@
 
 .alumni-portal-sidebar,
 .alumni-portal-main,
+.alumni-portal-account-bar,
 .alumni-home-feed,
 .alumni-home-rail,
 .alumni-resource-card,
@@ -735,14 +741,6 @@
     padding: 1rem;
 }
 
-.alumni-portal-identity {
-    display: grid;
-    gap: .35rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--alumni-line);
-}
-
-.alumni-portal-identity span,
 .alumni-panel-heading span,
 .alumni-feed-author span,
 .alumni-upcoming-card span,
@@ -757,21 +755,9 @@
     text-transform: uppercase;
 }
 
-.alumni-portal-identity strong,
 .alumni-panel-heading strong {
     color: var(--alumni-ink);
     line-height: 1.35;
-}
-
-.alumni-portal-identity b {
-    width: fit-content;
-    padding: .24rem .5rem;
-    border: 1px solid rgba(120, 147, 109, .55);
-    border-radius: 999px;
-    color: #d3e7c5;
-    font-size: .72rem;
-    font-style: normal;
-    text-transform: uppercase;
 }
 
 .alumni-portal-nav {
@@ -808,6 +794,8 @@
 
 .alumni-portal-main {
     min-width: 0;
+    display: grid;
+    gap: 1rem;
     padding: 1rem;
 }
 
@@ -826,6 +814,52 @@
 .alumni-portal-stack {
     display: grid;
     gap: 1rem;
+}
+
+.alumni-portal-account-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+    padding: .85rem;
+}
+
+.alumni-portal-context {
+    display: grid;
+    gap: .2rem;
+}
+
+.alumni-portal-context strong {
+    color: var(--alumni-ink);
+    line-height: 1.35;
+}
+
+.alumni-account-actions {
+    margin-left: auto;
+    align-items: center;
+}
+
+.alumni-account-actions button {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 1 auto;
+    gap: .5rem;
+    max-width: 17rem;
+}
+
+.alumni-account-actions img {
+    width: 1.75rem;
+    height: 1.75rem;
+    flex: 0 0 auto;
+    border: 1px solid rgba(201, 163, 91, .42);
+    border-radius: 999px;
+    object-fit: cover;
+}
+
+.alumni-account-actions span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .alumni-home-grid,
@@ -1071,6 +1105,16 @@
     .alumni-portal-nav {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+
+    .alumni-portal-account-bar {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .alumni-account-actions {
+        width: 100%;
+        margin-left: 0;
+    }
 }
 
 @media (max-width: 720px) {
@@ -1114,6 +1158,7 @@
     }
 
     .alumni-session-actions,
+    .alumni-account-actions,
     .alumni-contact-actions,
     .alumni-form-actions,
     .alumni-profile-view-actions,
@@ -1122,6 +1167,7 @@
     }
 
     .alumni-session-actions button,
+    .alumni-account-actions button,
     .alumni-contact-actions a,
     .alumni-contact-actions span,
     .alumni-contact-actions button,

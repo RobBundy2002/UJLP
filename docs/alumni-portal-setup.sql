@@ -7,7 +7,8 @@ stable
 as $$
   select lower(coalesce(auth.jwt() ->> 'email', '')) = any (
     array[
-      'robbielbundy@gmail.com'
+      'robbielbundy@gmail.com',
+      'shelbyeliasek@gmail.com'
     ]
   );
 $$;
