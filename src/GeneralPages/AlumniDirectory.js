@@ -186,6 +186,13 @@ const getMentionHandlesFromText = (value) => Array.from(
 
 const getNotificationSeenKey = (userId) => `${NOTIFICATION_SEEN_KEY_PREFIX}:${userId || 'guest'}`;
 
+const normalizeNotificationTime = (value) => {
+    if (!value) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return `${value}T00:00:00.000Z`;
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? String(value) : date.toISOString();
+};
+
 const defaultFeedMentionMenu = {
     open: false,
     query: '',
@@ -470,7 +477,7 @@ function AlumniDirectory() {
                     type: mentioned ? 'Mention' : 'Feed post',
                     title: mentioned ? `${post.authorName || 'Someone'} mentioned you` : `${post.authorName || 'Someone'} posted to the feed`,
                     body: post.title || post.body,
-                    createdAt: post.createdAt,
+                    createdAt: normalizeNotificationTime(post.createdAt),
                     postId: post.id
                 });
             }
@@ -486,7 +493,7 @@ function AlumniDirectory() {
                     type: mentioned ? 'Comment mention' : 'Comment',
                     title: mentioned ? `${comment.authorName} mentioned you in a comment` : `${comment.authorName} commented on your post`,
                     body: comment.body,
-                    createdAt: comment.createdAt,
+                    createdAt: normalizeNotificationTime(comment.createdAt),
                     postId: comment.postId
                 });
             }
@@ -500,7 +507,7 @@ function AlumniDirectory() {
                     type: 'Like',
                     title: `${like.userName} liked your post`,
                     body: post.title || post.body,
-                    createdAt: like.createdAt,
+                    createdAt: normalizeNotificationTime(like.createdAt),
                     postId: like.postId
                 });
             }
@@ -512,7 +519,7 @@ function AlumniDirectory() {
                 type: announcement.category || 'Announcement',
                 title: announcement.title,
                 body: announcement.body,
-                createdAt: announcement.createdAt || announcement.publishDate,
+                createdAt: normalizeNotificationTime(announcement.createdAt || announcement.publishDate),
                 postId: ''
             });
         });
@@ -523,7 +530,7 @@ function AlumniDirectory() {
                 type: task.role || 'Task',
                 title: task.title,
                 body: task.details,
-                createdAt: task.createdAt || task.dueDate,
+                createdAt: normalizeNotificationTime(task.createdAt || task.dueDate),
                 postId: ''
             });
         });

@@ -106,6 +106,13 @@ const getMentionHandlesFromText = (value) => Array.from(
     )
 );
 
+const normalizeNotificationTime = (value) => {
+    if (!value) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return `${value}T00:00:00.000Z`;
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? String(value) : date.toISOString();
+};
+
 const getAlumniNotificationItems = (content, ownProfile, session) => {
     const currentUserId = session?.user?.id || '';
     if (!currentUserId) return [];
@@ -118,7 +125,7 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
     feedPosts.forEach(post => {
         const mentioned = ownHandle && getMentionHandlesFromText(`${post.body || ''} ${(post.tags || []).join(' ')}`).includes(ownHandle);
         if (post.authorUserId !== currentUserId || mentioned) {
-            items.push({ createdAt: post.createdAt });
+            items.push({ createdAt: normalizeNotificationTime(post.createdAt) });
         }
     });
 
@@ -127,23 +134,23 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
         const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
         const onOwnPost = post?.authorUserId === currentUserId;
         if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
-            items.push({ createdAt: comment.createdAt });
+            items.push({ createdAt: normalizeNotificationTime(comment.createdAt) });
         }
     });
 
     (content?.feedLikes || []).forEach(like => {
         const post = feedPostsById.get(like.postId);
         if (post?.authorUserId === currentUserId && like.userId !== currentUserId) {
-            items.push({ createdAt: like.createdAt });
+            items.push({ createdAt: normalizeNotificationTime(like.createdAt) });
         }
     });
 
     (content?.announcements || []).forEach(announcement => {
-        items.push({ createdAt: announcement.createdAt || announcement.publishDate });
+        items.push({ createdAt: normalizeNotificationTime(announcement.createdAt || announcement.publishDate) });
     });
 
     (content?.tasks || []).forEach(task => {
-        items.push({ createdAt: task.createdAt || task.dueDate });
+        items.push({ createdAt: normalizeNotificationTime(task.createdAt || task.dueDate) });
     });
 
     return items;
