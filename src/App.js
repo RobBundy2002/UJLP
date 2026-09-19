@@ -33,7 +33,6 @@ import ComingSoon5 from "./Bios/ComingSoon5";
 import ComingSoon6 from "./Bios/ComingSoon6";
 import ComingSoon7 from "./Bios/ComingSoon7";
 import ComingSoon8 from "./Bios/ComingSoon8";
-import SearchBar from "./Components/SearchBar";
 import BackToTop from "./Components/BackToTop";
 import PublicationIndex from './GeneralPages/PublicationIndex';
 import IssueEdition from './GeneralPages/IssueEdition';
@@ -207,10 +206,6 @@ function Navigation() {
                     <Link to="/jointheteam" className={`App-link ${location.pathname === '/jointheteam' ? 'active' : ''}`} onClick={closeMobileMenu}>Apply</Link>
                     <div className="mobile-nav-footer"><span>University of Virginia</span><span>Est. 2024</span></div>
                 </nav>
-
-                <div className="header-search">
-                    <SearchBar />
-                </div>
 
                 {isSignedIn ? (
                     <div className="header-account" ref={accountRef}>

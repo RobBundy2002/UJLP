@@ -1222,7 +1222,7 @@ function AlumniDirectory() {
                 <div className="section-content alumni-hero-grid">
                     <div className="alumni-hero-copy">
                         <p className="jh-eyebrow"><strong>UJLP</strong> / Members Network</p>
-                        <h1>Alumni Directory</h1>
+                        <h1>Alumni<br /><em>Directory.</em></h1>
                         <p>
                             A private workspace for member profiles, career paths, law school information, and alumni contact preferences.
                         </p>
