@@ -86,8 +86,10 @@ function Navigation() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [alumniSession, setAlumniSession] = useState(() => getStoredAlumniSession());
     const [navProfile, setNavProfile] = useState(null);
+    const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
     const location = useLocation();
     const menuRef = useRef(null);
+    const accountRef = useRef(null);
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -97,7 +99,18 @@ function Navigation() {
 
     useEffect(() => {
         setIsMobileMenuOpen(false);
+        setIsAccountMenuOpen(false);
     }, [location]);
+
+    useEffect(() => {
+        const handleDocumentClick = (event) => {
+            if (accountRef.current && !accountRef.current.contains(event.target)) {
+                setIsAccountMenuOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleDocumentClick);
+        return () => document.removeEventListener('mousedown', handleDocumentClick);
+    }, []);
 
     useEffect(() => {
         const syncSession = () => setAlumniSession(getStoredAlumniSession());
@@ -189,7 +202,6 @@ function Navigation() {
                     <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`} onClick={closeMobileMenu}>Journal</Link>
                     {isSignedIn && <Link to="/alumni" className={`App-link ${location.pathname === '/alumni' ? 'active' : ''}`} onClick={closeMobileMenu}>Alumni</Link>}
                     <Link to="/announcements" className={`App-link ${location.pathname === '/announcements' ? 'active' : ''}`} onClick={closeMobileMenu}>Announcements</Link>
-                    <Link to="/contact" className={`App-link ${location.pathname === '/contact' ? 'active' : ''}`} onClick={closeMobileMenu}>Contact</Link>
                     <Link to="/jointheteam" className={`App-link ${location.pathname === '/jointheteam' ? 'active' : ''}`} onClick={closeMobileMenu}>Apply</Link>
                     <div className="mobile-nav-footer"><span>University of Virginia</span><span>Est. 2024</span></div>
                 </nav>
@@ -198,15 +210,30 @@ function Navigation() {
                     <SearchBar />
                 </div>
 
-                {isSignedIn && (
-                    <div className="header-account">
-                        <Link to="/alumni" className="header-account-profile" aria-label="Open alumni profile">
+                {isSignedIn ? (
+                    <div className="header-account" ref={accountRef}>
+                        <button
+                            type="button"
+                            className="header-account-profile"
+                            onClick={() => setIsAccountMenuOpen(current => !current)}
+                            aria-expanded={isAccountMenuOpen}
+                            aria-haspopup="menu"
+                        >
                             <img src={getAlumniPhoto(navProfile?.photoKey || 'blank')} alt="" />
                             <span>{accountName}</span>
                             {isAdmin && <b>Admin</b>}
-                        </Link>
-                        <button type="button" onClick={handleGlobalSignOut}>Sign out</button>
+                        </button>
+                        {isAccountMenuOpen && (
+                            <div className="header-account-menu" role="menu">
+                                <Link to="/alumni?profile=edit" role="menuitem">Edit profile</Link>
+                                <Link to="/alumni" role="menuitem">Alumni network</Link>
+                                {isAdmin && <Link to="/announcements" role="menuitem">Manage announcements</Link>}
+                                <button type="button" role="menuitem" onClick={handleGlobalSignOut}>Sign out</button>
+                            </div>
+                        )}
                     </div>
+                ) : (
+                    <Link to="/alumni" className="header-account-signin">Sign in</Link>
                 )}
 
                 <button className={`mobile-menu-button ${isMobileMenuOpen ? 'hidden' : ''}`} onClick={toggleMobileMenu} aria-label="Open navigation" aria-expanded={isMobileMenuOpen} aria-controls="primary-navigation">

@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
 import { alumniPhotoOptions, getAlumniPhoto } from '../Data/alumniPhotoRegistry';
@@ -109,6 +110,7 @@ const toTags = (value) => value
     .filter(Boolean);
 
 function AlumniDirectory() {
+    const location = useLocation();
     const [session, setSession] = useState(() => getStoredAlumniSession());
     const [authMode, setAuthMode] = useState('signin');
     const [authForm, setAuthForm] = useState({ email: '', password: '' });
@@ -334,6 +336,18 @@ function AlumniDirectory() {
         setProfileMessage('');
         setProfileInviteMessage('');
     };
+
+    useEffect(() => {
+        if (!session?.user?.id) return;
+        const params = new URLSearchParams(location.search);
+        if (params.get('profile') !== 'edit') return;
+
+        setEditingProfileUserId(session.user.id);
+        setActiveView('profile');
+        setProfileMode(ownProfile ? 'edit' : 'view');
+        setProfileMessage('');
+        setProfileInviteMessage('');
+    }, [location.search, ownProfile, session?.user?.id]);
 
     const handleCreateProfileRequest = (event) => {
         event.preventDefault();
