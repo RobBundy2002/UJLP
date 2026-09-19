@@ -187,16 +187,191 @@ export const jobSectorOptions = [
 export const locationSuggestions = [
     'Charlottesville, VA',
     'Washington, DC',
-    'New York, NY',
-    'Richmond, VA',
     'Arlington, VA',
     'Alexandria, VA',
+    'Richmond, VA',
+    'Fairfax, VA',
+    'Tysons, VA',
+    'Norfolk, VA',
+    'Virginia Beach, VA',
+    'Roanoke, VA',
+    'Harrisonburg, VA',
+    'Blacksburg, VA',
+    'Lynchburg, VA',
+    'Williamsburg, VA',
+    'Baltimore, MD',
+    'Bethesda, MD',
+    'Silver Spring, MD',
+    'Annapolis, MD',
+    'New York, NY',
+    'Albany, NY',
     'Boston, MA',
+    'Cambridge, MA',
     'Philadelphia, PA',
+    'Pittsburgh, PA',
+    'Wilmington, DE',
+    'Dover, DE',
+    'Newark, NJ',
+    'Princeton, NJ',
+    'Trenton, NJ',
+    'New Haven, CT',
+    'Hartford, CT',
     'Chicago, IL',
     'Atlanta, GA',
     'Charlotte, NC',
     'Raleigh, NC',
+    'Durham, NC',
+    'Chapel Hill, NC',
+    'Columbia, SC',
+    'Charleston, SC',
+    'Nashville, TN',
+    'Memphis, TN',
+    'Miami, FL',
+    'Orlando, FL',
+    'Tampa, FL',
+    'New Orleans, LA',
+    'Austin, TX',
+    'Dallas, TX',
+    'Houston, TX',
+    'San Antonio, TX',
+    'Denver, CO',
+    'Boulder, CO',
+    'Phoenix, AZ',
+    'Las Vegas, NV',
+    'Salt Lake City, UT',
+    'Seattle, WA',
+    'Portland, OR',
     'Los Angeles, CA',
-    'San Francisco, CA'
+    'San Francisco, CA',
+    'San Diego, CA',
+    'Sacramento, CA',
+    'San Jose, CA',
+    'Palo Alto, CA',
+    'Minneapolis, MN',
+    'St. Louis, MO',
+    'Kansas City, MO',
+    'Detroit, MI',
+    'Ann Arbor, MI',
+    'Cleveland, OH',
+    'Columbus, OH',
+    'Cincinnati, OH',
+    'Indianapolis, IN',
+    'Madison, WI',
+    'Milwaukee, WI',
+    'London, UK',
+    'Paris, France',
+    'Brussels, Belgium',
+    'Geneva, Switzerland',
+    'Toronto, ON',
+    'Montreal, QC',
+    'Remote',
+    'Multiple locations',
+    'International'
 ];
+
+const stateAbbreviations = {
+    alabama: 'AL',
+    alaska: 'AK',
+    arizona: 'AZ',
+    arkansas: 'AR',
+    california: 'CA',
+    colorado: 'CO',
+    connecticut: 'CT',
+    delaware: 'DE',
+    florida: 'FL',
+    georgia: 'GA',
+    hawaii: 'HI',
+    idaho: 'ID',
+    illinois: 'IL',
+    indiana: 'IN',
+    iowa: 'IA',
+    kansas: 'KS',
+    kentucky: 'KY',
+    louisiana: 'LA',
+    maine: 'ME',
+    maryland: 'MD',
+    massachusetts: 'MA',
+    michigan: 'MI',
+    minnesota: 'MN',
+    mississippi: 'MS',
+    missouri: 'MO',
+    montana: 'MT',
+    nebraska: 'NE',
+    nevada: 'NV',
+    'new hampshire': 'NH',
+    'new jersey': 'NJ',
+    'new mexico': 'NM',
+    'new york': 'NY',
+    'north carolina': 'NC',
+    'north dakota': 'ND',
+    ohio: 'OH',
+    oklahoma: 'OK',
+    oregon: 'OR',
+    pennsylvania: 'PA',
+    'rhode island': 'RI',
+    'south carolina': 'SC',
+    'south dakota': 'SD',
+    tennessee: 'TN',
+    texas: 'TX',
+    utah: 'UT',
+    vermont: 'VT',
+    virginia: 'VA',
+    washington: 'WA',
+    dc: 'DC',
+    'washington dc': 'DC',
+    'washington d.c.': 'DC',
+    'district of columbia': 'DC',
+    'west virginia': 'WV',
+    wisconsin: 'WI',
+    wyoming: 'WY'
+};
+
+const locationAliases = {
+    cville: 'Charlottesville, VA',
+    charlottesville: 'Charlottesville, VA',
+    dc: 'Washington, DC',
+    'd.c.': 'Washington, DC',
+    'washington dc': 'Washington, DC',
+    'washington d.c.': 'Washington, DC',
+    nyc: 'New York, NY',
+    'new york city': 'New York, NY',
+    la: 'Los Angeles, CA',
+    'san fran': 'San Francisco, CA',
+    sf: 'San Francisco, CA',
+    remote: 'Remote'
+};
+
+const titleCaseLocationPart = (value) => value
+    .toLowerCase()
+    .split(/(\s+|-|')/)
+    .map(part => (/^[a-z]/.test(part) ? part.charAt(0).toUpperCase() + part.slice(1) : part))
+    .join('')
+    .replace(/\bDc\b/g, 'DC')
+    .replace(/\bUk\b/g, 'UK')
+    .replace(/\bUsa\b/g, 'USA')
+    .replace(/\bUva\b/g, 'UVA')
+    .replace(/\bSt\./g, 'St.');
+
+export const normalizeLocationInput = (value) => {
+    const trimmed = String(value || '').trim().replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ');
+    if (!trimmed) return '';
+
+    const lower = trimmed.toLowerCase().replace(/\.$/, '');
+    if (locationAliases[lower]) return locationAliases[lower];
+
+    const exactSuggestion = locationSuggestions.find(location => location.toLowerCase() === lower);
+    if (exactSuggestion) return exactSuggestion;
+
+    const [city, ...rest] = trimmed.split(',').map(part => part.trim()).filter(Boolean);
+    if (!rest.length) {
+        return titleCaseLocationPart(city);
+    }
+
+    const regionValue = rest.join(', ');
+    const normalizedRegionKey = regionValue.toLowerCase().replace(/\./g, '');
+    const region = stateAbbreviations[normalizedRegionKey] || (
+        regionValue.length === 2 ? regionValue.toUpperCase() : titleCaseLocationPart(regionValue)
+    );
+
+    return `${titleCaseLocationPart(city)}, ${region}`;
+};

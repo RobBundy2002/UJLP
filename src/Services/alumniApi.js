@@ -266,14 +266,20 @@ export const saveAlumniProfile = async (profile, session) => {
             return normalizeProfile(row);
         }
 
-        const rows = await supabaseRequest('/rest/v1/alumni_profiles?on_conflict=user_id', {
-            method: 'POST',
+        const rows = await supabaseRequest(`/rest/v1/alumni_profiles?user_id=eq.${encodeURIComponent(targetUserId)}&select=*`, {
+            method: 'PATCH',
             headers: {
-                Prefer: 'resolution=merge-duplicates,return=representation'
+                Prefer: 'return=representation'
             },
             body: JSON.stringify(toDatabaseProfile(profile, session))
         }, session);
-        return normalizeProfile(Array.isArray(rows) ? rows[0] : rows);
+
+        const savedRow = Array.isArray(rows) ? rows[0] : rows;
+        if (!savedRow) {
+            throw new Error('No existing profile was found to update. Create the profile with the invite code first.');
+        }
+
+        return normalizeProfile(savedRow);
     }
 
     if (profile.isNewProfile && isAlumniProfileInviteConfigured && !isAlumniProfileInviteCodeValid(profile.inviteCode || '')) {

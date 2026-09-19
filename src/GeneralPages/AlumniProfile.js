@@ -16,6 +16,7 @@ import {
     employerIndustryOptions,
     jobSectorOptions,
     locationSuggestions,
+    normalizeLocationInput,
     profileTypeOptions,
     ujlpRoleOptions,
     uvaMajorOptions
@@ -252,7 +253,13 @@ function AlumniProfile() {
 
     useEffect(() => {
         if (!ownProfile) return;
-        setProfileDraft({ ...ownProfile, interestsText: toInterestText(ownProfile.interests) });
+        setProfileDraft(current => {
+            if (current?.id === ownProfile.id && current?.updatedAt === ownProfile.updatedAt) {
+                return current;
+            }
+
+            return { ...ownProfile, interestsText: toInterestText(ownProfile.interests) };
+        });
     }, [ownProfile?.id, ownProfile?.updatedAt, ownProfile]);
 
     const accountName = getCompactAlumniName(ownProfile, session?.user);
@@ -423,7 +430,7 @@ function AlumniProfile() {
             classYear: normalizeYearInput(profileDraft.classYear),
             email: String(profileDraft.email || '').trim(),
             linkedinUrl: String(profileDraft.linkedinUrl || '').trim(),
-            location: String(profileDraft.location || '').trim(),
+            location: normalizeLocationInput(profileDraft.location),
             bio: String(profileDraft.bio || '').trim(),
             interests: fromInterestText(profileDraft.interestsText || ''),
             jobs
@@ -718,7 +725,8 @@ function AlumniProfile() {
                     list="alumni-location-suggestions"
                     value={profileDraft.location || ''}
                     onChange={(event) => updateDraft('location', event.target.value)}
-                    placeholder="City, ST"
+                    onBlur={(event) => updateDraft('location', normalizeLocationInput(event.target.value))}
+                    placeholder="City, ST or City, Country"
                 />
             </label>
             <label>

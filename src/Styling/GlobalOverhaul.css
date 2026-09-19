@@ -37,7 +37,8 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 }
 .header-container::after { display: none; }
 .App-title { align-items: center; gap: .75rem; margin: 0; color: #f7f1e7; font-size: 1rem; letter-spacing: -.02em; }
-.App-title img { width: 3rem; height: 3rem; margin: 0; object-fit: contain; }
+.App-title img { width: 3.15rem; height: 3.15rem; margin: 0; object-fit: cover; object-position: 50% 58%; transform: translateY(2px); }
+.App-title img:hover { transform: translateY(2px) scale(1.05); }
 .title-text { margin: 0; }
 .title-line-1, .title-line-2 { color: #f7f1e7; line-height: 1.05; }
 .title-line-2 { color: #f18c62; font-size: 1.18em; }
@@ -109,7 +110,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
     .App-header { position: fixed; top: 0; right: 0; left: 0; z-index: 1100; background: rgba(7,17,31,.95); box-shadow: inset 0 -1px rgba(255,255,255,.04); }
     .App-header.scrolled { background: rgba(7,17,31,.98); }
     .header-container { height: 4.75rem; padding: 0 1rem; }
-    .App-title img { width: 2.6rem; height: 2.6rem; margin: 0; }
+    .App-title img { width: 2.7rem; height: 2.7rem; margin: 0; }
     .App-title, .title-text { margin: 0; }
     .title-line-1 { font-size: .85rem; }
     .title-line-2 { font-size: .92rem; }
