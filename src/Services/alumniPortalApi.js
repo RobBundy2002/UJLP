@@ -286,6 +286,9 @@ const toAnnouncementRow = (announcement) => ({
     publish_date: announcement.publishDate || null,
     audience: announcement.audience || 'public',
     tagged_user_ids: announcement.taggedUserIds || [],
+    author_user_id: announcement.authorUserId || null,
+    author_name: announcement.authorName || 'UJLP member',
+    author_photo_key: announcement.authorPhotoKey || 'blank',
     pinned: announcement.pinned
 });
 
@@ -296,7 +299,10 @@ const toTaskRow = (task) => ({
     role: task.role,
     due_date: task.dueDate || null,
     priority: task.priority,
-    status: task.status
+    status: task.status,
+    author_user_id: task.authorUserId || null,
+    author_name: task.authorName || 'UJLP member',
+    author_photo_key: task.authorPhotoKey || 'blank'
 });
 
 const toCalendarEventRow = (event) => ({

@@ -22,6 +22,7 @@ coverage/
 
 # Local database setup scripts
 *.sql
+docs/*.txt
 
 # Logs
 *.log

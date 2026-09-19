@@ -363,6 +363,9 @@ create table if not exists public.public_announcements (
   publish_date date,
   audience text not null default 'public' check (audience in ('public', 'portal')),
   tagged_user_ids text[] not null default '{}',
+  author_user_id uuid references auth.users(id) on delete set null,
+  author_name text not null default 'UJLP member',
+  author_photo_key text not null default 'blank',
   pinned boolean not null default false,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -376,9 +379,22 @@ create table if not exists public.alumni_weekly_tasks (
   due_date date,
   priority text not null default 'medium' check (priority in ('low', 'medium', 'high')),
   status text not null default 'open' check (status in ('open', 'done')),
+  author_user_id uuid references auth.users(id) on delete set null,
+  author_name text not null default 'UJLP member',
+  author_photo_key text not null default 'blank',
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table public.public_announcements
+add column if not exists author_user_id uuid references auth.users(id) on delete set null,
+add column if not exists author_name text not null default 'UJLP member',
+add column if not exists author_photo_key text not null default 'blank';
+
+alter table public.alumni_weekly_tasks
+add column if not exists author_user_id uuid references auth.users(id) on delete set null,
+add column if not exists author_name text not null default 'UJLP member',
+add column if not exists author_photo_key text not null default 'blank';
 
 create table if not exists public.alumni_feed_comments (
   id uuid primary key default gen_random_uuid(),
