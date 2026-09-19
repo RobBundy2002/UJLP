@@ -2578,11 +2578,11 @@
 
 .alumni-directory-page .alumni-hero,
 .alumni-profile-page .alumni-hero {
-    height: min(730px, 79vh);
-    min-height: 0;
+    height: auto;
+    min-height: 40vh;
     display: grid;
     place-items: center;
-    padding: 7rem clamp(1.5rem, 7vw, 8rem) 5rem;
+    padding: 4rem clamp(1.5rem, 7vw, 8rem);
     border-bottom: 1px solid rgba(231, 222, 203, .2);
 }
 
@@ -2635,6 +2635,12 @@
 .alumni-directory-page .alumni-hero-panel strong,
 .alumni-profile-page .alumni-hero-panel strong {
     font-size: 1.05rem;
+}
+
+.alumni-directory-page .alumni-hero h1,
+.alumni-profile-page .alumni-hero h1 {
+    font-size: clamp(3rem, 6vw, 4.8rem);
+    line-height: .92;
 }
 
 @media (max-width: 1040px) {
@@ -2838,9 +2844,9 @@
 
     .alumni-directory-page .alumni-hero,
     .alumni-profile-page .alumni-hero {
-        height: 500px;
-        min-height: 0;
-        padding: 6.5rem 1.25rem 3.5rem;
+        height: auto;
+        min-height: 30vh;
+        padding: 2rem 1.25rem;
     }
 
     .alumni-directory-page .alumni-hero-grid,

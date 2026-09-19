@@ -44,6 +44,7 @@ const defaultPortalContentState = {
 };
 
 const NOTIFICATION_SEEN_KEY_PREFIX = 'ujlp_alumni_notifications_seen_at';
+const NOTIFICATIONS_SEEN_EVENT = 'ujlp-alumni-notifications-seen-change';
 
 const normalizeText = (value) => String(value || '').toLowerCase();
 
@@ -540,6 +541,7 @@ function AlumniDirectory() {
         const seenAt = new Date().toISOString();
         window.localStorage.setItem(getNotificationSeenKey(currentUserId), seenAt);
         setNotificationsSeenAt(seenAt);
+        window.dispatchEvent(new Event(NOTIFICATIONS_SEEN_EVENT));
     }, [activeView, currentUserId, notificationItems.length]);
 
     const updateFilter = (key, value) => {

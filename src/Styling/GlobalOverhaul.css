@@ -143,7 +143,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
         color: #f7f1e7;
         backdrop-filter: blur(10px);
     }
-    .header-account-profile { overflow: hidden; }
+    .header-account-profile { overflow: visible; }
     .header-account-signin-icon { display: block; }
     .header-account-signin span {
         position: absolute;

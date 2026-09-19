@@ -84,6 +84,78 @@ function ScrollToTop() {
     return null;
 }
 
+const NOTIFICATION_SEEN_KEY_PREFIX = 'ujlp_alumni_notifications_seen_at';
+const NOTIFICATIONS_SEEN_EVENT = 'ujlp-alumni-notifications-seen-change';
+
+const getNotificationSeenKey = (userId) => `${NOTIFICATION_SEEN_KEY_PREFIX}:${userId || 'guest'}`;
+
+const getMentionHandle = (profile, user) => String(profile?.fullName || user?.email || '')
+    .replace(/[^a-zA-Z0-9\s]/g, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .join('')
+    .toLowerCase();
+
+const getMentionHandlesFromText = (value) => Array.from(
+    new Set(
+        String(value || '')
+            .match(/@[a-zA-Z0-9._-]+/g)
+            ?.map(handle => handle.slice(1).replace(/[^a-zA-Z0-9]/g, '').toLowerCase())
+            .filter(Boolean) || []
+    )
+);
+
+const getAlumniNotificationItems = (content, ownProfile, session) => {
+    const currentUserId = session?.user?.id || '';
+    if (!currentUserId) return [];
+
+    const ownHandle = getMentionHandle(ownProfile, session?.user);
+    const feedPosts = content?.feedPosts || [];
+    const feedPostsById = new Map(feedPosts.map(post => [post.id, post]));
+    const items = [];
+
+    feedPosts.forEach(post => {
+        const mentioned = ownHandle && getMentionHandlesFromText(`${post.body || ''} ${(post.tags || []).join(' ')}`).includes(ownHandle);
+        if (post.authorUserId !== currentUserId || mentioned) {
+            items.push({ createdAt: post.createdAt });
+        }
+    });
+
+    (content?.feedComments || []).forEach(comment => {
+        const post = feedPostsById.get(comment.postId);
+        const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
+        const onOwnPost = post?.authorUserId === currentUserId;
+        if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
+            items.push({ createdAt: comment.createdAt });
+        }
+    });
+
+    (content?.feedLikes || []).forEach(like => {
+        const post = feedPostsById.get(like.postId);
+        if (post?.authorUserId === currentUserId && like.userId !== currentUserId) {
+            items.push({ createdAt: like.createdAt });
+        }
+    });
+
+    (content?.announcements || []).forEach(announcement => {
+        items.push({ createdAt: announcement.createdAt || announcement.publishDate });
+    });
+
+    (content?.tasks || []).forEach(task => {
+        items.push({ createdAt: task.createdAt || task.dueDate });
+    });
+
+    return items;
+};
+
+const getUnreadAlumniNotificationCount = (content, ownProfile, session) => {
+    const items = getAlumniNotificationItems(content, ownProfile, session);
+    const seenAt = window.localStorage.getItem(getNotificationSeenKey(session?.user?.id));
+    if (!seenAt) return items.length;
+    return items.filter(item => String(item.createdAt || '') > seenAt).length;
+};
+
 function Navigation() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -118,13 +190,16 @@ function Navigation() {
 
     useEffect(() => {
         const syncSession = () => setAlumniSession(getStoredAlumniSession());
+        const clearSeenNotifications = () => setNavNotificationCount(0);
         window.addEventListener(ALUMNI_SESSION_EVENT, syncSession);
         window.addEventListener('storage', syncSession);
         window.addEventListener('focus', syncSession);
+        window.addEventListener(NOTIFICATIONS_SEEN_EVENT, clearSeenNotifications);
         return () => {
             window.removeEventListener(ALUMNI_SESSION_EVENT, syncSession);
             window.removeEventListener('storage', syncSession);
             window.removeEventListener('focus', syncSession);
+            window.removeEventListener(NOTIFICATIONS_SEEN_EVENT, clearSeenNotifications);
         };
     }, []);
 
@@ -142,15 +217,18 @@ function Navigation() {
             .then(([profileResult, portalResult]) => {
                 if (!isMounted) return;
 
+                const ownProfile = profileResult.status === 'fulfilled'
+                    ? profileResult.value.find(profile => profile.userId === alumniSession.user.id) || null
+                    : null;
+
                 if (profileResult.status === 'fulfilled') {
-                    setNavProfile(profileResult.value.find(profile => profile.userId === alumniSession.user.id) || null);
+                    setNavProfile(ownProfile);
                 } else {
                     setNavProfile(null);
                 }
 
                 if (portalResult.status === 'fulfilled') {
-                    const content = portalResult.value;
-                    setNavNotificationCount((content.announcements || []).length + (content.tasks || []).length);
+                    setNavNotificationCount(getUnreadAlumniNotificationCount(portalResult.value, ownProfile, alumniSession));
                 }
             });
 
@@ -232,7 +310,9 @@ function Navigation() {
                             aria-label={`Open account menu for ${accountName}`}
                         >
                             <img src={getAlumniPhoto(navProfile?.photoKey || 'blank')} alt="" />
-                            {navNotificationCount > 0 && <b className="header-account-badge">{Math.min(navNotificationCount, 9)}</b>}
+                            {navNotificationCount > 0 && (
+                                <b className="header-account-badge">{navNotificationCount > 99 ? '99+' : navNotificationCount}</b>
+                            )}
                         </button>
                         {isAccountMenuOpen && (
                             <div className="header-account-menu" role="menu">
