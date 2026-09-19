@@ -22,7 +22,7 @@ import Rishi from './Bios/Rishi';
 import Mia from './Bios/Mia';
 import Charlie from './Bios/Charlie'
 import Rhett from './Bios/Rhett';
-import logo from "./Logo.png";
+import logo from "./ProfilePictures/HeaderLogo.png";
 import UnequalOpportunity from "./ArticlePages/UnequalOpportunity";
 import SchoolhouseSecrets from "./ArticlePages/SchoolhouseSecrets";
 import JoinTheTeam from "./GeneralPages/JoinTheTeam";
