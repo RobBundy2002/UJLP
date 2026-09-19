@@ -202,6 +202,10 @@ const writeDismissedNotificationIds = (userId, ids) => {
     window.localStorage.setItem(getNotificationDismissedKey(userId), JSON.stringify(Array.from(new Set(ids))));
 };
 
+const dispatchNotificationsChanged = () => {
+    window.dispatchEvent(new Event(NOTIFICATIONS_SEEN_EVENT));
+};
+
 const normalizeNotificationTime = (value) => {
     if (!value) return '';
     if (/^\d{4}-\d{2}-\d{2}$/.test(String(value))) return `${value}T00:00:00.000Z`;
@@ -569,6 +573,9 @@ function AlumniDirectory() {
         });
 
         (portalContent.announcements || []).forEach(announcement => {
+            const announcementAuthorProfile = profiles.find(profile => (
+                profile.userId === announcement.authorUserId || normalizeText(profile.fullName) === normalizeText(announcement.authorName)
+            )) || null;
             items.push({
                 id: `announcement-${announcement.id}`,
                 type: announcement.category || 'Announcement',
@@ -576,11 +583,14 @@ function AlumniDirectory() {
                 body: announcement.body,
                 createdAt: normalizeNotificationTime(announcement.createdAt || announcement.publishDate),
                 postId: '',
-                photoKey: 'blank'
+                photoKey: announcementAuthorProfile?.photoKey || announcement.authorPhotoKey || 'blank'
             });
         });
 
         (portalContent.tasks || []).forEach(task => {
+            const taskAuthorProfile = profiles.find(profile => (
+                profile.userId === task.authorUserId || normalizeText(profile.fullName) === normalizeText(task.authorName)
+            )) || null;
             items.push({
                 id: `task-${task.id}`,
                 type: task.role || 'Task',
@@ -588,7 +598,7 @@ function AlumniDirectory() {
                 body: task.details,
                 createdAt: normalizeNotificationTime(task.createdAt || task.dueDate),
                 postId: '',
-                photoKey: 'blank'
+                photoKey: taskAuthorProfile?.photoKey || task.authorPhotoKey || 'blank'
             });
         });
 
@@ -613,7 +623,7 @@ function AlumniDirectory() {
         const seenAt = new Date().toISOString();
         window.localStorage.setItem(getNotificationSeenKey(currentUserId), seenAt);
         setNotificationsSeenAt(seenAt);
-        window.dispatchEvent(new Event(NOTIFICATIONS_SEEN_EVENT));
+        dispatchNotificationsChanged();
     }, [activeView, currentUserId, notificationItems.length]);
 
     const updateFilter = (key, value) => {
@@ -646,6 +656,12 @@ function AlumniDirectory() {
         navigate('/alumni/profile', { replace: true });
     }, [location.search, navigate, session?.user?.id]);
 
+    const getCurrentActor = () => ({
+        userId: currentUserId,
+        name: ownProfile?.fullName || session?.user?.email || 'UJLP member',
+        photoKey: ownProfile?.photoKey || 'blank'
+    });
+
     const resetEditorDraft = () => {
         setEditorDraft({
             title: '',
@@ -669,11 +685,18 @@ function AlumniDirectory() {
 
         setEditorMessage('');
         try {
+            const actor = getCurrentActor();
+            const actorFields = {
+                authorUserId: actor.userId,
+                authorName: actor.name,
+                authorPhotoKey: actor.photoKey
+            };
             const baseItem = {
                 title: editorDraft.title,
                 body: editorDraft.body,
                 category: editorDraft.category,
-                pinned: editorDraft.pinned
+                pinned: editorDraft.pinned,
+                ...actorFields
             };
             const itemByType = {
                 announcements: {
@@ -689,14 +712,22 @@ function AlumniDirectory() {
                     role: editorDraft.role,
                     dueDate: editorDraft.dueDate,
                     priority: editorDraft.priority,
-                    status: 'open'
+                    status: 'open',
+                    ...actorFields
                 }
             };
             const saved = await savePortalItem(editorType, itemByType[editorType], session);
+            const savedWithActor = {
+                ...saved,
+                authorUserId: saved.authorUserId || actor.userId,
+                authorName: saved.authorName || actor.name,
+                authorPhotoKey: saved.authorPhotoKey || actor.photoKey
+            };
             setPortalContent(current => ({
                 ...current,
-                [editorType]: [saved, ...current[editorType].filter(item => item.id !== saved.id)]
+                [editorType]: [savedWithActor, ...current[editorType].filter(item => item.id !== saved.id)]
             }));
+            dispatchNotificationsChanged();
             setEditorMessage('Saved.');
             resetEditorDraft();
         } catch (error) {
@@ -713,6 +744,7 @@ function AlumniDirectory() {
                 ...current,
                 [collection]: current[collection].filter(item => item.id !== id)
             }));
+            dispatchNotificationsChanged();
             setEditorMessage('Deleted.');
         } catch (error) {
             setEditorMessage(error.message);
@@ -743,6 +775,7 @@ function AlumniDirectory() {
                 ...current,
                 feedPosts: [saved, ...current.feedPosts.filter(item => item.id !== saved.id)]
             }));
+            dispatchNotificationsChanged();
             setFeedDraft(defaultFeedDraft);
             setFeedMentionMenu(defaultFeedMentionMenu);
             setFeedMessage(feedDraft.id ? 'Feed post updated.' : 'Posted to the alumni feed.');
@@ -783,6 +816,7 @@ function AlumniDirectory() {
                 feedLikes: current.feedLikes.filter(item => item.postId !== id)
             }));
             if (feedDraft.id === id) setFeedDraft(defaultFeedDraft);
+            dispatchNotificationsChanged();
             setFeedMessage('Feed post deleted.');
         } catch (error) {
             setFeedMessage(error.message);
@@ -810,12 +844,6 @@ function AlumniDirectory() {
         }
     };
 
-    const getCurrentActor = () => ({
-        userId: currentUserId,
-        name: ownProfile?.fullName || session?.user?.email || 'UJLP member',
-        photoKey: ownProfile?.photoKey || 'blank'
-    });
-
     const handleFeedLike = async (post) => {
         if (!currentUserId) return;
 
@@ -828,6 +856,7 @@ function AlumniDirectory() {
                     ? current.feedLikes.filter(like => !(like.postId === post.id && like.userId === currentUserId))
                     : [savedLike, ...current.feedLikes.filter(like => !(like.postId === post.id && like.userId === currentUserId))]
             }));
+            dispatchNotificationsChanged();
         } catch (error) {
             setFeedMessage(error.message);
         }
@@ -852,6 +881,7 @@ function AlumniDirectory() {
                 feedComments: [...current.feedComments, saved]
             }));
             setCommentDrafts(current => ({ ...current, [post.id]: '' }));
+            dispatchNotificationsChanged();
         } catch (error) {
             setFeedMessage(error.message);
         }
@@ -866,6 +896,7 @@ function AlumniDirectory() {
                 ...current,
                 feedComments: current.feedComments.filter(item => item.id !== comment.id)
             }));
+            dispatchNotificationsChanged();
         } catch (error) {
             setFeedMessage(error.message);
         }
@@ -877,7 +908,7 @@ function AlumniDirectory() {
         setDismissedNotificationIds(current => {
             const next = Array.from(new Set([...current, notificationId]));
             writeDismissedNotificationIds(currentUserId, next);
-            window.dispatchEvent(new Event(NOTIFICATIONS_SEEN_EVENT));
+            dispatchNotificationsChanged();
             return next;
         });
     };
@@ -1849,7 +1880,7 @@ function AlumniDirectory() {
             {notificationItems.map(item => (
                 <article className="alumni-notification-card" key={item.id}>
                     <div className="alumni-feed-author">
-                        <img src={getAlumniPhoto('blank')} alt="" />
+                        <img src={getAlumniPhoto(item.photoKey || 'blank')} alt="" />
                         <div>
                             <span>{item.type}</span>
                             <strong>{item.title}</strong>

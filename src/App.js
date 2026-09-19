@@ -158,7 +158,14 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
         const post = feedPostsById.get(comment.postId);
         const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
         const onOwnPost = isCurrentUserPost(post);
-        if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
+        const isOwnComment = (
+            comment.authorUserId === currentUserId ||
+            [
+                ownProfile?.fullName,
+                session?.user?.email
+            ].some(value => normalizeNotificationText(value) === normalizeNotificationText(comment.authorName))
+        );
+        if (onOwnPost || (mentioned && !isOwnComment)) {
             items.push({ id: `comment-${comment.id}`, createdAt: normalizeNotificationTime(comment.createdAt) });
         }
     });

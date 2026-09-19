@@ -212,6 +212,9 @@ const normalizeAnnouncement = (announcement) => ({
     publishDate: announcement.publishDate || announcement.publish_date || announcement.date || '',
     audience: announcement.audience || 'public',
     taggedUserIds: normalizeTextArray(announcement.taggedUserIds || announcement.tagged_user_ids),
+    authorUserId: announcement.authorUserId || announcement.author_user_id || '',
+    authorName: announcement.authorName || announcement.author_name || '',
+    authorPhotoKey: announcement.authorPhotoKey || announcement.author_photo_key || '',
     pinned: Boolean(announcement.pinned),
     createdAt: announcement.createdAt || announcement.created_at || new Date().toISOString()
 });
@@ -224,6 +227,9 @@ const normalizeTask = (task) => ({
     dueDate: task.dueDate || task.due_date || '',
     priority: task.priority || 'medium',
     status: task.status || 'open',
+    authorUserId: task.authorUserId || task.author_user_id || '',
+    authorName: task.authorName || task.author_name || '',
+    authorPhotoKey: task.authorPhotoKey || task.author_photo_key || '',
     createdAt: task.createdAt || task.created_at || new Date().toISOString()
 });
 
