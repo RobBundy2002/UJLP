@@ -149,22 +149,47 @@ const cropPhotoToDataUrl = (source, { cropX, cropY, zoom }) => new Promise((reso
         const outputSize = 512;
         const canvas = document.createElement('canvas');
         const context = canvas.getContext('2d');
-        const sourceSize = Math.min(image.naturalWidth, image.naturalHeight) / zoom;
-        const focalX = image.naturalWidth * (cropX / 100);
-        const focalY = image.naturalHeight * (cropY / 100);
-        const maxX = image.naturalWidth - sourceSize;
-        const maxY = image.naturalHeight - sourceSize;
-        const sourceX = Math.min(Math.max(focalX - sourceSize / 2, 0), maxX);
-        const sourceY = Math.min(Math.max(focalY - sourceSize / 2, 0), maxY);
+        const layout = getPhotoCropLayout({
+            width: image.naturalWidth,
+            height: image.naturalHeight
+        }, { cropX, cropY, zoom });
 
         canvas.width = outputSize;
         canvas.height = outputSize;
-        context.drawImage(image, sourceX, sourceY, sourceSize, sourceSize, 0, 0, outputSize, outputSize);
+        context.drawImage(
+            image,
+            layout.left * outputSize,
+            layout.top * outputSize,
+            layout.width * outputSize,
+            layout.height * outputSize
+        );
         resolve(canvas.toDataURL('image/jpeg', 0.88));
     };
     image.onerror = () => reject(new Error('Could not read that image.'));
     image.src = source;
 });
+
+const getPhotoCropLayout = (imageSize, crop) => {
+    const imageWidth = imageSize?.width || 1;
+    const imageHeight = imageSize?.height || 1;
+    const zoom = crop.zoom || 1;
+    const width = Math.max(1, imageWidth / imageHeight) * zoom;
+    const height = Math.max(1, imageHeight / imageWidth) * zoom;
+    const left = Math.min(Math.max(0.5 - (crop.cropX / 100) * width, 1 - width), 0);
+    const top = Math.min(Math.max(0.5 - (crop.cropY / 100) * height, 1 - height), 0);
+
+    return { width, height, left, top };
+};
+
+const getPhotoCropImageStyle = (imageSize, crop) => {
+    const layout = getPhotoCropLayout(imageSize, crop);
+    return {
+        width: `${layout.width * 100}%`,
+        height: `${layout.height * 100}%`,
+        left: `${layout.left * 100}%`,
+        top: `${layout.top * 100}%`
+    };
+};
 
 function AlumniProfile() {
     const [session, setSession] = useState(() => getStoredAlumniSession());
@@ -174,6 +199,7 @@ function AlumniProfile() {
     const [profileMessage, setProfileMessage] = useState('');
     const [profileInviteMessage, setProfileInviteMessage] = useState('');
     const [photoCropSource, setPhotoCropSource] = useState('');
+    const [photoCropImageSize, setPhotoCropImageSize] = useState(null);
     const [photoCrop, setPhotoCrop] = useState({ cropX: 50, cropY: 50, zoom: 1 });
     const [photoDragStart, setPhotoDragStart] = useState(null);
     const [photoMessage, setPhotoMessage] = useState('');
@@ -296,7 +322,16 @@ function AlumniProfile() {
 
         const reader = new FileReader();
         reader.onload = () => {
-            setPhotoCropSource(String(reader.result || ''));
+            const source = String(reader.result || '');
+            const image = new Image();
+            image.onload = () => {
+                setPhotoCropImageSize({
+                    width: image.naturalWidth,
+                    height: image.naturalHeight
+                });
+            };
+            image.src = source;
+            setPhotoCropSource(source);
             setPhotoCrop({ cropX: 50, cropY: 50, zoom: 1 });
         };
         reader.onerror = () => setPhotoMessage('Could not read that image.');
@@ -311,7 +346,8 @@ function AlumniProfile() {
             clientY: event.clientY,
             cropX: photoCrop.cropX,
             cropY: photoCrop.cropY,
-            zoom: photoCrop.zoom
+            zoom: photoCrop.zoom,
+            imageSize: photoCropImageSize
         });
     };
 
@@ -320,11 +356,12 @@ function AlumniProfile() {
         const rect = event.currentTarget.getBoundingClientRect();
         const horizontalDelta = ((event.clientX - photoDragStart.clientX) / rect.width) * 100;
         const verticalDelta = ((event.clientY - photoDragStart.clientY) / rect.height) * 100;
+        const startLayout = getPhotoCropLayout(photoDragStart.imageSize, photoDragStart);
 
         setPhotoCrop(current => ({
             ...current,
-            cropX: clampPercent(photoDragStart.cropX - (horizontalDelta / photoDragStart.zoom)),
-            cropY: clampPercent(photoDragStart.cropY - (verticalDelta / photoDragStart.zoom))
+            cropX: clampPercent(photoDragStart.cropX - (horizontalDelta / startLayout.width)),
+            cropY: clampPercent(photoDragStart.cropY - (verticalDelta / startLayout.height))
         }));
     };
 
@@ -340,6 +377,7 @@ function AlumniProfile() {
             const croppedPhoto = await cropPhotoToDataUrl(photoCropSource, photoCrop);
             updateDraft('photoKey', croppedPhoto);
             setPhotoCropSource('');
+            setPhotoCropImageSize(null);
             setPhotoMessage('Profile photo updated. Save the profile to keep it.');
         } catch (error) {
             setPhotoMessage(error.message);
@@ -599,18 +637,20 @@ function AlumniProfile() {
                 <div className="alumni-photo-cropper">
                     <div
                         className={`alumni-photo-crop-preview${photoDragStart ? ' is-dragging' : ''}`}
-                        style={{
-                            backgroundImage: `url(${photoCropSource})`,
-                            backgroundPosition: `${photoCrop.cropX}% ${photoCrop.cropY}%`,
-                            backgroundSize: `${photoCrop.zoom * 100}% auto`
-                        }}
                         role="img"
                         aria-label="Profile image crop preview"
                         onPointerDown={handlePhotoDragStart}
                         onPointerMove={handlePhotoDragMove}
                         onPointerUp={handlePhotoDragEnd}
                         onPointerCancel={handlePhotoDragEnd}
-                    />
+                    >
+                        <img
+                            src={photoCropSource}
+                            alt=""
+                            draggable="false"
+                            style={getPhotoCropImageStyle(photoCropImageSize, photoCrop)}
+                        />
+                    </div>
                     <div className="alumni-photo-sliders">
                         <label>
                             <span>Zoom</span>
@@ -645,7 +685,10 @@ function AlumniProfile() {
                         </label>
                         <div className="alumni-photo-crop-actions">
                             <button type="button" className="alumni-primary-action" onClick={handleApplyPhotoCrop}>Use cropped photo</button>
-                            <button type="button" className="alumni-secondary-action" onClick={() => setPhotoCropSource('')}>Cancel</button>
+                            <button type="button" className="alumni-secondary-action" onClick={() => {
+                                setPhotoCropSource('');
+                                setPhotoCropImageSize(null);
+                            }}>Cancel</button>
                         </div>
                     </div>
                 </div>

@@ -80,6 +80,21 @@ const toTags = (value) => value
     .map(item => item.trim())
     .filter(Boolean);
 
+const defaultFeedDraft = {
+    id: '',
+    title: '',
+    body: '',
+    category: 'Network',
+    postType: 'update',
+    eventDate: '',
+    deadlineDate: '',
+    tagsText: '',
+    pinned: false,
+    authorUserId: '',
+    authorName: '',
+    authorPhotoKey: ''
+};
+
 function AlumniDirectory() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -93,15 +108,7 @@ function AlumniDirectory() {
     const [activeView, setActiveView] = useState('home');
     const [editingProfileUserId, setEditingProfileUserId] = useState(null);
     const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [] });
-    const [feedDraft, setFeedDraft] = useState({
-        title: '',
-        body: '',
-        category: 'Network',
-        postType: 'update',
-        eventDate: '',
-        deadlineDate: '',
-        tagsText: ''
-    });
+    const [feedDraft, setFeedDraft] = useState(defaultFeedDraft);
     const [feedMessage, setFeedMessage] = useState('');
     const [editorType, setEditorType] = useState('announcements');
     const [editorMessage, setEditorMessage] = useState('');
@@ -348,32 +355,81 @@ function AlumniDirectory() {
         setFeedMessage('');
         try {
             const saved = await savePortalItem('feedPosts', {
+                id: feedDraft.id || undefined,
                 title: feedDraft.title,
                 body: feedDraft.body,
                 category: feedDraft.category,
                 postType: feedDraft.postType,
                 eventDate: feedDraft.eventDate,
                 deadlineDate: feedDraft.deadlineDate,
-                authorUserId: session.user.id,
-                authorName: ownProfile?.fullName || session.user.email,
-                authorPhotoKey: ownProfile?.photoKey || 'blank',
-                pinned: false,
+                authorUserId: feedDraft.authorUserId || session.user.id,
+                authorName: feedDraft.authorName || ownProfile?.fullName || session.user.email,
+                authorPhotoKey: feedDraft.authorPhotoKey || ownProfile?.photoKey || 'blank',
+                pinned: Boolean(feedDraft.pinned),
                 tags: toTags(feedDraft.tagsText)
             }, session);
             setPortalContent(current => ({
                 ...current,
                 feedPosts: [saved, ...current.feedPosts.filter(item => item.id !== saved.id)]
             }));
-            setFeedDraft({
-                title: '',
-                body: '',
-                category: 'Network',
-                postType: 'update',
-                eventDate: '',
-                deadlineDate: '',
-                tagsText: ''
-            });
-            setFeedMessage('Posted to the alumni feed.');
+            setFeedDraft(defaultFeedDraft);
+            setFeedMessage(feedDraft.id ? 'Feed post updated.' : 'Posted to the alumni feed.');
+        } catch (error) {
+            setFeedMessage(error.message);
+        }
+    };
+
+    const handleFeedEdit = (post) => {
+        setFeedDraft({
+            id: post.id,
+            title: post.title,
+            body: post.body,
+            category: post.category,
+            postType: post.postType,
+            eventDate: post.eventDate,
+            deadlineDate: post.deadlineDate,
+            tagsText: (post.tags || []).join(', '),
+            pinned: Boolean(post.pinned),
+            authorUserId: post.authorUserId,
+            authorName: post.authorName,
+            authorPhotoKey: post.authorPhotoKey
+        });
+        setFeedMessage('');
+        setActiveView('feed');
+    };
+
+    const handleFeedDelete = async (id) => {
+        if (!isAdmin) return;
+        setFeedMessage('');
+        try {
+            await deletePortalItem('feedPosts', id, session);
+            setPortalContent(current => ({
+                ...current,
+                feedPosts: current.feedPosts.filter(item => item.id !== id)
+            }));
+            if (feedDraft.id === id) setFeedDraft(defaultFeedDraft);
+            setFeedMessage('Feed post deleted.');
+        } catch (error) {
+            setFeedMessage(error.message);
+        }
+    };
+
+    const handleFeedTogglePin = async (post) => {
+        if (!isAdmin) return;
+        setFeedMessage('');
+        try {
+            const saved = await savePortalItem('feedPosts', {
+                ...post,
+                pinned: !post.pinned
+            }, session);
+            setPortalContent(current => ({
+                ...current,
+                feedPosts: [saved, ...current.feedPosts.filter(item => item.id !== saved.id)]
+            }));
+            if (feedDraft.id === saved.id) {
+                setFeedDraft(current => ({ ...current, pinned: saved.pinned }));
+            }
+            setFeedMessage(saved.pinned ? 'Feed post pinned.' : 'Feed post unpinned.');
         } catch (error) {
             setFeedMessage(error.message);
         }
@@ -656,6 +712,13 @@ function AlumniDirectory() {
             .slice(0, 4)
     ), [portalContent.feedPosts]);
 
+    const sortedFeedPosts = useMemo(() => (
+        [...portalContent.feedPosts].sort((left, right) => {
+            if (left.pinned !== right.pinned) return left.pinned ? -1 : 1;
+            return String(right.createdAt).localeCompare(String(left.createdAt));
+        })
+    ), [portalContent.feedPosts]);
+
     const renderFeedCard = (post) => (
         <article className="alumni-feed-card" key={post.id}>
             <div className="alumni-feed-author">
@@ -673,6 +736,15 @@ function AlumniDirectory() {
                 {post.eventDate && <span>Event {formatShortDate(post.eventDate)}</span>}
                 {post.deadlineDate && <span>Due {formatShortDate(post.deadlineDate)}</span>}
             </div>
+            {isAdmin && (
+                <div className="alumni-feed-admin-actions">
+                    <button type="button" className="alumni-secondary-action" onClick={() => handleFeedEdit(post)}>Edit</button>
+                    <button type="button" className="alumni-secondary-action" onClick={() => handleFeedTogglePin(post)}>
+                        {post.pinned ? 'Unpin' : 'Pin'}
+                    </button>
+                    <button type="button" className="alumni-secondary-action" onClick={() => handleFeedDelete(post.id)}>Delete</button>
+                </div>
+            )}
         </article>
     );
 
@@ -685,7 +757,7 @@ function AlumniDirectory() {
                         <span>Feed</span>
                         <strong>Latest from the network</strong>
                     </div>
-                    {portalContent.feedPosts.slice(0, 3).map(renderFeedCard)}
+                    {sortedFeedPosts.slice(0, 3).map(renderFeedCard)}
                 </section>
                 <aside className="alumni-home-rail">
                     <div className="alumni-panel-heading">
@@ -713,6 +785,10 @@ function AlumniDirectory() {
                     <strong>Member updates and opportunities</strong>
                 </div>
                 <form className="alumni-feed-composer" onSubmit={handleFeedSave}>
+                    <div className="alumni-panel-heading alumni-feed-composer-heading">
+                        <span>{feedDraft.id ? 'Editing feed post' : 'New feed post'}</span>
+                        <strong>{feedDraft.id ? feedDraft.title || 'Untitled post' : 'Post to the network'}</strong>
+                    </div>
                     <div className="alumni-form-grid">
                         <label>
                             <span>Title</span>
@@ -746,11 +822,22 @@ function AlumniDirectory() {
                             <span>Tags</span>
                             <input value={feedDraft.tagsText} onChange={(event) => setFeedDraft(current => ({ ...current, tagsText: event.target.value }))} placeholder="jobs, events, alumni" />
                         </label>
+                        {isAdmin && (
+                            <label className="alumni-checkbox">
+                                <input type="checkbox" checked={feedDraft.pinned} onChange={(event) => setFeedDraft(current => ({ ...current, pinned: event.target.checked }))} />
+                                <span>Pin feed post</span>
+                            </label>
+                        )}
                     </div>
-                    <button type="submit" className="alumni-primary-action">Post to feed</button>
+                    <div className="alumni-form-actions">
+                        <button type="submit" className="alumni-primary-action">{feedDraft.id ? 'Save feed post' : 'Post to feed'}</button>
+                        {feedDraft.id && (
+                            <button type="button" className="alumni-secondary-action" onClick={() => setFeedDraft(defaultFeedDraft)}>New post</button>
+                        )}
+                    </div>
                     {feedMessage && <p className="alumni-form-message">{feedMessage}</p>}
                 </form>
-                {portalContent.feedPosts.map(renderFeedCard)}
+                {sortedFeedPosts.map(renderFeedCard)}
             </section>
             <aside className="alumni-home-rail">
                 <div className="alumni-panel-heading">

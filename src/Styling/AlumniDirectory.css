@@ -739,11 +739,19 @@
 }
 
 .alumni-photo-crop-preview {
+    position: relative;
     width: 10rem;
     height: 10rem;
-    background-repeat: no-repeat;
     cursor: grab;
     touch-action: none;
+}
+
+.alumni-photo-crop-preview img {
+    position: absolute;
+    display: block;
+    max-width: none;
+    user-select: none;
+    pointer-events: none;
 }
 
 .alumni-photo-crop-preview.is-dragging {
@@ -1237,6 +1245,19 @@
     line-height: 1.6;
 }
 
+.alumni-feed-admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--alumni-line);
+}
+
+.alumni-feed-admin-actions .alumni-secondary-action {
+    min-height: 2.25rem;
+    padding: .5rem .75rem;
+}
+
 .alumni-upcoming-card strong,
 .alumni-notification-card strong,
 .alumni-admin-item strong {
@@ -1293,6 +1314,10 @@
     border: 1px solid var(--alumni-line);
     border-radius: 8px;
     background: var(--alumni-bg-soft);
+}
+
+.alumni-feed-composer-heading {
+    margin-bottom: .1rem;
 }
 
 .alumni-feed-composer textarea {
