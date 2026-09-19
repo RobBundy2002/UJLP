@@ -46,6 +46,7 @@ import {
     isAlumniAdmin,
     signOutAlumni
 } from './Services/alumniApi';
+import { fetchPortalContent } from './Services/alumniPortalApi';
 import { getCompactAlumniName } from './Data/alumniDisplay';
 import { getAlumniPhoto } from './Data/alumniPhotoRegistry';
 
@@ -88,6 +89,7 @@ function Navigation() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [alumniSession, setAlumniSession] = useState(() => getStoredAlumniSession());
     const [navProfile, setNavProfile] = useState(null);
+    const [navNotificationCount, setNavNotificationCount] = useState(0);
     const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
     const location = useLocation();
     const menuRef = useRef(null);
@@ -129,16 +131,27 @@ function Navigation() {
     useEffect(() => {
         let isMounted = true;
         setNavProfile(null);
+        setNavNotificationCount(0);
 
         if (!alumniSession?.user?.id) return undefined;
 
-        fetchAlumniProfiles(alumniSession)
-            .then(rows => {
+        Promise.allSettled([
+            fetchAlumniProfiles(alumniSession),
+            fetchPortalContent(alumniSession)
+        ])
+            .then(([profileResult, portalResult]) => {
                 if (!isMounted) return;
-                setNavProfile(rows.find(profile => profile.userId === alumniSession.user.id) || null);
-            })
-            .catch(() => {
-                if (isMounted) setNavProfile(null);
+
+                if (profileResult.status === 'fulfilled') {
+                    setNavProfile(profileResult.value.find(profile => profile.userId === alumniSession.user.id) || null);
+                } else {
+                    setNavProfile(null);
+                }
+
+                if (portalResult.status === 'fulfilled') {
+                    const content = portalResult.value;
+                    setNavNotificationCount((content.announcements || []).length + (content.tasks || []).length);
+                }
             });
 
         return () => {
@@ -219,6 +232,7 @@ function Navigation() {
                             aria-label={`Open account menu for ${accountName}`}
                         >
                             <img src={getAlumniPhoto(navProfile?.photoKey || 'blank')} alt="" />
+                            {navNotificationCount > 0 && <b className="header-account-badge">{Math.min(navNotificationCount, 9)}</b>}
                         </button>
                         {isAccountMenuOpen && (
                             <div className="header-account-menu" role="menu">

@@ -1250,24 +1250,6 @@ function AlumniDirectory() {
         </div>
     );
 
-    const renderPortalAccountBar = () => (
-        <div className="alumni-portal-account-bar">
-            <div className="alumni-portal-context">
-                <span>Alumni network</span>
-                <strong>Member workspace</strong>
-            </div>
-            <div className="alumni-account-actions">
-                <Link to="/alumni/profile">
-                    <span className="alumni-account-avatar">
-                        <img src={getAlumniPhoto(ownProfile?.photoKey || 'blank')} alt="" />
-                        {notificationCount > 0 && <b>{Math.min(notificationCount, 9)}</b>}
-                    </span>
-                    <span>{accountName}</span>
-                </Link>
-            </div>
-        </div>
-    );
-
     const renderResources = () => (
         <div className="alumni-resource-grid">
             {[
@@ -1452,7 +1434,6 @@ function AlumniDirectory() {
                     <a className="alumni-sidebar-mail" href="mailto:ujlawandpolitics@gmail.com">Contact UJLP</a>
                 </aside>
                 <div className="alumni-portal-main">
-                    {renderPortalAccountBar()}
                     {authMessage && <p className="alumni-form-message">{authMessage}</p>}
                     {renderActivePortalView()}
                 </div>
