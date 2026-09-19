@@ -1185,6 +1185,34 @@
     min-height: 13.5rem;
 }
 
+.alumni-profile-page .alumni-profile-page-hero {
+    min-height: min(520px, 62vh);
+    padding-bottom: clamp(5.5rem, 9vw, 8rem);
+    border-bottom: 0;
+}
+
+.alumni-profile-page .alumni-profile-page-hero::after {
+    inset: auto 0 -1px;
+    height: clamp(5rem, 10vw, 8rem);
+    background: linear-gradient(180deg, rgba(7, 17, 31, 0), var(--alumni-bg) 88%);
+}
+
+.alumni-profile-page .alumni-profile-section {
+    position: relative;
+    z-index: 2;
+    margin-top: -3rem;
+    border-bottom: 0;
+    background:
+        radial-gradient(circle at 24% -8rem, rgba(144, 52, 34, .26), transparent 30rem),
+        var(--alumni-bg);
+}
+
+.alumni-profile-page .alumni-profile-section > .section-content {
+    width: min(1280px, 100%);
+    max-width: none;
+    padding-top: clamp(3rem, 6vw, 5rem);
+}
+
 .alumni-profile-page-workspace {
     display: grid;
     grid-template-columns: minmax(300px, .72fr) minmax(0, 1fr);
@@ -1200,6 +1228,47 @@
 
 .alumni-profile-page-preview .alumni-profile-view-grid {
     grid-template-columns: 1fr;
+}
+
+.alumni-profile-page .alumni-empty-profile {
+    position: relative;
+    max-width: min(880px, 100%);
+    overflow: hidden;
+    gap: 1.15rem;
+    padding: clamp(1.45rem, 4vw, 2.4rem);
+    border-color: rgba(166, 195, 223, .22);
+    background:
+        linear-gradient(135deg, rgba(20, 53, 87, .95), rgba(7, 24, 39, .92)),
+        var(--alumni-panel);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(247, 241, 231, .06);
+    text-align: left;
+}
+
+.alumni-profile-page .alumni-empty-profile::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(241, 140, 98, .92), rgba(201, 163, 91, .74), rgba(79, 142, 197, .66));
+}
+
+.alumni-profile-page .alumni-empty-profile > * {
+    position: relative;
+    z-index: 1;
+}
+
+.alumni-profile-page .alumni-empty-profile h2 {
+    max-width: 12em;
+    font-size: clamp(2.3rem, 5vw, 4rem);
+}
+
+.alumni-profile-page .alumni-empty-profile p {
+    max-width: 36rem;
+}
+
+.alumni-profile-page .alumni-invite-form {
+    max-width: 680px;
+    margin-top: .35rem;
 }
 
 .alumni-home-grid,

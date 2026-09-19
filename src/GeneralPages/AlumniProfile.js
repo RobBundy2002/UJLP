@@ -553,7 +553,7 @@ function AlumniProfile() {
                 <div className="alumni-empty-profile">
                     <p className="jh-section-label">Profile access</p>
                     <h2>Sign in to manage your profile.</h2>
-                    <p>Your profile manager is connected to your alumni account.</p>
+                    <p>Your profile manager is connected to your account.</p>
                     <Link to="/alumni/signin" state={{ from: '/alumni/profile' }} className="alumni-primary-action">Go to member sign in</Link>
                 </div>
             </div>
@@ -565,8 +565,8 @@ function AlumniProfile() {
             <div className="section-content">
                 <div className="alumni-empty-profile">
                     <p className="jh-section-label">My profile</p>
-                    <h2>Create your member profile.</h2>
-                    <p>Use the UJLP alumni invite code to start your directory profile.</p>
+                    <h2>Create your member profile</h2>
+                    <p>Use your UJLP member invite code to start your directory profile.</p>
                     <form className="alumni-invite-form" onSubmit={handleCreateProfileRequest}>
                         <label>
                             <span>Invite code</span>
@@ -1035,7 +1035,7 @@ function AlumniProfile() {
                         <button type="submit" className="alumni-primary-action" disabled={saving}>
                             {saving ? 'Saving...' : 'Save profile'}
                         </button>
-                        <Link to="/alumni" className="alumni-secondary-action">Back to alumni network</Link>
+                        <Link to="/alumni" className="alumni-secondary-action">Back to member network</Link>
                     </div>
                     {profileMessage && <p className="alumni-form-message">{profileMessage}</p>}
                 </form>
@@ -1052,13 +1052,13 @@ function AlumniProfile() {
                         <p className="jh-eyebrow"><strong>UJLP</strong> / Member Profile</p>
                         <h1>Manage Profile</h1>
                         <p>
-                            Edit the profile attached to your alumni account without leaving this dedicated profile workspace.
+                            Edit the profile attached to your account.
                         </p>
                     </div>
                     <div className="alumni-hero-panel">
                         <span>{session ? 'Signed in as' : 'Member access'}</span>
                         <strong>{session ? accountName : 'Sign in required'}</strong>
-                        <p>{session ? 'Changes update your member profile and directory listing.' : 'Use your alumni account to open the profile manager.'}</p>
+                        <p>{session ? 'Changes update your member profile and directory listing.' : 'Sign in to open the profile manager.'}</p>
                     </div>
                 </div>
             </section>
