@@ -241,7 +241,12 @@ function Navigation() {
                         )}
                     </div>
                 ) : (
-                    <Link to="/alumni" className="header-account-signin">Sign in</Link>
+                    <Link to="/alumni" className="header-account-signin" aria-label="Sign in to alumni">
+                        <svg className="header-account-signin-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 20a7.5 7.5 0 0 1 15 0" />
+                        </svg>
+                        <span>Sign in</span>
+                    </Link>
                 )}
 
                 <button className={`mobile-menu-button ${isMobileMenuOpen ? 'hidden' : ''}`} onClick={toggleMobileMenu} aria-label="Open navigation" aria-expanded={isMobileMenuOpen} aria-controls="primary-navigation">

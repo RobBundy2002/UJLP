@@ -53,6 +53,11 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .header-search .search-input:focus { border-color: #f18c62; box-shadow: none; }
 .header-search .search-results { border-color: rgba(231,222,203,.25); border-radius: 1rem; background: #0c1b30; box-shadow: 0 18px 45px rgba(0,0,0,.38); }
 .header-search .search-results-header, .header-search .search-result-item:hover, .header-search .search-result-item.selected { background: #102540; }
+.header-account { align-self: center; margin: 0 0 0 .35rem; }
+.header-account-profile { width: 3rem; height: 3rem; border-color: rgba(231,222,203,.3); background: rgba(255,255,255,.06); }
+.header-account-profile img { display: block; }
+.header-account-signin { min-height: 2.6rem; margin: 0; padding: .45rem .75rem; border-color: rgba(231,222,203,.26); background: rgba(255,255,255,.06); color: #f7f1e7; }
+.header-account-signin-icon { display: none; width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .mobile-menu-button, .menu-icon { color: #f7f1e7; stroke: #f7f1e7; }
 .mobile-nav-header, .mobile-nav-kicker, .mobile-nav-footer { display: none; }
 
@@ -115,6 +120,44 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
     .title-line-1 { font-size: .85rem; }
     .title-line-2 { font-size: .92rem; }
     .App-header.over-hero:not(.scrolled) { background: rgba(7,17,31,.95); }
+    .header-account,
+    .header-account-signin {
+        position: absolute;
+        top: .85rem;
+        right: 4.25rem;
+        bottom: auto;
+        margin: 0;
+        max-width: none;
+    }
+    .header-account-profile,
+    .header-account-signin {
+        width: 3rem;
+        height: 3rem;
+        min-height: 3rem;
+        display: grid;
+        place-items: center;
+        padding: 0;
+        border: 1px solid rgba(231,222,203,.28);
+        border-radius: 50%;
+        background: rgba(7,17,31,.62);
+        color: #f7f1e7;
+        backdrop-filter: blur(10px);
+    }
+    .header-account-profile { overflow: hidden; }
+    .header-account-signin-icon { display: block; }
+    .header-account-signin span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+    .header-account-menu {
+        top: calc(100% + .55rem);
+        right: -4.25rem;
+        width: min(17rem, calc(100vw - 1.5rem));
+    }
     .mobile-menu-button { right: .85rem; bottom: auto; top: .85rem; display: grid; width: 3rem; height: 3rem; place-items: center; padding: .7rem; border: 1px solid rgba(231,222,203,.28); border-radius: 50%; background: rgba(7,17,31,.6); backdrop-filter: blur(10px); }
     .mobile-menu-button .menu-icon { width: 1.35rem; height: 1.35rem; }
     .App-nav-top {

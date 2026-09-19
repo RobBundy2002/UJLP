@@ -1,15 +1,17 @@
 .alumni-directory {
-    --alumni-bg: #11100d;
-    --alumni-bg-soft: #171611;
-    --alumni-panel: #1d1b16;
-    --alumni-panel-raised: #242118;
+    --alumni-bg: #07111f;
+    --alumni-bg-soft: #0b1b2f;
+    --alumni-panel: #102540;
+    --alumni-panel-raised: #143557;
     --alumni-ink: #f7f1e7;
-    --alumni-muted: #b9b09f;
-    --alumni-faint: #7f786b;
-    --alumni-line: rgba(247, 241, 231, .14);
-    --alumni-line-strong: rgba(247, 241, 231, .24);
-    --alumni-red: #b94834;
-    --alumni-red-deep: #8d3528;
+    --alumni-muted: #b8c7d6;
+    --alumni-faint: #7f96ac;
+    --alumni-line: rgba(166, 195, 223, .18);
+    --alumni-line-strong: rgba(166, 195, 223, .3);
+    --alumni-red: #2f79b7;
+    --alumni-red-deep: #1f5f93;
+    --alumni-blue: #4f8ec5;
+    --alumni-blue-soft: rgba(79, 142, 197, .12);
     --alumni-gold: #c9a35b;
     --alumni-green: #78936d;
     background: var(--alumni-bg);
@@ -34,8 +36,8 @@
     padding-top: 2.1rem;
     border-bottom: 1px solid var(--alumni-line);
     background:
-        linear-gradient(135deg, rgba(185, 72, 52, .22), transparent 42%),
-        linear-gradient(180deg, #171611 0%, #11100d 100%);
+        linear-gradient(135deg, rgba(79, 142, 197, .36), transparent 42%),
+        linear-gradient(180deg, #0b1b2f 0%, #07111f 100%);
 }
 
 .alumni-hero::after {
@@ -89,7 +91,7 @@
     padding: 1.15rem;
     border: 1px solid var(--alumni-line);
     border-radius: 8px;
-    background: rgba(29, 27, 22, .86);
+    background: rgba(16, 37, 64, .86);
     box-shadow: 0 22px 60px rgba(0, 0, 0, .24);
 }
 
@@ -238,8 +240,8 @@
 .alumni-session-actions button.active,
 .alumni-account-actions a.active,
 .alumni-account-actions button.active {
-    background: var(--alumni-gold);
-    color: #16120c;
+    background: var(--alumni-blue);
+    color: #f7f1e7;
 }
 
 .alumni-auth-panel input,
@@ -259,7 +261,7 @@
     padding: .72rem .85rem;
     border: 1px solid var(--alumni-line-strong);
     border-radius: 6px;
-    background: #11100d;
+    background: #071827;
     color: var(--alumni-ink);
     font: inherit;
     font-size: .92rem;
@@ -282,8 +284,8 @@
 .alumni-profile-form input:focus,
 .alumni-profile-form select:focus,
 .alumni-profile-form textarea:focus {
-    border-color: var(--alumni-gold);
-    box-shadow: 0 0 0 3px rgba(201, 163, 91, .14);
+    border-color: var(--alumni-blue);
+    box-shadow: 0 0 0 3px rgba(79, 142, 197, .18);
 }
 
 .alumni-profile-form textarea {
@@ -359,13 +361,13 @@
 
 .alumni-secondary-action:hover,
 .alumni-results-heading button:hover {
-    border-color: var(--alumni-gold);
+    border-color: var(--alumni-blue);
     color: var(--alumni-ink);
 }
 
 .alumni-edit-action {
-    border-color: rgba(201, 163, 91, .5);
-    color: var(--alumni-gold);
+    border-color: rgba(79, 142, 197, .55);
+    color: #b9daf3;
 }
 
 .alumni-system-note,
@@ -459,14 +461,14 @@
     padding: .7rem .85rem;
     border: 1px solid var(--alumni-line-strong);
     border-radius: 6px;
-    background: #11100d;
+    background: #071827;
 }
 
 .alumni-checkbox input {
     width: 1rem !important;
     min-height: 1rem !important;
     padding: 0 !important;
-    accent-color: var(--alumni-red);
+    accent-color: var(--alumni-blue);
 }
 
 .alumni-results-heading {
@@ -506,7 +508,7 @@
     height: 5.25rem;
     align-self: start;
     overflow: hidden;
-    border: 1px solid rgba(201, 163, 91, .45);
+    border: 1px solid rgba(121, 174, 215, .45);
     border-radius: 8px;
     background: var(--alumni-panel-raised);
 }
@@ -555,10 +557,10 @@
     align-items: center;
     min-height: 1.55rem;
     padding: .25rem .5rem;
-    border: 1px solid rgba(201, 163, 91, .38);
+    border: 1px solid rgba(79, 142, 197, .45);
     border-radius: 999px;
-    color: var(--alumni-gold);
-    background: rgba(201, 163, 91, .08);
+    color: #b9daf3;
+    background: var(--alumni-blue-soft);
 }
 
 .alumni-profile-title b {
@@ -632,8 +634,8 @@
 
 .alumni-contact-actions a,
 .alumni-profile-contact a {
-    border-color: rgba(185, 72, 52, .48);
-    color: #e4a092;
+    border-color: rgba(79, 142, 197, .55);
+    color: #b9daf3;
 }
 
 .alumni-editor-heading {
@@ -661,7 +663,7 @@
     width: 7rem;
     height: 7rem;
     overflow: hidden;
-    border: 1px solid rgba(201, 163, 91, .45);
+    border: 1px solid rgba(121, 174, 215, .45);
     border-radius: 999px;
     background-color: var(--alumni-panel-raised);
 }
@@ -714,7 +716,7 @@
 }
 
 .alumni-photo-upload:hover {
-    border-color: var(--alumni-gold);
+    border-color: var(--alumni-blue);
     color: var(--alumni-ink);
 }
 
@@ -780,7 +782,7 @@
     width: 100%;
     min-height: 1.4rem;
     padding: 0;
-    accent-color: var(--alumni-gold);
+    accent-color: var(--alumni-blue);
 }
 
 .alumni-photo-crop-actions {
@@ -847,7 +849,7 @@
     padding: .95rem;
     border: 1px solid var(--alumni-line-strong);
     border-radius: 8px;
-    background: #11100d;
+    background: #071827;
     color: var(--alumni-muted);
     cursor: pointer;
     text-align: left;
@@ -856,8 +858,8 @@
 
 .alumni-profile-type-grid button.active,
 .alumni-profile-type-grid button:hover {
-    border-color: rgba(201, 163, 91, .7);
-    background: rgba(201, 163, 91, .1);
+    border-color: rgba(79, 142, 197, .7);
+    background: var(--alumni-blue-soft);
     color: var(--alumni-ink);
 }
 
@@ -901,7 +903,7 @@
     padding: .85rem;
     border: 1px solid var(--alumni-line);
     border-radius: 8px;
-    background: #11100d;
+    background: #071827;
 }
 
 .alumni-job-entry-wide {
@@ -1056,8 +1058,8 @@
 .alumni-portal-nav button.active,
 .alumni-portal-nav button:hover,
 .alumni-sidebar-mail:hover {
-    border-color: rgba(201, 163, 91, .38);
-    background: rgba(201, 163, 91, .08);
+    border-color: rgba(79, 142, 197, .42);
+    background: var(--alumni-blue-soft);
     color: var(--alumni-ink);
 }
 
@@ -1129,7 +1131,7 @@
     width: 1.75rem;
     height: 1.75rem;
     flex: 0 0 auto;
-    border: 1px solid rgba(201, 163, 91, .42);
+    border: 1px solid rgba(121, 174, 215, .45);
     border-radius: 999px;
     object-fit: cover;
 }
@@ -1384,7 +1386,7 @@
     padding: .72rem .85rem;
     border: 1px solid var(--alumni-line-strong);
     border-radius: 6px;
-    background: #11100d;
+    background: #071827;
     color: var(--alumni-ink);
     font: inherit;
     font-size: .92rem;
@@ -1393,8 +1395,8 @@
 }
 
 .alumni-invite-form input:focus {
-    border-color: var(--alumni-gold);
-    box-shadow: 0 0 0 3px rgba(201, 163, 91, .14);
+    border-color: var(--alumni-blue);
+    box-shadow: 0 0 0 3px rgba(79, 142, 197, .18);
 }
 
 @media (max-width: 1040px) {
@@ -1431,6 +1433,14 @@
     .alumni-portal-sidebar,
     .alumni-profile-page-preview {
         position: static;
+    }
+
+    .alumni-profile-page-workspace .alumni-profile-form {
+        order: 1;
+    }
+
+    .alumni-profile-page-preview {
+        order: 2;
     }
 
     .alumni-portal-nav {
