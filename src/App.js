@@ -85,9 +85,20 @@ function ScrollToTop() {
 }
 
 const NOTIFICATION_SEEN_KEY_PREFIX = 'ujlp_alumni_notifications_seen_at';
+const NOTIFICATION_DISMISSED_KEY_PREFIX = 'ujlp_alumni_notifications_dismissed';
 const NOTIFICATIONS_SEEN_EVENT = 'ujlp-alumni-notifications-seen-change';
 
 const getNotificationSeenKey = (userId) => `${NOTIFICATION_SEEN_KEY_PREFIX}:${userId || 'guest'}`;
+const getNotificationDismissedKey = (userId) => `${NOTIFICATION_DISMISSED_KEY_PREFIX}:${userId || 'guest'}`;
+
+const readDismissedNotificationIds = (userId) => {
+    try {
+        const value = window.localStorage.getItem(getNotificationDismissedKey(userId));
+        return new Set(Array.isArray(JSON.parse(value || '[]')) ? JSON.parse(value || '[]') : []);
+    } catch {
+        return new Set();
+    }
+};
 
 const getMentionHandle = (profile, user) => String(profile?.fullName || user?.email || '')
     .replace(/[^a-zA-Z0-9\s]/g, '')
@@ -139,7 +150,7 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
     feedPosts.forEach(post => {
         const mentioned = ownHandle && getMentionHandlesFromText(`${post.body || ''} ${(post.tags || []).join(' ')}`).includes(ownHandle);
         if (!isCurrentUserPost(post) || mentioned) {
-            items.push({ createdAt: normalizeNotificationTime(post.createdAt) });
+            items.push({ id: `post-${post.id}`, createdAt: normalizeNotificationTime(post.createdAt) });
         }
     });
 
@@ -148,23 +159,23 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
         const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
         const onOwnPost = isCurrentUserPost(post);
         if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
-            items.push({ createdAt: normalizeNotificationTime(comment.createdAt) });
+            items.push({ id: `comment-${comment.id}`, createdAt: normalizeNotificationTime(comment.createdAt) });
         }
     });
 
     (content?.feedLikes || []).forEach(like => {
         const post = feedPostsById.get(like.postId);
         if (isCurrentUserPost(post) && like.userId !== currentUserId) {
-            items.push({ createdAt: normalizeNotificationTime(like.createdAt) });
+            items.push({ id: `like-${like.postId}-${like.userId}`, createdAt: normalizeNotificationTime(like.createdAt) });
         }
     });
 
     (content?.announcements || []).forEach(announcement => {
-        items.push({ createdAt: normalizeNotificationTime(announcement.createdAt || announcement.publishDate) });
+        items.push({ id: `announcement-${announcement.id}`, createdAt: normalizeNotificationTime(announcement.createdAt || announcement.publishDate) });
     });
 
     (content?.tasks || []).forEach(task => {
-        items.push({ createdAt: normalizeNotificationTime(task.createdAt || task.dueDate) });
+        items.push({ id: `task-${task.id}`, createdAt: normalizeNotificationTime(task.createdAt || task.dueDate) });
     });
 
     return items;
@@ -172,9 +183,11 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
 
 const getUnreadAlumniNotificationCount = (content, ownProfile, session) => {
     const items = getAlumniNotificationItems(content, ownProfile, session);
+    const dismissedIds = readDismissedNotificationIds(session?.user?.id);
     const seenAt = window.localStorage.getItem(getNotificationSeenKey(session?.user?.id));
-    if (!seenAt) return items.length;
-    return items.filter(item => String(item.createdAt || '') > seenAt).length;
+    const visibleItems = items.filter(item => !dismissedIds.has(item.id));
+    if (!seenAt) return visibleItems.length;
+    return visibleItems.filter(item => String(item.createdAt || '') > seenAt).length;
 };
 
 function Navigation() {
@@ -183,6 +196,7 @@ function Navigation() {
     const [alumniSession, setAlumniSession] = useState(() => getStoredAlumniSession());
     const [navProfile, setNavProfile] = useState(null);
     const [navNotificationCount, setNavNotificationCount] = useState(0);
+    const [notificationRefreshKey, setNotificationRefreshKey] = useState(0);
     const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
     const location = useLocation();
     const menuRef = useRef(null);
@@ -211,16 +225,16 @@ function Navigation() {
 
     useEffect(() => {
         const syncSession = () => setAlumniSession(getStoredAlumniSession());
-        const clearSeenNotifications = () => setNavNotificationCount(0);
+        const requestNotificationRefresh = () => setNotificationRefreshKey(current => current + 1);
         window.addEventListener(ALUMNI_SESSION_EVENT, syncSession);
         window.addEventListener('storage', syncSession);
         window.addEventListener('focus', syncSession);
-        window.addEventListener(NOTIFICATIONS_SEEN_EVENT, clearSeenNotifications);
+        window.addEventListener(NOTIFICATIONS_SEEN_EVENT, requestNotificationRefresh);
         return () => {
             window.removeEventListener(ALUMNI_SESSION_EVENT, syncSession);
             window.removeEventListener('storage', syncSession);
             window.removeEventListener('focus', syncSession);
-            window.removeEventListener(NOTIFICATIONS_SEEN_EVENT, clearSeenNotifications);
+            window.removeEventListener(NOTIFICATIONS_SEEN_EVENT, requestNotificationRefresh);
         };
     }, []);
 
@@ -256,7 +270,7 @@ function Navigation() {
         return () => {
             isMounted = false;
         };
-    }, [alumniSession]);
+    }, [alumniSession, notificationRefreshKey]);
 
     useEffect(() => {
         if (isMobileMenuOpen) {

@@ -44,6 +44,7 @@ const defaultPortalContentState = {
 };
 
 const NOTIFICATION_SEEN_KEY_PREFIX = 'ujlp_alumni_notifications_seen_at';
+const NOTIFICATION_DISMISSED_KEY_PREFIX = 'ujlp_alumni_notifications_dismissed';
 const NOTIFICATIONS_SEEN_EVENT = 'ujlp-alumni-notifications-seen-change';
 
 const normalizeText = (value) => String(value || '').toLowerCase();
@@ -185,6 +186,21 @@ const getMentionHandlesFromText = (value) => Array.from(
 );
 
 const getNotificationSeenKey = (userId) => `${NOTIFICATION_SEEN_KEY_PREFIX}:${userId || 'guest'}`;
+const getNotificationDismissedKey = (userId) => `${NOTIFICATION_DISMISSED_KEY_PREFIX}:${userId || 'guest'}`;
+
+const readDismissedNotificationIds = (userId) => {
+    try {
+        const value = window.localStorage.getItem(getNotificationDismissedKey(userId));
+        const parsed = JSON.parse(value || '[]');
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+};
+
+const writeDismissedNotificationIds = (userId, ids) => {
+    window.localStorage.setItem(getNotificationDismissedKey(userId), JSON.stringify(Array.from(new Set(ids))));
+};
 
 const normalizeNotificationTime = (value) => {
     if (!value) return '';
@@ -256,6 +272,7 @@ function AlumniDirectory() {
     const [feedMentionMenu, setFeedMentionMenu] = useState(defaultFeedMentionMenu);
     const [commentDrafts, setCommentDrafts] = useState({});
     const [notificationsSeenAt, setNotificationsSeenAt] = useState('');
+    const [dismissedNotificationIds, setDismissedNotificationIds] = useState([]);
     const [calendarDraft, setCalendarDraft] = useState(defaultCalendarDraft);
     const [calendarMessage, setCalendarMessage] = useState('');
     const [calendarWeekStart, setCalendarWeekStart] = useState('');
@@ -323,6 +340,7 @@ function AlumniDirectory() {
         }
 
         setNotificationsSeenAt(window.localStorage.getItem(getNotificationSeenKey(currentUserId)) || '');
+        setDismissedNotificationIds(readDismissedNotificationIds(currentUserId));
     }, [currentUserId]);
 
     const ownProfile = useMemo(() => {
@@ -485,13 +503,17 @@ function AlumniDirectory() {
         (portalContent.feedPosts || []).forEach(post => {
             const mentioned = ownHandle && getMentionHandlesFromText(`${post.body || ''} ${(post.tags || []).join(' ')}`).includes(ownHandle);
             if (!isCurrentUserPost(post) || mentioned) {
+                const authorProfile = profiles.find(profile => (
+                    profile.userId === post.authorUserId || normalizeText(profile.fullName) === normalizeText(post.authorName)
+                )) || null;
                 items.push({
                     id: `post-${post.id}`,
                     type: mentioned ? 'Mention' : 'Feed post',
                     title: mentioned ? `${post.authorName || 'Someone'} mentioned you` : `${post.authorName || 'Someone'} posted to the feed`,
                     body: post.title || post.body,
                     createdAt: normalizeNotificationTime(post.createdAt),
-                    postId: post.id
+                    postId: post.id,
+                    photoKey: authorProfile?.photoKey || post.authorPhotoKey || 'blank'
                 });
             }
         });
@@ -501,13 +523,17 @@ function AlumniDirectory() {
             const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
             const onOwnPost = isCurrentUserPost(post);
             if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
+                const commentAuthorProfile = profiles.find(profile => (
+                    profile.userId === comment.authorUserId || normalizeText(profile.fullName) === normalizeText(comment.authorName)
+                )) || null;
                 items.push({
                     id: `comment-${comment.id}`,
                     type: mentioned ? 'Comment mention' : 'Comment',
                     title: mentioned ? `${comment.authorName} mentioned you in a comment` : `${comment.authorName} commented on your post`,
                     body: comment.body,
                     createdAt: normalizeNotificationTime(comment.createdAt),
-                    postId: comment.postId
+                    postId: comment.postId,
+                    photoKey: commentAuthorProfile?.photoKey || comment.authorPhotoKey || 'blank'
                 });
             }
         });
@@ -515,13 +541,17 @@ function AlumniDirectory() {
         (portalContent.feedLikes || []).forEach(like => {
             const post = feedPostsById.get(like.postId);
             if (isCurrentUserPost(post) && like.userId !== currentUserId) {
+                const likeProfile = profiles.find(profile => (
+                    profile.userId === like.userId || normalizeText(profile.fullName) === normalizeText(like.userName)
+                )) || null;
                 items.push({
                     id: `like-${like.postId}-${like.userId}`,
                     type: 'Like',
                     title: `${like.userName} liked your post`,
                     body: post.title || post.body,
                     createdAt: normalizeNotificationTime(like.createdAt),
-                    postId: like.postId
+                    postId: like.postId,
+                    photoKey: likeProfile?.photoKey || like.userPhotoKey || 'blank'
                 });
             }
         });
@@ -533,7 +563,8 @@ function AlumniDirectory() {
                 title: announcement.title,
                 body: announcement.body,
                 createdAt: normalizeNotificationTime(announcement.createdAt || announcement.publishDate),
-                postId: ''
+                postId: '',
+                photoKey: 'blank'
             });
         });
 
@@ -544,12 +575,16 @@ function AlumniDirectory() {
                 title: task.title,
                 body: task.details,
                 createdAt: normalizeNotificationTime(task.createdAt || task.dueDate),
-                postId: ''
+                postId: '',
+                photoKey: 'blank'
             });
         });
 
-        return items.sort((left, right) => String(right.createdAt || '').localeCompare(String(left.createdAt || '')));
-    }, [accountName, currentUserId, ownProfile, portalContent.announcements, portalContent.feedComments, portalContent.feedLikes, portalContent.feedPosts, portalContent.tasks, session?.user?.email]);
+        const dismissedIds = new Set(dismissedNotificationIds);
+        return items
+            .filter(item => !dismissedIds.has(item.id))
+            .sort((left, right) => String(right.createdAt || '').localeCompare(String(left.createdAt || '')));
+    }, [accountName, currentUserId, dismissedNotificationIds, ownProfile, portalContent.announcements, portalContent.feedComments, portalContent.feedLikes, portalContent.feedPosts, portalContent.tasks, profiles, session?.user?.email]);
 
     const unreadNotificationCount = useMemo(() => {
         if (!notificationsSeenAt) return notificationItems.length;
@@ -822,6 +857,17 @@ function AlumniDirectory() {
         } catch (error) {
             setFeedMessage(error.message);
         }
+    };
+
+    const handleNotificationDismiss = (notificationId) => {
+        if (!currentUserId) return;
+
+        setDismissedNotificationIds(current => {
+            const next = Array.from(new Set([...current, notificationId]));
+            writeDismissedNotificationIds(currentUserId, next);
+            window.dispatchEvent(new Event(NOTIFICATIONS_SEEN_EVENT));
+            return next;
+        });
     };
 
     const handleCalendarSave = async (event) => {
