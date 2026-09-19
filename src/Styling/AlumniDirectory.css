@@ -1656,6 +1656,30 @@
     font-weight: 800;
 }
 
+.alumni-feed-social-actions .alumni-like-button {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+}
+
+.alumni-like-button svg {
+    width: .92rem;
+    height: .92rem;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+}
+
+.alumni-like-button.is-active svg {
+    fill: currentColor;
+}
+
+.alumni-feed-social-actions .alumni-like-count-button {
+    border-color: rgba(166, 195, 223, .28);
+    color: var(--alumni-ink);
+}
+
 .alumni-feed-social-actions button:hover,
 .alumni-feed-social-actions button.is-active {
     border-color: rgba(201, 163, 91, .65);
@@ -1666,6 +1690,45 @@
 .alumni-feed-social p {
     color: var(--alumni-faint);
     font-size: .78rem;
+}
+
+.alumni-like-dropdown {
+    width: min(23rem, 100%);
+    display: grid;
+    gap: .45rem;
+    padding: .65rem;
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 8px;
+    background: #071827;
+    box-shadow: 0 16px 30px rgba(0, 0, 0, .22);
+}
+
+.alumni-like-dropdown > span {
+    color: var(--alumni-faint);
+    font-size: .82rem;
+}
+
+.alumni-like-row {
+    display: grid;
+    grid-template-columns: 1.9rem minmax(0, 1fr);
+    gap: .55rem;
+    align-items: center;
+}
+
+.alumni-like-row img {
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 999px;
+    object-fit: cover;
+}
+
+.alumni-like-row strong {
+    overflow: hidden;
+    color: var(--alumni-ink);
+    font-size: .84rem;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .alumni-feed-comments {

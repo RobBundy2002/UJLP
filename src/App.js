@@ -247,10 +247,12 @@ function Navigation() {
 
     useEffect(() => {
         let isMounted = true;
-        setNavProfile(null);
         setNavNotificationCount(0);
 
-        if (!alumniSession?.user?.id) return undefined;
+        if (!alumniSession?.user?.id) {
+            setNavProfile(null);
+            return undefined;
+        }
 
         Promise.allSettled([
             fetchAlumniProfiles(alumniSession),
@@ -265,8 +267,6 @@ function Navigation() {
 
                 if (profileResult.status === 'fulfilled') {
                     setNavProfile(ownProfile);
-                } else {
-                    setNavProfile(null);
                 }
 
                 if (portalResult.status === 'fulfilled') {
@@ -306,6 +306,9 @@ function Navigation() {
     const isSignedIn = Boolean(alumniSession?.user?.email);
     const isAdmin = isAlumniAdmin(alumniSession);
     const accountName = getCompactAlumniName(navProfile, alumniSession?.user);
+    const accountPhotoKey = navProfile?.photoKey || '';
+    const hasAccountPhoto = Boolean(accountPhotoKey && accountPhotoKey !== 'blank');
+    const accountInitial = String(accountName || alumniSession?.user?.email || 'U').trim().charAt(0).toUpperCase() || 'U';
 
     return (
         <header className={`App-header ${isHeroRoute ? 'over-hero' : ''} ${isScrolled ? 'scrolled' : ''}`}>
@@ -351,7 +354,11 @@ function Navigation() {
                             aria-haspopup="menu"
                             aria-label={`Open account menu for ${accountName}`}
                         >
-                            <img src={getAlumniPhoto(navProfile?.photoKey || 'blank')} alt="" />
+                            {hasAccountPhoto ? (
+                                <img src={getAlumniPhoto(accountPhotoKey)} alt="" />
+                            ) : (
+                                <span className="header-account-initial" aria-hidden="true">{accountInitial}</span>
+                            )}
                             {navNotificationCount > 0 && (
                                 <b className="header-account-badge">{navNotificationCount > 99 ? '99+' : navNotificationCount}</b>
                             )}
@@ -359,7 +366,11 @@ function Navigation() {
                         {isAccountMenuOpen && (
                             <div className="header-account-menu" role="menu">
                                 <div className="header-account-menu-summary" role="presentation">
-                                    <img src={getAlumniPhoto(navProfile?.photoKey || 'blank')} alt="" />
+                                    {hasAccountPhoto ? (
+                                        <img src={getAlumniPhoto(accountPhotoKey)} alt="" />
+                                    ) : (
+                                        <span className="header-account-menu-initial" aria-hidden="true">{accountInitial}</span>
+                                    )}
                                     <div>
                                         <strong>{accountName}</strong>
                                         {isAdmin && <span>Admin</span>}

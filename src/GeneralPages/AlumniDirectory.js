@@ -277,6 +277,7 @@ function AlumniDirectory() {
     const [feedMessage, setFeedMessage] = useState('');
     const [feedMentionMenu, setFeedMentionMenu] = useState(defaultFeedMentionMenu);
     const [commentDrafts, setCommentDrafts] = useState({});
+    const [expandedLikePostId, setExpandedLikePostId] = useState('');
     const [notificationsSeenAt, setNotificationsSeenAt] = useState('');
     const [dismissedNotificationIds, setDismissedNotificationIds] = useState([]);
     const [calendarDraft, setCalendarDraft] = useState(createDefaultCalendarDraft);
@@ -1302,6 +1303,20 @@ function AlumniDirectory() {
         profile.userId === comment.authorUserId || normalizeText(profile.fullName) === normalizeText(comment.authorName)
     )) || null;
 
+    const getLikeAuthorProfile = (like) => profiles.find(profile => (
+        profile.userId === like.userId || normalizeText(profile.fullName) === normalizeText(like.userName)
+    )) || null;
+
+    const formatLikeSummary = (likes) => {
+        const names = likes
+            .map(like => like.userName)
+            .filter(Boolean);
+        if (names.length === 0) return 'No likes yet';
+        if (names.length === 1) return `${names[0]} liked this`;
+        if (names.length === 2) return `${names[0]} and ${names[1]} liked this`;
+        return `${names[0]}, ${names[1]} and ${names.length - 2} other${names.length - 2 === 1 ? '' : 's'} liked this`;
+    };
+
     const updateFeedMentionMenu = (value, cursorIndex) => {
         const activeMention = getActiveFeedMention(value, cursorIndex);
         if (!activeMention) {
@@ -1416,10 +1431,8 @@ function AlumniDirectory() {
             const postComments = feedCommentsByPostId[post.id] || [];
             const postLikes = feedLikesByPostId[post.id] || [];
             const likedByMe = postLikes.some(like => like.userId === currentUserId);
-            const likerNames = postLikes.map(like => like.userName).filter(Boolean);
-            const likeSummary = likerNames.length === 0
-                ? 'No likes yet'
-                : `Liked by ${likerNames.slice(0, 3).join(', ')}${likerNames.length > 3 ? ` and ${likerNames.length - 3} more` : ''}`;
+            const likesExpanded = expandedLikePostId === post.id;
+            const likeSummary = formatLikeSummary(postLikes);
             return (
                 <article className="alumni-feed-card" key={post.id}>
                     <div className="alumni-feed-author">
@@ -1448,15 +1461,46 @@ function AlumniDirectory() {
                         <div className="alumni-feed-social-actions">
                             <button
                                 type="button"
-                                className={likedByMe ? 'is-active' : ''}
+                                className={`alumni-like-button${likedByMe ? ' is-active' : ''}`}
                                 aria-pressed={likedByMe}
                                 onClick={() => handleFeedLike(post)}
                             >
-                                {likedByMe ? 'Liked' : 'Like'} · {postLikes.length}
+                                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                                    <path d="M12 21s-7.5-4.6-9.6-9.1C.9 8.7 2.7 5 6.2 5c2 0 3.4 1.1 4.2 2.3C11.2 6.1 12.6 5 14.6 5c3.5 0 5.3 3.7 3.8 6.9C16.3 16.4 12 21 12 21Z" />
+                                </svg>
+                                {likedByMe ? 'Hearted' : 'Heart'}
+                            </button>
+                            <button
+                                type="button"
+                                className="alumni-like-count-button"
+                                aria-expanded={likesExpanded}
+                                onClick={() => setExpandedLikePostId(current => current === post.id ? '' : post.id)}
+                            >
+                                {postLikes.length} like{postLikes.length === 1 ? '' : 's'}
                             </button>
                             <span>{postComments.length} comment{postComments.length === 1 ? '' : 's'}</span>
                         </div>
                         <p>{likeSummary}</p>
+                        {likesExpanded && (
+                            <div className="alumni-like-dropdown">
+                                {postLikes.length === 0 && <span>No one has liked this yet.</span>}
+                                {postLikes.map(like => {
+                                    const likeProfile = getLikeAuthorProfile(like);
+                                    return (
+                                        <div className="alumni-like-row" key={`${post.id}-${like.userId || like.userName}`}>
+                                            <img src={getAlumniPhoto(likeProfile?.photoKey || like.userPhotoKey || 'blank')} alt="" />
+                                            {likeProfile ? (
+                                                <button type="button" className="alumni-feed-author-link" onClick={() => openProfileView(likeProfile)}>
+                                                    {getProfileName(likeProfile)}
+                                                </button>
+                                            ) : (
+                                                <strong>{like.userName || 'UJLP member'}</strong>
+                                            )}
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
                     <div className="alumni-feed-comments">
                         {postComments.map(comment => {
