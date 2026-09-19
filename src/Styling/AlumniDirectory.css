@@ -1464,6 +1464,176 @@
     box-shadow: 0 0 0 3px rgba(79, 142, 197, .18);
 }
 
+.alumni-directory-page .alumni-portal-section {
+    background:
+        linear-gradient(180deg, rgba(11, 27, 47, .58), rgba(7, 17, 31, .96) 18rem),
+        var(--alumni-bg);
+}
+
+.alumni-directory-page .alumni-portal-shell {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.alumni-directory-page .alumni-portal-sidebar {
+    border-color: rgba(166, 195, 223, .22);
+    background: rgba(10, 23, 40, .9);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, .24);
+}
+
+.alumni-directory-page .alumni-portal-main {
+    gap: 1.15rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+.alumni-directory-page .alumni-portal-account-bar,
+.alumni-directory-page .alumni-home-feed,
+.alumni-directory-page .alumni-home-rail,
+.alumni-directory-page .alumni-task-list,
+.alumni-directory-page .alumni-notification-list,
+.alumni-directory-page .alumni-calendar-form,
+.alumni-directory-page .alumni-calendar-list,
+.alumni-directory-page .alumni-admin-form,
+.alumni-directory-page .alumni-admin-list,
+.alumni-directory-page .alumni-resource-card {
+    border-color: rgba(166, 195, 223, .2);
+    background: rgba(12, 30, 51, .92);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, .2);
+}
+
+.alumni-directory-page .alumni-portal-account-bar {
+    min-height: 4.75rem;
+    padding: 1rem 1.1rem;
+}
+
+.alumni-directory-page .alumni-dashboard {
+    border-bottom: 0;
+    background: transparent;
+}
+
+.alumni-directory-page .alumni-metrics {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: .75rem;
+}
+
+.alumni-directory-page .alumni-metrics div {
+    min-height: 7rem;
+    border-color: rgba(166, 195, 223, .18);
+    background:
+        linear-gradient(180deg, rgba(20, 53, 87, .82), rgba(11, 27, 47, .95)),
+        var(--alumni-bg-soft);
+    box-shadow: inset 0 1px 0 rgba(247, 241, 231, .08);
+}
+
+.alumni-directory-page .alumni-home-grid,
+.alumni-directory-page .alumni-admin-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, .36fr);
+    gap: 1.15rem;
+}
+
+.alumni-directory-page .alumni-home-feed,
+.alumni-directory-page .alumni-home-rail,
+.alumni-directory-page .alumni-task-list,
+.alumni-directory-page .alumni-notification-list,
+.alumni-directory-page .alumni-feed-composer,
+.alumni-directory-page .alumni-calendar-form,
+.alumni-directory-page .alumni-calendar-list,
+.alumni-directory-page .alumni-admin-form,
+.alumni-directory-page .alumni-admin-list {
+    gap: 1rem;
+    padding: 1.1rem;
+}
+
+.alumni-directory-page .alumni-panel-heading {
+    padding-bottom: .9rem;
+    border-bottom-color: rgba(201, 163, 91, .28);
+}
+
+.alumni-directory-page .alumni-feed-card,
+.alumni-directory-page .alumni-upcoming-card,
+.alumni-directory-page .alumni-calendar-card,
+.alumni-directory-page .alumni-task-card,
+.alumni-directory-page .alumni-notification-card,
+.alumni-directory-page .alumni-admin-item {
+    border-color: rgba(166, 195, 223, .16);
+    background: rgba(7, 24, 39, .78);
+    box-shadow: inset 0 1px 0 rgba(247, 241, 231, .05);
+}
+
+.alumni-directory-page .alumni-resource-grid {
+    align-items: stretch;
+}
+
+.alumni-directory-page .alumni-resource-card {
+    min-height: 9.5rem;
+    align-content: start;
+}
+
+.alumni-directory-page .alumni-mail-action {
+    grid-column: 1 / -1;
+    width: fit-content;
+    justify-self: start;
+    padding: 0 1.15rem;
+}
+
+.alumni-directory-page .alumni-tools {
+    padding: 1rem;
+    border: 1px solid rgba(166, 195, 223, .18);
+    border-radius: 8px;
+    background: rgba(12, 30, 51, .9);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, .18);
+}
+
+.alumni-directory-page .alumni-results {
+    gap: .9rem;
+}
+
+.alumni-directory-page .alumni-profile-row {
+    grid-template-columns: 5.25rem minmax(0, 1fr);
+    gap: .9rem 1rem;
+    padding: 1rem;
+    border-color: rgba(166, 195, 223, .2);
+    background: rgba(12, 30, 51, .92);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, .16);
+}
+
+.alumni-directory-page .alumni-profile-main {
+    min-width: 0;
+}
+
+.alumni-directory-page .alumni-profile-main h3 {
+    margin-top: .42rem;
+    font-size: clamp(1.45rem, 2.5vw, 1.95rem);
+}
+
+.alumni-directory-page .alumni-profile-details,
+.alumni-directory-page .alumni-profile-footer {
+    grid-column: 2;
+}
+
+.alumni-directory-page .alumni-profile-details {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    background: rgba(166, 195, 223, .14);
+}
+
+.alumni-directory-page .alumni-profile-details div {
+    min-height: 4rem;
+    background: rgba(7, 24, 39, .76);
+}
+
+.alumni-directory-page .alumni-profile-footer {
+    align-items: center;
+    padding-top: .1rem;
+}
+
+.alumni-directory-page .alumni-tags span,
+.alumni-directory-page .alumni-contact-actions a,
+.alumni-directory-page .alumni-contact-actions span {
+    background: rgba(247, 241, 231, .03);
+}
+
 @media (max-width: 1040px) {
     .alumni-hero-grid,
     .alumni-auth-layout,
@@ -1520,6 +1690,25 @@
     .alumni-account-actions {
         width: 100%;
         margin-left: 0;
+    }
+
+    .alumni-directory-page .alumni-portal-shell,
+    .alumni-directory-page .alumni-home-grid,
+    .alumni-directory-page .alumni-admin-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .alumni-directory-page .alumni-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .alumni-directory-page .alumni-profile-details,
+    .alumni-directory-page .alumni-profile-footer {
+        grid-column: 1 / -1;
+    }
+
+    .alumni-directory-page .alumni-profile-details {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
@@ -1605,5 +1794,33 @@
     .alumni-task-card,
     .alumni-admin-item {
         grid-template-columns: 1fr;
+    }
+
+    .alumni-directory-page .alumni-profile-row {
+        grid-template-columns: 4.75rem minmax(0, 1fr);
+        padding: .85rem;
+    }
+
+    .alumni-directory-page .alumni-profile-details,
+    .alumni-directory-page .alumni-profile-footer {
+        grid-column: 1 / -1;
+    }
+
+    .alumni-directory-page .alumni-metrics,
+    .alumni-directory-page .alumni-profile-details {
+        grid-template-columns: 1fr;
+    }
+
+    .alumni-directory-page .alumni-home-feed,
+    .alumni-directory-page .alumni-home-rail,
+    .alumni-directory-page .alumni-task-list,
+    .alumni-directory-page .alumni-notification-list,
+    .alumni-directory-page .alumni-feed-composer,
+    .alumni-directory-page .alumni-calendar-form,
+    .alumni-directory-page .alumni-calendar-list,
+    .alumni-directory-page .alumni-admin-form,
+    .alumni-directory-page .alumni-admin-list,
+    .alumni-directory-page .alumni-tools {
+        padding: .85rem;
     }
 }

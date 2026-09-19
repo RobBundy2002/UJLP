@@ -1216,7 +1216,7 @@ function AlumniDirectory() {
     );
 
     return (
-        <div className="alumni-directory jh-page fade-in">
+        <div className="alumni-directory alumni-directory-page jh-page fade-in">
             <section className="alumni-hero">
                 <ParticleBackground />
                 <div className="section-content alumni-hero-grid">
