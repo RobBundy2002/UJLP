@@ -524,14 +524,24 @@ function AlumniDirectory() {
             const post = feedPostsById.get(comment.postId);
             const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
             const onOwnPost = isCurrentUserPost(post);
-            if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
+            const isOwnComment = (
+                comment.authorUserId === currentUserId ||
+                [
+                    ownProfile?.fullName,
+                    session?.user?.email,
+                    accountName
+                ].some(value => normalizeText(value) === normalizeText(comment.authorName))
+            );
+            if (onOwnPost || (mentioned && !isOwnComment)) {
                 const commentAuthorProfile = profiles.find(profile => (
                     profile.userId === comment.authorUserId || normalizeText(profile.fullName) === normalizeText(comment.authorName)
                 )) || null;
                 items.push({
                     id: `comment-${comment.id}`,
                     type: mentioned ? 'Comment mention' : 'Comment',
-                    title: mentioned ? `${comment.authorName} mentioned you in a comment` : `${comment.authorName} commented on your post`,
+                    title: mentioned
+                        ? `${comment.authorName} mentioned you in a comment`
+                        : `${isOwnComment ? 'You' : comment.authorName} commented on your post`,
                     body: comment.body,
                     createdAt: normalizeNotificationTime(comment.createdAt),
                     postId: comment.postId,
