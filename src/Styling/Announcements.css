@@ -6,14 +6,14 @@
 .announcements-container .section-content {
     width: min(1200px, 100%);
     margin: 0 auto;
-    padding: 4.5rem 2rem;
+    padding: 3.4rem 2rem;
 }
 
 .announcements-hero {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-top: 5.75rem;
+    padding-top: 4.6rem;
     border-bottom: 1px solid rgba(247, 241, 231, .14);
     background:
         linear-gradient(135deg, rgba(185, 72, 52, .22), transparent 42%),
@@ -31,7 +31,7 @@
     grid-template-columns: minmax(0, 1.2fr) minmax(280px, .55fr);
     gap: 2rem;
     align-items: end;
-    min-height: 23rem;
+    min-height: 18.5rem;
 }
 
 .announcements-hero h1 {
@@ -349,7 +349,7 @@
 
 @media (max-width: 640px) {
     .announcements-container .section-content {
-        padding: 3.25rem 1rem;
+        padding: 2.8rem 1rem;
     }
 
     .announcement-admin-fields,

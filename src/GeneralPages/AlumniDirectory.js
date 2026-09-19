@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
+import { getCompactAlumniName } from '../Data/alumniDisplay';
 import { alumniPhotoOptions, getAlumniPhoto } from '../Data/alumniPhotoRegistry';
 import {
     createBlankAlumniProfile,
@@ -13,7 +14,6 @@ import {
     isAlumniProfileInviteConfigured,
     saveAlumniProfile,
     signInAlumni,
-    signOutAlumni,
     signUpAlumni
 } from '../Services/alumniApi';
 import { deletePortalItem, fetchPortalContent, savePortalItem } from '../Services/alumniPortalApi';
@@ -198,6 +198,8 @@ function AlumniDirectory() {
         }
     }, [profileMode, activeProfile?.id, activeProfile?.userId, activeProfile?.updatedAt, activeProfile]);
 
+    const accountName = getCompactAlumniName(ownProfile, session?.user);
+
     const classYears = useMemo(() => {
         const values = profiles
             .map(profile => profile.classYear)
@@ -279,17 +281,6 @@ function AlumniDirectory() {
         } finally {
             setLoading(false);
         }
-    };
-
-    const handleSignOut = async () => {
-        await signOutAlumni(session);
-        setSession(null);
-        setProfiles([]);
-        setProfileDraft(null);
-        setEditingProfileUserId(null);
-        setActiveView('home');
-        setProfileMode('view');
-        setPortalContent({ feedPosts: [], announcements: [], tasks: [] });
     };
 
     const updateFilter = (key, value) => {
@@ -1012,9 +1003,8 @@ function AlumniDirectory() {
             <div className="alumni-account-actions">
                 <button type="button" className={activeView === 'profile' && editingProfileUserId === session.user.id ? 'active' : ''} onClick={() => openOwnProfile('view')}>
                     <img src={getAlumniPhoto(ownProfile?.photoKey || 'blank')} alt="" />
-                    <span>{ownProfile?.fullName || session.user.email}</span>
+                    <span>{accountName}</span>
                 </button>
-                <button type="button" onClick={handleSignOut}>Sign out</button>
             </div>
         </div>
     );
@@ -1201,7 +1191,7 @@ function AlumniDirectory() {
                     </div>
                     <div className="alumni-hero-panel">
                         <span>{session ? 'Active session' : 'Member access'}</span>
-                        <strong>{session ? session.user.email : 'Sign in to continue'}</strong>
+                        <strong>{session ? accountName : 'Sign in to continue'}</strong>
                         <p>{session ? `${profiles.length} profiles available${isAdmin ? ' with admin access' : ''}.` : 'Accounts are protected by Supabase Auth and UJLP directory permissions.'}</p>
                     </div>
                 </div>

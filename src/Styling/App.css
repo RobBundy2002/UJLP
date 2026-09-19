@@ -469,7 +469,7 @@ footer {
     .header-account {
         position: absolute;
         right: 3.15rem;
-        bottom: 2.05rem;
+        bottom: 2.18rem;
         margin: 0;
         max-width: calc(100vw - 12rem);
     }
@@ -477,7 +477,7 @@ footer {
     .header-account-signin {
         position: absolute;
         right: 3.15rem;
-        bottom: 2.05rem;
+        bottom: 2.18rem;
         margin: 0;
         min-height: 2.35rem;
         padding: .35rem .55rem;
@@ -972,7 +972,7 @@ footer {
 .header-search {
     display: flex;
     align-items: center;
-    margin-top: .75rem;
+    margin-top: .62rem;
     margin-left: 1rem;
     flex-shrink: 0;
 }
@@ -982,7 +982,7 @@ footer {
     display: flex;
     align-items: center;
     gap: .45rem;
-    margin-top: .72rem;
+    margin-top: .46rem;
     margin-left: .75rem;
     flex-shrink: 0;
 }
@@ -1011,7 +1011,7 @@ footer {
 }
 
 .header-account-signin {
-    margin-top: .72rem;
+    margin-top: .46rem;
     margin-left: .75rem;
     flex-shrink: 0;
     color: var(--text-secondary);

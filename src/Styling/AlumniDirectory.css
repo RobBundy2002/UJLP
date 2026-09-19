@@ -19,7 +19,7 @@
 .alumni-directory .section-content {
     width: min(1280px, 100%);
     margin: 0 auto;
-    padding: 4.75rem 2rem;
+    padding: 3.6rem 2rem;
 }
 
 .alumni-directory .jh-eyebrow,
@@ -31,7 +31,7 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-top: 5.75rem;
+    padding-top: 4.6rem;
     border-bottom: 1px solid var(--alumni-line);
     background:
         linear-gradient(135deg, rgba(185, 72, 52, .22), transparent 42%),
@@ -58,7 +58,7 @@
     grid-template-columns: minmax(0, 1.25fr) minmax(280px, .58fr);
     gap: 2rem;
     align-items: end;
-    min-height: 25rem;
+    min-height: 20rem;
 }
 
 .alumni-hero-copy {
@@ -1134,11 +1134,11 @@
 
 @media (max-width: 720px) {
     .alumni-directory .section-content {
-        padding: 3.25rem 1rem;
+        padding: 2.8rem 1rem;
     }
 
     .alumni-hero {
-        padding-top: 5rem;
+        padding-top: 4.25rem;
     }
 
     .alumni-hero-grid {

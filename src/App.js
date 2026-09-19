@@ -45,6 +45,7 @@ import {
     isAlumniAdmin,
     signOutAlumni
 } from './Services/alumniApi';
+import { getCompactAlumniName } from './Data/alumniDisplay';
 import { getAlumniPhoto } from './Data/alumniPhotoRegistry';
 
 function ScrollToTop() {
@@ -170,7 +171,7 @@ function Navigation() {
     const isHeroRoute = heroRoutes.includes(location.pathname);
     const isSignedIn = Boolean(alumniSession?.user?.email);
     const isAdmin = isAlumniAdmin(alumniSession);
-    const accountName = navProfile?.fullName || alumniSession?.user?.email || '';
+    const accountName = getCompactAlumniName(navProfile, alumniSession?.user);
 
     return (
         <header className={`App-header ${isHeroRoute ? 'over-hero' : ''} ${isScrolled ? 'scrolled' : ''}`}>
