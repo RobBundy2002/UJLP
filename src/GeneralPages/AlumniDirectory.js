@@ -2,7 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
-import { getCompactAlumniName } from '../Data/alumniDisplay';
+import {
+    getAlumniPrimaryOrg,
+    getAlumniProfileLine,
+    getAlumniProfileTypeLabel,
+    getCompactAlumniName,
+    getPrimaryAlumniJob
+} from '../Data/alumniDisplay';
 import { getAlumniPhoto } from '../Data/alumniPhotoRegistry';
 import {
     fetchAlumniProfiles,
@@ -44,15 +50,6 @@ const formatUpdatedDate = (value) => {
 };
 
 const getProfileName = (profile) => profile?.fullName || 'Unnamed member';
-
-const getProfileLine = (profile) => {
-    const pieces = [
-        profile?.ujlpRole || 'UJLP member',
-        profile?.classYear ? `Class of ${profile.classYear}` : '',
-        profile?.currentOrg || profile?.lawSchool || profile?.gradSchool || ''
-    ].filter(Boolean);
-    return pieces.join(' / ');
-};
 
 const getPathLabel = (profile) => pathTypeLabels[profile?.pathType] || 'Other';
 
@@ -183,8 +180,12 @@ function AlumniDirectory() {
                 profile.industry,
                 profile.lawSchool,
                 profile.gradSchool,
+                profile.undergraduateSchool,
                 profile.undergradMajor,
+                profile.degreeTitle,
                 profile.email,
+                profile.profileType,
+                ...(profile.jobs || []).flatMap(job => [job.employer, job.industry, job.title, job.sector]),
                 ...(profile.interests || [])
             ].map(normalizeText).join(' ');
 
@@ -212,7 +213,7 @@ function AlumniDirectory() {
         ).size;
         const values = [
             ['Profiles', profiles.length],
-            ['Alumni', profiles.filter(profile => profile.status === 'alumni').length],
+            ['Alumni', profiles.filter(profile => profile.status === 'alumni' && profile.profileType !== 'unaffiliated').length],
             ['Class years', classYearCount],
             ['Paths listed', pathCount],
             ['Schools / orgs', schoolOrgCount]
@@ -461,17 +462,17 @@ function AlumniDirectory() {
             </div>
             <div className="alumni-profile-main">
                 <div className="alumni-profile-title">
-                    <span>{profile.status === 'current' ? 'Current member' : 'Alumni'}</span>
+                    <span>{getAlumniProfileTypeLabel(profile)}</span>
                     <span>{getPathLabel(profile)}</span>
                     {profile.isExample && <b>Preview</b>}
                     {!profile.directoryVisible && <b>Hidden</b>}
                 </div>
                 <h3>{getProfileName(profile)}</h3>
-                <p>{getProfileLine(profile) || 'Profile details pending'}</p>
+                <p>{getAlumniProfileLine(profile) || 'Profile details pending'}</p>
             </div>
             <div className="alumni-profile-details">
-                <div><span>Employer / school</span><strong>{profile.currentOrg || profile.lawSchool || profile.gradSchool || 'Not provided'}</strong></div>
-                <div><span>Role</span><strong>{profile.currentTitle || profile.industry || 'Not provided'}</strong></div>
+                <div><span>Employer / school</span><strong>{getAlumniPrimaryOrg(profile) || 'Not provided'}</strong></div>
+                <div><span>Role</span><strong>{getPrimaryAlumniJob(profile)?.title || profile.currentTitle || profile.industry || 'Not provided'}</strong></div>
                 <div><span>Location</span><strong>{profile.location || 'Not provided'}</strong></div>
                 <div><span>Updated</span><strong>{formatUpdatedDate(profile.updatedAt)}</strong></div>
             </div>
@@ -579,12 +580,14 @@ function AlumniDirectory() {
 
         const isOwnProfile = activeProfile.userId === session?.user?.id;
         const facts = [
+            ['Profile type', getAlumniProfileTypeLabel(activeProfile)],
             ['UJLP role', activeProfile.ujlpRole],
-            ['Class year', activeProfile.classYear],
+            [activeProfile.profileType === 'uva-law-student' ? 'Law class year' : 'Class year', activeProfile.classYear],
             ['Path', getPathLabel(activeProfile)],
-            ['Current title', activeProfile.currentTitle],
-            ['Employer / school', activeProfile.currentOrg || activeProfile.lawSchool || activeProfile.gradSchool],
+            ['Current title', getPrimaryAlumniJob(activeProfile)?.title || activeProfile.currentTitle],
+            ['Employer / school', getAlumniPrimaryOrg(activeProfile)],
             ['Major or program', activeProfile.undergradMajor],
+            ['Highest degree', activeProfile.degreeTitle],
             ['Location', activeProfile.location],
             ['Updated', formatUpdatedDate(activeProfile.updatedAt)]
         ];
@@ -599,13 +602,13 @@ function AlumniDirectory() {
                             </div>
                             <div>
                                 <div className="alumni-profile-title">
-                                    <span>{activeProfile.status === 'current' ? 'Current member' : 'Alumni'}</span>
+                                    <span>{getAlumniProfileTypeLabel(activeProfile)}</span>
                                     <span>{activeProfile.willingToChat ? 'Open to outreach' : 'Not currently open'}</span>
                                     {!activeProfile.directoryVisible && <b>Hidden</b>}
                                     {isAdmin && !isOwnProfile && <b>Admin view</b>}
                                 </div>
                                 <h2>{getProfileName(activeProfile)}</h2>
-                                <p>{getProfileLine(activeProfile) || 'Profile details pending'}</p>
+                                <p>{getAlumniProfileLine(activeProfile) || 'Profile details pending'}</p>
                             </div>
                             <div className="alumni-profile-view-actions">
                                 {isOwnProfile && (

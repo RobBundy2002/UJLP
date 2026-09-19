@@ -2,8 +2,24 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
-import { getCompactAlumniName } from '../Data/alumniDisplay';
+import {
+    getAlumniPrimaryOrg,
+    getAlumniProfileLine,
+    getAlumniProfileTypeLabel,
+    getCompactAlumniName,
+    getPrimaryAlumniJob
+} from '../Data/alumniDisplay';
 import { getAlumniPhoto } from '../Data/alumniPhotoRegistry';
+import {
+    anticipatedPathOptions,
+    degreeTitleOptions,
+    employerIndustryOptions,
+    jobSectorOptions,
+    locationSuggestions,
+    profileTypeOptions,
+    ujlpRoleOptions,
+    uvaMajorOptions
+} from '../Data/profileFormOptions';
 import {
     ALUMNI_SESSION_EVENT,
     createBlankAlumniProfile,
@@ -16,21 +32,6 @@ import {
 } from '../Services/alumniApi';
 import '../Styling/AlumniDirectory.css';
 import '../Styling/EditorialPages.css';
-
-const profileFields = [
-    ['fullName', 'Full name', 'text'],
-    ['classYear', 'UVA class year', 'text'],
-    ['ujlpRole', 'UJLP role', 'text'],
-    ['undergradMajor', 'Major or program', 'text'],
-    ['currentTitle', 'Current title', 'text'],
-    ['currentOrg', 'Employer or school', 'text'],
-    ['industry', 'Industry', 'text'],
-    ['lawSchool', 'Law school', 'text'],
-    ['gradSchool', 'Graduate school', 'text'],
-    ['location', 'Location', 'text'],
-    ['email', 'Preferred email', 'email'],
-    ['linkedinUrl', 'LinkedIn URL', 'url']
-];
 
 const toInterestText = (interests) => (Array.isArray(interests) ? interests.join(', ') : '');
 
@@ -52,16 +53,95 @@ const formatUpdatedDate = (value) => {
 
 const getProfileName = (profile) => profile?.fullName || 'Unnamed member';
 
-const getProfileLine = (profile) => {
-    const pieces = [
-        profile?.ujlpRole || 'UJLP member',
-        profile?.classYear ? `Class of ${profile.classYear}` : '',
-        profile?.currentOrg || profile?.lawSchool || profile?.gradSchool || ''
-    ].filter(Boolean);
-    return pieces.join(' / ');
+const getPathLabel = (profile) => pathTypeLabels[profile?.pathType] || 'Other';
+
+const emptyJob = () => ({
+    employer: '',
+    industry: '',
+    title: '',
+    sector: ''
+});
+
+const normalizeYearInput = (value) => String(value || '').replace(/\D/g, '').slice(0, 4);
+
+const clampPercent = (value) => Math.min(Math.max(value, 0), 100);
+
+const getSelectOptions = (options, currentValue = '') => {
+    if (!currentValue || options.includes(currentValue)) return options;
+    return [currentValue, ...options];
 };
 
-const getPathLabel = (profile) => pathTypeLabels[profile?.pathType] || 'Other';
+const getProfileDefaultsForType = (profileType) => {
+    if (profileType === 'uva-undergraduate-alumni') {
+        return {
+            status: 'current',
+            currentTitle: 'Undergraduate Student',
+            currentOrg: 'University of Virginia',
+            industry: 'Current Student',
+            pathType: 'undecided',
+            lawSchool: '',
+            gradSchool: '',
+            degreeTitle: '',
+            undergraduateSchool: '',
+            affiliatedWithUjlp: true,
+            jobs: []
+        };
+    }
+
+    if (profileType === 'uva-law-student') {
+        return {
+            status: 'current',
+            currentTitle: 'UVA Law Student',
+            currentOrg: 'University of Virginia School of Law',
+            industry: 'Law School',
+            pathType: 'law-school',
+            lawSchool: 'University of Virginia School of Law',
+            gradSchool: '',
+            degreeTitle: 'Juris Doctor',
+            affiliatedWithUjlp: false,
+            jobs: [emptyJob()]
+        };
+    }
+
+    if (profileType === 'unaffiliated') {
+        return {
+            status: 'alumni',
+            currentTitle: '',
+            currentOrg: '',
+            industry: '',
+            pathType: 'other',
+            lawSchool: '',
+            gradSchool: '',
+            undergraduateSchool: '',
+            undergradMajor: '',
+            ujlpRole: '',
+            affiliatedWithUjlp: false,
+            jobs: [emptyJob()]
+        };
+    }
+
+    return {};
+};
+
+const getJobsForDraft = (profileDraft) => {
+    if (!profileDraft) return [];
+    if (Array.isArray(profileDraft.jobs) && profileDraft.jobs.length > 0) return profileDraft.jobs;
+    if (profileDraft.profileType === 'uva-law-student' || profileDraft.profileType === 'unaffiliated') return [emptyJob()];
+    return [];
+};
+
+const jobSectorToPathType = (sector) => {
+    const normalizedSector = String(sector || '').toLowerCase();
+    if (normalizedSector.includes('government')) return 'government';
+    if (normalizedSector.includes('nonprofit')) return 'nonprofit';
+    if (normalizedSector.includes('public')) return 'public-service';
+    if (normalizedSector.includes('finance')) return 'finance';
+    if (normalizedSector.includes('consulting')) return 'consulting';
+    if (normalizedSector.includes('legal')) return 'law-firm';
+    if (normalizedSector.includes('private')) return 'private-sector';
+    if (normalizedSector.includes('education') || normalizedSector.includes('academia')) return 'graduate-school';
+    return 'other';
+};
 
 const cropPhotoToDataUrl = (source, { cropX, cropY, zoom }) => new Promise((resolve, reject) => {
     const image = new Image();
@@ -95,6 +175,7 @@ function AlumniProfile() {
     const [profileInviteMessage, setProfileInviteMessage] = useState('');
     const [photoCropSource, setPhotoCropSource] = useState('');
     const [photoCrop, setPhotoCrop] = useState({ cropX: 50, cropY: 50, zoom: 1 });
+    const [photoDragStart, setPhotoDragStart] = useState(null);
     const [photoMessage, setPhotoMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
@@ -155,6 +236,53 @@ function AlumniProfile() {
         setProfileDraft(current => ({ ...current, [key]: value }));
     };
 
+    const selectProfileType = (profileType) => {
+        setProfileDraft(current => {
+            const defaults = current?.profileType === profileType ? {} : getProfileDefaultsForType(profileType);
+            return {
+                ...current,
+                ...defaults,
+                profileType,
+                email: current?.email || session?.user?.email || '',
+                fullName: current?.fullName || '',
+                classYear: current?.classYear || '',
+                interestsText: current?.interestsText || '',
+                photoKey: current?.photoKey || 'blank',
+                bio: current?.bio || '',
+                directoryVisible: current?.directoryVisible ?? true,
+                willingToChat: current?.willingToChat ?? true,
+                inviteCode: current?.inviteCode || profileInviteCode.trim()
+            };
+        });
+        setProfileMessage('');
+    };
+
+    const updateYearField = (value) => {
+        updateDraft('classYear', normalizeYearInput(value));
+    };
+
+    const updateJob = (index, key, value) => {
+        setProfileDraft(current => {
+            const jobs = getJobsForDraft(current).map(job => ({ ...job }));
+            jobs[index] = { ...(jobs[index] || emptyJob()), [key]: value };
+            return { ...current, jobs };
+        });
+    };
+
+    const addJob = () => {
+        setProfileDraft(current => ({
+            ...current,
+            jobs: [...getJobsForDraft(current), emptyJob()]
+        }));
+    };
+
+    const removeJob = (index) => {
+        setProfileDraft(current => {
+            const nextJobs = getJobsForDraft(current).filter((job, jobIndex) => jobIndex !== index);
+            return { ...current, jobs: nextJobs.length > 0 ? nextJobs : [emptyJob()] };
+        });
+    };
+
     const handlePhotoFileChange = (event) => {
         const file = event.target.files?.[0];
         event.target.value = '';
@@ -173,6 +301,36 @@ function AlumniProfile() {
         };
         reader.onerror = () => setPhotoMessage('Could not read that image.');
         reader.readAsDataURL(file);
+    };
+
+    const handlePhotoDragStart = (event) => {
+        if (!photoCropSource) return;
+        event.currentTarget.setPointerCapture?.(event.pointerId);
+        setPhotoDragStart({
+            clientX: event.clientX,
+            clientY: event.clientY,
+            cropX: photoCrop.cropX,
+            cropY: photoCrop.cropY,
+            zoom: photoCrop.zoom
+        });
+    };
+
+    const handlePhotoDragMove = (event) => {
+        if (!photoDragStart) return;
+        const rect = event.currentTarget.getBoundingClientRect();
+        const horizontalDelta = ((event.clientX - photoDragStart.clientX) / rect.width) * 100;
+        const verticalDelta = ((event.clientY - photoDragStart.clientY) / rect.height) * 100;
+
+        setPhotoCrop(current => ({
+            ...current,
+            cropX: clampPercent(photoDragStart.cropX - (horizontalDelta / photoDragStart.zoom)),
+            cropY: clampPercent(photoDragStart.cropY - (verticalDelta / photoDragStart.zoom))
+        }));
+    };
+
+    const handlePhotoDragEnd = (event) => {
+        event.currentTarget.releasePointerCapture?.(event.pointerId);
+        setPhotoDragStart(null);
     };
 
     const handleApplyPhotoCrop = async () => {
@@ -211,17 +369,115 @@ function AlumniProfile() {
         setProfileInviteCode('');
     };
 
+    const buildProfileForSave = () => {
+        const jobs = getJobsForDraft(profileDraft)
+            .map(job => ({
+                employer: String(job.employer || '').trim(),
+                industry: String(job.industry || '').trim(),
+                title: String(job.title || '').trim(),
+                sector: String(job.sector || '').trim()
+            }))
+            .filter(job => job.employer || job.industry || job.title || job.sector);
+        const primaryJob = jobs[0] || emptyJob();
+        const baseProfile = {
+            ...profileDraft,
+            fullName: String(profileDraft.fullName || '').trim(),
+            classYear: normalizeYearInput(profileDraft.classYear),
+            email: String(profileDraft.email || '').trim(),
+            linkedinUrl: String(profileDraft.linkedinUrl || '').trim(),
+            location: String(profileDraft.location || '').trim(),
+            bio: String(profileDraft.bio || '').trim(),
+            interests: fromInterestText(profileDraft.interestsText || ''),
+            jobs
+        };
+
+        if (profileDraft.profileType === 'uva-undergraduate-alumni') {
+            return {
+                ...baseProfile,
+                currentTitle: profileDraft.status === 'current' ? 'Undergraduate Student' : 'UVA Alumni',
+                currentOrg: 'University of Virginia',
+                industry: profileDraft.status === 'current' ? 'Current Student' : 'UVA Alumni',
+                lawSchool: '',
+                gradSchool: '',
+                undergraduateSchool: '',
+                degreeTitle: '',
+                affiliatedWithUjlp: true
+            };
+        }
+
+        if (profileDraft.profileType === 'uva-law-student') {
+            return {
+                ...baseProfile,
+                status: 'current',
+                currentTitle: primaryJob.title || 'UVA Law Student',
+                currentOrg: primaryJob.employer || 'University of Virginia School of Law',
+                industry: primaryJob.industry || 'Law School',
+                pathType: 'law-school',
+                lawSchool: 'University of Virginia School of Law',
+                degreeTitle: 'Juris Doctor',
+                ujlpRole: profileDraft.affiliatedWithUjlp ? profileDraft.ujlpRole : ''
+            };
+        }
+
+        if (profileDraft.profileType === 'unaffiliated') {
+            return {
+                ...baseProfile,
+                status: 'alumni',
+                currentTitle: primaryJob.title || '',
+                currentOrg: primaryJob.employer || '',
+                industry: primaryJob.industry || primaryJob.sector || '',
+                pathType: jobSectorToPathType(primaryJob.sector),
+                ujlpRole: '',
+                classYear: ''
+            };
+        }
+
+        return baseProfile;
+    };
+
+    const getProfileValidationMessage = () => {
+        if (!profileDraft.profileType) return 'Select a profile type before saving.';
+        if (!String(profileDraft.fullName || '').trim()) return 'Full name is required.';
+        if (!String(profileDraft.email || '').trim()) return 'Preferred email is required.';
+        if (!profileDraft.photoKey || profileDraft.photoKey === 'blank') return 'Profile image is required.';
+        if (!String(profileDraft.bio || '').trim()) return 'Bio is required.';
+
+        if (profileDraft.profileType === 'uva-undergraduate-alumni') {
+            if (!normalizeYearInput(profileDraft.classYear)) return 'UVA class year is required.';
+            if (!profileDraft.status) return 'Club status is required.';
+            if (!profileDraft.ujlpRole) return 'Highest UJLP role is required.';
+            if (!profileDraft.undergradMajor) return 'Major is required.';
+            if (!profileDraft.pathType) return 'Anticipated path is required.';
+        }
+
+        if (profileDraft.profileType === 'uva-law-student') {
+            if (!normalizeYearInput(profileDraft.classYear)) return 'UVA Law class year is required.';
+            if (!String(profileDraft.undergraduateSchool || '').trim()) return 'Undergraduate school is required.';
+            if (!String(profileDraft.undergradMajor || '').trim()) return 'Undergraduate major is required.';
+            if (profileDraft.affiliatedWithUjlp && !profileDraft.ujlpRole) return 'Highest UJLP role is required.';
+        }
+
+        if (profileDraft.profileType === 'unaffiliated' && !profileDraft.degreeTitle) {
+            return 'Title of highest degree is required.';
+        }
+
+        return '';
+    };
+
     const handleProfileSave = async (event) => {
         event.preventDefault();
         if (!profileDraft) return;
 
+        const validationMessage = getProfileValidationMessage();
+        if (validationMessage) {
+            setProfileMessage(validationMessage);
+            return;
+        }
+
         setSaving(true);
         setProfileMessage('');
         try {
-            const saved = await saveAlumniProfile({
-                ...profileDraft,
-                interests: fromInterestText(profileDraft.interestsText || '')
-            }, session);
+            const saved = await saveAlumniProfile(buildProfileForSave(), session);
             setProfiles(current => [saved, ...current.filter(profile => profile.id !== saved.id && profile.userId !== saved.userId)]);
             setProfileDraft({ ...saved, interestsText: toInterestText(saved.interests) });
             setProfileMessage('Profile saved.');
@@ -234,12 +490,14 @@ function AlumniProfile() {
     };
 
     const facts = previewProfile ? [
+        ['Profile type', getAlumniProfileTypeLabel(previewProfile)],
         ['UJLP role', previewProfile.ujlpRole],
-        ['Class year', previewProfile.classYear],
+        [previewProfile.profileType === 'uva-law-student' ? 'Law class year' : 'Class year', previewProfile.classYear],
         ['Path', getPathLabel(previewProfile)],
-        ['Current title', previewProfile.currentTitle],
-        ['Employer / school', previewProfile.currentOrg || previewProfile.lawSchool || previewProfile.gradSchool],
+        ['Current title', getPrimaryAlumniJob(previewProfile)?.title || previewProfile.currentTitle],
+        ['Employer / school', getAlumniPrimaryOrg(previewProfile)],
         ['Major or program', previewProfile.undergradMajor],
+        ['Highest degree', previewProfile.degreeTitle],
         ['Location', previewProfile.location],
         ['Updated', formatUpdatedDate(previewProfile.updatedAt)]
     ] : [];
@@ -268,10 +526,11 @@ function AlumniProfile() {
                         <label>
                             <span>Invite code</span>
                             <input
-                                type="password"
+                                type="text"
                                 value={profileInviteCode}
                                 onChange={(event) => setProfileInviteCode(event.target.value)}
                                 placeholder="Enter invite code"
+                                autoCapitalize="characters"
                             />
                         </label>
                         <button type="submit" className="alumni-primary-action">Create profile</button>
@@ -281,6 +540,390 @@ function AlumniProfile() {
             </div>
         </section>
     );
+
+    const renderProfileTypeQuestionnaire = () => (
+        <div className="alumni-profile-type alumni-wide">
+            <div>
+                <span>Questionnaire</span>
+                <strong>Please select one option.</strong>
+            </div>
+            <div className="alumni-profile-type-grid">
+                {profileTypeOptions.map(option => (
+                    <button
+                        type="button"
+                        key={option.value}
+                        className={profileDraft.profileType === option.value ? 'active' : ''}
+                        onClick={() => selectProfileType(option.value)}
+                    >
+                        <strong>{option.title}</strong>
+                        <span>{option.summary}</span>
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+
+    const renderRoleSelect = (required = true) => (
+        <label>
+            <span>Highest UJLP Role{required ? '*' : ''}</span>
+            <select
+                value={profileDraft.ujlpRole || ''}
+                onChange={(event) => updateDraft('ujlpRole', event.target.value)}
+                required={required}
+            >
+                <option value="">Select role</option>
+                {getSelectOptions(ujlpRoleOptions, profileDraft.ujlpRole).map(role => (
+                    <option key={role} value={role}>{role}</option>
+                ))}
+            </select>
+        </label>
+    );
+
+    const renderPhotoManager = () => (
+        <div className="alumni-photo-manager">
+            <div className="alumni-photo-current">
+                <img src={getAlumniPhoto(profileDraft.photoKey || 'blank')} alt="" />
+            </div>
+            <div className="alumni-photo-controls">
+                <span>Profile Image*</span>
+                <p>Upload an image, then drag or adjust it inside the circle.</p>
+                <label className="alumni-photo-upload">
+                    <input type="file" accept="image/*" onChange={handlePhotoFileChange} />
+                    <span>Choose image</span>
+                </label>
+                {profileDraft.photoKey !== 'blank' && (
+                    <button type="button" className="alumni-secondary-action" onClick={() => updateDraft('photoKey', 'blank')}>Remove photo</button>
+                )}
+            </div>
+            {photoCropSource && (
+                <div className="alumni-photo-cropper">
+                    <div
+                        className={`alumni-photo-crop-preview${photoDragStart ? ' is-dragging' : ''}`}
+                        style={{
+                            backgroundImage: `url(${photoCropSource})`,
+                            backgroundPosition: `${photoCrop.cropX}% ${photoCrop.cropY}%`,
+                            backgroundSize: `${photoCrop.zoom * 100}% auto`
+                        }}
+                        role="img"
+                        aria-label="Profile image crop preview"
+                        onPointerDown={handlePhotoDragStart}
+                        onPointerMove={handlePhotoDragMove}
+                        onPointerUp={handlePhotoDragEnd}
+                        onPointerCancel={handlePhotoDragEnd}
+                    />
+                    <div className="alumni-photo-sliders">
+                        <label>
+                            <span>Zoom</span>
+                            <input
+                                type="range"
+                                min="1"
+                                max="3"
+                                step="0.05"
+                                value={photoCrop.zoom}
+                                onChange={(event) => setPhotoCrop(current => ({ ...current, zoom: Number(event.target.value) }))}
+                            />
+                        </label>
+                        <label>
+                            <span>Horizontal position</span>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={photoCrop.cropX}
+                                onChange={(event) => setPhotoCrop(current => ({ ...current, cropX: Number(event.target.value) }))}
+                            />
+                        </label>
+                        <label>
+                            <span>Vertical position</span>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                value={photoCrop.cropY}
+                                onChange={(event) => setPhotoCrop(current => ({ ...current, cropY: Number(event.target.value) }))}
+                            />
+                        </label>
+                        <div className="alumni-photo-crop-actions">
+                            <button type="button" className="alumni-primary-action" onClick={handleApplyPhotoCrop}>Use cropped photo</button>
+                            <button type="button" className="alumni-secondary-action" onClick={() => setPhotoCropSource('')}>Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {photoMessage && <p className="alumni-form-message">{photoMessage}</p>}
+        </div>
+    );
+
+    const renderContactFields = () => (
+        <>
+            <div className="alumni-image-email-row alumni-wide">
+                <label>
+                    <span>Preferred Email*</span>
+                    <input
+                        type="email"
+                        value={profileDraft.email || ''}
+                        onChange={(event) => updateDraft('email', event.target.value)}
+                        required
+                    />
+                </label>
+                {renderPhotoManager()}
+            </div>
+            <label>
+                <span>Location</span>
+                <input
+                    type="text"
+                    list="alumni-location-suggestions"
+                    value={profileDraft.location || ''}
+                    onChange={(event) => updateDraft('location', event.target.value)}
+                    placeholder="City, ST"
+                />
+            </label>
+            <label>
+                <span>LinkedIn URL</span>
+                <input
+                    type="url"
+                    value={profileDraft.linkedinUrl || ''}
+                    onChange={(event) => updateDraft('linkedinUrl', event.target.value)}
+                    placeholder="https://www.linkedin.com/in/..."
+                />
+            </label>
+            <label className="alumni-wide">
+                <span>Interests</span>
+                <input
+                    type="text"
+                    value={profileDraft.interestsText || ''}
+                    onChange={(event) => updateDraft('interestsText', event.target.value)}
+                    placeholder="Law school admissions, litigation, campaigns..."
+                />
+            </label>
+            <label className="alumni-wide">
+                <span>Bio*</span>
+                <textarea
+                    value={profileDraft.bio || ''}
+                    onChange={(event) => updateDraft('bio', event.target.value)}
+                    rows="4"
+                    required
+                />
+            </label>
+            <label className="alumni-checkbox alumni-wide">
+                <input
+                    type="checkbox"
+                    checked={profileDraft.willingToChat}
+                    onChange={(event) => updateDraft('willingToChat', event.target.checked)}
+                />
+                <span>Open to outreach from UJLP members</span>
+            </label>
+            <label className="alumni-checkbox alumni-wide">
+                <input
+                    type="checkbox"
+                    checked={profileDraft.directoryVisible}
+                    onChange={(event) => updateDraft('directoryVisible', event.target.checked)}
+                />
+                <span>Show this profile in the member directory</span>
+            </label>
+            <datalist id="alumni-location-suggestions">
+                {locationSuggestions.map(location => <option key={location} value={location} />)}
+            </datalist>
+        </>
+    );
+
+    const renderUndergraduateAlumniFields = () => {
+        const selectedPath = anticipatedPathOptions.some(([value]) => value === profileDraft.pathType)
+            ? anticipatedPathOptions
+            : [[profileDraft.pathType, getPathLabel(profileDraft)], ...anticipatedPathOptions].filter(([value]) => value);
+
+        return (
+            <>
+                <label>
+                    <span>Full Name*</span>
+                    <input value={profileDraft.fullName || ''} onChange={(event) => updateDraft('fullName', event.target.value)} required />
+                </label>
+                <label>
+                    <span>UVA Class Year*</span>
+                    <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength="4"
+                        value={profileDraft.classYear || ''}
+                        onChange={(event) => updateYearField(event.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    <span>Club Status*</span>
+                    <select value={profileDraft.status || 'current'} onChange={(event) => updateDraft('status', event.target.value)} required>
+                        <option value="current">Current UJLP member</option>
+                        <option value="alumni">UVA alumni</option>
+                    </select>
+                </label>
+                {renderRoleSelect(true)}
+                <label>
+                    <span>Major*</span>
+                    <select value={profileDraft.undergradMajor || ''} onChange={(event) => updateDraft('undergradMajor', event.target.value)} required>
+                        <option value="">Select major</option>
+                        {getSelectOptions(uvaMajorOptions, profileDraft.undergradMajor).map(major => (
+                            <option key={major} value={major}>{major}</option>
+                        ))}
+                    </select>
+                </label>
+                <label>
+                    <span>Anticipated Path*</span>
+                    <select value={profileDraft.pathType || ''} onChange={(event) => updateDraft('pathType', event.target.value)} required>
+                        <option value="">Select path</option>
+                        {selectedPath.map(([value, label]) => (
+                            <option key={value} value={value}>{label}</option>
+                        ))}
+                    </select>
+                </label>
+                {renderContactFields()}
+            </>
+        );
+    };
+
+    const renderLawStudentFields = () => {
+        const jobs = getJobsForDraft(profileDraft);
+
+        return (
+            <>
+                <label>
+                    <span>Full Name*</span>
+                    <input value={profileDraft.fullName || ''} onChange={(event) => updateDraft('fullName', event.target.value)} required />
+                </label>
+                <label>
+                    <span>UVA Law Class Year*</span>
+                    <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength="4"
+                        value={profileDraft.classYear || ''}
+                        onChange={(event) => updateYearField(event.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    <span>Undergraduate School*</span>
+                    <input value={profileDraft.undergraduateSchool || ''} onChange={(event) => updateDraft('undergraduateSchool', event.target.value)} required />
+                </label>
+                <label>
+                    <span>Undergraduate Major*</span>
+                    <input value={profileDraft.undergradMajor || ''} onChange={(event) => updateDraft('undergradMajor', event.target.value)} required />
+                </label>
+                <label className="alumni-checkbox alumni-wide">
+                    <input
+                        type="checkbox"
+                        checked={profileDraft.affiliatedWithUjlp}
+                        onChange={(event) => updateDraft('affiliatedWithUjlp', event.target.checked)}
+                    />
+                    <span>I am affiliated with the UJLP</span>
+                </label>
+                {profileDraft.affiliatedWithUjlp && (
+                    <div className="alumni-wide alumni-nested-field">
+                        {renderRoleSelect(true)}
+                    </div>
+                )}
+                <div className="alumni-job-list alumni-wide">
+                    {jobs.map((job, index) => (
+                        <div className="alumni-job-entry" key={`law-job-${index}`}>
+                            <label>
+                                <span>Employer</span>
+                                <input value={job.employer || ''} onChange={(event) => updateJob(index, 'employer', event.target.value)} />
+                            </label>
+                            <label>
+                                <span>Employer Industry</span>
+                                <select value={job.industry || ''} onChange={(event) => updateJob(index, 'industry', event.target.value)}>
+                                    <option value="">Select industry</option>
+                                    {getSelectOptions(employerIndustryOptions, job.industry).map(industry => (
+                                        <option key={industry} value={industry}>{industry}</option>
+                                    ))}
+                                </select>
+                            </label>
+                            {jobs.length > 1 && (
+                                <button type="button" className="alumni-secondary-action alumni-job-remove" onClick={() => removeJob(index)}>Remove job</button>
+                            )}
+                        </div>
+                    ))}
+                    <button type="button" className="alumni-secondary-action alumni-add-job" onClick={addJob}>+ Add another job</button>
+                </div>
+                {renderContactFields()}
+            </>
+        );
+    };
+
+    const renderUnaffiliatedFields = () => {
+        const jobs = getJobsForDraft(profileDraft);
+
+        return (
+            <>
+                <label>
+                    <span>Full Name*</span>
+                    <input value={profileDraft.fullName || ''} onChange={(event) => updateDraft('fullName', event.target.value)} required />
+                </label>
+                <label>
+                    <span>Title of Highest Degree*</span>
+                    <select value={profileDraft.degreeTitle || ''} onChange={(event) => updateDraft('degreeTitle', event.target.value)} required>
+                        <option value="">Select degree</option>
+                        {getSelectOptions(degreeTitleOptions, profileDraft.degreeTitle).map(degree => (
+                            <option key={degree} value={degree}>{degree}</option>
+                        ))}
+                    </select>
+                </label>
+                <label>
+                    <span>Undergraduate School</span>
+                    <input value={profileDraft.undergraduateSchool || ''} onChange={(event) => updateDraft('undergraduateSchool', event.target.value)} />
+                </label>
+                <label>
+                    <span>Graduate or Law School</span>
+                    <input value={profileDraft.gradSchool || ''} onChange={(event) => updateDraft('gradSchool', event.target.value)} />
+                </label>
+                <div className="alumni-job-list alumni-wide">
+                    {jobs.map((job, index) => (
+                        <div className="alumni-job-entry alumni-job-entry-wide" key={`unaffiliated-job-${index}`}>
+                            <label>
+                                <span>Employer</span>
+                                <input value={job.employer || ''} onChange={(event) => updateJob(index, 'employer', event.target.value)} />
+                            </label>
+                            <label>
+                                <span>Employer Industry</span>
+                                <select value={job.industry || ''} onChange={(event) => updateJob(index, 'industry', event.target.value)}>
+                                    <option value="">Select industry</option>
+                                    {getSelectOptions(employerIndustryOptions, job.industry).map(industry => (
+                                        <option key={industry} value={industry}>{industry}</option>
+                                    ))}
+                                </select>
+                            </label>
+                            <label>
+                                <span>Job Title</span>
+                                <input value={job.title || ''} onChange={(event) => updateJob(index, 'title', event.target.value)} />
+                            </label>
+                            <label>
+                                <span>Job Sector</span>
+                                <select value={job.sector || ''} onChange={(event) => updateJob(index, 'sector', event.target.value)}>
+                                    <option value="">Select sector</option>
+                                    {getSelectOptions(jobSectorOptions, job.sector).map(sector => (
+                                        <option key={sector} value={sector}>{sector}</option>
+                                    ))}
+                                </select>
+                            </label>
+                            {jobs.length > 1 && (
+                                <button type="button" className="alumni-secondary-action alumni-job-remove" onClick={() => removeJob(index)}>Remove job</button>
+                            )}
+                        </div>
+                    ))}
+                    <button type="button" className="alumni-secondary-action alumni-add-job" onClick={addJob}>+ Add another job</button>
+                </div>
+                {renderContactFields()}
+            </>
+        );
+    };
+
+    const renderProfileFields = () => {
+        if (profileDraft.profileType === 'uva-undergraduate-alumni') return renderUndergraduateAlumniFields();
+        if (profileDraft.profileType === 'uva-law-student') return renderLawStudentFields();
+        if (profileDraft.profileType === 'unaffiliated') return renderUnaffiliatedFields();
+        return <p className="alumni-system-note alumni-wide">Choose a profile type to continue.</p>;
+    };
 
     const renderProfileWorkspace = () => (
         <section className="alumni-profile-section">
@@ -292,12 +935,12 @@ function AlumniProfile() {
                         </div>
                         <div>
                             <div className="alumni-profile-title">
-                                <span>{previewProfile.status === 'current' ? 'Current member' : 'Alumni'}</span>
+                                <span>{getAlumniProfileTypeLabel(previewProfile)}</span>
                                 <span>{previewProfile.willingToChat ? 'Open to outreach' : 'Not currently open'}</span>
                                 {!previewProfile.directoryVisible && <b>Hidden</b>}
                             </div>
                             <h2>{getProfileName(previewProfile)}</h2>
-                            <p>{getProfileLine(previewProfile) || 'Profile details pending'}</p>
+                            <p>{getAlumniProfileLine(previewProfile) || 'Profile details pending'}</p>
                         </div>
                     </div>
 
@@ -334,131 +977,8 @@ function AlumniProfile() {
                         <h2>{previewProfile.fullName ? `Editing ${previewProfile.fullName}` : 'Build the member profile'}</h2>
                     </div>
                     <div className="alumni-form-grid">
-                        <label>
-                            <span>Status</span>
-                            <select value={profileDraft.status} onChange={(event) => updateDraft('status', event.target.value)}>
-                                <option value="current">Current member</option>
-                                <option value="alumni">Alumni</option>
-                            </select>
-                        </label>
-                        <label>
-                            <span>Path</span>
-                            <select value={profileDraft.pathType} onChange={(event) => updateDraft('pathType', event.target.value)}>
-                                {Object.entries(pathTypeLabels).filter(([value]) => value !== 'all').map(([value, label]) => (
-                                    <option key={value} value={value}>{label}</option>
-                                ))}
-                            </select>
-                        </label>
-                        <div className="alumni-photo-manager alumni-wide">
-                            <div className="alumni-photo-current">
-                                <img src={getAlumniPhoto(profileDraft.photoKey || 'blank')} alt="" />
-                            </div>
-                            <div className="alumni-photo-controls">
-                                <span>Profile photo</span>
-                                <p>Upload an image from your computer, position it in the circle, then save your profile.</p>
-                                <label className="alumni-photo-upload">
-                                    <input type="file" accept="image/*" onChange={handlePhotoFileChange} />
-                                    <span>Choose image</span>
-                                </label>
-                                {profileDraft.photoKey !== 'blank' && (
-                                    <button type="button" className="alumni-secondary-action" onClick={() => updateDraft('photoKey', 'blank')}>Remove photo</button>
-                                )}
-                            </div>
-                            {photoCropSource && (
-                                <div className="alumni-photo-cropper">
-                                    <div
-                                        className="alumni-photo-crop-preview"
-                                        style={{
-                                            backgroundImage: `url(${photoCropSource})`,
-                                            backgroundPosition: `${photoCrop.cropX}% ${photoCrop.cropY}%`,
-                                            backgroundSize: `${photoCrop.zoom * 100}% auto`
-                                        }}
-                                        aria-hidden="true"
-                                    />
-                                    <div className="alumni-photo-sliders">
-                                        <label>
-                                            <span>Zoom</span>
-                                            <input
-                                                type="range"
-                                                min="1"
-                                                max="3"
-                                                step="0.05"
-                                                value={photoCrop.zoom}
-                                                onChange={(event) => setPhotoCrop(current => ({ ...current, zoom: Number(event.target.value) }))}
-                                            />
-                                        </label>
-                                        <label>
-                                            <span>Horizontal position</span>
-                                            <input
-                                                type="range"
-                                                min="0"
-                                                max="100"
-                                                value={photoCrop.cropX}
-                                                onChange={(event) => setPhotoCrop(current => ({ ...current, cropX: Number(event.target.value) }))}
-                                            />
-                                        </label>
-                                        <label>
-                                            <span>Vertical position</span>
-                                            <input
-                                                type="range"
-                                                min="0"
-                                                max="100"
-                                                value={photoCrop.cropY}
-                                                onChange={(event) => setPhotoCrop(current => ({ ...current, cropY: Number(event.target.value) }))}
-                                            />
-                                        </label>
-                                        <div className="alumni-photo-crop-actions">
-                                            <button type="button" className="alumni-primary-action" onClick={handleApplyPhotoCrop}>Use cropped photo</button>
-                                            <button type="button" className="alumni-secondary-action" onClick={() => setPhotoCropSource('')}>Cancel</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                            {photoMessage && <p className="alumni-form-message">{photoMessage}</p>}
-                        </div>
-                        {profileFields.map(([key, label, type]) => (
-                            <label key={key}>
-                                <span>{label}</span>
-                                <input
-                                    type={type}
-                                    value={profileDraft[key] || ''}
-                                    onChange={(event) => updateDraft(key, event.target.value)}
-                                />
-                            </label>
-                        ))}
-                        <label className="alumni-wide">
-                            <span>Interests</span>
-                            <input
-                                type="text"
-                                value={profileDraft.interestsText || ''}
-                                onChange={(event) => updateDraft('interestsText', event.target.value)}
-                                placeholder="Law school admissions, litigation, campaigns..."
-                            />
-                        </label>
-                        <label className="alumni-wide">
-                            <span>Bio</span>
-                            <textarea
-                                value={profileDraft.bio || ''}
-                                onChange={(event) => updateDraft('bio', event.target.value)}
-                                rows="4"
-                            />
-                        </label>
-                        <label className="alumni-checkbox alumni-wide">
-                            <input
-                                type="checkbox"
-                                checked={profileDraft.willingToChat}
-                                onChange={(event) => updateDraft('willingToChat', event.target.checked)}
-                            />
-                            <span>Open to outreach from UJLP members</span>
-                        </label>
-                        <label className="alumni-checkbox alumni-wide">
-                            <input
-                                type="checkbox"
-                                checked={profileDraft.directoryVisible}
-                                onChange={(event) => updateDraft('directoryVisible', event.target.checked)}
-                            />
-                            <span>Show this profile in the member directory</span>
-                        </label>
+                        {renderProfileTypeQuestionnaire()}
+                        {renderProfileFields()}
                     </div>
                     <div className="alumni-form-actions">
                         <button type="submit" className="alumni-primary-action" disabled={saving}>

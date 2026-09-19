@@ -6,7 +6,7 @@ const ALUMNI_ADMIN_EMAILS = (process.env.REACT_APP_ALUMNI_ADMIN_EMAILS || '')
     .split(',')
     .map(email => email.trim().toLowerCase())
     .filter(Boolean);
-const PREVIEW_PROFILE_INVITE_CODE = (process.env.REACT_APP_ALUMNI_PREVIEW_INVITE_CODE || '').trim();
+const PREVIEW_PROFILE_INVITE_CODE = (process.env.REACT_APP_ALUMNI_PREVIEW_INVITE_CODE || 'FREESPEECH').trim();
 const SESSION_KEY = 'ujlp_alumni_session';
 const PREVIEW_ACCOUNTS_KEY = 'ujlp_alumni_preview_accounts';
 const PREVIEW_PROFILES_KEY = 'ujlp_alumni_preview_profiles';
@@ -46,9 +46,20 @@ const createId = () => {
     return `local-${Date.now()}-${Math.random().toString(16).slice(2)}`;
 };
 
+const normalizeJobs = (jobs) => {
+    if (!Array.isArray(jobs)) return [];
+    return jobs.map(job => ({
+        employer: job?.employer || '',
+        industry: job?.industry || '',
+        title: job?.title || '',
+        sector: job?.sector || ''
+    }));
+};
+
 const normalizeProfile = (profile) => ({
     id: profile.id || createId(),
     userId: profile.userId || profile.user_id || '',
+    profileType: profile.profileType || profile.profile_type || '',
     fullName: profile.fullName || profile.full_name || '',
     photoKey: profile.photoKey || profile.photo_key || 'blank',
     status: profile.status || 'alumni',
@@ -61,9 +72,13 @@ const normalizeProfile = (profile) => ({
     pathType: profile.pathType || profile.path_type || 'other',
     lawSchool: profile.lawSchool || profile.law_school || '',
     gradSchool: profile.gradSchool || profile.grad_school || '',
+    undergraduateSchool: profile.undergraduateSchool || profile.undergraduate_school || '',
     undergradMajor: profile.undergradMajor || profile.undergrad_major || '',
+    degreeTitle: profile.degreeTitle || profile.degree_title || '',
     email: profile.email || profile.preferred_email || '',
     linkedinUrl: profile.linkedinUrl || profile.linkedin_url || '',
+    affiliatedWithUjlp: Boolean(profile.affiliatedWithUjlp ?? profile.affiliated_with_ujlp),
+    jobs: normalizeJobs(profile.jobs),
     willingToChat: Boolean(profile.willingToChat ?? profile.willing_to_chat),
     interests: Array.isArray(profile.interests) ? profile.interests : [],
     bio: profile.bio || '',
@@ -74,6 +89,7 @@ const normalizeProfile = (profile) => ({
 
 const toDatabaseProfile = (profile, session) => ({
     user_id: profile.userId || profile.user_id || session.user.id,
+    profile_type: profile.profileType || '',
     full_name: profile.fullName,
     photo_key: profile.photoKey || 'blank',
     status: profile.status,
@@ -86,9 +102,13 @@ const toDatabaseProfile = (profile, session) => ({
     path_type: profile.pathType,
     law_school: profile.lawSchool,
     grad_school: profile.gradSchool,
+    undergraduate_school: profile.undergraduateSchool,
     undergrad_major: profile.undergradMajor,
+    degree_title: profile.degreeTitle,
     preferred_email: profile.email,
     linkedin_url: profile.linkedinUrl,
+    affiliated_with_ujlp: Boolean(profile.affiliatedWithUjlp),
+    jobs: normalizeJobs(profile.jobs),
     willing_to_chat: profile.willingToChat,
     interests: profile.interests,
     bio: profile.bio,
@@ -289,9 +309,14 @@ export const createBlankAlumniProfile = (session) => normalizeProfile({
     pathType: 'other',
     lawSchool: '',
     gradSchool: '',
+    undergraduateSchool: '',
     undergradMajor: '',
+    degreeTitle: '',
     email: session?.user?.email || '',
     linkedinUrl: '',
+    profileType: '',
+    affiliatedWithUjlp: false,
+    jobs: [],
     willingToChat: true,
     interests: [],
     bio: '',

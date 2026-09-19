@@ -31,7 +31,7 @@
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-top: 4.6rem;
+    padding-top: 2.1rem;
     border-bottom: 1px solid var(--alumni-line);
     background:
         linear-gradient(135deg, rgba(185, 72, 52, .22), transparent 42%),
@@ -742,6 +742,12 @@
     width: 10rem;
     height: 10rem;
     background-repeat: no-repeat;
+    cursor: grab;
+    touch-action: none;
+}
+
+.alumni-photo-crop-preview.is-dragging {
+    cursor: grabbing;
 }
 
 .alumni-photo-sliders {
@@ -788,6 +794,119 @@
 
 .alumni-wide {
     grid-column: 1 / -1;
+}
+
+.alumni-profile-type {
+    display: grid;
+    gap: .8rem;
+    padding: 1rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
+}
+
+.alumni-profile-type > div:first-child {
+    display: grid;
+    gap: .2rem;
+}
+
+.alumni-profile-type > div:first-child span,
+.alumni-photo-controls > span,
+.alumni-job-entry span {
+    color: var(--alumni-faint);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-profile-type > div:first-child strong {
+    color: var(--alumni-ink);
+    font-size: 1rem;
+}
+
+.alumni-profile-type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .7rem;
+}
+
+.alumni-profile-type-grid button {
+    min-height: 8.6rem;
+    display: grid;
+    align-content: start;
+    gap: .55rem;
+    padding: .95rem;
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 8px;
+    background: #11100d;
+    color: var(--alumni-muted);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color .18s ease, background .18s ease, color .18s ease;
+}
+
+.alumni-profile-type-grid button.active,
+.alumni-profile-type-grid button:hover {
+    border-color: rgba(201, 163, 91, .7);
+    background: rgba(201, 163, 91, .1);
+    color: var(--alumni-ink);
+}
+
+.alumni-profile-type-grid strong {
+    color: inherit;
+    font-size: .96rem;
+    line-height: 1.25;
+}
+
+.alumni-profile-type-grid span {
+    color: var(--alumni-muted);
+    font-size: .82rem;
+    line-height: 1.45;
+}
+
+.alumni-image-email-row {
+    display: grid;
+    grid-template-columns: minmax(0, .85fr) minmax(280px, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.alumni-nested-field {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.alumni-job-list {
+    display: grid;
+    gap: .85rem;
+    padding: 1rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
+}
+
+.alumni-job-entry {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .85rem;
+    padding: .85rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: #11100d;
+}
+
+.alumni-job-entry-wide {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.alumni-job-remove {
+    justify-self: start;
+    grid-column: 1 / -1;
+}
+
+.alumni-add-job {
+    justify-self: start;
 }
 
 .alumni-profile-view {
@@ -1014,7 +1133,7 @@
 }
 
 .alumni-profile-page .alumni-hero-grid {
-    min-height: 17rem;
+    min-height: 13.5rem;
 }
 
 .alumni-profile-page-workspace {
@@ -1258,7 +1377,9 @@
     .alumni-auth-layout,
     .alumni-profile-row,
     .alumni-profile-view-header,
-    .alumni-profile-view-grid {
+    .alumni-profile-view-grid,
+    .alumni-profile-type-grid,
+    .alumni-image-email-row {
         grid-template-columns: 1fr;
     }
 
@@ -1308,7 +1429,7 @@
     }
 
     .alumni-hero {
-        padding-top: 4.25rem;
+        padding-top: 1.5rem;
     }
 
     .alumni-hero-grid {
@@ -1331,6 +1452,9 @@
     .alumni-profile-details,
     .alumni-profile-facts,
     .alumni-form-grid,
+    .alumni-profile-type-grid,
+    .alumni-image-email-row,
+    .alumni-job-entry,
     .alumni-invite-form,
     .alumni-photo-manager,
     .alumni-photo-cropper {

@@ -159,7 +159,10 @@ export const pathTypeLabels = {
     'government': 'Government',
     'public-service': 'Public Service',
     'private-sector': 'Private Sector',
+    'finance': 'Finance',
+    'consulting': 'Consulting',
     'nonprofit': 'Nonprofit',
     'graduate-school': 'Graduate School',
+    'undecided': 'Undecided',
     'other': 'Other'
 };
