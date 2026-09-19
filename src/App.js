@@ -6,6 +6,7 @@ import Home from './GeneralPages/Home';
 import About from './GeneralPages/About';
 import Journal from './GeneralPages/Journal';
 import AlumniDirectory from './GeneralPages/AlumniDirectory';
+import AlumniProfile from './GeneralPages/AlumniProfile';
 import Announcements from './GeneralPages/Announcements';
 import Contact from './GeneralPages/Contact';
 import Footer from './Components/Footer';
@@ -167,7 +168,7 @@ function Navigation() {
         setAlumniSession(null);
         setNavProfile(null);
     };
-    const heroRoutes = ['/', '/about', '/journal', '/alumni', '/announcements', '/contact', '/jointheteam'];
+    const heroRoutes = ['/', '/about', '/journal', '/alumni', '/alumni/profile', '/announcements', '/contact', '/jointheteam'];
     const isHeroRoute = heroRoutes.includes(location.pathname);
     const isSignedIn = Boolean(alumniSession?.user?.email);
     const isAdmin = isAlumniAdmin(alumniSession);
@@ -226,7 +227,7 @@ function Navigation() {
                         </button>
                         {isAccountMenuOpen && (
                             <div className="header-account-menu" role="menu">
-                                <Link to="/alumni?profile=edit" role="menuitem">Edit profile</Link>
+                                <Link to="/alumni/profile" role="menuitem">Manage profile</Link>
                                 <Link to="/alumni" role="menuitem">Alumni network</Link>
                                 {isAdmin && <Link to="/announcements" role="menuitem">Manage announcements</Link>}
                                 <button type="button" role="menuitem" onClick={handleGlobalSignOut}>Sign out</button>
@@ -264,6 +265,7 @@ function App() {
                         <Route path="/about" element={<About />} />
                         <Route path="/journal" element={<Journal />} />
                         <Route path="/alumni" element={<AlumniDirectory />} />
+                        <Route path="/alumni/profile" element={<AlumniProfile />} />
                         <Route path="/journal/index" element={<PublicationIndex />} />
                         <Route path="/journal/issue/:issueId" element={<IssueEdition />} />
                         <Route path="/research/:slug" element={<ResearchArea />} />

@@ -1,18 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
 import { getCompactAlumniName } from '../Data/alumniDisplay';
-import { alumniPhotoOptions, getAlumniPhoto } from '../Data/alumniPhotoRegistry';
+import { getAlumniPhoto } from '../Data/alumniPhotoRegistry';
 import {
-    createBlankAlumniProfile,
     fetchAlumniProfiles,
     getAlumniBackendMode,
     getStoredAlumniSession,
     isAlumniAdmin,
-    isAlumniProfileInviteCodeValid,
-    isAlumniProfileInviteConfigured,
-    saveAlumniProfile,
     signInAlumni,
     signUpAlumni
 } from '../Services/alumniApi';
@@ -34,29 +30,7 @@ const defaultFilters = {
     willingOnly: false
 };
 
-const profileFields = [
-    ['fullName', 'Full name', 'text'],
-    ['classYear', 'UVA class year', 'text'],
-    ['ujlpRole', 'UJLP role', 'text'],
-    ['undergradMajor', 'Major or program', 'text'],
-    ['currentTitle', 'Current title', 'text'],
-    ['currentOrg', 'Employer or school', 'text'],
-    ['industry', 'Industry', 'text'],
-    ['lawSchool', 'Law school', 'text'],
-    ['gradSchool', 'Graduate school', 'text'],
-    ['location', 'Location', 'text'],
-    ['email', 'Preferred email', 'email'],
-    ['linkedinUrl', 'LinkedIn URL', 'url']
-];
-
 const normalizeText = (value) => String(value || '').toLowerCase();
-
-const toInterestText = (interests) => (Array.isArray(interests) ? interests.join(', ') : '');
-
-const fromInterestText = (value) => value
-    .split(',')
-    .map(item => item.trim())
-    .filter(Boolean);
 
 const formatUpdatedDate = (value) => {
     if (!value) return 'Not saved yet';
@@ -111,6 +85,7 @@ const toTags = (value) => value
 
 function AlumniDirectory() {
     const location = useLocation();
+    const navigate = useNavigate();
     const [session, setSession] = useState(() => getStoredAlumniSession());
     const [authMode, setAuthMode] = useState('signin');
     const [authForm, setAuthForm] = useState({ email: '', password: '' });
@@ -119,12 +94,7 @@ function AlumniDirectory() {
     const [profiles, setProfiles] = useState([]);
     const [filters, setFilters] = useState(defaultFilters);
     const [activeView, setActiveView] = useState('home');
-    const [profileMode, setProfileMode] = useState('view');
     const [editingProfileUserId, setEditingProfileUserId] = useState(null);
-    const [profileDraft, setProfileDraft] = useState(null);
-    const [profileMessage, setProfileMessage] = useState('');
-    const [profileInviteCode, setProfileInviteCode] = useState('');
-    const [profileInviteMessage, setProfileInviteMessage] = useState('');
     const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [] });
     const [feedDraft, setFeedDraft] = useState({
         title: '',
@@ -153,7 +123,6 @@ function AlumniDirectory() {
         pinned: false
     });
     const [loading, setLoading] = useState(false);
-    const [saving, setSaving] = useState(false);
 
     const backendMode = getAlumniBackendMode();
     const isAdmin = isAlumniAdmin(session);
@@ -191,12 +160,6 @@ function AlumniDirectory() {
         if (targetUserId === session.user.id) return ownProfile;
         return profiles.find(profile => profile.userId === targetUserId) || null;
     }, [editingProfileUserId, ownProfile, profiles, session]);
-
-    useEffect(() => {
-        if (profileMode === 'edit' && activeProfile) {
-            setProfileDraft({ ...activeProfile, interestsText: toInterestText(activeProfile.interests) });
-        }
-    }, [profileMode, activeProfile?.id, activeProfile?.userId, activeProfile?.updatedAt, activeProfile]);
 
     const accountName = getCompactAlumniName(ownProfile, session?.user);
 
@@ -287,45 +250,13 @@ function AlumniDirectory() {
         setFilters(current => ({ ...current, [key]: value }));
     };
 
-    const updateDraft = (key, value) => {
-        setProfileDraft(current => ({ ...current, [key]: value }));
-    };
-
-    const canEditProfile = (profile) => Boolean(
-        session?.user?.id && profile?.userId && (profile.userId === session.user.id || isAdmin)
-    );
-
     const openDirectory = () => {
         setActiveView('directory');
-        setProfileMode('view');
-        setProfileMessage('');
-        setProfileInviteMessage('');
-    };
-
-    const openOwnProfile = (mode = 'view') => {
-        setEditingProfileUserId(session?.user?.id || null);
-        setActiveView('profile');
-        setProfileMode(mode);
-        setProfileMessage('');
-        setProfileInviteMessage('');
     };
 
     const openProfileView = (profile) => {
         setEditingProfileUserId(profile.userId);
         setActiveView('profile');
-        setProfileMode('view');
-        setProfileMessage('');
-        setProfileInviteMessage('');
-    };
-
-    const openProfileEditor = (profile) => {
-        if (!canEditProfile(profile)) return;
-        setEditingProfileUserId(profile.userId);
-        setProfileDraft({ ...profile, interestsText: toInterestText(profile.interests) });
-        setActiveView('profile');
-        setProfileMode('edit');
-        setProfileMessage('');
-        setProfileInviteMessage('');
     };
 
     useEffect(() => {
@@ -333,61 +264,8 @@ function AlumniDirectory() {
         const params = new URLSearchParams(location.search);
         if (params.get('profile') !== 'edit') return;
 
-        setEditingProfileUserId(session.user.id);
-        setActiveView('profile');
-        setProfileMode(ownProfile ? 'edit' : 'view');
-        setProfileMessage('');
-        setProfileInviteMessage('');
-    }, [location.search, ownProfile, session?.user?.id]);
-
-    const handleCreateProfileRequest = (event) => {
-        event.preventDefault();
-        setProfileInviteMessage('');
-
-        if (!profileInviteCode.trim()) {
-            setProfileInviteMessage('Enter the alumni invite code to create a profile.');
-            return;
-        }
-
-        if (backendMode === 'preview' && isAlumniProfileInviteConfigured && !isAlumniProfileInviteCodeValid(profileInviteCode)) {
-            setProfileInviteMessage('That invite code is not valid.');
-            return;
-        }
-
-        const draft = createBlankAlumniProfile(session);
-        setProfileDraft({
-            ...draft,
-            inviteCode: profileInviteCode.trim(),
-            interestsText: '',
-            isNewProfile: true
-        });
-        setEditingProfileUserId(session.user.id);
-        setProfileMode('edit');
-        setProfileInviteCode('');
-    };
-
-    const handleProfileSave = async (event) => {
-        event.preventDefault();
-        if (!profileDraft) return;
-
-        setSaving(true);
-        setProfileMessage('');
-        try {
-            const saved = await saveAlumniProfile({
-                ...profileDraft,
-                interests: fromInterestText(profileDraft.interestsText || '')
-            }, session);
-            setProfiles(current => [saved, ...current.filter(profile => profile.id !== saved.id && profile.userId !== saved.userId)]);
-            setEditingProfileUserId(saved.userId);
-            setProfileDraft({ ...saved, interestsText: toInterestText(saved.interests) });
-            setProfileMode('view');
-            setProfileMessage('Profile saved.');
-        } catch (error) {
-            setProfileMessage(error.message);
-        } finally {
-            setSaving(false);
-        }
-    };
+        navigate('/alumni/profile', { replace: true });
+    }, [location.search, navigate, session?.user?.id]);
 
     const resetEditorDraft = () => {
         setEditorDraft({
@@ -610,8 +488,8 @@ function AlumniDirectory() {
                     )}
                     {profile.linkedinUrl && <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
                     <button type="button" className="alumni-secondary-action" onClick={() => openProfileView(profile)}>View</button>
-                    {canEditProfile(profile) && (
-                        <button type="button" className="alumni-secondary-action alumni-edit-action" onClick={() => openProfileEditor(profile)}>Edit</button>
+                    {profile.userId === session?.user?.id && (
+                        <Link to="/alumni/profile" className="alumni-secondary-action alumni-edit-action">Manage profile</Link>
                     )}
                 </div>
             </div>
@@ -689,19 +567,7 @@ function AlumniDirectory() {
                                 <p>
                                     Use the UJLP alumni invite code to create your directory profile.
                                 </p>
-                                <form className="alumni-invite-form" onSubmit={handleCreateProfileRequest}>
-                                    <label>
-                                        <span>Invite code</span>
-                                        <input
-                                            type="password"
-                                            value={profileInviteCode}
-                                            onChange={(event) => setProfileInviteCode(event.target.value)}
-                                            placeholder="Enter invite code"
-                                        />
-                                    </label>
-                                    <button type="submit" className="alumni-primary-action">Create profile</button>
-                                </form>
-                                {profileInviteMessage && <p className="alumni-form-message">{profileInviteMessage}</p>}
+                                <Link to="/alumni/profile" className="alumni-primary-action">Manage profile</Link>
                             </div>
                         ) : (
                             <p className="alumni-form-message">Profile unavailable.</p>
@@ -711,7 +577,6 @@ function AlumniDirectory() {
             );
         }
 
-        const canEdit = canEditProfile(activeProfile);
         const isOwnProfile = activeProfile.userId === session?.user?.id;
         const facts = [
             ['UJLP role', activeProfile.ujlpRole],
@@ -743,16 +608,12 @@ function AlumniDirectory() {
                                 <p>{getProfileLine(activeProfile) || 'Profile details pending'}</p>
                             </div>
                             <div className="alumni-profile-view-actions">
-                                {canEdit && (
-                                    <button type="button" className="alumni-primary-action" onClick={() => openProfileEditor(activeProfile)}>
-                                        {isOwnProfile ? 'Edit my profile' : 'Edit profile'}
-                                    </button>
+                                {isOwnProfile && (
+                                    <Link to="/alumni/profile" className="alumni-primary-action">Manage profile</Link>
                                 )}
                                 <button type="button" className="alumni-secondary-action" onClick={openDirectory}>Back to directory</button>
                             </div>
                         </div>
-
-                        {profileMessage && <p className="alumni-form-message alumni-profile-save-message">{profileMessage}</p>}
 
                         <div className="alumni-profile-view-grid">
                             <div className="alumni-profile-bio">
@@ -784,96 +645,6 @@ function AlumniDirectory() {
             </section>
         );
     };
-
-    const renderProfileEditor = () => (
-        <section className="alumni-profile-section">
-            <div className="section-content">
-                <div className="alumni-editor-heading">
-                    <p className="jh-section-label">{profileDraft?.userId === session?.user?.id ? 'My profile' : 'Admin edit'}</p>
-                    <h2>{profileDraft?.fullName ? `Editing ${profileDraft.fullName}` : 'Build the member profile'}</h2>
-                </div>
-                {profileDraft && (
-                    <form className="alumni-profile-form" onSubmit={handleProfileSave}>
-                        <div className="alumni-form-grid">
-                            <label>
-                                <span>Status</span>
-                                <select value={profileDraft.status} onChange={(event) => updateDraft('status', event.target.value)}>
-                                    <option value="current">Current member</option>
-                                    <option value="alumni">Alumni</option>
-                                </select>
-                            </label>
-                            <label>
-                                <span>Path</span>
-                                <select value={profileDraft.pathType} onChange={(event) => updateDraft('pathType', event.target.value)}>
-                                    {Object.entries(pathTypeLabels).filter(([value]) => value !== 'all').map(([value, label]) => (
-                                        <option key={value} value={value}>{label}</option>
-                                    ))}
-                                </select>
-                            </label>
-                            <label>
-                                <span>Profile image</span>
-                                <select value={profileDraft.photoKey || 'blank'} onChange={(event) => updateDraft('photoKey', event.target.value)}>
-                                    {alumniPhotoOptions.map(option => (
-                                        <option key={option.key} value={option.key}>{option.label}</option>
-                                    ))}
-                                </select>
-                            </label>
-                            {profileFields.map(([key, label, type]) => (
-                                <label key={key}>
-                                    <span>{label}</span>
-                                    <input
-                                        type={type}
-                                        value={profileDraft[key] || ''}
-                                        onChange={(event) => updateDraft(key, event.target.value)}
-                                    />
-                                </label>
-                            ))}
-                            <label className="alumni-wide">
-                                <span>Interests</span>
-                                <input
-                                    type="text"
-                                    value={profileDraft.interestsText || ''}
-                                    onChange={(event) => updateDraft('interestsText', event.target.value)}
-                                    placeholder="Law school admissions, litigation, campaigns..."
-                                />
-                            </label>
-                            <label className="alumni-wide">
-                                <span>Bio</span>
-                                <textarea
-                                    value={profileDraft.bio || ''}
-                                    onChange={(event) => updateDraft('bio', event.target.value)}
-                                    rows="4"
-                                />
-                            </label>
-                            <label className="alumni-checkbox alumni-wide">
-                                <input
-                                    type="checkbox"
-                                    checked={profileDraft.willingToChat}
-                                    onChange={(event) => updateDraft('willingToChat', event.target.checked)}
-                                />
-                                <span>Open to outreach from UJLP members</span>
-                            </label>
-                            <label className="alumni-checkbox alumni-wide">
-                                <input
-                                    type="checkbox"
-                                    checked={profileDraft.directoryVisible}
-                                    onChange={(event) => updateDraft('directoryVisible', event.target.checked)}
-                                />
-                                <span>Show this profile in the member directory</span>
-                            </label>
-                        </div>
-                        <div className="alumni-form-actions">
-                            <button type="submit" className="alumni-primary-action" disabled={saving}>
-                                {saving ? 'Saving...' : 'Save profile'}
-                            </button>
-                            <button type="button" className="alumni-secondary-action" onClick={() => setProfileMode('view')}>Cancel</button>
-                        </div>
-                        {profileMessage && <p className="alumni-form-message">{profileMessage}</p>}
-                    </form>
-                )}
-            </div>
-        </section>
-    );
 
     const upcomingItems = useMemo(() => (
         [...portalContent.feedPosts]
@@ -1001,10 +772,10 @@ function AlumniDirectory() {
                 <strong>Member workspace</strong>
             </div>
             <div className="alumni-account-actions">
-                <button type="button" className={activeView === 'profile' && editingProfileUserId === session.user.id ? 'active' : ''} onClick={() => openOwnProfile('view')}>
+                <Link to="/alumni/profile">
                     <img src={getAlumniPhoto(ownProfile?.photoKey || 'blank')} alt="" />
                     <span>{accountName}</span>
-                </button>
+                </Link>
             </div>
         </div>
     );
@@ -1151,7 +922,7 @@ function AlumniDirectory() {
         if (activeView === 'tasks') return renderTasks();
         if (activeView === 'notifications') return renderNotifications();
         if (activeView === 'admin') return renderAdminEditor();
-        if (activeView === 'profile') return profileMode === 'edit' ? renderProfileEditor() : renderProfileView();
+        if (activeView === 'profile') return renderProfileView();
         return renderHome();
     };
 

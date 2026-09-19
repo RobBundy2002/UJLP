@@ -201,6 +201,7 @@
 
 .alumni-auth-tabs button,
 .alumni-session-actions button,
+.alumni-account-actions a,
 .alumni-account-actions button,
 .alumni-results-heading button,
 .alumni-secondary-action,
@@ -217,6 +218,7 @@
 
 .alumni-auth-tabs button,
 .alumni-session-actions button,
+.alumni-account-actions a,
 .alumni-account-actions button,
 .alumni-results-heading button {
     border: 0;
@@ -226,6 +228,7 @@
 
 .alumni-auth-tabs button,
 .alumni-session-actions button,
+.alumni-account-actions a,
 .alumni-account-actions button {
     flex: 1;
     padding: .65rem .85rem;
@@ -233,6 +236,7 @@
 
 .alumni-auth-tabs button.active,
 .alumni-session-actions button.active,
+.alumni-account-actions a.active,
 .alumni-account-actions button.active {
     background: var(--alumni-gold);
     color: #16120c;
@@ -322,10 +326,14 @@
 }
 
 .alumni-primary-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: .7rem 1.05rem;
     border: 1px solid var(--alumni-red);
     background: var(--alumni-red);
     color: #fff;
+    text-decoration: none;
 }
 
 .alumni-primary-action:hover,
@@ -851,6 +859,15 @@
     max-width: 17rem;
 }
 
+.alumni-account-actions a {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 1 auto;
+    gap: .5rem;
+    max-width: 17rem;
+    text-decoration: none;
+}
+
 .alumni-account-actions img {
     width: 1.75rem;
     height: 1.75rem;
@@ -864,6 +881,27 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.alumni-profile-page .alumni-hero-grid {
+    min-height: 17rem;
+}
+
+.alumni-profile-page-workspace {
+    display: grid;
+    grid-template-columns: minmax(300px, .72fr) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.alumni-profile-page-preview {
+    position: sticky;
+    top: 7rem;
+    max-width: none;
+}
+
+.alumni-profile-page-preview .alumni-profile-view-grid {
+    grid-template-columns: 1fr;
 }
 
 .alumni-home-grid,
@@ -1109,11 +1147,13 @@
     .alumni-portal-shell,
     .alumni-home-grid,
     .alumni-admin-grid,
-    .alumni-resource-grid {
+    .alumni-resource-grid,
+    .alumni-profile-page-workspace {
         grid-template-columns: 1fr;
     }
 
-    .alumni-portal-sidebar {
+    .alumni-portal-sidebar,
+    .alumni-profile-page-preview {
         position: static;
     }
 
@@ -1182,6 +1222,7 @@
     }
 
     .alumni-session-actions button,
+    .alumni-account-actions a,
     .alumni-account-actions button,
     .alumni-contact-actions a,
     .alumni-contact-actions span,
