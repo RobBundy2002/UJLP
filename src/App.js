@@ -113,18 +113,32 @@ const normalizeNotificationTime = (value) => {
     return Number.isNaN(date.getTime()) ? String(value) : date.toISOString();
 };
 
+const normalizeNotificationText = (value) => String(value || '').toLowerCase();
+
 const getAlumniNotificationItems = (content, ownProfile, session) => {
     const currentUserId = session?.user?.id || '';
     if (!currentUserId) return [];
 
     const ownHandle = getMentionHandle(ownProfile, session?.user);
+    const isCurrentUserPost = (post) => {
+        if (!post) return false;
+        if (post.authorUserId && post.authorUserId === currentUserId) return true;
+
+        const authorName = normalizeNotificationText(post.authorName);
+        if (!authorName) return false;
+
+        return [
+            ownProfile?.fullName,
+            session?.user?.email
+        ].some(value => normalizeNotificationText(value) === authorName);
+    };
     const feedPosts = content?.feedPosts || [];
     const feedPostsById = new Map(feedPosts.map(post => [post.id, post]));
     const items = [];
 
     feedPosts.forEach(post => {
         const mentioned = ownHandle && getMentionHandlesFromText(`${post.body || ''} ${(post.tags || []).join(' ')}`).includes(ownHandle);
-        if (post.authorUserId !== currentUserId || mentioned) {
+        if (!isCurrentUserPost(post) || mentioned) {
             items.push({ createdAt: normalizeNotificationTime(post.createdAt) });
         }
     });
@@ -132,7 +146,7 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
     (content?.feedComments || []).forEach(comment => {
         const post = feedPostsById.get(comment.postId);
         const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
-        const onOwnPost = post?.authorUserId === currentUserId;
+        const onOwnPost = isCurrentUserPost(post);
         if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
             items.push({ createdAt: normalizeNotificationTime(comment.createdAt) });
         }
@@ -140,7 +154,7 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
 
     (content?.feedLikes || []).forEach(like => {
         const post = feedPostsById.get(like.postId);
-        if (post?.authorUserId === currentUserId && like.userId !== currentUserId) {
+        if (isCurrentUserPost(post) && like.userId !== currentUserId) {
             items.push({ createdAt: normalizeNotificationTime(like.createdAt) });
         }
     });

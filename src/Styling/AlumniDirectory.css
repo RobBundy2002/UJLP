@@ -1564,6 +1564,24 @@
     font-size: .72rem;
 }
 
+.alumni-feed-author-link {
+    width: fit-content;
+    appearance: none;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--alumni-ink);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 750;
+    line-height: 1.35;
+    text-align: left;
+}
+
+.alumni-feed-author-link:hover {
+    color: var(--alumni-gold);
+}
+
 .alumni-feed-author b {
     margin-left: auto;
     padding: .2rem .45rem;

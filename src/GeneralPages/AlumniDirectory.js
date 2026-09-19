@@ -466,12 +466,25 @@ function AlumniDirectory() {
         if (!currentUserId) return [];
 
         const ownHandle = getMentionHandle(ownProfile || { fullName: session?.user?.email || '' });
+        const isCurrentUserPost = (post) => {
+            if (!post) return false;
+            if (post.authorUserId && post.authorUserId === currentUserId) return true;
+
+            const authorName = normalizeText(post.authorName);
+            if (!authorName) return false;
+
+            return [
+                ownProfile?.fullName,
+                session?.user?.email,
+                accountName
+            ].some(value => normalizeText(value) === authorName);
+        };
         const feedPostsById = new Map((portalContent.feedPosts || []).map(post => [post.id, post]));
         const items = [];
 
         (portalContent.feedPosts || []).forEach(post => {
             const mentioned = ownHandle && getMentionHandlesFromText(`${post.body || ''} ${(post.tags || []).join(' ')}`).includes(ownHandle);
-            if (post.authorUserId !== currentUserId || mentioned) {
+            if (!isCurrentUserPost(post) || mentioned) {
                 items.push({
                     id: `post-${post.id}`,
                     type: mentioned ? 'Mention' : 'Feed post',
@@ -486,7 +499,7 @@ function AlumniDirectory() {
         (portalContent.feedComments || []).forEach(comment => {
             const post = feedPostsById.get(comment.postId);
             const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
-            const onOwnPost = post?.authorUserId === currentUserId;
+            const onOwnPost = isCurrentUserPost(post);
             if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
                 items.push({
                     id: `comment-${comment.id}`,
@@ -501,7 +514,7 @@ function AlumniDirectory() {
 
         (portalContent.feedLikes || []).forEach(like => {
             const post = feedPostsById.get(like.postId);
-            if (post?.authorUserId === currentUserId && like.userId !== currentUserId) {
+            if (isCurrentUserPost(post) && like.userId !== currentUserId) {
                 items.push({
                     id: `like-${like.postId}-${like.userId}`,
                     type: 'Like',
@@ -536,12 +549,17 @@ function AlumniDirectory() {
         });
 
         return items.sort((left, right) => String(right.createdAt || '').localeCompare(String(left.createdAt || '')));
-    }, [currentUserId, ownProfile, portalContent.announcements, portalContent.feedComments, portalContent.feedLikes, portalContent.feedPosts, portalContent.tasks, session?.user?.email]);
+    }, [accountName, currentUserId, ownProfile, portalContent.announcements, portalContent.feedComments, portalContent.feedLikes, portalContent.feedPosts, portalContent.tasks, session?.user?.email]);
 
     const unreadNotificationCount = useMemo(() => {
         if (!notificationsSeenAt) return notificationItems.length;
         return notificationItems.filter(item => String(item.createdAt || '') > notificationsSeenAt).length;
     }, [notificationItems, notificationsSeenAt]);
+
+    useEffect(() => {
+        if (activeView !== 'notifications' || !currentUserId || !session) return;
+        fetchPortalContent(session).then(content => setPortalContent({ ...defaultPortalContentState, ...content }));
+    }, [activeView, currentUserId, session]);
 
     useEffect(() => {
         if (activeView !== 'notifications' || !currentUserId) return;
@@ -1191,15 +1209,9 @@ function AlumniDirectory() {
         profile.userId === post.authorUserId || normalizeText(profile.fullName) === normalizeText(post.authorName)
     )) || null;
 
-    const getPostMentionProfiles = (post) => {
-        const handles = [
-            ...getMentionHandlesFromText(post.body),
-            ...getMentionHandlesFromText((post.tags || []).join(' '))
-        ];
-        return Array.from(new Set(handles))
-            .map(handle => profileMentionLookup.get(handle))
-            .filter(Boolean);
-    };
+    const getCommentAuthorProfile = (comment) => profiles.find(profile => (
+        profile.userId === comment.authorUserId || normalizeText(profile.fullName) === normalizeText(comment.authorName)
+    )) || null;
 
     const updateFeedMentionMenu = (value, cursorIndex) => {
         const activeMention = getActiveFeedMention(value, cursorIndex);
@@ -1312,7 +1324,6 @@ function AlumniDirectory() {
     const renderFeedCard = (post) => (
         (() => {
             const authorProfile = getFeedAuthorProfile(post);
-            const mentionProfiles = getPostMentionProfiles(post);
             const postComments = feedCommentsByPostId[post.id] || [];
             const postLikes = feedLikesByPostId[post.id] || [];
             const likedByMe = postLikes.some(like => like.userId === currentUserId);
@@ -1326,7 +1337,13 @@ function AlumniDirectory() {
                         <img src={getAlumniPhoto(authorProfile?.photoKey || post.authorPhotoKey || 'blank')} alt="" />
                         <div>
                             <span>{post.category}</span>
-                            <strong>{authorProfile ? getProfileName(authorProfile) : post.authorName || 'UJLP'}</strong>
+                            {authorProfile ? (
+                                <button type="button" className="alumni-feed-author-link" onClick={() => openProfileView(authorProfile)}>
+                                    {getProfileName(authorProfile)}
+                                </button>
+                            ) : (
+                                <strong>{post.authorName || 'UJLP'}</strong>
+                            )}
                             <time>{formatUpdatedDate(post.createdAt)}</time>
                         </div>
                         {post.pinned && <b>Pinned</b>}
@@ -1335,11 +1352,6 @@ function AlumniDirectory() {
                     <p>{renderPostBody(post)}</p>
                     <div className="alumni-tags">
                         {(post.tags || []).map(tag => <span key={tag}>{tag}</span>)}
-                        {mentionProfiles.map(profile => (
-                            <button type="button" key={profile.userId || profile.id} onClick={() => openProfileView(profile)}>
-                                @{getMentionHandle(profile)}
-                            </button>
-                        ))}
                         {post.eventDate && <span>Event {formatShortDate(post.eventDate)}</span>}
                         {post.deadlineDate && <span>Due {formatShortDate(post.deadlineDate)}</span>}
                     </div>
@@ -1360,12 +1372,19 @@ function AlumniDirectory() {
                     <div className="alumni-feed-comments">
                         {postComments.map(comment => {
                             const canDeleteComment = isAdmin || comment.authorUserId === currentUserId;
+                            const commentAuthorProfile = getCommentAuthorProfile(comment);
                             return (
                                 <article className="alumni-feed-comment" key={comment.id}>
-                                    <img src={getAlumniPhoto(comment.authorPhotoKey || 'blank')} alt="" />
+                                    <img src={getAlumniPhoto(commentAuthorProfile?.photoKey || comment.authorPhotoKey || 'blank')} alt="" />
                                     <div>
                                         <div>
-                                            <strong>{comment.authorName || 'UJLP member'}</strong>
+                                            {commentAuthorProfile ? (
+                                                <button type="button" className="alumni-feed-author-link" onClick={() => openProfileView(commentAuthorProfile)}>
+                                                    {getProfileName(commentAuthorProfile)}
+                                                </button>
+                                            ) : (
+                                                <strong>{comment.authorName || 'UJLP member'}</strong>
+                                            )}
                                             <time>{formatUpdatedDate(comment.createdAt)}</time>
                                         </div>
                                         <p>{renderPostBody({ ...post, id: comment.id, body: comment.body })}</p>
