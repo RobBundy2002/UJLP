@@ -1300,29 +1300,101 @@
     white-space: nowrap;
 }
 
-.alumni-profile-page .alumni-hero-grid {
-    min-height: 13.5rem;
+.alumni-profile-page .alumni-profile-page-hero {
+    min-height: min(730px, 79vh);
+    padding: 7rem clamp(1.5rem, 7vw, 8rem) 5rem;
+    border-bottom: 0;
+    background:
+        radial-gradient(circle at 76% 21%, rgba(34, 84, 127, .58), transparent 28%),
+        radial-gradient(circle 26rem at 30% 100%, rgba(144, 52, 34, .27), transparent 100%),
+        #07111f;
 }
 
-.alumni-profile-page .alumni-profile-page-hero {
-    min-height: min(520px, 62vh);
-    padding-bottom: clamp(5.5rem, 9vw, 8rem);
-    border-bottom: 0;
+.alumni-profile-page .alumni-profile-page-hero::before {
+    content: "";
+    position: absolute;
+    width: min(70vw, 820px);
+    height: min(70vw, 820px);
+    right: -25vw;
+    bottom: -44vw;
+    border: 1px solid rgba(241, 140, 98, .36);
+    border-radius: 50%;
+    background: none;
+    pointer-events: none;
 }
 
 .alumni-profile-page .alumni-profile-page-hero::after {
-    inset: auto 0 -1px;
-    height: clamp(5rem, 10vw, 8rem);
-    background: linear-gradient(180deg, rgba(7, 17, 31, 0), var(--alumni-bg) 88%);
+    inset: 1.25rem;
+    height: auto;
+    border: 1px solid rgba(236, 227, 210, .18);
+    background: none;
+    z-index: 1;
+}
+
+.alumni-profile-page .alumni-hero-grid {
+    z-index: 3;
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, .36fr);
+    align-items: end;
+    min-height: 24rem;
+}
+
+.alumni-profile-page .alumni-hero-copy {
+    max-width: 820px;
+}
+
+.alumni-profile-page .jh-eyebrow {
+    margin: 0 0 1.75rem;
+    color: #f18c62 !important;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-profile-page .jh-eyebrow strong {
+    color: #f7f1e7;
+    font-size: 1.1em;
+    letter-spacing: 0;
+}
+
+.alumni-profile-page .alumni-hero h1 {
+    margin: 0 0 1.15rem;
+    font-size: clamp(3.5rem, 8vw, 7.1rem);
+    font-weight: 400;
+    line-height: .88;
+}
+
+.alumni-profile-page .alumni-hero-copy p:last-child {
+    max-width: 620px;
+    color: #b8bcc9;
+}
+
+.alumni-profile-page .alumni-hero-panel {
+    align-self: end;
+    gap: .65rem;
+    padding: 1rem 0 0;
+    border: 0;
+    border-top: 1px solid rgba(231, 222, 203, .22);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.alumni-profile-page .alumni-hero-panel span {
+    color: #f18c62;
+}
+
+.alumni-profile-page .alumni-hero-panel p {
+    color: #b8bcc9;
 }
 
 .alumni-profile-page .alumni-profile-section {
     position: relative;
     z-index: 2;
-    margin-top: -3rem;
+    margin-top: 0;
     border-bottom: 0;
     background:
-        radial-gradient(circle at 24% -8rem, rgba(144, 52, 34, .26), transparent 30rem),
+        radial-gradient(circle 26rem at 30% 0, rgba(144, 52, 34, .27), transparent 100%),
         var(--alumni-bg);
 }
 
