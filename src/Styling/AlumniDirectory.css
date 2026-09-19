@@ -1189,6 +1189,7 @@
 
 .alumni-portal-nav button,
 .alumni-sidebar-mail {
+    position: relative;
     min-height: 2.65rem;
     display: flex;
     align-items: center;
@@ -1212,6 +1213,21 @@
     border-color: rgba(79, 142, 197, .42);
     background: var(--alumni-blue-soft);
     color: var(--alumni-ink);
+}
+
+.alumni-nav-badge {
+    min-width: 1.35rem;
+    height: 1.35rem;
+    display: inline-grid;
+    place-items: center;
+    margin-left: auto;
+    padding: 0 .35rem;
+    border-radius: 999px;
+    background: var(--alumni-gold);
+    color: #07111f;
+    font-size: .68rem;
+    font-weight: 900;
+    line-height: 1;
 }
 
 .alumni-portal-main {
@@ -1592,6 +1608,133 @@
 
 .alumni-inline-mention:hover {
     color: var(--alumni-gold);
+}
+
+.alumni-feed-social {
+    display: grid;
+    gap: .35rem;
+    padding-top: .7rem;
+    border-top: 1px solid var(--alumni-line);
+}
+
+.alumni-feed-social-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    align-items: center;
+}
+
+.alumni-feed-social-actions button {
+    appearance: none;
+    min-height: 2.15rem;
+    padding: .45rem .68rem;
+    border: 1px solid rgba(79, 142, 197, .55);
+    border-radius: 999px;
+    background: transparent;
+    color: #b9daf3;
+    cursor: pointer;
+    font: inherit;
+    font-size: .78rem;
+    font-weight: 800;
+}
+
+.alumni-feed-social-actions button:hover,
+.alumni-feed-social-actions button.is-active {
+    border-color: rgba(201, 163, 91, .65);
+    color: var(--alumni-gold);
+}
+
+.alumni-feed-social-actions span,
+.alumni-feed-social p {
+    color: var(--alumni-faint);
+    font-size: .78rem;
+}
+
+.alumni-feed-comments {
+    display: grid;
+    gap: .7rem;
+    padding-top: .75rem;
+    border-top: 1px solid var(--alumni-line);
+}
+
+.alumni-feed-comment {
+    display: grid;
+    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    gap: .7rem;
+    align-items: start;
+}
+
+.alumni-feed-comment img {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    object-fit: cover;
+}
+
+.alumni-feed-comment > div {
+    display: grid;
+    gap: .18rem;
+}
+
+.alumni-feed-comment > div > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    align-items: baseline;
+}
+
+.alumni-feed-comment strong {
+    color: var(--alumni-ink);
+    font-size: .82rem;
+}
+
+.alumni-feed-comment time {
+    color: var(--alumni-faint);
+    font-size: .7rem;
+}
+
+.alumni-feed-comment p {
+    font-size: .88rem;
+}
+
+.alumni-feed-comment > button {
+    appearance: none;
+    padding: .25rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--alumni-faint);
+    cursor: pointer;
+    font: inherit;
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+.alumni-feed-comment > button:hover {
+    color: var(--alumni-gold);
+}
+
+.alumni-feed-comment-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .5rem;
+}
+
+.alumni-feed-comment-form input {
+    width: 100%;
+    min-height: 2.55rem;
+    padding: .62rem .75rem;
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 6px;
+    background: #071827;
+    color: var(--alumni-ink);
+    font: inherit;
+    font-size: .88rem;
+    outline: none;
+}
+
+.alumni-feed-comment-form input:focus {
+    border-color: var(--alumni-blue);
+    box-shadow: 0 0 0 3px rgba(79, 142, 197, .18);
 }
 
 .alumni-feed-admin-actions {
@@ -2435,7 +2578,8 @@
 
 .alumni-directory-page .alumni-hero,
 .alumni-profile-page .alumni-hero {
-    min-height: min(730px, 79vh);
+    height: min(730px, 79vh);
+    min-height: 0;
     display: grid;
     place-items: center;
     padding: 7rem clamp(1.5rem, 7vw, 8rem) 5rem;
@@ -2621,6 +2765,7 @@
     .alumni-profile-type-grid,
     .alumni-image-email-row,
     .alumni-location-input-row,
+    .alumni-feed-comment-form,
     .alumni-job-entry,
     .alumni-invite-form,
     .alumni-photo-manager,
@@ -2693,7 +2838,8 @@
 
     .alumni-directory-page .alumni-hero,
     .alumni-profile-page .alumni-hero {
-        min-height: 500px;
+        height: 500px;
+        min-height: 0;
         padding: 6.5rem 1.25rem 3.5rem;
     }
 

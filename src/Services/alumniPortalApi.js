@@ -69,7 +69,8 @@ const fallbackTasks = [
         role: 'Editors',
         dueDate: '2026-10-04',
         priority: 'high',
-        status: 'open'
+        status: 'open',
+        createdAt: '2026-09-18T00:00:00.000Z'
     },
     {
         id: 'task-writer-sources',
@@ -78,7 +79,8 @@ const fallbackTasks = [
         role: 'Writers',
         dueDate: '2026-10-08',
         priority: 'medium',
-        status: 'open'
+        status: 'open',
+        createdAt: '2026-09-18T00:00:00.000Z'
     }
 ];
 
@@ -111,11 +113,16 @@ const fallbackCalendarEvents = [
     }
 ];
 
+const fallbackFeedComments = [];
+const fallbackFeedLikes = [];
+
 const emptyPortalContent = {
     feedPosts: fallbackFeedPosts,
     announcements: fallbackAnnouncements,
     tasks: fallbackTasks,
-    calendarEvents: fallbackCalendarEvents
+    calendarEvents: fallbackCalendarEvents,
+    feedComments: fallbackFeedComments,
+    feedLikes: fallbackFeedLikes
 };
 
 const readLocalPortalContent = () => {
@@ -178,6 +185,25 @@ const normalizeFeedPost = (post) => ({
     createdAt: post.createdAt || post.created_at || new Date().toISOString()
 });
 
+const normalizeFeedComment = (comment) => ({
+    id: comment.id || createId('comment'),
+    postId: comment.postId || comment.post_id || '',
+    authorUserId: comment.authorUserId || comment.author_user_id || '',
+    authorName: comment.authorName || comment.author_name || 'UJLP member',
+    authorPhotoKey: comment.authorPhotoKey || comment.author_photo_key || 'blank',
+    body: comment.body || '',
+    createdAt: comment.createdAt || comment.created_at || new Date().toISOString()
+});
+
+const normalizeFeedLike = (like) => ({
+    id: like.id || `${like.postId || like.post_id || ''}-${like.userId || like.user_id || ''}`,
+    postId: like.postId || like.post_id || '',
+    userId: like.userId || like.user_id || '',
+    userName: like.userName || like.user_name || 'UJLP member',
+    userPhotoKey: like.userPhotoKey || like.user_photo_key || 'blank',
+    createdAt: like.createdAt || like.created_at || new Date().toISOString()
+});
+
 const normalizeAnnouncement = (announcement) => ({
     id: announcement.id || createId('announcement'),
     title: announcement.title || '',
@@ -197,7 +223,8 @@ const normalizeTask = (task) => ({
     role: task.role || 'Writers',
     dueDate: task.dueDate || task.due_date || '',
     priority: task.priority || 'medium',
-    status: task.status || 'open'
+    status: task.status || 'open',
+    createdAt: task.createdAt || task.created_at || new Date().toISOString()
 });
 
 const normalizeCalendarEvent = (event) => ({
@@ -227,6 +254,22 @@ const toFeedPostRow = (post) => ({
     author_photo_key: post.authorPhotoKey || 'blank',
     pinned: post.pinned,
     tags: post.tags || []
+});
+
+const toFeedCommentRow = (comment) => ({
+    id: comment.id?.startsWith('comment-') ? undefined : comment.id,
+    post_id: comment.postId,
+    author_user_id: comment.authorUserId || null,
+    author_name: comment.authorName,
+    author_photo_key: comment.authorPhotoKey || 'blank',
+    body: comment.body
+});
+
+const toFeedLikeRow = (like) => ({
+    post_id: like.postId,
+    user_id: like.userId,
+    user_name: like.userName,
+    user_photo_key: like.userPhotoKey || 'blank'
 });
 
 const toAnnouncementRow = (announcement) => ({
@@ -265,6 +308,8 @@ const toCalendarEventRow = (event) => ({
 
 const localCollectionKey = {
     feedPosts: 'feedPosts',
+    feedComments: 'feedComments',
+    feedLikes: 'feedLikes',
     announcements: 'announcements',
     tasks: 'tasks',
     calendarEvents: 'calendarEvents'
@@ -280,9 +325,15 @@ export const fetchPortalContent = async (session) => {
             supabaseRequest('/rest/v1/alumni_weekly_tasks?select=*&order=due_date.asc', { method: 'GET' }, session),
             supabaseRequest('/rest/v1/alumni_calendar_events?select=*&order=pinned.desc,event_date.asc,start_time.asc', { method: 'GET' }, session)
         ]);
+        const [feedComments, feedLikes] = await Promise.all([
+            supabaseRequest('/rest/v1/alumni_feed_comments?select=*&order=created_at.asc', { method: 'GET' }, session).catch(() => []),
+            supabaseRequest('/rest/v1/alumni_feed_likes?select=*&order=created_at.asc', { method: 'GET' }, session).catch(() => [])
+        ]);
 
         return {
             feedPosts: feedPosts.map(normalizeFeedPost),
+            feedComments: feedComments.map(normalizeFeedComment),
+            feedLikes: feedLikes.map(normalizeFeedLike),
             announcements: announcements.map(normalizeAnnouncement),
             tasks: tasks.map(normalizeTask),
             calendarEvents: calendarEvents.map(normalizeCalendarEvent)
@@ -309,6 +360,8 @@ export const fetchPublicAnnouncements = async () => {
 export const savePortalItem = async (collection, item, session) => {
     const normalized = {
         feedPosts: normalizeFeedPost,
+        feedComments: normalizeFeedComment,
+        feedLikes: normalizeFeedLike,
         announcements: normalizeAnnouncement,
         tasks: normalizeTask,
         calendarEvents: normalizeCalendarEvent
@@ -317,6 +370,8 @@ export const savePortalItem = async (collection, item, session) => {
     if (isSupabaseConfigured) {
         const config = {
             feedPosts: ['/rest/v1/alumni_feed_posts', toFeedPostRow],
+            feedComments: ['/rest/v1/alumni_feed_comments', toFeedCommentRow],
+            feedLikes: ['/rest/v1/alumni_feed_likes', toFeedLikeRow],
             announcements: ['/rest/v1/public_announcements', toAnnouncementRow],
             tasks: ['/rest/v1/alumni_weekly_tasks', toTaskRow],
             calendarEvents: ['/rest/v1/alumni_calendar_events', toCalendarEventRow]
@@ -331,6 +386,8 @@ export const savePortalItem = async (collection, item, session) => {
         }, session);
         return {
             feedPosts: normalizeFeedPost,
+            feedComments: normalizeFeedComment,
+            feedLikes: normalizeFeedLike,
             announcements: normalizeAnnouncement,
             tasks: normalizeTask,
             calendarEvents: normalizeCalendarEvent
@@ -348,11 +405,14 @@ export const deletePortalItem = async (collection, id, session) => {
     if (isSupabaseConfigured) {
         const table = {
             feedPosts: 'alumni_feed_posts',
+            feedComments: 'alumni_feed_comments',
+            feedLikes: 'alumni_feed_likes',
             announcements: 'public_announcements',
             tasks: 'alumni_weekly_tasks',
             calendarEvents: 'alumni_calendar_events'
         }[collection];
-        await supabaseRequest(`/rest/v1/${table}?id=eq.${id}`, { method: 'DELETE' }, session);
+        const filter = collection === 'feedLikes' ? id : `id=eq.${id}`;
+        await supabaseRequest(`/rest/v1/${table}?${filter}`, { method: 'DELETE' }, session);
         return;
     }
 
@@ -360,4 +420,35 @@ export const deletePortalItem = async (collection, id, session) => {
     const key = localCollectionKey[collection];
     content[key] = content[key].filter(item => item.id !== id);
     writeLocalPortalContent(content);
+};
+
+export const toggleFeedLike = async (post, actor, liked, session) => {
+    const like = normalizeFeedLike({
+        postId: post.id,
+        userId: actor.userId,
+        userName: actor.name,
+        userPhotoKey: actor.photoKey
+    });
+
+    if (isSupabaseConfigured) {
+        if (liked) {
+            await supabaseRequest(`/rest/v1/alumni_feed_likes?post_id=eq.${post.id}&user_id=eq.${actor.userId}`, { method: 'DELETE' }, session);
+            return null;
+        }
+
+        const rows = await supabaseRequest('/rest/v1/alumni_feed_likes', {
+            method: 'POST',
+            headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
+            body: JSON.stringify(toFeedLikeRow(like))
+        }, session);
+        return normalizeFeedLike(Array.isArray(rows) ? rows[0] : rows);
+    }
+
+    const content = readLocalPortalContent();
+    const exists = content.feedLikes.some(item => item.postId === post.id && item.userId === actor.userId);
+    content.feedLikes = exists
+        ? content.feedLikes.filter(item => !(item.postId === post.id && item.userId === actor.userId))
+        : [like, ...content.feedLikes];
+    writeLocalPortalContent(content);
+    return exists ? null : like;
 };

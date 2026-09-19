@@ -16,7 +16,7 @@ import {
     getStoredAlumniSession,
     isAlumniAdmin
 } from '../Services/alumniApi';
-import { deletePortalItem, fetchPortalContent, savePortalItem } from '../Services/alumniPortalApi';
+import { deletePortalItem, fetchPortalContent, savePortalItem, toggleFeedLike } from '../Services/alumniPortalApi';
 import '../Styling/AlumniDirectory.css';
 import '../Styling/EditorialPages.css';
 
@@ -33,6 +33,17 @@ const defaultFilters = {
     classYear: 'all',
     willingOnly: false
 };
+
+const defaultPortalContentState = {
+    feedPosts: [],
+    feedComments: [],
+    feedLikes: [],
+    announcements: [],
+    tasks: [],
+    calendarEvents: []
+};
+
+const NOTIFICATION_SEEN_KEY_PREFIX = 'ujlp_alumni_notifications_seen_at';
 
 const normalizeText = (value) => String(value || '').toLowerCase();
 
@@ -172,6 +183,8 @@ const getMentionHandlesFromText = (value) => Array.from(
     )
 );
 
+const getNotificationSeenKey = (userId) => `${NOTIFICATION_SEEN_KEY_PREFIX}:${userId || 'guest'}`;
+
 const defaultFeedMentionMenu = {
     open: false,
     query: '',
@@ -229,10 +242,12 @@ function AlumniDirectory() {
     const [filters, setFilters] = useState(defaultFilters);
     const [activeView, setActiveView] = useState('home');
     const [editingProfileUserId, setEditingProfileUserId] = useState(null);
-    const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [], calendarEvents: [] });
+    const [portalContent, setPortalContent] = useState(defaultPortalContentState);
     const [feedDraft, setFeedDraft] = useState(defaultFeedDraft);
     const [feedMessage, setFeedMessage] = useState('');
     const [feedMentionMenu, setFeedMentionMenu] = useState(defaultFeedMentionMenu);
+    const [commentDrafts, setCommentDrafts] = useState({});
+    const [notificationsSeenAt, setNotificationsSeenAt] = useState('');
     const [calendarDraft, setCalendarDraft] = useState(defaultCalendarDraft);
     const [calendarMessage, setCalendarMessage] = useState('');
     const [calendarWeekStart, setCalendarWeekStart] = useState('');
@@ -257,6 +272,7 @@ function AlumniDirectory() {
     const feedPostTextareaRef = useRef(null);
 
     const isAdmin = isAlumniAdmin(session);
+    const currentUserId = session?.user?.id || '';
 
     useEffect(() => {
         const syncSession = () => setSession(getStoredAlumniSession());
@@ -287,10 +303,19 @@ function AlumniDirectory() {
     useEffect(() => {
         if (session) {
             loadProfiles(session);
-            fetchPortalContent(session).then(setPortalContent);
+            fetchPortalContent(session).then(content => setPortalContent({ ...defaultPortalContentState, ...content }));
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [session?.user?.id]);
+
+    useEffect(() => {
+        if (!currentUserId) {
+            setNotificationsSeenAt('');
+            return;
+        }
+
+        setNotificationsSeenAt(window.localStorage.getItem(getNotificationSeenKey(currentUserId)) || '');
+    }, [currentUserId]);
 
     const ownProfile = useMemo(() => {
         if (!session?.user?.id) return null;
@@ -413,9 +438,109 @@ function AlumniDirectory() {
             .slice(0, 7);
     }, [feedMentionMenu.open, feedMentionMenu.query, profiles]);
 
-    const notificationCount = useMemo(() => (
-        (portalContent.announcements || []).length + (portalContent.tasks || []).length
-    ), [portalContent.announcements, portalContent.tasks]);
+    const feedCommentsByPostId = useMemo(() => (
+        (portalContent.feedComments || []).reduce((lookup, comment) => {
+            if (!lookup[comment.postId]) lookup[comment.postId] = [];
+            lookup[comment.postId].push(comment);
+            return lookup;
+        }, {})
+    ), [portalContent.feedComments]);
+
+    const feedLikesByPostId = useMemo(() => (
+        (portalContent.feedLikes || []).reduce((lookup, like) => {
+            if (!lookup[like.postId]) lookup[like.postId] = [];
+            lookup[like.postId].push(like);
+            return lookup;
+        }, {})
+    ), [portalContent.feedLikes]);
+
+    const notificationItems = useMemo(() => {
+        if (!currentUserId) return [];
+
+        const ownHandle = getMentionHandle(ownProfile || { fullName: session?.user?.email || '' });
+        const feedPostsById = new Map((portalContent.feedPosts || []).map(post => [post.id, post]));
+        const items = [];
+
+        (portalContent.feedPosts || []).forEach(post => {
+            const mentioned = ownHandle && getMentionHandlesFromText(`${post.body || ''} ${(post.tags || []).join(' ')}`).includes(ownHandle);
+            if (post.authorUserId !== currentUserId || mentioned) {
+                items.push({
+                    id: `post-${post.id}`,
+                    type: mentioned ? 'Mention' : 'Feed post',
+                    title: mentioned ? `${post.authorName || 'Someone'} mentioned you` : `${post.authorName || 'Someone'} posted to the feed`,
+                    body: post.title || post.body,
+                    createdAt: post.createdAt,
+                    postId: post.id
+                });
+            }
+        });
+
+        (portalContent.feedComments || []).forEach(comment => {
+            const post = feedPostsById.get(comment.postId);
+            const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
+            const onOwnPost = post?.authorUserId === currentUserId;
+            if (comment.authorUserId !== currentUserId && (mentioned || onOwnPost)) {
+                items.push({
+                    id: `comment-${comment.id}`,
+                    type: mentioned ? 'Comment mention' : 'Comment',
+                    title: mentioned ? `${comment.authorName} mentioned you in a comment` : `${comment.authorName} commented on your post`,
+                    body: comment.body,
+                    createdAt: comment.createdAt,
+                    postId: comment.postId
+                });
+            }
+        });
+
+        (portalContent.feedLikes || []).forEach(like => {
+            const post = feedPostsById.get(like.postId);
+            if (post?.authorUserId === currentUserId && like.userId !== currentUserId) {
+                items.push({
+                    id: `like-${like.postId}-${like.userId}`,
+                    type: 'Like',
+                    title: `${like.userName} liked your post`,
+                    body: post.title || post.body,
+                    createdAt: like.createdAt,
+                    postId: like.postId
+                });
+            }
+        });
+
+        (portalContent.announcements || []).forEach(announcement => {
+            items.push({
+                id: `announcement-${announcement.id}`,
+                type: announcement.category || 'Announcement',
+                title: announcement.title,
+                body: announcement.body,
+                createdAt: announcement.createdAt || announcement.publishDate,
+                postId: ''
+            });
+        });
+
+        (portalContent.tasks || []).forEach(task => {
+            items.push({
+                id: `task-${task.id}`,
+                type: task.role || 'Task',
+                title: task.title,
+                body: task.details,
+                createdAt: task.createdAt || task.dueDate,
+                postId: ''
+            });
+        });
+
+        return items.sort((left, right) => String(right.createdAt || '').localeCompare(String(left.createdAt || '')));
+    }, [currentUserId, ownProfile, portalContent.announcements, portalContent.feedComments, portalContent.feedLikes, portalContent.feedPosts, portalContent.tasks, session?.user?.email]);
+
+    const unreadNotificationCount = useMemo(() => {
+        if (!notificationsSeenAt) return notificationItems.length;
+        return notificationItems.filter(item => String(item.createdAt || '') > notificationsSeenAt).length;
+    }, [notificationItems, notificationsSeenAt]);
+
+    useEffect(() => {
+        if (activeView !== 'notifications' || !currentUserId) return;
+        const seenAt = new Date().toISOString();
+        window.localStorage.setItem(getNotificationSeenKey(currentUserId), seenAt);
+        setNotificationsSeenAt(seenAt);
+    }, [activeView, currentUserId, notificationItems.length]);
 
     const updateFilter = (key, value) => {
         setFilters(current => ({ ...current, [key]: value }));
@@ -579,7 +704,9 @@ function AlumniDirectory() {
             await deletePortalItem('feedPosts', id, session);
             setPortalContent(current => ({
                 ...current,
-                feedPosts: current.feedPosts.filter(item => item.id !== id)
+                feedPosts: current.feedPosts.filter(item => item.id !== id),
+                feedComments: current.feedComments.filter(item => item.postId !== id),
+                feedLikes: current.feedLikes.filter(item => item.postId !== id)
             }));
             if (feedDraft.id === id) setFeedDraft(defaultFeedDraft);
             setFeedMessage('Feed post deleted.');
@@ -604,6 +731,67 @@ function AlumniDirectory() {
                 setFeedDraft(current => ({ ...current, pinned: saved.pinned }));
             }
             setFeedMessage(saved.pinned ? 'Feed post pinned.' : 'Feed post unpinned.');
+        } catch (error) {
+            setFeedMessage(error.message);
+        }
+    };
+
+    const getCurrentActor = () => ({
+        userId: currentUserId,
+        name: ownProfile?.fullName || session?.user?.email || 'UJLP member',
+        photoKey: ownProfile?.photoKey || 'blank'
+    });
+
+    const handleFeedLike = async (post) => {
+        if (!currentUserId) return;
+
+        const liked = (feedLikesByPostId[post.id] || []).some(like => like.userId === currentUserId);
+        try {
+            const savedLike = await toggleFeedLike(post, getCurrentActor(), liked, session);
+            setPortalContent(current => ({
+                ...current,
+                feedLikes: liked
+                    ? current.feedLikes.filter(like => !(like.postId === post.id && like.userId === currentUserId))
+                    : [savedLike, ...current.feedLikes.filter(like => !(like.postId === post.id && like.userId === currentUserId))]
+            }));
+        } catch (error) {
+            setFeedMessage(error.message);
+        }
+    };
+
+    const handleCommentSave = async (event, post) => {
+        event.preventDefault();
+        const body = String(commentDrafts[post.id] || '').trim();
+        if (!body || !currentUserId) return;
+
+        try {
+            const actor = getCurrentActor();
+            const saved = await savePortalItem('feedComments', {
+                postId: post.id,
+                authorUserId: actor.userId,
+                authorName: actor.name,
+                authorPhotoKey: actor.photoKey,
+                body
+            }, session);
+            setPortalContent(current => ({
+                ...current,
+                feedComments: [...current.feedComments, saved]
+            }));
+            setCommentDrafts(current => ({ ...current, [post.id]: '' }));
+        } catch (error) {
+            setFeedMessage(error.message);
+        }
+    };
+
+    const handleCommentDelete = async (comment) => {
+        if (!isAdmin && comment.authorUserId !== currentUserId) return;
+
+        try {
+            await deletePortalItem('feedComments', comment.id, session);
+            setPortalContent(current => ({
+                ...current,
+                feedComments: current.feedComments.filter(item => item.id !== comment.id)
+            }));
         } catch (error) {
             setFeedMessage(error.message);
         }
@@ -1116,6 +1304,13 @@ function AlumniDirectory() {
         (() => {
             const authorProfile = getFeedAuthorProfile(post);
             const mentionProfiles = getPostMentionProfiles(post);
+            const postComments = feedCommentsByPostId[post.id] || [];
+            const postLikes = feedLikesByPostId[post.id] || [];
+            const likedByMe = postLikes.some(like => like.userId === currentUserId);
+            const likerNames = postLikes.map(like => like.userName).filter(Boolean);
+            const likeSummary = likerNames.length === 0
+                ? 'No likes yet'
+                : `Liked by ${likerNames.slice(0, 3).join(', ')}${likerNames.length > 3 ? ` and ${likerNames.length - 3} more` : ''}`;
             return (
                 <article className="alumni-feed-card" key={post.id}>
                     <div className="alumni-feed-author">
@@ -1138,6 +1333,49 @@ function AlumniDirectory() {
                         ))}
                         {post.eventDate && <span>Event {formatShortDate(post.eventDate)}</span>}
                         {post.deadlineDate && <span>Due {formatShortDate(post.deadlineDate)}</span>}
+                    </div>
+                    <div className="alumni-feed-social">
+                        <div className="alumni-feed-social-actions">
+                            <button
+                                type="button"
+                                className={likedByMe ? 'is-active' : ''}
+                                aria-pressed={likedByMe}
+                                onClick={() => handleFeedLike(post)}
+                            >
+                                {likedByMe ? 'Liked' : 'Like'} · {postLikes.length}
+                            </button>
+                            <span>{postComments.length} comment{postComments.length === 1 ? '' : 's'}</span>
+                        </div>
+                        <p>{likeSummary}</p>
+                    </div>
+                    <div className="alumni-feed-comments">
+                        {postComments.map(comment => {
+                            const canDeleteComment = isAdmin || comment.authorUserId === currentUserId;
+                            return (
+                                <article className="alumni-feed-comment" key={comment.id}>
+                                    <img src={getAlumniPhoto(comment.authorPhotoKey || 'blank')} alt="" />
+                                    <div>
+                                        <div>
+                                            <strong>{comment.authorName || 'UJLP member'}</strong>
+                                            <time>{formatUpdatedDate(comment.createdAt)}</time>
+                                        </div>
+                                        <p>{renderPostBody({ ...post, id: comment.id, body: comment.body })}</p>
+                                    </div>
+                                    {canDeleteComment && (
+                                        <button type="button" onClick={() => handleCommentDelete(comment)}>Delete</button>
+                                    )}
+                                </article>
+                            );
+                        })}
+                        <form className="alumni-feed-comment-form" onSubmit={(event) => handleCommentSave(event, post)}>
+                            <input
+                                value={commentDrafts[post.id] || ''}
+                                onChange={(event) => setCommentDrafts(current => ({ ...current, [post.id]: event.target.value }))}
+                                placeholder="Write a comment..."
+                                aria-label={`Comment on ${post.title}`}
+                            />
+                            <button type="submit" className="alumni-secondary-action">Comment</button>
+                        </form>
                     </div>
                     {isAdmin && (
                         <div className="alumni-feed-admin-actions">
@@ -1520,37 +1758,27 @@ function AlumniDirectory() {
         <div className="alumni-notification-list">
             <div className="alumni-panel-heading">
                 <span>Notifications</span>
-                <strong>Portal activity and feed-aligned updates</strong>
+                <strong>{unreadNotificationCount > 0 ? `${unreadNotificationCount} unread update${unreadNotificationCount === 1 ? '' : 's'}` : 'All caught up'}</strong>
             </div>
-            {portalContent.announcements.slice(0, 4).map(announcement => (
-                <article className="alumni-notification-card" key={announcement.id}>
+            {notificationItems.map(item => (
+                <article className="alumni-notification-card" key={item.id}>
                     <div className="alumni-feed-author">
                         <img src={getAlumniPhoto('blank')} alt="" />
                         <div>
-                            <span>{announcement.category}</span>
-                            <strong>UJLP</strong>
-                            <time>{formatShortDate(announcement.publishDate)}</time>
+                            <span>{item.type}</span>
+                            <strong>{item.title}</strong>
+                            <time>{formatUpdatedDate(item.createdAt)}</time>
                         </div>
                     </div>
-                    <h3>{announcement.title}</h3>
-                    <p>{announcement.body}</p>
+                    <p>{item.body}</p>
+                    {item.postId && (
+                        <button type="button" className="alumni-secondary-action" onClick={() => setActiveView('feed')}>
+                            Open feed
+                        </button>
+                    )}
                 </article>
             ))}
-            {portalContent.tasks.slice(0, 3).map(task => (
-                <article className="alumni-notification-card" key={`task-notification-${task.id}`}>
-                    <div className="alumni-feed-author">
-                        <img src={getAlumniPhoto('blank')} alt="" />
-                        <div>
-                            <span>{task.role}</span>
-                            <strong>Weekly task</strong>
-                            <time>{formatShortDate(task.dueDate)}</time>
-                        </div>
-                    </div>
-                    <h3>{task.title}</h3>
-                    <p>{task.details}</p>
-                </article>
-            ))}
-            {notificationCount === 0 && <p className="alumni-system-note">No notifications yet.</p>}
+            {notificationItems.length === 0 && <p className="alumni-system-note">No notifications yet.</p>}
         </div>
     );
 
@@ -1658,6 +1886,9 @@ function AlumniDirectory() {
                             <button key={key} type="button" className={activeView === key ? 'active' : ''} onClick={() => setActiveView(key)}>
                                 <Icon path={iconPath} />
                                 <span>{label}</span>
+                                {key === 'notifications' && unreadNotificationCount > 0 && (
+                                    <b className="alumni-nav-badge">{unreadNotificationCount > 99 ? '99+' : unreadNotificationCount}</b>
+                                )}
                             </button>
                         ))}
                     </nav>

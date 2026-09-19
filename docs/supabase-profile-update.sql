@@ -133,3 +133,43 @@ $$;
 
 revoke all on function public.create_alumni_profile(text, jsonb) from public;
 grant execute on function public.create_alumni_profile(text, jsonb) to authenticated;
+
+-- Directory-admin policies for editing another member's existing profile.
+-- Keep this email list in sync with REACT_APP_ALUMNI_ADMIN_EMAILS.
+create or replace function public.is_alumni_directory_admin()
+returns boolean
+language sql
+stable
+as $$
+  select lower(coalesce(auth.jwt() ->> 'email', '')) = any (
+    array[
+      'robbielbundy@gmail.com',
+      'shelbyeliasek@gmail.com'
+    ]
+  );
+$$;
+
+alter table public.alumni_profiles enable row level security;
+
+drop policy if exists "Directory admins can read all alumni profiles" on public.alumni_profiles;
+drop policy if exists "Directory admins can create alumni profiles" on public.alumni_profiles;
+drop policy if exists "Directory admins can update all alumni profiles" on public.alumni_profiles;
+
+create policy "Directory admins can read all alumni profiles"
+on public.alumni_profiles
+for select
+to authenticated
+using (public.is_alumni_directory_admin());
+
+create policy "Directory admins can create alumni profiles"
+on public.alumni_profiles
+for insert
+to authenticated
+with check (public.is_alumni_directory_admin());
+
+create policy "Directory admins can update all alumni profiles"
+on public.alumni_profiles
+for update
+to authenticated
+using (public.is_alumni_directory_admin())
+with check (public.is_alumni_directory_admin());
