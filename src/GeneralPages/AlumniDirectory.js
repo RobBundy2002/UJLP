@@ -257,6 +257,8 @@ const defaultCalendarDraft = {
     pinned: false
 };
 
+const createDefaultCalendarDraft = () => ({ ...defaultCalendarDraft });
+
 function AlumniDirectory() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -273,7 +275,7 @@ function AlumniDirectory() {
     const [commentDrafts, setCommentDrafts] = useState({});
     const [notificationsSeenAt, setNotificationsSeenAt] = useState('');
     const [dismissedNotificationIds, setDismissedNotificationIds] = useState([]);
-    const [calendarDraft, setCalendarDraft] = useState(defaultCalendarDraft);
+    const [calendarDraft, setCalendarDraft] = useState(createDefaultCalendarDraft);
     const [calendarMessage, setCalendarMessage] = useState('');
     const [calendarWeekStart, setCalendarWeekStart] = useState('');
     const [selectedCalendarEventId, setSelectedCalendarEventId] = useState('');
@@ -892,7 +894,7 @@ function AlumniDirectory() {
                 ...current,
                 calendarEvents: [saved, ...current.calendarEvents.filter(item => item.id !== saved.id)]
             }));
-            setCalendarDraft(defaultCalendarDraft);
+            setCalendarDraft(createDefaultCalendarDraft());
             if (saved.eventDate) {
                 const savedDate = parseCalendarDate(saved.eventDate);
                 if (savedDate) setCalendarWeekStart(toCalendarDateValue(getCalendarWeekStart(savedDate)));
@@ -905,15 +907,15 @@ function AlumniDirectory() {
 
     const handleCalendarEdit = (eventItem) => {
         setCalendarDraft({
-            id: eventItem.id,
-            title: eventItem.title,
-            details: eventItem.details,
-            category: eventItem.category,
-            eventDate: eventItem.eventDate,
-            startTime: eventItem.startTime,
-            endTime: eventItem.endTime,
-            location: eventItem.location,
-            linkUrl: eventItem.linkUrl,
+            id: eventItem.id || '',
+            title: eventItem.title || '',
+            details: eventItem.details || '',
+            category: eventItem.category || 'Event',
+            eventDate: eventItem.eventDate || '',
+            startTime: eventItem.startTime || '',
+            endTime: eventItem.endTime || '',
+            location: eventItem.location || '',
+            linkUrl: eventItem.linkUrl || '',
             pinned: Boolean(eventItem.pinned)
         });
         const eventDate = parseCalendarDate(eventItem.eventDate);
@@ -931,7 +933,7 @@ function AlumniDirectory() {
                 ...current,
                 calendarEvents: current.calendarEvents.filter(item => item.id !== id)
             }));
-            if (calendarDraft.id === id) setCalendarDraft(defaultCalendarDraft);
+            if (calendarDraft.id === id) setCalendarDraft(createDefaultCalendarDraft());
             if (selectedCalendarEventId === id) setSelectedCalendarEventId('');
             setCalendarMessage('Calendar event deleted.');
         } catch (error) {
@@ -1729,7 +1731,7 @@ function AlumniDirectory() {
     const renderCalendar = () => (
         <div className="alumni-calendar-layout">
             {isAdmin && (
-                <form className="alumni-calendar-form" onSubmit={handleCalendarSave}>
+                <form className="alumni-calendar-form" onSubmit={handleCalendarSave} autoComplete="off">
                     <div className="alumni-panel-heading">
                         <span>{calendarDraft.id ? 'Editing calendar event' : 'New calendar event'}</span>
                         <strong>{calendarDraft.id ? calendarDraft.title || 'Untitled event' : 'Add to the calendar'}</strong>
@@ -1745,15 +1747,15 @@ function AlumniDirectory() {
                         </label>
                         <label>
                             <span>Date</span>
-                            <input type="date" value={calendarDraft.eventDate} onChange={(event) => setCalendarDraft(current => ({ ...current, eventDate: event.target.value }))} required />
+                            <input type="date" value={calendarDraft.eventDate} onChange={(event) => setCalendarDraft(current => ({ ...current, eventDate: event.target.value }))} required autoComplete="off" />
                         </label>
                         <label>
                             <span>Start time</span>
-                            <input type="time" value={calendarDraft.startTime} onChange={(event) => setCalendarDraft(current => ({ ...current, startTime: event.target.value }))} />
+                            <input type="time" value={calendarDraft.startTime} onChange={(event) => setCalendarDraft(current => ({ ...current, startTime: event.target.value }))} required autoComplete="off" />
                         </label>
                         <label>
                             <span>End time</span>
-                            <input type="time" value={calendarDraft.endTime} onChange={(event) => setCalendarDraft(current => ({ ...current, endTime: event.target.value }))} />
+                            <input type="time" value={calendarDraft.endTime} onChange={(event) => setCalendarDraft(current => ({ ...current, endTime: event.target.value }))} required autoComplete="off" />
                         </label>
                         <label>
                             <span>Location</span>
@@ -1775,7 +1777,7 @@ function AlumniDirectory() {
                     <div className="alumni-form-actions">
                         <button type="submit" className="alumni-primary-action">{calendarDraft.id ? 'Save event' : 'Add event'}</button>
                         {calendarDraft.id && (
-                            <button type="button" className="alumni-secondary-action" onClick={() => setCalendarDraft(defaultCalendarDraft)}>New event</button>
+                            <button type="button" className="alumni-secondary-action" onClick={() => setCalendarDraft(createDefaultCalendarDraft())}>New event</button>
                         )}
                     </div>
                     {calendarMessage && <p className="alumni-form-message">{calendarMessage}</p>}
@@ -1850,6 +1852,9 @@ function AlumniDirectory() {
                             Open feed
                         </button>
                     )}
+                    <button type="button" className="alumni-secondary-action" onClick={() => handleNotificationDismiss(item.id)}>
+                        Dismiss
+                    </button>
                 </article>
             ))}
             {notificationItems.length === 0 && <p className="alumni-system-note">No notifications yet.</p>}
