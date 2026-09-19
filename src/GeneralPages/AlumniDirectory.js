@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
@@ -172,6 +172,26 @@ const getMentionHandlesFromText = (value) => Array.from(
     )
 );
 
+const defaultFeedMentionMenu = {
+    open: false,
+    query: '',
+    startIndex: 0,
+    endIndex: 0,
+    activeIndex: 0
+};
+
+const getActiveFeedMention = (value, cursorIndex) => {
+    const textBeforeCursor = String(value || '').slice(0, cursorIndex);
+    const match = textBeforeCursor.match(/(^|\s)@([a-zA-Z0-9._-]*)$/);
+    if (!match) return null;
+
+    return {
+        query: match[2],
+        startIndex: cursorIndex - match[2].length - 1,
+        endIndex: cursorIndex
+    };
+};
+
 const defaultFeedDraft = {
     id: '',
     title: '',
@@ -212,6 +232,7 @@ function AlumniDirectory() {
     const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [], calendarEvents: [] });
     const [feedDraft, setFeedDraft] = useState(defaultFeedDraft);
     const [feedMessage, setFeedMessage] = useState('');
+    const [feedMentionMenu, setFeedMentionMenu] = useState(defaultFeedMentionMenu);
     const [calendarDraft, setCalendarDraft] = useState(defaultCalendarDraft);
     const [calendarMessage, setCalendarMessage] = useState('');
     const [calendarWeekStart, setCalendarWeekStart] = useState('');
@@ -233,6 +254,7 @@ function AlumniDirectory() {
         pinned: false
     });
     const [loading, setLoading] = useState(false);
+    const feedPostTextareaRef = useRef(null);
 
     const isAdmin = isAlumniAdmin(session);
 
@@ -358,6 +380,39 @@ function AlumniDirectory() {
         return lookup;
     }, [profiles]);
 
+    const feedMentionMatches = useMemo(() => {
+        if (!feedMentionMenu.open) return [];
+
+        const query = normalizeText(feedMentionMenu.query);
+        return profiles
+            .filter(profile => {
+                const handle = getMentionHandle(profile);
+                if (!handle) return false;
+
+                const searchable = [
+                    getProfileName(profile),
+                    handle,
+                    profile.email,
+                    profile.ujlpRole,
+                    getAlumniProfileLine(profile),
+                    getPathLabel(profile)
+                ].map(normalizeText).join(' ');
+
+                return !query || searchable.includes(query);
+            })
+            .sort((left, right) => {
+                const leftName = normalizeText(getProfileName(left));
+                const rightName = normalizeText(getProfileName(right));
+                const leftHandle = normalizeText(getMentionHandle(left));
+                const rightHandle = normalizeText(getMentionHandle(right));
+                const leftScore = leftName.startsWith(query) || leftHandle.startsWith(query) ? 0 : 1;
+                const rightScore = rightName.startsWith(query) || rightHandle.startsWith(query) ? 0 : 1;
+                if (leftScore !== rightScore) return leftScore - rightScore;
+                return leftName.localeCompare(rightName);
+            })
+            .slice(0, 7);
+    }, [feedMentionMenu.open, feedMentionMenu.query, profiles]);
+
     const notificationCount = useMemo(() => (
         (portalContent.announcements || []).length + (portalContent.tasks || []).length
     ), [portalContent.announcements, portalContent.tasks]);
@@ -373,6 +428,15 @@ function AlumniDirectory() {
     const openProfileView = (profile) => {
         setEditingProfileUserId(profile.userId);
         setActiveView('profile');
+    };
+
+    const getProfileEditPath = (profile) => {
+        const targetUserId = profile?.userId || '';
+        if (isAdmin && targetUserId && targetUserId !== session?.user?.id) {
+            return `/alumni/profile?userId=${encodeURIComponent(targetUserId)}`;
+        }
+
+        return '/alumni/profile';
     };
 
     useEffect(() => {
@@ -481,6 +545,7 @@ function AlumniDirectory() {
                 feedPosts: [saved, ...current.feedPosts.filter(item => item.id !== saved.id)]
             }));
             setFeedDraft(defaultFeedDraft);
+            setFeedMentionMenu(defaultFeedMentionMenu);
             setFeedMessage(feedDraft.id ? 'Feed post updated.' : 'Posted to the alumni feed.');
         } catch (error) {
             setFeedMessage(error.message);
@@ -503,6 +568,7 @@ function AlumniDirectory() {
             authorPhotoKey: post.authorPhotoKey
         });
         setFeedMessage('');
+        setFeedMentionMenu(defaultFeedMentionMenu);
         setActiveView('feed');
     };
 
@@ -679,9 +745,11 @@ function AlumniDirectory() {
                         <span>Email pending</span>
                     )}
                     {profile.linkedinUrl && <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
-                    <button type="button" className="alumni-secondary-action alumni-edit-action" onClick={() => openProfileView(profile)}>View</button>
-                    {profile.userId === session?.user?.id && (
-                        <Link to="/alumni/profile" className="alumni-secondary-action alumni-edit-action">Manage profile</Link>
+                    <button type="button" onClick={() => openProfileView(profile)}>View</button>
+                    {(profile.userId === session?.user?.id || isAdmin) && (
+                        <Link to={getProfileEditPath(profile)}>
+                            {profile.userId === session?.user?.id ? 'Manage profile' : 'Edit profile'}
+                        </Link>
                     )}
                 </div>
             </div>
@@ -802,8 +870,10 @@ function AlumniDirectory() {
                                 <p>{getAlumniProfileLine(activeProfile) || 'Profile details pending'}</p>
                             </div>
                             <div className="alumni-profile-view-actions">
-                                {isOwnProfile && (
-                                    <Link to="/alumni/profile" className="alumni-primary-action">Manage profile</Link>
+                                {(isOwnProfile || isAdmin) && (
+                                    <Link to={getProfileEditPath(activeProfile)} className="alumni-primary-action">
+                                        {isOwnProfile ? 'Manage profile' : 'Edit profile'}
+                                    </Link>
                                 )}
                                 <button type="button" className="alumni-secondary-action" onClick={openDirectory}>Back to directory</button>
                             </div>
@@ -932,6 +1002,100 @@ function AlumniDirectory() {
         return Array.from(new Set(handles))
             .map(handle => profileMentionLookup.get(handle))
             .filter(Boolean);
+    };
+
+    const updateFeedMentionMenu = (value, cursorIndex) => {
+        const activeMention = getActiveFeedMention(value, cursorIndex);
+        if (!activeMention) {
+            setFeedMentionMenu(defaultFeedMentionMenu);
+            return;
+        }
+
+        setFeedMentionMenu(current => ({
+            ...activeMention,
+            open: true,
+            activeIndex: current.query === activeMention.query ? current.activeIndex : 0
+        }));
+    };
+
+    const handleFeedBodyChange = (event) => {
+        const nextBody = event.target.value;
+        setFeedDraft(current => ({ ...current, body: nextBody }));
+        updateFeedMentionMenu(nextBody, event.target.selectionStart);
+    };
+
+    const handleFeedBodySelection = (event) => {
+        updateFeedMentionMenu(event.target.value, event.target.selectionStart);
+    };
+
+    const closeFeedMentionMenuSoon = () => {
+        window.setTimeout(() => setFeedMentionMenu(defaultFeedMentionMenu), 120);
+    };
+
+    const insertFeedMention = (profile) => {
+        const handle = getMentionHandle(profile);
+        if (!handle) return;
+
+        const insertion = `@${handle}`;
+        let nextCursorPosition = 0;
+
+        setFeedDraft(current => {
+            const body = current.body || '';
+            const before = body.slice(0, feedMentionMenu.startIndex);
+            const after = body.slice(feedMentionMenu.endIndex);
+            const separator = after && /^[\s.,;:!?)]/.test(after) ? '' : ' ';
+            nextCursorPosition = before.length + insertion.length + separator.length;
+
+            return {
+                ...current,
+                body: `${before}${insertion}${separator}${after}`
+            };
+        });
+        setFeedMentionMenu(defaultFeedMentionMenu);
+
+        window.requestAnimationFrame(() => {
+            if (!feedPostTextareaRef.current) return;
+            feedPostTextareaRef.current.focus();
+            feedPostTextareaRef.current.setSelectionRange(nextCursorPosition, nextCursorPosition);
+        });
+    };
+
+    const handleFeedBodyKeyDown = (event) => {
+        if (!feedMentionMenu.open) return;
+
+        if (event.key === 'Escape') {
+            event.preventDefault();
+            setFeedMentionMenu(defaultFeedMentionMenu);
+            return;
+        }
+
+        if (feedMentionMatches.length === 0) return;
+
+        if (event.key === 'ArrowDown') {
+            event.preventDefault();
+            setFeedMentionMenu(current => ({
+                ...current,
+                activeIndex: (current.activeIndex + 1) % feedMentionMatches.length
+            }));
+            return;
+        }
+
+        if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            setFeedMentionMenu(current => ({
+                ...current,
+                activeIndex: (current.activeIndex - 1 + feedMentionMatches.length) % feedMentionMatches.length
+            }));
+            return;
+        }
+
+        if (event.key === 'Enter' || event.key === 'Tab') {
+            const activeProfile = feedMentionMatches[Math.min(feedMentionMenu.activeIndex, feedMentionMatches.length - 1)];
+            if (!activeProfile) return;
+
+            event.preventDefault();
+            insertFeedMention(activeProfile);
+        }
     };
 
     const renderPostBody = (post) => {
@@ -1143,16 +1307,56 @@ function AlumniDirectory() {
                             <span>Category</span>
                             <input value={feedDraft.category} onChange={(event) => setFeedDraft(current => ({ ...current, category: event.target.value }))} />
                         </label>
-                        <label className="alumni-wide">
-                            <span>Post</span>
-                            <textarea
-                                value={feedDraft.body}
-                                onChange={(event) => setFeedDraft(current => ({ ...current, body: event.target.value }))}
-                                required
-                                rows="3"
-                                placeholder={profiles.length ? `Use @${getMentionHandle(profiles[0])} to mention a member` : 'Use @name to mention a member'}
-                            />
-                        </label>
+                        <div className="alumni-wide alumni-mention-label">
+                            <label htmlFor="alumni-feed-post-body">Post</label>
+                            <div className="alumni-mention-field">
+                                <textarea
+                                    id="alumni-feed-post-body"
+                                    ref={feedPostTextareaRef}
+                                    value={feedDraft.body}
+                                    onChange={handleFeedBodyChange}
+                                    onClick={handleFeedBodySelection}
+                                    onSelect={handleFeedBodySelection}
+                                    onKeyDown={handleFeedBodyKeyDown}
+                                    onBlur={closeFeedMentionMenuSoon}
+                                    required
+                                    rows="3"
+                                    placeholder={profiles.length ? `Use @${getMentionHandle(profiles[0])} to mention a member` : 'Use @name to mention a member'}
+                                    aria-controls={feedMentionMenu.open ? 'alumni-feed-mention-menu' : undefined}
+                                    aria-haspopup="listbox"
+                                />
+                                {feedMentionMenu.open && (
+                                    <div className="alumni-mention-menu" id="alumni-feed-mention-menu" role="listbox">
+                                        {feedMentionMatches.length > 0 ? feedMentionMatches.map((profile, index) => {
+                                            const handle = getMentionHandle(profile);
+                                            return (
+                                                <button
+                                                    type="button"
+                                                    role="option"
+                                                    aria-selected={feedMentionMenu.activeIndex === index}
+                                                    className={feedMentionMenu.activeIndex === index ? 'is-active' : ''}
+                                                    key={profile.userId || profile.id || handle}
+                                                    onMouseEnter={() => setFeedMentionMenu(current => ({ ...current, activeIndex: index }))}
+                                                    onMouseDown={(event) => {
+                                                        event.preventDefault();
+                                                        insertFeedMention(profile);
+                                                    }}
+                                                >
+                                                    <img src={getAlumniPhoto(profile.photoKey)} alt="" />
+                                                    <span>
+                                                        <strong>{getProfileName(profile)}</strong>
+                                                        <small>{getAlumniProfileLine(profile) || profile.email || getPathLabel(profile)}</small>
+                                                    </span>
+                                                    <b>@{handle}</b>
+                                                </button>
+                                            );
+                                        }) : (
+                                            <p>No directory matches</p>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
                         <label>
                             <span>Type</span>
                             <select value={feedDraft.postType} onChange={(event) => setFeedDraft(current => ({ ...current, postType: event.target.value }))}>
@@ -1183,7 +1387,16 @@ function AlumniDirectory() {
                     <div className="alumni-form-actions">
                         <button type="submit" className="alumni-primary-action">{feedDraft.id ? 'Save feed post' : 'Post to feed'}</button>
                         {feedDraft.id && (
-                            <button type="button" className="alumni-secondary-action" onClick={() => setFeedDraft(defaultFeedDraft)}>New post</button>
+                            <button
+                                type="button"
+                                className="alumni-secondary-action"
+                                onClick={() => {
+                                    setFeedDraft(defaultFeedDraft);
+                                    setFeedMentionMenu(defaultFeedMentionMenu);
+                                }}
+                            >
+                                New post
+                            </button>
                         )}
                     </div>
                     {feedMessage && <p className="alumni-form-message">{feedMessage}</p>}

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
 import {
@@ -27,6 +27,7 @@ import {
     fetchAlumniProfiles,
     getAlumniBackendMode,
     getStoredAlumniSession,
+    isAlumniAdmin,
     isAlumniProfileInviteCodeValid,
     isAlumniProfileInviteConfigured,
     saveAlumniProfile
@@ -193,6 +194,7 @@ const getPhotoCropImageStyle = (imageSize, crop) => {
 };
 
 function AlumniProfile() {
+    const location = useLocation();
     const [session, setSession] = useState(() => getStoredAlumniSession());
     const [profiles, setProfiles] = useState([]);
     const [profileDraft, setProfileDraft] = useState(null);
@@ -208,6 +210,17 @@ function AlumniProfile() {
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const backendMode = getAlumniBackendMode();
+    const isAdmin = isAlumniAdmin(session);
+    const requestedProfileUserId = useMemo(() => {
+        const params = new URLSearchParams(location.search);
+        return params.get('userId') || '';
+    }, [location.search]);
+    const targetProfileUserId = isAdmin && requestedProfileUserId
+        ? requestedProfileUserId
+        : session?.user?.id || '';
+    const isEditingAnotherProfile = Boolean(
+        targetProfileUserId && session?.user?.id && targetProfileUserId !== session.user.id
+    );
 
     useEffect(() => {
         const syncSession = () => setSession(getStoredAlumniSession());
@@ -252,20 +265,35 @@ function AlumniProfile() {
         return profiles.find(profile => profile.userId === session.user.id) || null;
     }, [profiles, session]);
 
+    const editableProfile = useMemo(() => {
+        if (!targetProfileUserId) return null;
+        return profiles.find(profile => profile.userId === targetProfileUserId) || null;
+    }, [profiles, targetProfileUserId]);
+
     useEffect(() => {
-        if (!ownProfile) return;
+        if (!session?.user?.id) return;
+        if (!editableProfile) {
+            setProfileDraft(null);
+            setShowProfileTypeQuestionnaire(false);
+            return;
+        }
+
         setProfileDraft(current => {
-            if (current?.id === ownProfile.id && current?.updatedAt === ownProfile.updatedAt) {
+            if (
+                current?.id === editableProfile.id &&
+                current?.userId === editableProfile.userId &&
+                current?.updatedAt === editableProfile.updatedAt
+            ) {
                 return current;
             }
 
-            return { ...ownProfile, interestsText: toInterestText(ownProfile.interests) };
+            return { ...editableProfile, interestsText: toInterestText(editableProfile.interests) };
         });
         setShowProfileTypeQuestionnaire(false);
-    }, [ownProfile?.id, ownProfile?.updatedAt, ownProfile]);
+    }, [editableProfile?.id, editableProfile?.userId, editableProfile?.updatedAt, editableProfile, session?.user?.id]);
 
     const accountName = getCompactAlumniName(ownProfile, session?.user);
-    const previewProfile = profileDraft || ownProfile;
+    const previewProfile = profileDraft || editableProfile;
 
     const updateDraft = (key, value) => {
         setProfileDraft(current => ({ ...current, [key]: value }));
@@ -584,6 +612,19 @@ function AlumniProfile() {
                         <button type="submit" className="alumni-primary-action">Create profile</button>
                     </form>
                     {profileInviteMessage && <p className="alumni-form-message">{profileInviteMessage}</p>}
+                </div>
+            </div>
+        </section>
+    );
+
+    const renderMissingAdminProfile = () => (
+        <section className="alumni-profile-section">
+            <div className="section-content">
+                <div className="alumni-empty-profile">
+                    <p className="jh-section-label">Admin profile editor</p>
+                    <h2>Profile unavailable.</h2>
+                    <p>The selected member profile could not be found in the directory results.</p>
+                    <Link to="/alumni" className="alumni-secondary-action">Back to member network</Link>
                 </div>
             </div>
         </section>
@@ -1047,7 +1088,7 @@ function AlumniProfile() {
 
                 <form className="alumni-profile-form" onSubmit={handleProfileSave}>
                     <div className="alumni-editor-heading">
-                        <p className="jh-section-label">Manage profile</p>
+                        <p className="jh-section-label">{isEditingAnotherProfile ? 'Admin profile editor' : 'Manage profile'}</p>
                         <h2>{previewProfile.fullName ? `Editing ${previewProfile.fullName}` : 'Build the member profile'}</h2>
                     </div>
                     <div className="alumni-form-grid">
@@ -1073,9 +1114,9 @@ function AlumniProfile() {
                 <div className="section-content alumni-hero-grid">
                     <div className="alumni-hero-copy">
                         <p className="jh-eyebrow"><strong>UJLP</strong> / Member Profile</p>
-                        <h1>Manage Profile</h1>
+                        <h1>{isEditingAnotherProfile ? 'Edit Profile' : 'Manage Profile'}</h1>
                         <p>
-                            Edit the profile attached to your account.
+                            {isEditingAnotherProfile ? 'Edit the selected member profile.' : 'Edit the profile attached to your account.'}
                         </p>
                     </div>
                     <div className="alumni-hero-panel">
@@ -1098,7 +1139,8 @@ function AlumniProfile() {
                     </div>
                 </section>
             )}
-            {session && !loading && !profileDraft && renderCreateProfile()}
+            {session && !loading && !profileDraft && isAdmin && requestedProfileUserId && renderMissingAdminProfile()}
+            {session && !loading && !profileDraft && (!isAdmin || !requestedProfileUserId) && renderCreateProfile()}
             {session && profileDraft && renderProfileWorkspace()}
         </div>
     );
