@@ -399,6 +399,66 @@ const titleCaseLocationPart = (value) => value
     .replace(/\bUva\b/g, 'UVA')
     .replace(/\bSt\./g, 'St.');
 
+const getLocationAddressCity = (address, place) => (
+    address.city ||
+    address.town ||
+    address.village ||
+    address.hamlet ||
+    address.municipality ||
+    address.suburb ||
+    place?.name ||
+    String(place?.display_name || '').split(',')[0]
+);
+
+const getLocationAddressRegion = (address) => (
+    address.state ||
+    address.province ||
+    address.region ||
+    address.county ||
+    ''
+);
+
+const normalizeLocationRegion = (value, countryCode) => {
+    const trimmed = String(value || '').trim();
+    if (!trimmed) return '';
+
+    const normalizedKey = trimmed.toLowerCase().replace(/\./g, '');
+    if (countryCode === 'us' && stateAbbreviations[normalizedKey]) {
+        return stateAbbreviations[normalizedKey];
+    }
+
+    if (trimmed.length === 2 && countryCode === 'us') {
+        return trimmed.toUpperCase();
+    }
+
+    return titleCaseLocationPart(trimmed);
+};
+
+export const formatLocationSearchResult = (place) => {
+    const address = place?.address || {};
+    const countryCode = String(address.country_code || '').toLowerCase();
+    const city = titleCaseLocationPart(getLocationAddressCity(address, place));
+    if (!city) return null;
+
+    const region = normalizeLocationRegion(getLocationAddressRegion(address), countryCode);
+    const country = titleCaseLocationPart(address.country || '');
+    const parts = [city];
+
+    if (region && normalizeLocationInput(region).toLowerCase() !== normalizeLocationInput(city).toLowerCase()) {
+        parts.push(region);
+    }
+
+    if (countryCode !== 'us' && country && normalizeLocationInput(country).toLowerCase() !== normalizeLocationInput(city).toLowerCase()) {
+        parts.push(country);
+    }
+
+    return {
+        id: String(place.place_id || place.osm_id || parts.join('-')),
+        label: parts.join(', '),
+        detail: String(place.display_name || parts.join(', '))
+    };
+};
+
 export const normalizeLocationInput = (value) => {
     const trimmed = String(value || '').trim().replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ');
     if (!trimmed) return '';

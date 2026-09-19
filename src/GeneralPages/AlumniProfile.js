@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
@@ -14,8 +14,8 @@ import {
     anticipatedPathOptions,
     degreeTitleOptions,
     employerIndustryOptions,
+    formatLocationSearchResult,
     jobSectorOptions,
-    locationSuggestions,
     normalizeLocationInput,
     profileTypeOptions,
     ujlpRoleOptions,
@@ -71,6 +71,13 @@ const clampPercent = (value) => Math.min(Math.max(value, 0), 100);
 const getSelectOptions = (options, currentValue = '') => {
     if (!currentValue || options.includes(currentValue)) return options;
     return [currentValue, ...options];
+};
+
+const defaultLocationSearch = {
+    loading: false,
+    open: false,
+    message: '',
+    results: []
 };
 
 const getProfileDefaultsForType = (profileType) => {
@@ -207,8 +214,11 @@ function AlumniProfile() {
     const [photoCrop, setPhotoCrop] = useState({ cropX: 50, cropY: 50, zoom: 1 });
     const [photoDragStart, setPhotoDragStart] = useState(null);
     const [photoMessage, setPhotoMessage] = useState('');
+    const [locationSearch, setLocationSearch] = useState(defaultLocationSearch);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
+    const locationSearchCacheRef = useRef(new Map());
+    const lastLocationSearchAtRef = useRef(0);
     const backendMode = getAlumniBackendMode();
     const isAdmin = isAlumniAdmin(session);
     const requestedProfileUserId = useMemo(() => {
@@ -297,6 +307,93 @@ function AlumniProfile() {
 
     const updateDraft = (key, value) => {
         setProfileDraft(current => ({ ...current, [key]: value }));
+    };
+
+    const updateLocationDraft = (value) => {
+        updateDraft('location', value);
+        setLocationSearch(current => ({
+            ...current,
+            open: false,
+            message: ''
+        }));
+    };
+
+    const searchLocations = async () => {
+        const query = normalizeLocationInput(profileDraft?.location || '');
+        if (query.length < 2) {
+            setLocationSearch({
+                loading: false,
+                open: true,
+                message: 'Enter at least two characters.',
+                results: []
+            });
+            return;
+        }
+
+        const cacheKey = query.toLowerCase();
+        const cachedResults = locationSearchCacheRef.current.get(cacheKey);
+        if (cachedResults) {
+            setLocationSearch({
+                loading: false,
+                open: true,
+                message: cachedResults.length ? '' : 'No matching towns or cities found.',
+                results: cachedResults
+            });
+            return;
+        }
+
+        setLocationSearch(current => ({
+            ...current,
+            loading: true,
+            open: true,
+            message: '',
+            results: []
+        }));
+
+        try {
+            const waitMs = Math.max(0, 1050 - (Date.now() - lastLocationSearchAtRef.current));
+            if (waitMs > 0) {
+                await new Promise(resolve => window.setTimeout(resolve, waitMs));
+            }
+            lastLocationSearchAtRef.current = Date.now();
+
+            const searchParams = new URLSearchParams({
+                q: query,
+                format: 'jsonv2',
+                addressdetails: '1',
+                limit: '7',
+                featureType: 'settlement',
+                'accept-language': 'en'
+            });
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?${searchParams.toString()}`);
+            if (!response.ok) throw new Error('Location search is temporarily unavailable.');
+
+            const rows = await response.json();
+            const results = rows
+                .map(formatLocationSearchResult)
+                .filter(Boolean)
+                .filter((result, index, list) => list.findIndex(item => item.label === result.label) === index);
+
+            locationSearchCacheRef.current.set(cacheKey, results);
+            setLocationSearch({
+                loading: false,
+                open: true,
+                message: results.length ? '' : 'No matching towns or cities found.',
+                results
+            });
+        } catch (error) {
+            setLocationSearch({
+                loading: false,
+                open: true,
+                message: error.message || 'Location search is temporarily unavailable.',
+                results: []
+            });
+        }
+    };
+
+    const selectLocationResult = (result) => {
+        updateDraft('location', result.label);
+        setLocationSearch(defaultLocationSearch);
     };
 
     const selectProfileType = (profileType) => {
@@ -788,17 +885,61 @@ function AlumniProfile() {
                 </label>
                 {renderPhotoManager()}
             </div>
-            <label>
-                <span>Location</span>
-                <input
-                    type="text"
-                    list="alumni-location-suggestions"
-                    value={profileDraft.location || ''}
-                    onChange={(event) => updateDraft('location', event.target.value)}
-                    onBlur={(event) => updateDraft('location', normalizeLocationInput(event.target.value))}
-                    placeholder="City, ST or City, Country"
-                />
-            </label>
+            <div className="alumni-location-picker">
+                <label htmlFor="alumni-profile-location">Location</label>
+                <div className="alumni-location-field">
+                    <div className="alumni-location-input-row">
+                        <input
+                            id="alumni-profile-location"
+                            type="text"
+                            value={profileDraft.location || ''}
+                            onChange={(event) => updateLocationDraft(event.target.value)}
+                            onBlur={(event) => {
+                                updateDraft('location', normalizeLocationInput(event.target.value));
+                                window.setTimeout(() => setLocationSearch(current => ({ ...current, open: false })), 140);
+                            }}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                    event.preventDefault();
+                                    searchLocations();
+                                }
+                            }}
+                            placeholder="City, ST or City, Country"
+                            autoComplete="off"
+                        />
+                        <button
+                            type="button"
+                            className="alumni-secondary-action"
+                            disabled={locationSearch.loading}
+                            onMouseDown={(event) => event.preventDefault()}
+                            onClick={searchLocations}
+                        >
+                            {locationSearch.loading ? 'Searching...' : 'Search'}
+                        </button>
+                    </div>
+                    {locationSearch.open && (
+                        <div className="alumni-location-menu">
+                            {locationSearch.results.map(result => (
+                                <button
+                                    type="button"
+                                    key={result.id}
+                                    onMouseDown={(event) => {
+                                        event.preventDefault();
+                                        selectLocationResult(result);
+                                    }}
+                                >
+                                    <strong>{result.label}</strong>
+                                    <span>{result.detail}</span>
+                                </button>
+                            ))}
+                            {locationSearch.message && <p>{locationSearch.message}</p>}
+                            <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">
+                                OpenStreetMap
+                            </a>
+                        </div>
+                    )}
+                </div>
+            </div>
             <label>
                 <span>LinkedIn URL</span>
                 <input
@@ -842,9 +983,6 @@ function AlumniProfile() {
                 />
                 <span>Show this profile in the member directory</span>
             </label>
-            <datalist id="alumni-location-suggestions">
-                {locationSuggestions.map(location => <option key={location} value={location} />)}
-            </datalist>
         </>
     );
 
