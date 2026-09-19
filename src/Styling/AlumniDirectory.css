@@ -1814,6 +1814,22 @@
     align-content: start;
 }
 
+.alumni-calendar-selection-header {
+    display: flex;
+    gap: 1rem;
+    align-items: start;
+    justify-content: space-between;
+}
+
+.alumni-calendar-selection-header .alumni-panel-heading {
+    flex: 1;
+}
+
+.alumni-calendar-selection-header .alumni-secondary-action {
+    min-height: 2.25rem;
+    padding: .5rem .75rem;
+}
+
 .alumni-calendar-meta {
     display: flex;
     flex-wrap: wrap;

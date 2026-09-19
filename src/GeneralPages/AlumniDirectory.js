@@ -856,6 +856,12 @@ function AlumniDirectory() {
         return (portalContent.calendarEvents || []).find(eventItem => eventItem.id === selectedCalendarEventId) || null;
     }, [portalContent.calendarEvents, selectedCalendarEventId]);
 
+    useEffect(() => {
+        if (activeView !== 'calendar' && selectedCalendarEventId) {
+            setSelectedCalendarEventId('');
+        }
+    }, [activeView, selectedCalendarEventId]);
+
     const calendarWeekDays = useMemo(() => {
         const fallbackWeekStart = getDefaultCalendarWeekStart(portalContent.calendarEvents || []);
         const startDate = parseCalendarDate(calendarWeekStart || fallbackWeekStart) || new Date();
@@ -899,6 +905,7 @@ function AlumniDirectory() {
     const moveCalendarWeek = (direction) => {
         const currentStart = calendarWeekDays[0]?.date || new Date();
         setCalendarWeekStart(toCalendarDateValue(addCalendarDays(currentStart, direction * 7)));
+        setSelectedCalendarEventId('');
     };
 
     const resetCalendarWeek = () => {
@@ -1010,9 +1017,18 @@ function AlumniDirectory() {
 
         return (
             <article className="alumni-calendar-selection">
-                <div className="alumni-panel-heading">
-                    <span>{selectedCalendarEvent.category || 'Event'}</span>
-                    <strong>{selectedCalendarEvent.title}</strong>
+                <div className="alumni-calendar-selection-header">
+                    <div className="alumni-panel-heading">
+                        <span>{selectedCalendarEvent.category || 'Event'}</span>
+                        <strong>{selectedCalendarEvent.title}</strong>
+                    </div>
+                    <button
+                        type="button"
+                        className="alumni-secondary-action"
+                        onClick={() => setSelectedCalendarEventId('')}
+                    >
+                        Close
+                    </button>
                 </div>
                 <p>{selectedCalendarEvent.details || 'Details pending.'}</p>
                 <div className="alumni-calendar-meta">
@@ -1063,6 +1079,7 @@ function AlumniDirectory() {
                                         type="button"
                                         className={`alumni-week-event${selectedCalendarEventId === eventItem.id ? ' is-selected' : ''}`}
                                         key={eventItem.id}
+                                        aria-pressed={selectedCalendarEventId === eventItem.id}
                                         onClick={() => setSelectedCalendarEventId(eventItem.id)}
                                     >
                                         <span>{eventItem.category || 'Event'}</span>
