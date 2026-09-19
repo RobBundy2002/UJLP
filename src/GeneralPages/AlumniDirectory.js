@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
 import {
@@ -11,12 +11,10 @@ import {
 } from '../Data/alumniDisplay';
 import { getAlumniPhoto } from '../Data/alumniPhotoRegistry';
 import {
+    ALUMNI_SESSION_EVENT,
     fetchAlumniProfiles,
-    getAlumniBackendMode,
     getStoredAlumniSession,
-    isAlumniAdmin,
-    signInAlumni,
-    signUpAlumni
+    isAlumniAdmin
 } from '../Services/alumniApi';
 import { deletePortalItem, fetchPortalContent, savePortalItem } from '../Services/alumniPortalApi';
 import '../Styling/AlumniDirectory.css';
@@ -129,9 +127,6 @@ function AlumniDirectory() {
     const location = useLocation();
     const navigate = useNavigate();
     const [session, setSession] = useState(() => getStoredAlumniSession());
-    const [authMode, setAuthMode] = useState('signin');
-    const [authForm, setAuthForm] = useState({ email: '', password: '' });
-    const [showAuthPassword, setShowAuthPassword] = useState(false);
     const [authMessage, setAuthMessage] = useState('');
     const [profiles, setProfiles] = useState([]);
     const [filters, setFilters] = useState(defaultFilters);
@@ -160,8 +155,19 @@ function AlumniDirectory() {
     });
     const [loading, setLoading] = useState(false);
 
-    const backendMode = getAlumniBackendMode();
     const isAdmin = isAlumniAdmin(session);
+
+    useEffect(() => {
+        const syncSession = () => setSession(getStoredAlumniSession());
+        window.addEventListener(ALUMNI_SESSION_EVENT, syncSession);
+        window.addEventListener('storage', syncSession);
+        window.addEventListener('focus', syncSession);
+        return () => {
+            window.removeEventListener(ALUMNI_SESSION_EVENT, syncSession);
+            window.removeEventListener('storage', syncSession);
+            window.removeEventListener('focus', syncSession);
+        };
+    }, []);
 
     const loadProfiles = async (activeSession = session) => {
         if (!activeSession) return;
@@ -264,27 +270,6 @@ function AlumniDirectory() {
 
         return values;
     }, [profiles, isAdmin]);
-
-    const handleAuthSubmit = async (event) => {
-        event.preventDefault();
-        setLoading(true);
-        setAuthMessage('');
-        try {
-            const action = authMode === 'signin' ? signInAlumni : signUpAlumni;
-            const result = await action(authForm);
-            if (result.needsEmailConfirmation) {
-                setAuthMessage('Check your inbox to confirm the account before signing in.');
-                return;
-            }
-            setSession(result.session);
-            setEditingProfileUserId(result.session?.user?.id || null);
-            setAuthForm({ email: '', password: '' });
-        } catch (error) {
-            setAuthMessage(error.message);
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const updateFilter = (key, value) => {
         setFilters(current => ({ ...current, [key]: value }));
@@ -528,70 +513,6 @@ function AlumniDirectory() {
             setCalendarMessage(error.message);
         }
     };
-
-    const renderAuthPanel = () => (
-        <section className="alumni-auth-section">
-            <div className="section-content alumni-auth-layout">
-                <div className="alumni-auth-copy">
-                    <p className="jh-section-label">Member access</p>
-                    <h2>Private member network</h2>
-                    <div className="alumni-lock-list">
-                        <span>Verified accounts</span>
-                        <span>Member profiles</span>
-                        <span>Career paths</span>
-                        <span>Contact preferences</span>
-                    </div>
-                </div>
-                <form className="alumni-auth-panel" onSubmit={handleAuthSubmit}>
-                    <div className="alumni-auth-tabs" aria-label="Authentication mode">
-                        <button type="button" className={authMode === 'signin' ? 'active' : ''} onClick={() => setAuthMode('signin')}>Sign in</button>
-                        <button type="button" className={authMode === 'signup' ? 'active' : ''} onClick={() => setAuthMode('signup')}>Create account</button>
-                    </div>
-                    <label>
-                        <span>Email</span>
-                        <input
-                            type="email"
-                            value={authForm.email}
-                            onChange={(event) => setAuthForm(current => ({ ...current, email: event.target.value }))}
-                            required
-                        />
-                    </label>
-                    <label>
-                        <span>Password</span>
-                        <div className="alumni-password-field">
-                            <input
-                                type={showAuthPassword ? 'text' : 'password'}
-                                value={authForm.password}
-                                onChange={(event) => setAuthForm(current => ({ ...current, password: event.target.value }))}
-                                required
-                                minLength={6}
-                            />
-                            <button
-                                type="button"
-                                onClick={() => setShowAuthPassword(current => !current)}
-                                aria-label={showAuthPassword ? 'Hide password' : 'Show password'}
-                            >
-                                <svg viewBox="0 0 24 24" aria-hidden="true">
-                                    {showAuthPassword ? (
-                                        <path d="M4 4l16 16M10.6 10.6a2 2 0 0 0 2.8 2.8M8.3 5.9A10.7 10.7 0 0 1 12 5c5 0 8.5 4.5 9.5 7a13.3 13.3 0 0 1-3 4.2M6.1 7.8A13.2 13.2 0 0 0 2.5 12c1 2.5 4.5 7 9.5 7 1.4 0 2.7-.35 3.8-.95" />
-                                    ) : (
-                                        <path d="M2.5 12c1-2.5 4.5-7 9.5-7s8.5 4.5 9.5 7c-1 2.5-4.5 7-9.5 7S3.5 14.5 2.5 12Zm9.5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-                                    )}
-                                </svg>
-                            </button>
-                        </div>
-                    </label>
-                    <button type="submit" className="alumni-primary-action" disabled={loading}>
-                        {loading ? 'Working...' : authMode === 'signin' ? 'Sign in' : 'Create account'}
-                    </button>
-                    {backendMode === 'preview' && (
-                        <p className="alumni-system-note">Preview mode is local to this browser. Supabase env vars switch this to real Postgres/Auth.</p>
-                    )}
-                    {authMessage && <p className="alumni-form-message">{authMessage}</p>}
-                </form>
-            </div>
-        </section>
-    );
 
     const renderDashboard = () => (
         <section className="alumni-dashboard">
@@ -1209,11 +1130,16 @@ function AlumniDirectory() {
                 </aside>
                 <div className="alumni-portal-main">
                     {renderPortalAccountBar()}
+                    {authMessage && <p className="alumni-form-message">{authMessage}</p>}
                     {renderActivePortalView()}
                 </div>
             </div>
         </section>
     );
+
+    if (!session) {
+        return <Navigate to="/alumni/signin" replace state={{ from: '/alumni' }} />;
+    }
 
     return (
         <div className="alumni-directory alumni-directory-page jh-page fade-in">
@@ -1235,11 +1161,7 @@ function AlumniDirectory() {
                 </div>
             </section>
 
-            {!session ? (
-                renderAuthPanel()
-            ) : (
-                renderPortalShell()
-            )}
+            {renderPortalShell()}
         </div>
     );
 }

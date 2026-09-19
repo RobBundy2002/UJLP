@@ -7,6 +7,7 @@ import About from './GeneralPages/About';
 import Journal from './GeneralPages/Journal';
 import AlumniDirectory from './GeneralPages/AlumniDirectory';
 import AlumniProfile from './GeneralPages/AlumniProfile';
+import AlumniSignIn from './GeneralPages/AlumniSignIn';
 import Announcements from './GeneralPages/Announcements';
 import Contact from './GeneralPages/Contact';
 import Footer from './Components/Footer';
@@ -167,7 +168,7 @@ function Navigation() {
         setAlumniSession(null);
         setNavProfile(null);
     };
-    const heroRoutes = ['/', '/about', '/journal', '/alumni', '/alumni/profile', '/announcements', '/contact', '/jointheteam'];
+    const heroRoutes = ['/', '/about', '/journal', '/alumni', '/alumni/profile', '/alumni/signin', '/announcements', '/contact', '/jointheteam'];
     const isHeroRoute = heroRoutes.includes(location.pathname);
     const isSignedIn = Boolean(alumniSession?.user?.email);
     const isAdmin = isAlumniAdmin(alumniSession);
@@ -236,7 +237,7 @@ function Navigation() {
                         )}
                     </div>
                 ) : (
-                    <Link to="/alumni" className="header-account-signin" aria-label="Sign in to alumni">
+                    <Link to="/alumni/signin" className="header-account-signin" aria-label="Sign in to alumni">
                         <svg className="header-account-signin-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                             <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM4.5 20a7.5 7.5 0 0 1 15 0" />
                         </svg>
@@ -272,6 +273,7 @@ function App() {
                         <Route path="/journal" element={<Journal />} />
                         <Route path="/alumni" element={<AlumniDirectory />} />
                         <Route path="/alumni/profile" element={<AlumniProfile />} />
+                        <Route path="/alumni/signin" element={<AlumniSignIn />} />
                         <Route path="/journal/index" element={<PublicationIndex />} />
                         <Route path="/journal/issue/:issueId" element={<IssueEdition />} />
                         <Route path="/research/:slug" element={<ResearchArea />} />

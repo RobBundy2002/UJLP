@@ -554,7 +554,7 @@ function AlumniProfile() {
                     <p className="jh-section-label">Profile access</p>
                     <h2>Sign in to manage your profile.</h2>
                     <p>Your profile manager is connected to your alumni account.</p>
-                    <Link to="/alumni" className="alumni-primary-action">Go to alumni sign in</Link>
+                    <Link to="/alumni/signin" state={{ from: '/alumni/profile' }} className="alumni-primary-action">Go to member sign in</Link>
                 </div>
             </div>
         </section>
