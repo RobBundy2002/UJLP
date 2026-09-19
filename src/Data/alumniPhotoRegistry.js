@@ -67,4 +67,11 @@ export const alumniPhotoOptions = Object.entries(alumniPhotoRegistry).map(([key,
     label: value.label
 }));
 
-export const getAlumniPhoto = (photoKey) => alumniPhotoRegistry[photoKey]?.src || alumniPhotoRegistry.blank.src;
+const isCustomPhotoDataUrl = (photoKey) => (
+    typeof photoKey === 'string' && /^data:image\/(?:jpeg|jpg|png|webp);base64,/i.test(photoKey)
+);
+
+export const getAlumniPhoto = (photoKey) => {
+    if (isCustomPhotoDataUrl(photoKey)) return photoKey;
+    return alumniPhotoRegistry[photoKey]?.src || alumniPhotoRegistry.blank.src;
+};

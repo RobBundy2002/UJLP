@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import { pathTypeLabels } from '../Data/alumniDemoData';
 import { getCompactAlumniName } from '../Data/alumniDisplay';
-import { alumniPhotoOptions, getAlumniPhoto } from '../Data/alumniPhotoRegistry';
+import { getAlumniPhoto } from '../Data/alumniPhotoRegistry';
 import {
     ALUMNI_SESSION_EVENT,
     createBlankAlumniProfile,
@@ -63,6 +63,29 @@ const getProfileLine = (profile) => {
 
 const getPathLabel = (profile) => pathTypeLabels[profile?.pathType] || 'Other';
 
+const cropPhotoToDataUrl = (source, { cropX, cropY, zoom }) => new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => {
+        const outputSize = 512;
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        const sourceSize = Math.min(image.naturalWidth, image.naturalHeight) / zoom;
+        const focalX = image.naturalWidth * (cropX / 100);
+        const focalY = image.naturalHeight * (cropY / 100);
+        const maxX = image.naturalWidth - sourceSize;
+        const maxY = image.naturalHeight - sourceSize;
+        const sourceX = Math.min(Math.max(focalX - sourceSize / 2, 0), maxX);
+        const sourceY = Math.min(Math.max(focalY - sourceSize / 2, 0), maxY);
+
+        canvas.width = outputSize;
+        canvas.height = outputSize;
+        context.drawImage(image, sourceX, sourceY, sourceSize, sourceSize, 0, 0, outputSize, outputSize);
+        resolve(canvas.toDataURL('image/jpeg', 0.88));
+    };
+    image.onerror = () => reject(new Error('Could not read that image.'));
+    image.src = source;
+});
+
 function AlumniProfile() {
     const [session, setSession] = useState(() => getStoredAlumniSession());
     const [profiles, setProfiles] = useState([]);
@@ -70,6 +93,9 @@ function AlumniProfile() {
     const [profileInviteCode, setProfileInviteCode] = useState('');
     const [profileMessage, setProfileMessage] = useState('');
     const [profileInviteMessage, setProfileInviteMessage] = useState('');
+    const [photoCropSource, setPhotoCropSource] = useState('');
+    const [photoCrop, setPhotoCrop] = useState({ cropX: 50, cropY: 50, zoom: 1 });
+    const [photoMessage, setPhotoMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const backendMode = getAlumniBackendMode();
@@ -129,6 +155,39 @@ function AlumniProfile() {
         setProfileDraft(current => ({ ...current, [key]: value }));
     };
 
+    const handlePhotoFileChange = (event) => {
+        const file = event.target.files?.[0];
+        event.target.value = '';
+        setPhotoMessage('');
+
+        if (!file) return;
+        if (!file.type.startsWith('image/')) {
+            setPhotoMessage('Choose an image file.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            setPhotoCropSource(String(reader.result || ''));
+            setPhotoCrop({ cropX: 50, cropY: 50, zoom: 1 });
+        };
+        reader.onerror = () => setPhotoMessage('Could not read that image.');
+        reader.readAsDataURL(file);
+    };
+
+    const handleApplyPhotoCrop = async () => {
+        if (!photoCropSource) return;
+
+        try {
+            const croppedPhoto = await cropPhotoToDataUrl(photoCropSource, photoCrop);
+            updateDraft('photoKey', croppedPhoto);
+            setPhotoCropSource('');
+            setPhotoMessage('Profile photo updated. Save the profile to keep it.');
+        } catch (error) {
+            setPhotoMessage(error.message);
+        }
+    };
+
     const handleCreateProfileRequest = (event) => {
         event.preventDefault();
         setProfileInviteMessage('');
@@ -166,6 +225,7 @@ function AlumniProfile() {
             setProfiles(current => [saved, ...current.filter(profile => profile.id !== saved.id && profile.userId !== saved.userId)]);
             setProfileDraft({ ...saved, interestsText: toInterestText(saved.interests) });
             setProfileMessage('Profile saved.');
+            window.dispatchEvent(new Event(ALUMNI_SESSION_EVENT));
         } catch (error) {
             setProfileMessage(error.message);
         } finally {
@@ -289,14 +349,73 @@ function AlumniProfile() {
                                 ))}
                             </select>
                         </label>
-                        <label>
-                            <span>Profile image</span>
-                            <select value={profileDraft.photoKey || 'blank'} onChange={(event) => updateDraft('photoKey', event.target.value)}>
-                                {alumniPhotoOptions.map(option => (
-                                    <option key={option.key} value={option.key}>{option.label}</option>
-                                ))}
-                            </select>
-                        </label>
+                        <div className="alumni-photo-manager alumni-wide">
+                            <div className="alumni-photo-current">
+                                <img src={getAlumniPhoto(profileDraft.photoKey || 'blank')} alt="" />
+                            </div>
+                            <div className="alumni-photo-controls">
+                                <span>Profile photo</span>
+                                <p>Upload an image from your computer, position it in the circle, then save your profile.</p>
+                                <label className="alumni-photo-upload">
+                                    <input type="file" accept="image/*" onChange={handlePhotoFileChange} />
+                                    <span>Choose image</span>
+                                </label>
+                                {profileDraft.photoKey !== 'blank' && (
+                                    <button type="button" className="alumni-secondary-action" onClick={() => updateDraft('photoKey', 'blank')}>Remove photo</button>
+                                )}
+                            </div>
+                            {photoCropSource && (
+                                <div className="alumni-photo-cropper">
+                                    <div
+                                        className="alumni-photo-crop-preview"
+                                        style={{
+                                            backgroundImage: `url(${photoCropSource})`,
+                                            backgroundPosition: `${photoCrop.cropX}% ${photoCrop.cropY}%`,
+                                            backgroundSize: `${photoCrop.zoom * 100}% auto`
+                                        }}
+                                        aria-hidden="true"
+                                    />
+                                    <div className="alumni-photo-sliders">
+                                        <label>
+                                            <span>Zoom</span>
+                                            <input
+                                                type="range"
+                                                min="1"
+                                                max="3"
+                                                step="0.05"
+                                                value={photoCrop.zoom}
+                                                onChange={(event) => setPhotoCrop(current => ({ ...current, zoom: Number(event.target.value) }))}
+                                            />
+                                        </label>
+                                        <label>
+                                            <span>Horizontal position</span>
+                                            <input
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value={photoCrop.cropX}
+                                                onChange={(event) => setPhotoCrop(current => ({ ...current, cropX: Number(event.target.value) }))}
+                                            />
+                                        </label>
+                                        <label>
+                                            <span>Vertical position</span>
+                                            <input
+                                                type="range"
+                                                min="0"
+                                                max="100"
+                                                value={photoCrop.cropY}
+                                                onChange={(event) => setPhotoCrop(current => ({ ...current, cropY: Number(event.target.value) }))}
+                                            />
+                                        </label>
+                                        <div className="alumni-photo-crop-actions">
+                                            <button type="button" className="alumni-primary-action" onClick={handleApplyPhotoCrop}>Use cropped photo</button>
+                                            <button type="button" className="alumni-secondary-action" onClick={() => setPhotoCropSource('')}>Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                            {photoMessage && <p className="alumni-form-message">{photoMessage}</p>}
+                        </div>
                         {profileFields.map(([key, label, type]) => (
                             <label key={key}>
                                 <span>{label}</span>

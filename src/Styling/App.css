@@ -91,8 +91,9 @@ html, body {
 
 .App-title img {
     margin-top: -5rem;
-    width: 7rem;
+    width: 6rem;
     height: 6rem;
+    object-fit: contain;
 }
 
 .title-text {
@@ -421,8 +422,9 @@ footer {
 
     .App-title img {
         margin-top: -4rem;
-        width: 5rem;
+        width: 4rem;
         height: 4rem;
+        object-fit: contain;
         margin-left: -1rem;
     }
 

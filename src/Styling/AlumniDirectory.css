@@ -645,6 +645,136 @@
     padding: 1.25rem;
 }
 
+.alumni-photo-manager {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
+}
+
+.alumni-photo-current,
+.alumni-photo-crop-preview {
+    width: 7rem;
+    height: 7rem;
+    overflow: hidden;
+    border: 1px solid rgba(201, 163, 91, .45);
+    border-radius: 999px;
+    background-color: var(--alumni-panel-raised);
+}
+
+.alumni-photo-current img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.alumni-photo-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+    align-items: center;
+}
+
+.alumni-photo-controls > span {
+    width: 100%;
+    color: var(--alumni-faint);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-photo-controls p {
+    width: 100%;
+    margin: 0;
+    color: var(--alumni-muted);
+    font-size: .86rem;
+    line-height: 1.55;
+}
+
+.alumni-photo-upload {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.55rem;
+    padding: .65rem .9rem;
+    border: 1px solid var(--alumni-line-strong);
+    border-radius: 6px;
+    color: var(--alumni-muted);
+    cursor: pointer;
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-photo-upload:hover {
+    border-color: var(--alumni-gold);
+    color: var(--alumni-ink);
+}
+
+.alumni-photo-upload input {
+    position: absolute;
+    width: 1px !important;
+    height: 1px !important;
+    min-height: 0 !important;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.alumni-photo-cropper {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--alumni-line);
+}
+
+.alumni-photo-crop-preview {
+    width: 10rem;
+    height: 10rem;
+    background-repeat: no-repeat;
+}
+
+.alumni-photo-sliders {
+    display: grid;
+    gap: .75rem;
+}
+
+.alumni-photo-sliders label {
+    display: grid;
+    gap: .35rem;
+}
+
+.alumni-photo-sliders span {
+    color: var(--alumni-faint);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-photo-sliders input[type="range"] {
+    width: 100%;
+    min-height: 1.4rem;
+    padding: 0;
+    accent-color: var(--alumni-gold);
+}
+
+.alumni-photo-crop-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .65rem;
+}
+
 .alumni-profile-section .section-content {
     max-width: 1120px;
 }
@@ -1201,8 +1331,15 @@
     .alumni-profile-details,
     .alumni-profile-facts,
     .alumni-form-grid,
-    .alumni-invite-form {
+    .alumni-invite-form,
+    .alumni-photo-manager,
+    .alumni-photo-cropper {
         grid-template-columns: 1fr;
+    }
+
+    .alumni-photo-current,
+    .alumni-photo-crop-preview {
+        justify-self: center;
     }
 
     .alumni-session-bar,
