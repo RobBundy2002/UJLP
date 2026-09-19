@@ -489,7 +489,7 @@ footer {
     .header-account-profile {
         width: 2.35rem;
         height: 2.35rem;
-        padding: .22rem;
+        padding: 0;
     }
 
     .header-account-menu {
@@ -1008,8 +1008,9 @@ footer {
     width: 2.55rem;
     height: 2.55rem;
     justify-content: center;
-    padding: .24rem;
+    padding: 0;
     border-radius: 999px;
+    overflow: hidden;
 }
 
 .header-account-signin {
