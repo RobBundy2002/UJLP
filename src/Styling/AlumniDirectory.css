@@ -1235,6 +1235,7 @@
 .alumni-feed-card,
 .alumni-upcoming-card,
 .alumni-calendar-card,
+.alumni-calendar-selection,
 .alumni-task-card,
 .alumni-notification-card,
 .alumni-admin-item {
@@ -1285,6 +1286,7 @@
 
 .alumni-feed-card p,
 .alumni-calendar-card p,
+.alumni-calendar-selection p,
 .alumni-resource-card p,
 .alumni-task-card p {
     margin: 0;
@@ -1460,6 +1462,8 @@
 }
 
 .alumni-week-event {
+    width: 100%;
+    appearance: none;
     display: grid;
     gap: .35rem;
     padding: .65rem;
@@ -1467,6 +1471,26 @@
     border-left-color: rgba(201, 163, 91, .65);
     border-radius: 6px;
     background: #071827;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+.alumni-week-event:hover,
+.alumni-week-event:focus-visible {
+    border-color: rgba(166, 195, 223, .42);
+    border-left-color: rgba(201, 163, 91, .9);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.alumni-week-event.is-selected {
+    border-color: rgba(79, 142, 197, .68);
+    border-left-color: var(--alumni-gold);
+    box-shadow: inset 0 0 0 1px rgba(79, 142, 197, .24), 0 10px 24px rgba(0, 0, 0, .2);
 }
 
 .alumni-week-event strong {
@@ -1484,20 +1508,6 @@
 
 .alumni-week-event b {
     color: var(--alumni-gold);
-}
-
-.alumni-week-event button {
-    justify-self: start;
-    min-height: 1.85rem;
-    padding: .28rem .45rem;
-    border: 1px solid rgba(79, 142, 197, .45);
-    border-radius: 6px;
-    background: transparent;
-    color: #b9daf3;
-    cursor: pointer;
-    font-size: .66rem;
-    font-weight: 800;
-    text-transform: uppercase;
 }
 
 .alumni-feed-composer {
@@ -1826,6 +1836,7 @@
 .alumni-directory-page .alumni-feed-card,
 .alumni-directory-page .alumni-upcoming-card,
 .alumni-directory-page .alumni-calendar-card,
+.alumni-directory-page .alumni-calendar-selection,
 .alumni-directory-page .alumni-task-card,
 .alumni-directory-page .alumni-notification-card,
 .alumni-directory-page .alumni-admin-item {

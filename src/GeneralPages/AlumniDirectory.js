@@ -198,6 +198,7 @@ function AlumniDirectory() {
     const [calendarDraft, setCalendarDraft] = useState(defaultCalendarDraft);
     const [calendarMessage, setCalendarMessage] = useState('');
     const [calendarWeekStart, setCalendarWeekStart] = useState('');
+    const [selectedCalendarEventId, setSelectedCalendarEventId] = useState('');
     const [editorType, setEditorType] = useState('announcements');
     const [editorMessage, setEditorMessage] = useState('');
     const [editorDraft, setEditorDraft] = useState({
@@ -575,6 +576,7 @@ function AlumniDirectory() {
                 calendarEvents: current.calendarEvents.filter(item => item.id !== id)
             }));
             if (calendarDraft.id === id) setCalendarDraft(defaultCalendarDraft);
+            if (selectedCalendarEventId === id) setSelectedCalendarEventId('');
             setCalendarMessage('Calendar event deleted.');
         } catch (error) {
             setCalendarMessage(error.message);
@@ -798,6 +800,11 @@ function AlumniDirectory() {
 
     const upcomingItems = useMemo(() => sortedCalendarEvents.slice(0, 4), [sortedCalendarEvents]);
 
+    const selectedCalendarEvent = useMemo(() => {
+        if (!selectedCalendarEventId) return null;
+        return (portalContent.calendarEvents || []).find(eventItem => eventItem.id === selectedCalendarEventId) || null;
+    }, [portalContent.calendarEvents, selectedCalendarEventId]);
+
     const calendarWeekDays = useMemo(() => {
         const fallbackWeekStart = getDefaultCalendarWeekStart(portalContent.calendarEvents || []);
         const startDate = parseCalendarDate(calendarWeekStart || fallbackWeekStart) || new Date();
@@ -845,6 +852,7 @@ function AlumniDirectory() {
 
     const resetCalendarWeek = () => {
         setCalendarWeekStart('');
+        setSelectedCalendarEventId('');
     };
 
     const sortedFeedPosts = useMemo(() => (
@@ -906,6 +914,35 @@ function AlumniDirectory() {
         </article>
     );
 
+    const renderSelectedCalendarEvent = () => {
+        if (!selectedCalendarEvent) return null;
+
+        return (
+            <article className="alumni-calendar-selection">
+                <div className="alumni-panel-heading">
+                    <span>{selectedCalendarEvent.category || 'Event'}</span>
+                    <strong>{selectedCalendarEvent.title}</strong>
+                </div>
+                <p>{selectedCalendarEvent.details || 'Details pending.'}</p>
+                <div className="alumni-calendar-meta">
+                    <time>{formatShortDate(selectedCalendarEvent.eventDate)}</time>
+                    <span>{formatCalendarTime(selectedCalendarEvent.startTime, selectedCalendarEvent.endTime)}</span>
+                    {selectedCalendarEvent.location && <span>{selectedCalendarEvent.location}</span>}
+                    {selectedCalendarEvent.pinned && <b>Pinned</b>}
+                </div>
+                {selectedCalendarEvent.linkUrl && (
+                    <a className="alumni-calendar-link" href={selectedCalendarEvent.linkUrl} target="_blank" rel="noopener noreferrer">Open link</a>
+                )}
+                {isAdmin && (
+                    <div className="alumni-feed-admin-actions">
+                        <button type="button" className="alumni-secondary-action" onClick={() => handleCalendarEdit(selectedCalendarEvent)}>Edit</button>
+                        <button type="button" className="alumni-secondary-action" onClick={() => handleCalendarDelete(selectedCalendarEvent.id)}>Delete</button>
+                    </div>
+                )}
+            </article>
+        );
+    };
+
     const renderWeeklyCalendar = () => (
         <section className="alumni-calendar-board">
             <div className="alumni-calendar-board-header">
@@ -931,16 +968,18 @@ function AlumniDirectory() {
                             </div>
                             <div className="alumni-week-events">
                                 {dayEvents.map(eventItem => (
-                                    <article className="alumni-week-event" key={eventItem.id}>
+                                    <button
+                                        type="button"
+                                        className={`alumni-week-event${selectedCalendarEventId === eventItem.id ? ' is-selected' : ''}`}
+                                        key={eventItem.id}
+                                        onClick={() => setSelectedCalendarEventId(eventItem.id)}
+                                    >
                                         <span>{eventItem.category || 'Event'}</span>
                                         <strong>{eventItem.title}</strong>
                                         <time>{formatCalendarTime(eventItem.startTime, eventItem.endTime)}</time>
                                         {eventItem.location && <small>{eventItem.location}</small>}
                                         {eventItem.pinned && <b>Pinned</b>}
-                                        {isAdmin && (
-                                            <button type="button" onClick={() => handleCalendarEdit(eventItem)}>Edit</button>
-                                        )}
-                                    </article>
+                                    </button>
                                 ))}
                                 {dayEvents.length === 0 && <p>No events</p>}
                             </div>
@@ -948,6 +987,7 @@ function AlumniDirectory() {
                     );
                 })}
             </div>
+            {renderSelectedCalendarEvent()}
         </section>
     );
 
@@ -1104,11 +1144,10 @@ function AlumniDirectory() {
             )}
             <section className="alumni-calendar-list">
                 <div className="alumni-panel-heading">
-                    <span>Agenda</span>
-                    <strong>All events and deadlines</strong>
+                    <span>Calendar</span>
+                    <strong>Weekly events and deadlines</strong>
                 </div>
                 {renderWeeklyCalendar()}
-                {sortedCalendarEvents.map(eventItem => renderCalendarEventCard(eventItem))}
                 {sortedCalendarEvents.length === 0 && <p className="alumni-system-note">No calendar events are posted.</p>}
             </section>
         </div>
