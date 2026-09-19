@@ -27,6 +27,20 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      (function () {
+        var redirectPath = sessionStorage.getItem('ujlp.redirect');
+        if (redirectPath) {
+          sessionStorage.removeItem('ujlp.redirect');
+          window.history.replaceState(null, '', redirectPath);
+          return;
+        }
+
+        if (window.location.hash.indexOf('#/') === 0) {
+          window.history.replaceState(null, '', window.location.hash.slice(1));
+        }
+      })();
+    </script>
     <div id="root"></div>
     <!--
       This HTML file is a template.

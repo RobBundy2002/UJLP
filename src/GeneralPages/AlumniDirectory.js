@@ -15,6 +15,7 @@ import {
     signOutAlumni,
     signUpAlumni
 } from '../Services/alumniApi';
+import { deletePortalItem, fetchPortalContent, savePortalItem } from '../Services/alumniPortalApi';
 import '../Styling/AlumniDirectory.css';
 import '../Styling/EditorialPages.css';
 
@@ -80,20 +81,66 @@ const getProfileLine = (profile) => {
 
 const getPathLabel = (profile) => pathTypeLabels[profile?.pathType] || 'Other';
 
+const portalTabs = [
+    ['home', 'Home', 'M6 10.5 12 5l6 5.5v7.5a1 1 0 0 1-1 1h-3.5v-5h-3v5H7a1 1 0 0 1-1-1v-7.5Z'],
+    ['feed', 'Feed', 'M5 6h14M5 12h14M5 18h9'],
+    ['directory', 'Directory', 'M8 7a3 3 0 1 0 0 .1M4 19a4 4 0 0 1 8 0M17 8a2.5 2.5 0 1 0 0 .1M14 19a3.5 3.5 0 0 1 6 0'],
+    ['resources', 'Resources', 'M6 5h12v14H6zM9 8h6M9 12h6M9 16h4'],
+    ['tasks', 'Weekly Tasks', 'M7 7h10M7 12h10M7 17h6M4 7l1 1 2-2M4 12l1 1 2-2M4 17l1 1 2-2'],
+    ['notifications', 'Notifications', 'M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 20h4'],
+    ['profile', 'My Profile', 'M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 20a7 7 0 0 1 14 0']
+];
+
+const Icon = ({ path }) => (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d={path} />
+    </svg>
+);
+
+const formatShortDate = (value) => {
+    if (!value) return 'Date pending';
+    const date = new Date(`${value}T00:00:00`);
+    if (Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+};
+
+const toTags = (value) => value
+    .split(',')
+    .map(item => item.trim())
+    .filter(Boolean);
+
 function AlumniDirectory() {
     const [session, setSession] = useState(() => getStoredAlumniSession());
     const [authMode, setAuthMode] = useState('signin');
     const [authForm, setAuthForm] = useState({ email: '', password: '' });
+    const [showAuthPassword, setShowAuthPassword] = useState(false);
     const [authMessage, setAuthMessage] = useState('');
     const [profiles, setProfiles] = useState([]);
     const [filters, setFilters] = useState(defaultFilters);
-    const [activeView, setActiveView] = useState('directory');
+    const [activeView, setActiveView] = useState('home');
     const [profileMode, setProfileMode] = useState('view');
     const [editingProfileUserId, setEditingProfileUserId] = useState(null);
     const [profileDraft, setProfileDraft] = useState(null);
     const [profileMessage, setProfileMessage] = useState('');
     const [profileInviteCode, setProfileInviteCode] = useState('');
     const [profileInviteMessage, setProfileInviteMessage] = useState('');
+    const [portalContent, setPortalContent] = useState({ feedPosts: [], announcements: [], tasks: [] });
+    const [editorType, setEditorType] = useState('feedPosts');
+    const [editorMessage, setEditorMessage] = useState('');
+    const [editorDraft, setEditorDraft] = useState({
+        title: '',
+        body: '',
+        category: 'Update',
+        postType: 'update',
+        eventDate: '',
+        deadlineDate: '',
+        publishDate: '',
+        role: 'Writers',
+        dueDate: '',
+        priority: 'medium',
+        tagsText: '',
+        pinned: false
+    });
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
 
@@ -117,6 +164,7 @@ function AlumniDirectory() {
     useEffect(() => {
         if (session) {
             loadProfiles(session);
+            fetchPortalContent(session).then(setPortalContent);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [session?.user?.id]);
@@ -228,8 +276,9 @@ function AlumniDirectory() {
         setProfiles([]);
         setProfileDraft(null);
         setEditingProfileUserId(null);
-        setActiveView('directory');
+        setActiveView('home');
         setProfileMode('view');
+        setPortalContent({ feedPosts: [], announcements: [], tasks: [] });
     };
 
     const updateFilter = (key, value) => {
@@ -326,6 +375,88 @@ function AlumniDirectory() {
         }
     };
 
+    const resetEditorDraft = () => {
+        setEditorDraft({
+            title: '',
+            body: '',
+            category: 'Update',
+            postType: 'update',
+            eventDate: '',
+            deadlineDate: '',
+            publishDate: '',
+            role: 'Writers',
+            dueDate: '',
+            priority: 'medium',
+            tagsText: '',
+            pinned: false
+        });
+    };
+
+    const handleEditorSave = async (event) => {
+        event.preventDefault();
+        if (!isAdmin) return;
+
+        setEditorMessage('');
+        try {
+            const baseItem = {
+                title: editorDraft.title,
+                body: editorDraft.body,
+                category: editorDraft.category,
+                pinned: editorDraft.pinned,
+                tags: toTags(editorDraft.tagsText)
+            };
+            const itemByType = {
+                feedPosts: {
+                    ...baseItem,
+                    postType: editorDraft.postType,
+                    eventDate: editorDraft.eventDate,
+                    deadlineDate: editorDraft.deadlineDate,
+                    authorUserId: session.user.id,
+                    authorName: ownProfile?.fullName || session.user.email,
+                    authorPhotoKey: ownProfile?.photoKey || 'blank'
+                },
+                announcements: {
+                    ...baseItem,
+                    publishDate: editorDraft.publishDate,
+                    audience: 'public',
+                    taggedUserIds: []
+                },
+                tasks: {
+                    title: editorDraft.title,
+                    details: editorDraft.body,
+                    role: editorDraft.role,
+                    dueDate: editorDraft.dueDate,
+                    priority: editorDraft.priority,
+                    status: 'open'
+                }
+            };
+            const saved = await savePortalItem(editorType, itemByType[editorType], session);
+            setPortalContent(current => ({
+                ...current,
+                [editorType]: [saved, ...current[editorType].filter(item => item.id !== saved.id)]
+            }));
+            setEditorMessage('Saved.');
+            resetEditorDraft();
+        } catch (error) {
+            setEditorMessage(error.message);
+        }
+    };
+
+    const handleEditorDelete = async (collection, id) => {
+        if (!isAdmin) return;
+        setEditorMessage('');
+        try {
+            await deletePortalItem(collection, id, session);
+            setPortalContent(current => ({
+                ...current,
+                [collection]: current[collection].filter(item => item.id !== id)
+            }));
+            setEditorMessage('Deleted.');
+        } catch (error) {
+            setEditorMessage(error.message);
+        }
+    };
+
     const renderAuthPanel = () => (
         <section className="alumni-auth-section">
             <div className="section-content alumni-auth-layout">
@@ -355,13 +486,28 @@ function AlumniDirectory() {
                     </label>
                     <label>
                         <span>Password</span>
-                        <input
-                            type="password"
-                            value={authForm.password}
-                            onChange={(event) => setAuthForm(current => ({ ...current, password: event.target.value }))}
-                            required
-                            minLength={6}
-                        />
+                        <div className="alumni-password-field">
+                            <input
+                                type={showAuthPassword ? 'text' : 'password'}
+                                value={authForm.password}
+                                onChange={(event) => setAuthForm(current => ({ ...current, password: event.target.value }))}
+                                required
+                                minLength={6}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowAuthPassword(current => !current)}
+                                aria-label={showAuthPassword ? 'Hide password' : 'Show password'}
+                            >
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    {showAuthPassword ? (
+                                        <path d="M4 4l16 16M10.6 10.6a2 2 0 0 0 2.8 2.8M8.3 5.9A10.7 10.7 0 0 1 12 5c5 0 8.5 4.5 9.5 7a13.3 13.3 0 0 1-3 4.2M6.1 7.8A13.2 13.2 0 0 0 2.5 12c1 2.5 4.5 7 9.5 7 1.4 0 2.7-.35 3.8-.95" />
+                                    ) : (
+                                        <path d="M2.5 12c1-2.5 4.5-7 9.5-7s8.5 4.5 9.5 7c-1 2.5-4.5 7-9.5 7S3.5 14.5 2.5 12Zm9.5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                                    )}
+                                </svg>
+                            </button>
+                        </div>
                     </label>
                     <button type="submit" className="alumni-primary-action" disabled={loading}>
                         {loading ? 'Working...' : authMode === 'signin' ? 'Sign in' : 'Create account'}
@@ -699,6 +845,272 @@ function AlumniDirectory() {
         </section>
     );
 
+    const upcomingItems = useMemo(() => (
+        [...portalContent.feedPosts]
+            .filter(post => post.eventDate || post.deadlineDate)
+            .sort((left, right) => String(left.eventDate || left.deadlineDate).localeCompare(String(right.eventDate || right.deadlineDate)))
+            .slice(0, 4)
+    ), [portalContent.feedPosts]);
+
+    const renderFeedCard = (post) => (
+        <article className="alumni-feed-card" key={post.id}>
+            <div className="alumni-feed-author">
+                <img src={getAlumniPhoto(post.authorPhotoKey)} alt="" />
+                <div>
+                    <span>{post.category}</span>
+                    <strong>{post.authorName || 'UJLP'}</strong>
+                </div>
+                {post.pinned && <b>Pinned</b>}
+            </div>
+            <h3>{post.title}</h3>
+            <p>{post.body}</p>
+            <div className="alumni-tags">
+                {(post.tags || []).map(tag => <span key={tag}>{tag}</span>)}
+                {post.eventDate && <span>Event {formatShortDate(post.eventDate)}</span>}
+                {post.deadlineDate && <span>Due {formatShortDate(post.deadlineDate)}</span>}
+            </div>
+        </article>
+    );
+
+    const renderHome = () => (
+        <div className="alumni-portal-stack">
+            {renderDashboard()}
+            <div className="alumni-home-grid">
+                <section className="alumni-home-feed">
+                    <div className="alumni-panel-heading">
+                        <span>Feed</span>
+                        <strong>Latest from the network</strong>
+                    </div>
+                    {portalContent.feedPosts.slice(0, 3).map(renderFeedCard)}
+                </section>
+                <aside className="alumni-home-rail">
+                    <div className="alumni-panel-heading">
+                        <span>Upcoming</span>
+                        <strong>Events and deadlines</strong>
+                    </div>
+                    {upcomingItems.map(item => (
+                        <article className="alumni-upcoming-card" key={item.id}>
+                            <span>{item.postType === 'deadline' ? 'Deadline' : 'Event'}</span>
+                            <strong>{item.title}</strong>
+                            <time>{formatShortDate(item.eventDate || item.deadlineDate)}</time>
+                        </article>
+                    ))}
+                    {upcomingItems.length === 0 && <p className="alumni-system-note">No dated items are posted.</p>}
+                </aside>
+            </div>
+        </div>
+    );
+
+    const renderFeed = () => (
+        <div className="alumni-home-grid">
+            <section className="alumni-home-feed">
+                <div className="alumni-panel-heading">
+                    <span>Member feed</span>
+                    <strong>Updates, events, and deadlines</strong>
+                </div>
+                {portalContent.feedPosts.map(renderFeedCard)}
+            </section>
+            <aside className="alumni-home-rail">
+                <div className="alumni-panel-heading">
+                    <span>Calendar</span>
+                    <strong>Coming up</strong>
+                </div>
+                {upcomingItems.map(item => (
+                    <article className="alumni-upcoming-card" key={item.id}>
+                        <span>{item.category}</span>
+                        <strong>{item.title}</strong>
+                        <time>{formatShortDate(item.eventDate || item.deadlineDate)}</time>
+                    </article>
+                ))}
+            </aside>
+        </div>
+    );
+
+    const renderResources = () => (
+        <div className="alumni-resource-grid">
+            {[
+                ['Career Development', 'Law school applications, clerkship paths, internships, government service, and recruiting notes.'],
+                ['Club Resources', 'Editorial standards, source collection, article development, and publication workflow materials.'],
+                ['Alumni Outreach', 'Shared contacts, mentorship preferences, and tagged profiles from the private directory.'],
+                ['UJLP Inbox', 'Use the contact button to email the Journal account for private questions and portal issues.']
+            ].map(([title, body]) => (
+                <article className="alumni-resource-card" key={title}>
+                    <span>{title}</span>
+                    <p>{body}</p>
+                </article>
+            ))}
+            <a className="alumni-mail-action" href="mailto:ujlawandpolitics@gmail.com">Email UJLP</a>
+        </div>
+    );
+
+    const renderTasks = () => (
+        <div className="alumni-task-list">
+            <div className="alumni-panel-heading">
+                <span>Weekly tasks</span>
+                <strong>For writers and editors</strong>
+            </div>
+            {portalContent.tasks.map(task => (
+                <article className="alumni-task-card" key={task.id}>
+                    <div>
+                        <span>{task.role}</span>
+                        <h3>{task.title}</h3>
+                        <p>{task.details}</p>
+                    </div>
+                    <time>{formatShortDate(task.dueDate)}</time>
+                </article>
+            ))}
+        </div>
+    );
+
+    const renderNotifications = () => (
+        <div className="alumni-notification-list">
+            <div className="alumni-panel-heading">
+                <span>Notifications</span>
+                <strong>Portal activity</strong>
+            </div>
+            {portalContent.announcements.slice(0, 4).map(announcement => (
+                <article className="alumni-notification-card" key={announcement.id}>
+                    <span>{announcement.category}</span>
+                    <strong>{announcement.title}</strong>
+                    <time>{formatShortDate(announcement.publishDate)}</time>
+                </article>
+            ))}
+        </div>
+    );
+
+    const renderAdminEditor = () => {
+        if (!isAdmin) return renderHome();
+
+        const currentItems = portalContent[editorType] || [];
+        return (
+            <div className="alumni-admin-grid">
+                <form className="alumni-admin-form" onSubmit={handleEditorSave}>
+                    <div className="alumni-panel-heading">
+                        <span>Feed editor</span>
+                        <strong>Create portal content</strong>
+                    </div>
+                    <div className="alumni-auth-tabs" aria-label="Editor type">
+                        <button type="button" className={editorType === 'feedPosts' ? 'active' : ''} onClick={() => setEditorType('feedPosts')}>Feed</button>
+                        <button type="button" className={editorType === 'announcements' ? 'active' : ''} onClick={() => setEditorType('announcements')}>Announcements</button>
+                        <button type="button" className={editorType === 'tasks' ? 'active' : ''} onClick={() => setEditorType('tasks')}>Tasks</button>
+                    </div>
+                    <label>
+                        <span>Title</span>
+                        <input value={editorDraft.title} onChange={(event) => setEditorDraft(current => ({ ...current, title: event.target.value }))} required />
+                    </label>
+                    <label>
+                        <span>{editorType === 'tasks' ? 'Details' : 'Body'}</span>
+                        <textarea value={editorDraft.body} onChange={(event) => setEditorDraft(current => ({ ...current, body: event.target.value }))} required rows="4" />
+                    </label>
+                    {editorType !== 'tasks' && (
+                        <>
+                            <label>
+                                <span>Category</span>
+                                <input value={editorDraft.category} onChange={(event) => setEditorDraft(current => ({ ...current, category: event.target.value }))} />
+                            </label>
+                            <label>
+                                <span>{editorType === 'announcements' ? 'Publish date' : 'Event date'}</span>
+                                <input type="date" value={editorType === 'announcements' ? editorDraft.publishDate : editorDraft.eventDate} onChange={(event) => setEditorDraft(current => editorType === 'announcements' ? { ...current, publishDate: event.target.value } : { ...current, eventDate: event.target.value })} />
+                            </label>
+                            {editorType === 'feedPosts' && (
+                                <label>
+                                    <span>Deadline date</span>
+                                    <input type="date" value={editorDraft.deadlineDate} onChange={(event) => setEditorDraft(current => ({ ...current, deadlineDate: event.target.value }))} />
+                                </label>
+                            )}
+                            <label>
+                                <span>Tags</span>
+                                <input value={editorDraft.tagsText} onChange={(event) => setEditorDraft(current => ({ ...current, tagsText: event.target.value }))} placeholder="writers, events, alumni" />
+                            </label>
+                        </>
+                    )}
+                    {editorType === 'tasks' && (
+                        <>
+                            <label>
+                                <span>Role</span>
+                                <select value={editorDraft.role} onChange={(event) => setEditorDraft(current => ({ ...current, role: event.target.value }))}>
+                                    <option>Writers</option>
+                                    <option>Editors</option>
+                                    <option>Leadership</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Due date</span>
+                                <input type="date" value={editorDraft.dueDate} onChange={(event) => setEditorDraft(current => ({ ...current, dueDate: event.target.value }))} />
+                            </label>
+                        </>
+                    )}
+                    <label className="alumni-checkbox">
+                        <input type="checkbox" checked={editorDraft.pinned} onChange={(event) => setEditorDraft(current => ({ ...current, pinned: event.target.checked }))} />
+                        <span>Pin this item</span>
+                    </label>
+                    <button type="submit" className="alumni-primary-action">Save item</button>
+                    {editorMessage && <p className="alumni-form-message">{editorMessage}</p>}
+                </form>
+
+                <div className="alumni-admin-list">
+                    <div className="alumni-panel-heading">
+                        <span>Manage</span>
+                        <strong>{editorType === 'feedPosts' ? 'Feed posts' : editorType === 'announcements' ? 'Announcements' : 'Tasks'}</strong>
+                    </div>
+                    {currentItems.map(item => (
+                        <article className="alumni-admin-item" key={item.id}>
+                            <div>
+                                <span>{item.category || item.role || 'Item'}</span>
+                                <strong>{item.title}</strong>
+                            </div>
+                            <button type="button" className="alumni-secondary-action" onClick={() => handleEditorDelete(editorType, item.id)}>Delete</button>
+                        </article>
+                    ))}
+                </div>
+            </div>
+        );
+    };
+
+    const renderActivePortalView = () => {
+        if (activeView === 'home') return renderHome();
+        if (activeView === 'feed') return renderFeed();
+        if (activeView === 'directory') return renderDirectory();
+        if (activeView === 'resources') return renderResources();
+        if (activeView === 'tasks') return renderTasks();
+        if (activeView === 'notifications') return renderNotifications();
+        if (activeView === 'admin') return renderAdminEditor();
+        if (activeView === 'profile') return profileMode === 'edit' ? renderProfileEditor() : renderProfileView();
+        return renderHome();
+    };
+
+    const renderPortalShell = () => (
+        <section className="alumni-portal-section">
+            <div className="section-content alumni-portal-shell">
+                <aside className="alumni-portal-sidebar">
+                    <div className="alumni-portal-identity">
+                        <span>Private portal</span>
+                        <strong>{ownProfile?.fullName || session.user.email}</strong>
+                        {isAdmin && <b>Super user</b>}
+                    </div>
+                    <nav className="alumni-portal-nav" aria-label="Alumni portal">
+                        {portalTabs.map(([key, label, iconPath]) => (
+                            <button key={key} type="button" className={activeView === key ? 'active' : ''} onClick={() => key === 'profile' ? openOwnProfile('view') : setActiveView(key)}>
+                                <Icon path={iconPath} />
+                                <span>{label}</span>
+                            </button>
+                        ))}
+                        {isAdmin && (
+                            <button type="button" className={activeView === 'admin' ? 'active' : ''} onClick={() => setActiveView('admin')}>
+                                <Icon path="M12 3l2.5 5 5.5.8-4 3.9.9 5.5L12 15.6 7.1 18.2l.9-5.5-4-3.9 5.5-.8z" />
+                                <span>Admin</span>
+                            </button>
+                        )}
+                    </nav>
+                    <a className="alumni-sidebar-mail" href="mailto:ujlawandpolitics@gmail.com">Contact UJLP</a>
+                </aside>
+                <div className="alumni-portal-main">
+                    {renderActivePortalView()}
+                </div>
+            </div>
+        </section>
+    );
+
     return (
         <div className="alumni-directory jh-page fade-in">
             <section className="alumni-hero">
@@ -722,11 +1134,7 @@ function AlumniDirectory() {
             {!session ? (
                 renderAuthPanel()
             ) : (
-                <>
-                    {renderDashboard()}
-                    {activeView === 'directory' && renderDirectory()}
-                    {activeView === 'profile' && (profileMode === 'edit' ? renderProfileEditor() : renderProfileView())}
-                </>
+                renderPortalShell()
             )}
         </div>
     );

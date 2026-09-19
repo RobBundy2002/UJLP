@@ -1,70 +1,88 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import '../Styling/Announcements.css';
 import '../Styling/EditorialPages.css';
 import ParticleBackground from '../Components/ParticleBackground';
+import { fetchPublicAnnouncements } from '../Services/alumniPortalApi';
 
-const announcements = [
-    {
-        title: "UJLP Reorganizes Under a New Leadership Team",
-        date: "July 13, 2025",
-        content: "In preparation for the upcoming semester, UJLP restructured its leadership team and publishing pathways. Effective immediately, Derek Tsai is promoted to Editor-in-Chief, Shelby Eliasek is promoted to Director of Operations, and Evan Proudkii is promoted to Managing Editor.",
-        category: "Team Updates"
-    },
-];
+const formatDate = (value) => {
+    if (!value) return 'Date pending';
+    const date = new Date(`${value}T00:00:00`);
+    if (Number.isNaN(date.getTime())) return value;
+    return date.toLocaleDateString(undefined, {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+    });
+};
 
 function Announcements() {
+    const [announcements, setAnnouncements] = useState([]);
+
+    useEffect(() => {
+        let isMounted = true;
+        fetchPublicAnnouncements().then(rows => {
+            if (isMounted) setAnnouncements(rows);
+        });
+        return () => {
+            isMounted = false;
+        };
+    }, []);
+
+    const [leadAnnouncement, secondaryAnnouncements] = useMemo(() => {
+        const sorted = [...announcements].sort((left, right) => {
+            if (left.pinned !== right.pinned) return left.pinned ? -1 : 1;
+            return String(right.publishDate).localeCompare(String(left.publishDate));
+        });
+        return [sorted[0], sorted.slice(1, 3)];
+    }, [announcements]);
+
     return (
         <div className="announcements-container jh-page jh-announcements fade-in">
             <section className="announcements-hero">
                 <ParticleBackground />
-                <div className="section-content">
-                    <p className="jh-eyebrow jh-announcements-kicker"><strong>UJLP</strong> · University of Virginia · Est. 2024</p>
-                    <h1>The latest<br /><em>from UJLP.</em></h1>
-                    <p className="hero-content">
-                        Stay updated with our latest events, news, and activities at UJLP
-                    </p>
+                <div className="section-content announcements-hero-layout">
+                    <div>
+                        <p className="jh-eyebrow jh-announcements-kicker"><strong>UJLP</strong> / Newsroom</p>
+                        <h1>Announcements</h1>
+                        <p className="hero-content">
+                            Updates, events, deadlines, and opportunities from the Undergraduate Journal of Law and Politics.
+                        </p>
+                    </div>
+                    <div className="announcements-hero-panel">
+                        <span>Latest bulletin</span>
+                        <strong>{leadAnnouncement?.title || 'Updates coming soon'}</strong>
+                        <p>{leadAnnouncement ? formatDate(leadAnnouncement.publishDate) : 'Check back for the next public update.'}</p>
+                    </div>
                 </div>
             </section>
 
             <section className="announcements-section">
-                <div className="section-content">
-                    <div className="jh-announcement-intro">
-                        <span>Latest signal</span>
-                        <p>News, milestones, and opportunities from the Journal.</p>
-                    </div>
-                    <div className="jh-announcement-feed">
-                        {announcements.map((announcement, index) => (
-                            <article className="jh-announcement" key={index}>
-                                <span className="jh-announcement-number">0{index + 1}</span>
-                                <div>
-                                    <span className="announcement-category">{announcement.category}</span>
-                                    <h2>{announcement.title}</h2>
-                                    <time className="announcement-date">{announcement.date}</time>
-                                    <p className="announcement-text">{announcement.content}</p>
-                                </div>
+                <div className="section-content announcements-board">
+                    {leadAnnouncement && (
+                        <article className="announcement-lead">
+                            <span>{leadAnnouncement.category}</span>
+                            <h2>{leadAnnouncement.title}</h2>
+                            <time>{formatDate(leadAnnouncement.publishDate)}</time>
+                            <p>{leadAnnouncement.body}</p>
+                        </article>
+                    )}
+
+                    <aside className="announcement-rail" aria-label="Recent announcements">
+                        <div className="announcement-rail-heading">
+                            <span>Recent</span>
+                            <strong>{secondaryAnnouncements.length}</strong>
+                        </div>
+                        {secondaryAnnouncements.map(announcement => (
+                            <article key={announcement.id} className="announcement-brief">
+                                <span>{announcement.category}</span>
+                                <h3>{announcement.title}</h3>
+                                <time>{formatDate(announcement.publishDate)}</time>
                             </article>
                         ))}
-                    </div>
-                </div>
-            </section>
-
-            <section className="subscribe-section jh-subscribe">
-                <div className="section-content">
-                    <div><p className="jh-announcements-kicker">Don’t miss a signal</p><h2>Stay in the<br /><em>loop.</em></h2></div>
-                    <p>Subscribe to receive updates about events, publications, and opportunities.</p>
-                    <form className="subscribe-form">
-                        <input 
-                            type="email" 
-                            placeholder="Enter your email address" 
-                            className="subscribe-input"
-                        />
-                        <button 
-                            type="submit" 
-                            className="cta-button"
-                        >
-                            Subscribe
-                        </button>
-                    </form>
+                        {secondaryAnnouncements.length === 0 && (
+                            <p className="announcement-empty">No additional public announcements are posted.</p>
+                        )}
+                    </aside>
                 </div>
             </section>
         </div>

@@ -237,7 +237,10 @@
 .alumni-tools select,
 .alumni-profile-form input,
 .alumni-profile-form select,
-.alumni-profile-form textarea {
+.alumni-profile-form textarea,
+.alumni-admin-form input,
+.alumni-admin-form select,
+.alumni-admin-form textarea {
     width: 100%;
     min-height: 2.85rem;
     padding: .72rem .85rem;
@@ -253,7 +256,8 @@
 
 .alumni-auth-panel label,
 .alumni-tools label,
-.alumni-profile-form label {
+.alumni-profile-form label,
+.alumni-admin-form label {
     display: grid;
     gap: .45rem;
 }
@@ -271,6 +275,40 @@
 .alumni-profile-form textarea {
     resize: vertical;
     line-height: 1.55;
+}
+
+.alumni-password-field {
+    position: relative;
+}
+
+.alumni-password-field input {
+    padding-right: 3.1rem;
+}
+
+.alumni-password-field button {
+    position: absolute;
+    top: .35rem;
+    right: .35rem;
+    width: 2.15rem;
+    height: 2.15rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--alumni-line);
+    border-radius: 6px;
+    background: var(--alumni-bg-soft);
+    color: var(--alumni-muted);
+    cursor: pointer;
+}
+
+.alumni-password-field svg,
+.alumni-portal-nav svg {
+    width: 1.05rem;
+    height: 1.05rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .alumni-primary-action {
@@ -663,6 +701,268 @@
     display: flex;
 }
 
+.alumni-portal-section {
+    background: var(--alumni-bg);
+    border-bottom: 1px solid var(--alumni-line);
+}
+
+.alumni-portal-shell {
+    display: grid;
+    grid-template-columns: 17rem minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.alumni-portal-sidebar,
+.alumni-portal-main,
+.alumni-home-feed,
+.alumni-home-rail,
+.alumni-resource-card,
+.alumni-task-list,
+.alumni-notification-list,
+.alumni-admin-form,
+.alumni-admin-list {
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-panel);
+}
+
+.alumni-portal-sidebar {
+    position: sticky;
+    top: 5.5rem;
+    display: grid;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.alumni-portal-identity {
+    display: grid;
+    gap: .35rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--alumni-line);
+}
+
+.alumni-portal-identity span,
+.alumni-panel-heading span,
+.alumni-feed-author span,
+.alumni-upcoming-card span,
+.alumni-resource-card span,
+.alumni-task-card span,
+.alumni-notification-card span,
+.alumni-admin-item span {
+    color: var(--alumni-faint);
+    font-size: .72rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.alumni-portal-identity strong,
+.alumni-panel-heading strong {
+    color: var(--alumni-ink);
+    line-height: 1.35;
+}
+
+.alumni-portal-identity b {
+    width: fit-content;
+    padding: .24rem .5rem;
+    border: 1px solid rgba(120, 147, 109, .55);
+    border-radius: 999px;
+    color: #d3e7c5;
+    font-size: .72rem;
+    font-style: normal;
+    text-transform: uppercase;
+}
+
+.alumni-portal-nav {
+    display: grid;
+    gap: .35rem;
+}
+
+.alumni-portal-nav button,
+.alumni-sidebar-mail {
+    min-height: 2.65rem;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .65rem .75rem;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--alumni-muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: .86rem;
+    font-weight: 750;
+    text-align: left;
+    text-decoration: none;
+}
+
+.alumni-portal-nav button.active,
+.alumni-portal-nav button:hover,
+.alumni-sidebar-mail:hover {
+    border-color: rgba(201, 163, 91, .38);
+    background: rgba(201, 163, 91, .08);
+    color: var(--alumni-ink);
+}
+
+.alumni-portal-main {
+    min-width: 0;
+    padding: 1rem;
+}
+
+.alumni-portal-main .alumni-dashboard,
+.alumni-portal-main .alumni-directory-section,
+.alumni-portal-main .alumni-profile-section {
+    border-bottom: 0;
+}
+
+.alumni-portal-main .section-content {
+    width: 100%;
+    max-width: none;
+    padding: 0;
+}
+
+.alumni-portal-stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.alumni-home-grid,
+.alumni-admin-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .42fr);
+    gap: 1rem;
+    align-items: start;
+}
+
+.alumni-home-feed,
+.alumni-home-rail,
+.alumni-task-list,
+.alumni-notification-list,
+.alumni-admin-form,
+.alumni-admin-list {
+    display: grid;
+    gap: .85rem;
+    padding: 1rem;
+}
+
+.alumni-panel-heading {
+    display: grid;
+    gap: .25rem;
+    padding-bottom: .8rem;
+    border-bottom: 1px solid var(--alumni-line);
+}
+
+.alumni-feed-card,
+.alumni-upcoming-card,
+.alumni-task-card,
+.alumni-notification-card,
+.alumni-admin-item {
+    display: grid;
+    gap: .75rem;
+    padding: .95rem;
+    border: 1px solid var(--alumni-line);
+    border-radius: 8px;
+    background: var(--alumni-bg-soft);
+}
+
+.alumni-feed-author {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+}
+
+.alumni-feed-author img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 999px;
+    object-fit: cover;
+}
+
+.alumni-feed-author div {
+    display: grid;
+    gap: .15rem;
+}
+
+.alumni-feed-author b {
+    margin-left: auto;
+    padding: .2rem .45rem;
+    border: 1px solid rgba(201, 163, 91, .45);
+    border-radius: 999px;
+    color: var(--alumni-gold);
+    font-size: .72rem;
+    font-style: normal;
+}
+
+.alumni-feed-card h3,
+.alumni-task-card h3 {
+    margin: 0;
+    color: var(--alumni-ink);
+    font-size: 1.18rem;
+    line-height: 1.25;
+}
+
+.alumni-feed-card p,
+.alumni-resource-card p,
+.alumni-task-card p {
+    margin: 0;
+    color: var(--alumni-muted);
+    line-height: 1.6;
+}
+
+.alumni-upcoming-card strong,
+.alumni-notification-card strong,
+.alumni-admin-item strong {
+    color: var(--alumni-ink);
+    line-height: 1.35;
+}
+
+.alumni-upcoming-card time,
+.alumni-task-card time,
+.alumni-notification-card time {
+    color: var(--alumni-gold);
+    font-size: .86rem;
+    font-weight: 750;
+}
+
+.alumni-resource-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.alumni-resource-card {
+    display: grid;
+    gap: .75rem;
+    padding: 1rem;
+}
+
+.alumni-mail-action {
+    min-height: 3rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--alumni-red);
+    border-radius: 6px;
+    background: var(--alumni-red);
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 850;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.alumni-task-card,
+.alumni-admin-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+}
+
+.alumni-admin-form textarea {
+    resize: vertical;
+}
+
 .alumni-editor-heading,
 .alumni-empty-profile {
     margin-right: auto;
@@ -756,6 +1056,21 @@
     .alumni-search {
         grid-column: 1 / -1;
     }
+
+    .alumni-portal-shell,
+    .alumni-home-grid,
+    .alumni-admin-grid,
+    .alumni-resource-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .alumni-portal-sidebar {
+        position: static;
+    }
+
+    .alumni-portal-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 }
 
 @media (max-width: 720px) {
@@ -801,7 +1116,8 @@
     .alumni-session-actions,
     .alumni-contact-actions,
     .alumni-form-actions,
-    .alumni-profile-view-actions {
+    .alumni-profile-view-actions,
+    .alumni-portal-nav {
         width: 100%;
     }
 
@@ -812,5 +1128,19 @@
     .alumni-form-actions button,
     .alumni-profile-view-actions button {
         flex: 1;
+    }
+
+    .alumni-portal-shell {
+        gap: .75rem;
+    }
+
+    .alumni-portal-main,
+    .alumni-portal-sidebar {
+        padding: .75rem;
+    }
+
+    .alumni-task-card,
+    .alumni-admin-item {
+        grid-template-columns: 1fr;
     }
 }
