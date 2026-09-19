@@ -657,6 +657,7 @@
 }
 
 .alumni-photo-manager {
+    min-width: 0;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     gap: 1rem;
@@ -685,6 +686,7 @@
 }
 
 .alumni-photo-controls {
+    min-width: 0;
     display: flex;
     flex-wrap: wrap;
     gap: .65rem;
@@ -702,6 +704,7 @@
 
 .alumni-photo-controls p {
     width: 100%;
+    overflow-wrap: anywhere;
     margin: 0;
     color: var(--alumni-muted);
     font-size: .86rem;
@@ -709,6 +712,7 @@
 }
 
 .alumni-photo-upload {
+    max-width: 100%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -722,6 +726,17 @@
     font-weight: 800;
     letter-spacing: 0;
     text-transform: uppercase;
+    overflow-wrap: anywhere;
+    text-align: center;
+}
+
+.alumni-photo-manager > .alumni-form-message {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding-top: .15rem;
+    overflow-wrap: anywhere;
 }
 
 .alumni-photo-upload:hover {
@@ -741,6 +756,7 @@
 
 .alumni-photo-cropper {
     grid-column: 1 / -1;
+    min-width: 0;
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     gap: 1rem;
@@ -770,6 +786,7 @@
 }
 
 .alumni-photo-sliders {
+    min-width: 0;
     display: grid;
     gap: .75rem;
 }
@@ -798,6 +815,15 @@
     display: flex;
     flex-wrap: wrap;
     gap: .65rem;
+}
+
+.alumni-photo-controls .alumni-secondary-action,
+.alumni-photo-crop-actions .alumni-primary-action,
+.alumni-photo-crop-actions .alumni-secondary-action {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
 }
 
 .alumni-profile-section .section-content {
@@ -2033,6 +2059,18 @@
     .alumni-photo-current,
     .alumni-photo-crop-preview {
         justify-self: center;
+    }
+
+    .alumni-photo-controls,
+    .alumni-photo-crop-actions {
+        align-items: stretch;
+    }
+
+    .alumni-photo-upload,
+    .alumni-photo-controls .alumni-secondary-action,
+    .alumni-photo-crop-actions .alumni-primary-action,
+    .alumni-photo-crop-actions .alumni-secondary-action {
+        width: 100%;
     }
 
     .alumni-session-bar,

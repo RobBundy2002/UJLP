@@ -626,7 +626,7 @@ function AlumniDirectory() {
                         <span>Email pending</span>
                     )}
                     {profile.linkedinUrl && <a href={profile.linkedinUrl} target="_blank" rel="noopener noreferrer">LinkedIn</a>}
-                    <button type="button" className="alumni-secondary-action" onClick={() => openProfileView(profile)}>View</button>
+                    <button type="button" className="alumni-secondary-action alumni-edit-action" onClick={() => openProfileView(profile)}>View</button>
                     {profile.userId === session?.user?.id && (
                         <Link to="/alumni/profile" className="alumni-secondary-action alumni-edit-action">Manage profile</Link>
                     )}
