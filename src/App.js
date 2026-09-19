@@ -220,13 +220,19 @@ function Navigation() {
                             onClick={() => setIsAccountMenuOpen(current => !current)}
                             aria-expanded={isAccountMenuOpen}
                             aria-haspopup="menu"
+                            aria-label={`Open account menu for ${accountName}`}
                         >
                             <img src={getAlumniPhoto(navProfile?.photoKey || 'blank')} alt="" />
-                            <span>{accountName}</span>
-                            {isAdmin && <b>Admin</b>}
                         </button>
                         {isAccountMenuOpen && (
                             <div className="header-account-menu" role="menu">
+                                <div className="header-account-menu-summary" role="presentation">
+                                    <img src={getAlumniPhoto(navProfile?.photoKey || 'blank')} alt="" />
+                                    <div>
+                                        <strong>{accountName}</strong>
+                                        {isAdmin && <span>Admin</span>}
+                                    </div>
+                                </div>
                                 <Link to="/alumni/profile" role="menuitem">Manage profile</Link>
                                 <Link to="/alumni" role="menuitem">Alumni network</Link>
                                 {isAdmin && <Link to="/announcements" role="menuitem">Manage announcements</Link>}
