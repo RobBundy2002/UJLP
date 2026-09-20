@@ -43,7 +43,7 @@ import BioFrame from './Components/BioFrame';
 import {
     ALUMNI_SESSION_EVENT,
     clearStoredAlumniSession,
-    fetchAlumniProfiles,
+    fetchOwnAlumniProfile,
     getAlumniSessionTimeRemaining,
     getStoredAlumniSession,
     isAlumniAdmin,
@@ -275,24 +275,22 @@ function Navigation() {
             return undefined;
         }
 
-        Promise.allSettled([
-            fetchAlumniProfiles(alumniSession),
-            fetchPortalContent(alumniSession)
-        ])
-            .then(([profileResult, portalResult]) => {
+        fetchOwnAlumniProfile(alumniSession)
+            .then(ownProfile => {
                 if (!isMounted) return;
 
-                const ownProfile = profileResult.status === 'fulfilled'
-                    ? profileResult.value.find(profile => profile.userId === alumniSession.user.id) || null
-                    : null;
+                setNavProfile(ownProfile);
+                if (!ownProfile && !isAlumniAdmin(alumniSession)) return null;
 
-                if (profileResult.status === 'fulfilled') {
-                    setNavProfile(ownProfile);
-                }
-
-                if (portalResult.status === 'fulfilled') {
-                    setNavNotificationCount(getUnreadAlumniNotificationCount(portalResult.value, ownProfile, alumniSession));
-                }
+                return fetchPortalContent(alumniSession)
+                    .then(content => {
+                        if (isMounted) {
+                            setNavNotificationCount(getUnreadAlumniNotificationCount(content, ownProfile, alumniSession));
+                        }
+                    });
+            })
+            .catch(() => {
+                if (isMounted) setNavProfile(null);
             });
 
         return () => {
@@ -348,6 +346,7 @@ function Navigation() {
     const isHeroRoute = heroRoutes.includes(location.pathname);
     const isSignedIn = Boolean(alumniSession?.user?.email);
     const isAdmin = isAlumniAdmin(alumniSession);
+    const canAccessAlumniNetwork = isSignedIn && (Boolean(navProfile) || isAdmin);
     const accountName = getCompactAlumniName(navProfile, alumniSession?.user);
     const accountPhotoKey = navProfile?.photoKey || '';
     const hasAccountPhoto = Boolean(accountPhotoKey && accountPhotoKey !== 'blank');
@@ -381,7 +380,7 @@ function Navigation() {
                     <Link to="/" className={`App-link ${location.pathname === '/' ? 'active' : ''}`} onClick={closeMobileMenu}>Home</Link>
                     <Link to="/about" className={`App-link ${location.pathname === '/about' ? 'active' : ''}`} onClick={closeMobileMenu}>About</Link>
                     <Link to="/journal" className={`App-link ${location.pathname === '/journal' ? 'active' : ''}`} onClick={closeMobileMenu}>Journal</Link>
-                    {isSignedIn && <Link to="/alumni" className={`App-link ${location.pathname === '/alumni' ? 'active' : ''}`} onClick={closeMobileMenu}>Alumni</Link>}
+                    {canAccessAlumniNetwork && <Link to="/alumni" className={`App-link ${location.pathname === '/alumni' ? 'active' : ''}`} onClick={closeMobileMenu}>Alumni</Link>}
                     <Link to="/announcements" className={`App-link ${location.pathname === '/announcements' ? 'active' : ''}`} onClick={closeMobileMenu}>Announcements</Link>
                     <Link to="/jointheteam" className={`App-link ${location.pathname === '/jointheteam' ? 'active' : ''}`} onClick={closeMobileMenu}>Apply</Link>
                     <div className="mobile-nav-footer"><span>University of Virginia</span><span>Est. 2024</span></div>
@@ -420,7 +419,7 @@ function Navigation() {
                                     </div>
                                 </div>
                                 <Link to="/alumni/profile" role="menuitem">Manage profile</Link>
-                                <Link to="/alumni" role="menuitem">Alumni network</Link>
+                                {canAccessAlumniNetwork && <Link to="/alumni" role="menuitem">Alumni network</Link>}
                                 {isAdmin && <Link to="/announcements" role="menuitem">Manage announcements</Link>}
                                 <button type="button" role="menuitem" onClick={handleGlobalSignOut}>Sign out</button>
                             </div>

@@ -13,6 +13,7 @@ import { getAlumniPhoto } from '../Data/alumniPhotoRegistry';
 import {
     ALUMNI_SESSION_EVENT,
     fetchAlumniProfiles,
+    fetchOwnAlumniProfile,
     getStoredAlumniSession,
     isAlumniAdmin
 } from '../Services/alumniApi';
@@ -276,6 +277,8 @@ function AlumniDirectory() {
     const [session, setSession] = useState(() => getStoredAlumniSession());
     const [authMessage, setAuthMessage] = useState('');
     const [profiles, setProfiles] = useState([]);
+    const [accessProfile, setAccessProfile] = useState(null);
+    const [accessChecked, setAccessChecked] = useState(false);
     const [filters, setFilters] = useState(defaultFilters);
     const [activeView, setActiveView] = useState('home');
     const [editingProfileUserId, setEditingProfileUserId] = useState(null);
@@ -326,15 +329,32 @@ function AlumniDirectory() {
         };
     }, []);
 
-    const loadProfiles = async (activeSession = session) => {
+    const loadAlumniPortal = async (activeSession = session) => {
         if (!activeSession) return;
         setLoading(true);
+        setAccessChecked(false);
         setAuthMessage('');
         try {
-            const rows = await fetchAlumniProfiles(activeSession);
+            const ownProfileResult = await fetchOwnAlumniProfile(activeSession);
+            const hasNetworkAccess = Boolean(ownProfileResult) || isAlumniAdmin(activeSession);
+            setAccessProfile(ownProfileResult);
+            setAccessChecked(true);
+
+            if (!hasNetworkAccess) {
+                setProfiles([]);
+                setPortalContent(defaultPortalContentState);
+                return;
+            }
+
+            const [rows, content] = await Promise.all([
+                fetchAlumniProfiles(activeSession),
+                fetchPortalContent(activeSession)
+            ]);
             setProfiles(rows);
+            setPortalContent({ ...defaultPortalContentState, ...content });
         } catch (error) {
             setAuthMessage(error.message);
+            setAccessChecked(true);
         } finally {
             setLoading(false);
         }
@@ -342,8 +362,12 @@ function AlumniDirectory() {
 
     useEffect(() => {
         if (session) {
-            loadProfiles(session);
-            fetchPortalContent(session).then(content => setPortalContent({ ...defaultPortalContentState, ...content }));
+            loadAlumniPortal(session);
+        } else {
+            setProfiles([]);
+            setAccessProfile(null);
+            setAccessChecked(false);
+            setPortalContent(defaultPortalContentState);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [session?.user?.id]);
@@ -360,8 +384,8 @@ function AlumniDirectory() {
 
     const ownProfile = useMemo(() => {
         if (!session?.user?.id) return null;
-        return profiles.find(profile => profile.userId === session.user.id) || null;
-    }, [profiles, session]);
+        return profiles.find(profile => profile.userId === session.user.id) || accessProfile;
+    }, [accessProfile, profiles, session]);
 
     const activeProfile = useMemo(() => {
         if (!session?.user?.id) return null;
@@ -2177,6 +2201,26 @@ function AlumniDirectory() {
 
     if (!session) {
         return <Navigate to="/alumni/signin" replace state={{ from: '/alumni' }} />;
+    }
+
+    if (!accessChecked) {
+        return (
+            <div className="alumni-directory alumni-directory-page jh-page fade-in">
+                <section className="alumni-profile-section">
+                    <div className="section-content">
+                        <div className="alumni-empty-profile">
+                            <p className="jh-section-label">Loading</p>
+                            <h2>Checking profile access.</h2>
+                            <p>Opening the member network after your invite-code profile is confirmed.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+
+    if (!ownProfile && !isAdmin) {
+        return <Navigate to="/alumni/profile" replace />;
     }
 
     return (

@@ -1491,6 +1491,24 @@
     max-width: 36rem;
 }
 
+.alumni-profile-page .alumni-create-profile-card {
+    justify-items: center;
+    text-align: center;
+}
+
+.alumni-profile-page .alumni-create-profile-card h2 {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    text-wrap: balance;
+}
+
+.alumni-profile-page .alumni-create-profile-card p {
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+}
+
 .alumni-profile-page .alumni-invite-form {
     max-width: 680px;
     margin-top: .35rem;
@@ -2901,6 +2919,18 @@
         font-size: 2.45rem;
     }
 
+    .alumni-auth-copy {
+        text-align: center;
+    }
+
+    .alumni-auth-copy h2 {
+        max-width: 10em;
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+        text-wrap: balance;
+    }
+
     .alumni-lock-list,
     .alumni-metrics,
     .alumni-tools,
@@ -3045,5 +3075,26 @@
 
     .alumni-week-controls .alumni-secondary-action {
         flex: 1 1 8rem;
+    }
+}
+
+@media (max-width: 820px) {
+    .alumni-profile-page .alumni-create-profile-card h2 {
+        width: min(100%, 18rem);
+        max-width: 18rem;
+        justify-self: center;
+        text-align: center;
+    }
+
+    .alumni-profile-page .alumni-create-profile-card .alumni-invite-form {
+        width: min(100%, 18rem);
+        max-width: 18rem;
+        grid-template-columns: 1fr;
+        justify-self: center;
+    }
+
+    .alumni-profile-page .alumni-create-profile-card .alumni-invite-form label,
+    .alumni-profile-page .alumni-create-profile-card .alumni-invite-form button {
+        width: 100%;
     }
 }

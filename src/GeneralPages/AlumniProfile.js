@@ -691,7 +691,7 @@ function AlumniProfile() {
     const renderCreateProfile = () => (
         <section className="alumni-profile-section">
             <div className="section-content">
-                <div className="alumni-empty-profile">
+                <div className="alumni-empty-profile alumni-create-profile-card">
                     <p className="jh-section-label">My profile</p>
                     <h2>Create your member profile</h2>
                     <p>Use your UJLP member invite code to start your directory profile.</p>

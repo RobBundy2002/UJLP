@@ -301,6 +301,23 @@ export const fetchAlumniProfiles = async (session) => {
     ];
 };
 
+export const fetchOwnAlumniProfile = async (session) => {
+    if (!session?.user?.id) return null;
+
+    if (isSupabaseConfigured) {
+        const rows = await supabaseRequest(
+            `/rest/v1/alumni_profiles?select=*&user_id=eq.${encodeURIComponent(session.user.id)}&limit=1`,
+            { method: 'GET' },
+            session
+        );
+        return Array.isArray(rows) && rows[0] ? normalizeProfile(rows[0]) : null;
+    }
+
+    const profiles = readJson(PREVIEW_PROFILES_KEY, []);
+    const profile = profiles.find(item => item.userId === session.user.id || item.user_id === session.user.id);
+    return profile ? normalizeProfile(profile) : null;
+};
+
 export const saveAlumniProfile = async (profile, session) => {
     if (!session?.user?.id) {
         throw new Error('You need to be signed in to save a profile.');
