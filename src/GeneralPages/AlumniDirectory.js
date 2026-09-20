@@ -285,7 +285,6 @@ function AlumniDirectory() {
     const [feedMentionMenu, setFeedMentionMenu] = useState(defaultFeedMentionMenu);
     const [commentDrafts, setCommentDrafts] = useState({});
     const [expandedLikePostId, setExpandedLikePostId] = useState('');
-    const [expandedLikeCommentId, setExpandedLikeCommentId] = useState('');
     const [notificationsSeenAt, setNotificationsSeenAt] = useState('');
     const [dismissedNotificationIds, setDismissedNotificationIds] = useState([]);
     const [calendarDraft, setCalendarDraft] = useState(createDefaultCalendarDraft);
@@ -1581,8 +1580,6 @@ function AlumniDirectory() {
                             const commentAuthorProfile = getCommentAuthorProfile(comment);
                             const commentLikes = feedCommentLikesByCommentId[comment.id] || [];
                             const commentLikedByMe = commentLikes.some(like => like.userId === currentUserId);
-                            const commentLikesExpanded = expandedLikeCommentId === comment.id;
-                            const commentLikeSummary = formatLikeSummary(commentLikes);
                             return (
                                 <article className="alumni-feed-comment" key={comment.id}>
                                     <img src={getAlumniPhoto(commentAuthorProfile?.photoKey || comment.authorPhotoKey || 'blank')} alt="" />
@@ -1606,41 +1603,17 @@ function AlumniDirectory() {
                                                 onClick={() => handleFeedCommentLike(comment)}
                                             >
                                                 {renderLikeIcon()}
-                                                {commentLikedByMe ? 'Liked' : 'Like'}
+                                                <span>{commentLikedByMe ? 'Liked' : 'Like'}</span>
+                                                {commentLikes.length > 0 && (
+                                                    <b className="alumni-comment-like-count-badge" aria-label={`${commentLikes.length} like${commentLikes.length === 1 ? '' : 's'}`}>
+                                                        {commentLikes.length > 99 ? '99+' : commentLikes.length}
+                                                    </b>
+                                                )}
                                             </button>
                                             {canDeleteComment && (
                                                 <button type="button" onClick={() => handleCommentDelete(comment)}>Delete</button>
                                             )}
                                         </div>
-                                        {commentLikes.length > 0 && (
-                                            <button
-                                                type="button"
-                                                className="alumni-like-summary-button alumni-comment-like-summary"
-                                                aria-expanded={commentLikesExpanded}
-                                                onClick={() => setExpandedLikeCommentId(current => current === comment.id ? '' : comment.id)}
-                                            >
-                                                {commentLikeSummary}
-                                            </button>
-                                        )}
-                                        {commentLikes.length > 0 && commentLikesExpanded && (
-                                            <div className="alumni-like-dropdown alumni-comment-like-dropdown">
-                                                {commentLikes.map(like => {
-                                                    const likeProfile = getLikeAuthorProfile(like);
-                                                    return (
-                                                        <div className="alumni-like-row" key={`${comment.id}-${like.userId || like.userName}`}>
-                                                            <img src={getAlumniPhoto(likeProfile?.photoKey || like.userPhotoKey || 'blank')} alt="" />
-                                                            {likeProfile ? (
-                                                                <button type="button" className="alumni-feed-author-link" onClick={() => openProfileView(likeProfile)}>
-                                                                    {getProfileName(likeProfile)}
-                                                                </button>
-                                                            ) : (
-                                                                <strong>{like.userName || 'UJLP member'}</strong>
-                                                            )}
-                                                        </div>
-                                                    );
-                                                })}
-                                            </div>
-                                        )}
                                     </div>
                                 </article>
                             );
