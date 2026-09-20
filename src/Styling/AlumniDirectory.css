@@ -1818,6 +1818,10 @@
     position: relative;
 }
 
+.alumni-comment-social-actions .alumni-comment-delete-button {
+    transform: translateY(-3px);
+}
+
 .alumni-comment-like-count-badge {
     position: absolute;
     top: -.45rem;
@@ -2081,6 +2085,11 @@
     border: 1px solid var(--alumni-line);
     border-radius: 8px;
     background: var(--alumni-bg-soft);
+}
+
+.alumni-feed-composer-closed {
+    display: flex;
+    justify-content: flex-start;
 }
 
 .alumni-feed-composer-heading {

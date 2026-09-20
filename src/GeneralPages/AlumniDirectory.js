@@ -282,6 +282,7 @@ function AlumniDirectory() {
     const [portalContent, setPortalContent] = useState(defaultPortalContentState);
     const [feedDraft, setFeedDraft] = useState(defaultFeedDraft);
     const [feedMessage, setFeedMessage] = useState('');
+    const [isFeedComposerOpen, setIsFeedComposerOpen] = useState(false);
     const [feedMentionMenu, setFeedMentionMenu] = useState(defaultFeedMentionMenu);
     const [commentDrafts, setCommentDrafts] = useState({});
     const [expandedLikePostId, setExpandedLikePostId] = useState('');
@@ -797,6 +798,13 @@ function AlumniDirectory() {
         }
     };
 
+    const closeFeedComposer = () => {
+        setFeedDraft(defaultFeedDraft);
+        setFeedMentionMenu(defaultFeedMentionMenu);
+        setFeedMessage('');
+        setIsFeedComposerOpen(false);
+    };
+
     const handleFeedSave = async (event) => {
         event.preventDefault();
         if (!session) return;
@@ -824,6 +832,7 @@ function AlumniDirectory() {
             dispatchNotificationsChanged();
             setFeedDraft(defaultFeedDraft);
             setFeedMentionMenu(defaultFeedMentionMenu);
+            setIsFeedComposerOpen(false);
             setFeedMessage(feedDraft.id ? 'Feed post updated.' : 'Posted to the alumni feed.');
         } catch (error) {
             setFeedMessage(error.message);
@@ -847,7 +856,9 @@ function AlumniDirectory() {
         });
         setFeedMessage('');
         setFeedMentionMenu(defaultFeedMentionMenu);
+        setIsFeedComposerOpen(true);
         setActiveView('feed');
+        window.requestAnimationFrame(() => feedPostTextareaRef.current?.focus());
     };
 
     const handleFeedDelete = async (id) => {
@@ -1611,7 +1622,7 @@ function AlumniDirectory() {
                                                 )}
                                             </button>
                                             {canDeleteComment && (
-                                                <button type="button" onClick={() => handleCommentDelete(comment)}>Delete</button>
+                                                <button type="button" className="alumni-comment-delete-button" onClick={() => handleCommentDelete(comment)}>Delete</button>
                                             )}
                                         </div>
                                     </div>
@@ -1782,114 +1793,122 @@ function AlumniDirectory() {
                     <span>Alumni network</span>
                     <strong>Member updates and opportunities</strong>
                 </div>
-                <form className="alumni-feed-composer" onSubmit={handleFeedSave}>
-                    <div className="alumni-panel-heading alumni-feed-composer-heading">
-                        <span>{feedDraft.id ? 'Editing feed post' : 'New feed post'}</span>
-                        <strong>{feedDraft.id ? feedDraft.title || 'Untitled post' : 'Post to the network'}</strong>
+                {!isFeedComposerOpen && (
+                    <div className="alumni-feed-composer-closed">
+                        <button
+                            type="button"
+                            className="alumni-primary-action"
+                            onClick={() => {
+                                setFeedDraft(defaultFeedDraft);
+                                setFeedMessage('');
+                                setFeedMentionMenu(defaultFeedMentionMenu);
+                                setIsFeedComposerOpen(true);
+                                window.requestAnimationFrame(() => feedPostTextareaRef.current?.focus());
+                            }}
+                        >
+                            Make a post
+                        </button>
                     </div>
-                    <div className="alumni-form-grid">
-                        <label>
-                            <span>Title</span>
-                            <input value={feedDraft.title} onChange={(event) => setFeedDraft(current => ({ ...current, title: event.target.value }))} required />
-                        </label>
-                        <label>
-                            <span>Category</span>
-                            <input value={feedDraft.category} onChange={(event) => setFeedDraft(current => ({ ...current, category: event.target.value }))} />
-                        </label>
-                        <div className="alumni-wide alumni-mention-label">
-                            <label htmlFor="alumni-feed-post-body">Post</label>
-                            <div className="alumni-mention-field">
-                                <textarea
-                                    id="alumni-feed-post-body"
-                                    ref={feedPostTextareaRef}
-                                    value={feedDraft.body}
-                                    onChange={handleFeedBodyChange}
-                                    onClick={handleFeedBodySelection}
-                                    onSelect={handleFeedBodySelection}
-                                    onKeyDown={handleFeedBodyKeyDown}
-                                    onBlur={closeFeedMentionMenuSoon}
-                                    required
-                                    rows="3"
-                                    placeholder={profiles.length ? `Use @${getMentionHandle(profiles[0])} to mention a member` : 'Use @name to mention a member'}
-                                    aria-controls={feedMentionMenu.open ? 'alumni-feed-mention-menu' : undefined}
-                                    aria-haspopup="listbox"
-                                />
-                                {feedMentionMenu.open && (
-                                    <div className="alumni-mention-menu" id="alumni-feed-mention-menu" role="listbox">
-                                        {feedMentionMatches.length > 0 ? feedMentionMatches.map((profile, index) => {
-                                            const handle = getMentionHandle(profile);
-                                            return (
-                                                <button
-                                                    type="button"
-                                                    role="option"
-                                                    aria-selected={feedMentionMenu.activeIndex === index}
-                                                    className={feedMentionMenu.activeIndex === index ? 'is-active' : ''}
-                                                    key={profile.userId || profile.id || handle}
-                                                    onMouseEnter={() => setFeedMentionMenu(current => ({ ...current, activeIndex: index }))}
-                                                    onMouseDown={(event) => {
-                                                        event.preventDefault();
-                                                        insertFeedMention(profile);
-                                                    }}
-                                                >
-                                                    <img src={getAlumniPhoto(profile.photoKey)} alt="" />
-                                                    <span>
-                                                        <strong>{getProfileName(profile)}</strong>
-                                                        <small>{getAlumniProfileLine(profile) || profile.email || getPathLabel(profile)}</small>
-                                                    </span>
-                                                    <b>@{handle}</b>
-                                                </button>
-                                            );
-                                        }) : (
-                                            <p>No directory matches</p>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
+                )}
+                {isFeedComposerOpen && (
+                    <form className="alumni-feed-composer" onSubmit={handleFeedSave}>
+                        <div className="alumni-panel-heading alumni-feed-composer-heading">
+                            <span>{feedDraft.id ? 'Editing feed post' : 'New feed post'}</span>
+                            <strong>{feedDraft.id ? feedDraft.title || 'Untitled post' : 'Post to the network'}</strong>
                         </div>
-                        <label>
-                            <span>Type</span>
-                            <select value={feedDraft.postType} onChange={(event) => setFeedDraft(current => ({ ...current, postType: event.target.value }))}>
-                                <option value="update">Update</option>
-                                <option value="event">Event</option>
-                                <option value="deadline">Deadline</option>
-                            </select>
-                        </label>
-                        <label>
-                            <span>Event date</span>
-                            <input type="date" value={feedDraft.eventDate} onChange={(event) => setFeedDraft(current => ({ ...current, eventDate: event.target.value }))} />
-                        </label>
-                        <label>
-                            <span>Deadline date</span>
-                            <input type="date" value={feedDraft.deadlineDate} onChange={(event) => setFeedDraft(current => ({ ...current, deadlineDate: event.target.value }))} />
-                        </label>
-                        <label>
-                            <span>Tags</span>
-                            <input value={feedDraft.tagsText} onChange={(event) => setFeedDraft(current => ({ ...current, tagsText: event.target.value }))} placeholder="jobs, events, @memberhandle" />
-                        </label>
-                        {isAdmin && (
-                            <label className="alumni-checkbox">
-                                <input type="checkbox" checked={feedDraft.pinned} onChange={(event) => setFeedDraft(current => ({ ...current, pinned: event.target.checked }))} />
-                                <span>Pin feed post</span>
+                        <div className="alumni-form-grid">
+                            <label>
+                                <span>Title</span>
+                                <input value={feedDraft.title} onChange={(event) => setFeedDraft(current => ({ ...current, title: event.target.value }))} required />
                             </label>
-                        )}
-                    </div>
-                    <div className="alumni-form-actions">
-                        <button type="submit" className="alumni-primary-action">{feedDraft.id ? 'Save feed post' : 'Post to feed'}</button>
-                        {feedDraft.id && (
-                            <button
-                                type="button"
-                                className="alumni-secondary-action"
-                                onClick={() => {
-                                    setFeedDraft(defaultFeedDraft);
-                                    setFeedMentionMenu(defaultFeedMentionMenu);
-                                }}
-                            >
-                                New post
-                            </button>
-                        )}
-                    </div>
-                    {feedMessage && <p className="alumni-form-message">{feedMessage}</p>}
-                </form>
+                            <label>
+                                <span>Category</span>
+                                <input value={feedDraft.category} onChange={(event) => setFeedDraft(current => ({ ...current, category: event.target.value }))} />
+                            </label>
+                            <div className="alumni-wide alumni-mention-label">
+                                <label htmlFor="alumni-feed-post-body">Post</label>
+                                <div className="alumni-mention-field">
+                                    <textarea
+                                        id="alumni-feed-post-body"
+                                        ref={feedPostTextareaRef}
+                                        value={feedDraft.body}
+                                        onChange={handleFeedBodyChange}
+                                        onClick={handleFeedBodySelection}
+                                        onSelect={handleFeedBodySelection}
+                                        onKeyDown={handleFeedBodyKeyDown}
+                                        onBlur={closeFeedMentionMenuSoon}
+                                        required
+                                        rows="3"
+                                        placeholder={profiles.length ? `Use @${getMentionHandle(profiles[0])} to mention a member` : 'Use @name to mention a member'}
+                                        aria-controls={feedMentionMenu.open ? 'alumni-feed-mention-menu' : undefined}
+                                        aria-haspopup="listbox"
+                                    />
+                                    {feedMentionMenu.open && (
+                                        <div className="alumni-mention-menu" id="alumni-feed-mention-menu" role="listbox">
+                                            {feedMentionMatches.length > 0 ? feedMentionMatches.map((profile, index) => {
+                                                const handle = getMentionHandle(profile);
+                                                return (
+                                                    <button
+                                                        type="button"
+                                                        role="option"
+                                                        aria-selected={feedMentionMenu.activeIndex === index}
+                                                        className={feedMentionMenu.activeIndex === index ? 'is-active' : ''}
+                                                        key={profile.userId || profile.id || handle}
+                                                        onMouseEnter={() => setFeedMentionMenu(current => ({ ...current, activeIndex: index }))}
+                                                        onMouseDown={(event) => {
+                                                            event.preventDefault();
+                                                            insertFeedMention(profile);
+                                                        }}
+                                                    >
+                                                        <img src={getAlumniPhoto(profile.photoKey)} alt="" />
+                                                        <span>
+                                                            <strong>{getProfileName(profile)}</strong>
+                                                            <small>{getAlumniProfileLine(profile) || profile.email || getPathLabel(profile)}</small>
+                                                        </span>
+                                                        <b>@{handle}</b>
+                                                    </button>
+                                                );
+                                            }) : (
+                                                <p>No directory matches</p>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            <label>
+                                <span>Type</span>
+                                <select value={feedDraft.postType} onChange={(event) => setFeedDraft(current => ({ ...current, postType: event.target.value }))}>
+                                    <option value="update">Update</option>
+                                    <option value="event">Event</option>
+                                    <option value="deadline">Deadline</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span>Event date</span>
+                                <input type="date" value={feedDraft.eventDate} onChange={(event) => setFeedDraft(current => ({ ...current, eventDate: event.target.value }))} />
+                            </label>
+                            <label>
+                                <span>Deadline date</span>
+                                <input type="date" value={feedDraft.deadlineDate} onChange={(event) => setFeedDraft(current => ({ ...current, deadlineDate: event.target.value }))} />
+                            </label>
+                            <label>
+                                <span>Tags</span>
+                                <input value={feedDraft.tagsText} onChange={(event) => setFeedDraft(current => ({ ...current, tagsText: event.target.value }))} placeholder="jobs, events, @memberhandle" />
+                            </label>
+                            {isAdmin && (
+                                <label className="alumni-checkbox">
+                                    <input type="checkbox" checked={feedDraft.pinned} onChange={(event) => setFeedDraft(current => ({ ...current, pinned: event.target.checked }))} />
+                                    <span>Pin feed post</span>
+                                </label>
+                            )}
+                        </div>
+                        <div className="alumni-form-actions">
+                            <button type="submit" className="alumni-primary-action">{feedDraft.id ? 'Save changes' : 'Post'}</button>
+                            <button type="button" className="alumni-secondary-action" onClick={closeFeedComposer}>Cancel</button>
+                        </div>
+                        {feedMessage && <p className="alumni-form-message">{feedMessage}</p>}
+                    </form>
+                )}
                 {sortedFeedPosts.map(renderFeedCard)}
             </section>
             <aside className="alumni-home-rail">
