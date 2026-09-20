@@ -2159,3 +2159,11 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
     .article-page .article-summary-heading h2 { margin-top: 1.5rem; }
     .article-page .article-summary > p { grid-column: auto; }
 }
+
+@media (max-width: 640px) {
+    .jh-page.jh-announcements .announcements-hero h1 {
+        font-size: clamp(3.05rem, 13.4vw, 4.2rem);
+        overflow-wrap: normal;
+        white-space: nowrap;
+    }
+}
