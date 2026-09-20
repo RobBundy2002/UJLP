@@ -1,50 +1,32 @@
-import React, { useMemo, useState } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
-import {
-    getAlumniBackendMode,
-    getStoredAlumniSession,
-    signInAlumni,
-    signUpAlumni
-} from '../Services/alumniApi';
+import { getStoredAlumniSession, signInAlumni } from '../Services/alumniApi';
 import '../Styling/AlumniDirectory.css';
 import '../Styling/EditorialPages.css';
 
-function AlumniSignIn() {
-    const location = useLocation();
+function AlumniEmailConfirmed() {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [session, setSession] = useState(() => getStoredAlumniSession());
-    const [authMode, setAuthMode] = useState('signin');
-    const [authForm, setAuthForm] = useState({ email: '', password: '' });
+    const [authForm, setAuthForm] = useState({
+        email: searchParams.get('email') || '',
+        password: ''
+    });
     const [showAuthPassword, setShowAuthPassword] = useState(true);
     const [authMessage, setAuthMessage] = useState('');
     const [loading, setLoading] = useState(false);
-    const backendMode = getAlumniBackendMode();
-
-    const redirectTo = useMemo(() => {
-        const requested = location.state?.from;
-        if (typeof requested === 'string' && requested && requested !== '/alumni/signin') {
-            return requested;
-        }
-        return '/alumni/profile';
-    }, [location.state]);
 
     const handleAuthSubmit = async (event) => {
         event.preventDefault();
         setLoading(true);
         setAuthMessage('');
-        try {
-            const action = authMode === 'signin' ? signInAlumni : signUpAlumni;
-            const emailRedirectTo = `${window.location.origin}/alumni/confirmed?email=${encodeURIComponent(authForm.email)}`;
-            const result = await action({ ...authForm, emailRedirectTo });
-            if (result.needsEmailConfirmation) {
-                setAuthMessage('Check your inbox to confirm the account before signing in.');
-                return;
-            }
 
+        try {
+            const result = await signInAlumni(authForm);
             setSession(result.session);
             setAuthForm({ email: '', password: '' });
-            navigate(redirectTo, { replace: true });
+            navigate('/alumni/profile', { replace: true });
         } catch (error) {
             setAuthMessage(error.message);
         } finally {
@@ -53,7 +35,7 @@ function AlumniSignIn() {
     };
 
     if (session) {
-        return <Navigate to={redirectTo} replace />;
+        return <Navigate to="/alumni/profile" replace />;
     }
 
     return (
@@ -62,37 +44,28 @@ function AlumniSignIn() {
                 <ParticleBackground />
                 <div className="section-content alumni-hero-grid">
                     <div className="alumni-hero-copy">
-                        <p className="jh-eyebrow"><strong>UJLP</strong> / Member Access</p>
-                        <h1>Member<br /><em>Sign in.</em></h1>
+                        <p className="jh-eyebrow"><strong>UJLP</strong> / Account Confirmed</p>
+                        <h1>Success!<br /><em>Email confirmed.</em></h1>
                         <p>
-                            Sign in or create an account before opening the alumni network and profile manager.
+                            Use your email and password to sign in to your new account.
                         </p>
                     </div>
                     <div className="alumni-hero-panel">
-                        <span>Private access</span>
-                        <strong>Profiles stay separate from the directory view</strong>
-                        <p>After sign in, you can manage your profile or continue into the network.</p>
+                        <span>Account ready</span>
+                        <strong>Sign in to finish setup</strong>
+                        <p>After sign in, you can create or update your member profile.</p>
                     </div>
                 </div>
             </section>
 
             <section className="alumni-auth-section">
-                <div className="section-content alumni-auth-layout">
+                <div className="section-content alumni-auth-layout alumni-confirmed-auth-layout">
                     <div className="alumni-auth-copy">
-                        <p className="jh-section-label">Account access</p>
-                        <h2>Open your member workspace</h2>
-                        <div className="alumni-lock-list">
-                            <span>Verified accounts</span>
-                            <span>Profile manager</span>
-                            <span>Alumni network</span>
-                            <span>Contact preferences</span>
-                        </div>
+                        <p className="jh-section-label">Confirmed</p>
+                        <h2>Your account is ready.</h2>
+                        <p>Enter the same email and password you used when creating the account.</p>
                     </div>
                     <form className="alumni-auth-panel" onSubmit={handleAuthSubmit}>
-                        <div className="alumni-auth-tabs" aria-label="Authentication mode">
-                            <button type="button" className={authMode === 'signin' ? 'active' : ''} onClick={() => setAuthMode('signin')}>Sign in</button>
-                            <button type="button" className={authMode === 'signup' ? 'active' : ''} onClick={() => setAuthMode('signup')}>Create account</button>
-                        </div>
                         <label>
                             <span>Email</span>
                             <input
@@ -128,11 +101,8 @@ function AlumniSignIn() {
                             </div>
                         </label>
                         <button type="submit" className="alumni-primary-action" disabled={loading}>
-                            {loading ? 'Working...' : authMode === 'signin' ? 'Sign in' : 'Create account'}
+                            {loading ? 'Signing in...' : 'Sign in'}
                         </button>
-                        {backendMode === 'preview' && (
-                            <p className="alumni-system-note">Preview mode is local to this browser. Supabase env vars switch this to real Postgres/Auth.</p>
-                        )}
                         {authMessage && <p className="alumni-form-message">{authMessage}</p>}
                     </form>
                 </div>
@@ -141,4 +111,4 @@ function AlumniSignIn() {
     );
 }
 
-export default AlumniSignIn;
+export default AlumniEmailConfirmed;

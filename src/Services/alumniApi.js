@@ -233,9 +233,10 @@ export const signInAlumni = async ({ email, password }) => {
     return { session: sessionWithExpiry };
 };
 
-export const signUpAlumni = async ({ email, password }) => {
+export const signUpAlumni = async ({ email, password, emailRedirectTo = '' }) => {
     if (isSupabaseConfigured) {
-        const payload = await supabaseRequest('/auth/v1/signup', {
+        const redirectQuery = emailRedirectTo ? `?redirect_to=${encodeURIComponent(emailRedirectTo)}` : '';
+        const payload = await supabaseRequest(`/auth/v1/signup${redirectQuery}`, {
             method: 'POST',
             body: JSON.stringify({ email, password })
         });

@@ -37,7 +37,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 }
 .header-container::after { display: none; }
 .App-title { align-items: center; gap: .75rem; margin: 0; color: #f7f1e7; font-size: 1rem; letter-spacing: -.02em; }
-.App-title img { width: 3.15rem; height: 3.15rem; margin: 0; object-fit: cover; object-position: 50% 58%; transform: translateY(2px); }
+.App-title img { width: 3.15rem; height: 3.15rem; margin: 0; object-fit: contain; object-position: center; transform: translateY(2px); }
 .App-title img:hover { transform: translateY(2px) scale(1.05); }
 .title-text { margin: 0; }
 .title-line-1, .title-line-2 { color: #f7f1e7; line-height: 1.05; }

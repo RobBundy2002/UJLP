@@ -8,6 +8,7 @@ import Journal from './GeneralPages/Journal';
 import AlumniDirectory from './GeneralPages/AlumniDirectory';
 import AlumniProfile from './GeneralPages/AlumniProfile';
 import AlumniSignIn from './GeneralPages/AlumniSignIn';
+import AlumniEmailConfirmed from './GeneralPages/AlumniEmailConfirmed';
 import Announcements from './GeneralPages/Announcements';
 import Contact from './GeneralPages/Contact';
 import Footer from './Components/Footer';
@@ -22,7 +23,7 @@ import Rishi from './Bios/Rishi';
 import Mia from './Bios/Mia';
 import Charlie from './Bios/Charlie'
 import Rhett from './Bios/Rhett';
-import logo from "./ProfilePictures/HeaderLogo.png";
+import logo from "./HeaderLogo.jpeg";
 import UnequalOpportunity from "./ArticlePages/UnequalOpportunity";
 import SchoolhouseSecrets from "./ArticlePages/SchoolhouseSecrets";
 import JoinTheTeam from "./GeneralPages/JoinTheTeam";
@@ -343,7 +344,7 @@ function Navigation() {
         setAlumniSession(null);
         setNavProfile(null);
     };
-    const heroRoutes = ['/', '/about', '/journal', '/alumni', '/alumni/profile', '/alumni/signin', '/announcements', '/contact', '/jointheteam'];
+    const heroRoutes = ['/', '/about', '/journal', '/alumni', '/alumni/profile', '/alumni/signin', '/alumni/confirmed', '/announcements', '/contact', '/jointheteam'];
     const isHeroRoute = heroRoutes.includes(location.pathname);
     const isSignedIn = Boolean(alumniSession?.user?.email);
     const isAdmin = isAlumniAdmin(alumniSession);
@@ -463,6 +464,7 @@ function App() {
                         <Route path="/alumni" element={<AlumniDirectory />} />
                         <Route path="/alumni/profile" element={<AlumniProfile />} />
                         <Route path="/alumni/signin" element={<AlumniSignIn />} />
+                        <Route path="/alumni/confirmed" element={<AlumniEmailConfirmed />} />
                         <Route path="/journal/index" element={<PublicationIndex />} />
                         <Route path="/journal/issue/:issueId" element={<IssueEdition />} />
                         <Route path="/research/:slug" element={<ResearchArea />} />
