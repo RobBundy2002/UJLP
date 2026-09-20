@@ -2929,6 +2929,7 @@
         margin-left: auto;
         text-align: center;
         text-wrap: balance;
+        transform: translateX(.4rem);
     }
 
     .alumni-lock-list,
