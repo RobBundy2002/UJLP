@@ -192,7 +192,7 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
 
     (content?.feedCommentLikes || []).forEach(like => {
         const comment = feedCommentsById.get(like.commentId);
-        if (isCurrentUserComment(comment) && like.userId !== currentUserId) {
+        if (isCurrentUserComment(comment)) {
             items.push({ id: `comment-like-${like.commentId}-${like.userId}`, createdAt: normalizeNotificationTime(like.createdAt) });
         }
     });

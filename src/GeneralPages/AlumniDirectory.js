@@ -603,7 +603,7 @@ function AlumniDirectory() {
         (portalContent.feedCommentLikes || []).forEach(like => {
             const comment = feedCommentsById.get(like.commentId);
             const post = feedPostsById.get(like.postId || comment?.postId);
-            if (isCurrentUserComment(comment) && like.userId !== currentUserId) {
+            if (isCurrentUserComment(comment)) {
                 const likeProfile = profiles.find(profile => (
                     profile.userId === like.userId || normalizeText(profile.fullName) === normalizeText(like.userName)
                 )) || null;
