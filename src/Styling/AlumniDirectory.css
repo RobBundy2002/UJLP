@@ -1794,18 +1794,20 @@
     font-size: .88rem;
 }
 
-.alumni-comment-social-actions {
+.alumni-feed-comment > div > .alumni-comment-social-actions {
     display: flex;
     flex-wrap: wrap;
     gap: .45rem;
     align-items: center;
+    align-content: center;
     padding-top: .2rem;
 }
 
-.alumni-comment-social-actions button {
+.alumni-feed-comment > div > .alumni-comment-social-actions button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
     min-height: 1.8rem;
     padding: .32rem .55rem;
     font-size: .72rem;

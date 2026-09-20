@@ -41,7 +41,9 @@ import ResearchArea from './GeneralPages/ResearchArea';
 import BioFrame from './Components/BioFrame';
 import {
     ALUMNI_SESSION_EVENT,
+    clearStoredAlumniSession,
     fetchAlumniProfiles,
+    getAlumniSessionTimeRemaining,
     getStoredAlumniSession,
     isAlumniAdmin,
     signOutAlumni
@@ -296,6 +298,28 @@ function Navigation() {
             isMounted = false;
         };
     }, [alumniSession, notificationRefreshKey]);
+
+    useEffect(() => {
+        if (!alumniSession?.user?.email) return undefined;
+
+        const timeRemaining = getAlumniSessionTimeRemaining(alumniSession);
+        if (timeRemaining <= 0) {
+            clearStoredAlumniSession();
+            setAlumniSession(null);
+            setNavProfile(null);
+            setNavNotificationCount(0);
+            return undefined;
+        }
+
+        const timeoutId = window.setTimeout(() => {
+            clearStoredAlumniSession();
+            setAlumniSession(null);
+            setNavProfile(null);
+            setNavNotificationCount(0);
+        }, timeRemaining);
+
+        return () => window.clearTimeout(timeoutId);
+    }, [alumniSession]);
 
     useEffect(() => {
         if (isMobileMenuOpen) {

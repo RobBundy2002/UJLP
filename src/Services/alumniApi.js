@@ -10,6 +10,9 @@ const PREVIEW_PROFILE_INVITE_CODE = (process.env.REACT_APP_ALUMNI_PREVIEW_INVITE
 const SESSION_KEY = 'ujlp_alumni_session';
 const PREVIEW_ACCOUNTS_KEY = 'ujlp_alumni_preview_accounts';
 const PREVIEW_PROFILES_KEY = 'ujlp_alumni_preview_profiles';
+const ALUMNI_SESSION_MAX_AGE_MS = 60 * 60 * 1000;
+const SESSION_STARTED_AT_FIELD = 'ujlpSessionStartedAt';
+const SESSION_EXPIRES_AT_FIELD = 'ujlpSessionExpiresAt';
 export const ALUMNI_SESSION_EVENT = 'ujlp-alumni-session-change';
 
 export const isSupabaseConfigured = Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
@@ -140,11 +143,61 @@ const supabaseRequest = async (path, options = {}, session = null) => {
     return payload;
 };
 
+const decodeJwtExpiresAt = (token) => {
+    try {
+        const payload = token?.split('.')[1];
+        if (!payload) return 0;
+        const normalizedPayload = payload.replace(/-/g, '+').replace(/_/g, '/');
+        const decoded = JSON.parse(window.atob(normalizedPayload.padEnd(Math.ceil(normalizedPayload.length / 4) * 4, '=')));
+        return decoded?.exp ? decoded.exp * 1000 : 0;
+    } catch {
+        return 0;
+    }
+};
+
+const getSupabaseSessionExpiresAt = (session) => {
+    const explicitExpiry = Number(session?.expires_at || 0);
+    if (explicitExpiry) return explicitExpiry * 1000;
+    return decodeJwtExpiresAt(session?.access_token);
+};
+
+const withSessionExpiry = (session) => {
+    if (!session?.user?.email) return session;
+
+    const startedAt = Number(session[SESSION_STARTED_AT_FIELD] || Date.now());
+    const localExpiresAt = startedAt + ALUMNI_SESSION_MAX_AGE_MS;
+    const tokenExpiresAt = getSupabaseSessionExpiresAt(session);
+    const expiresAt = Math.min(localExpiresAt, tokenExpiresAt || localExpiresAt);
+
+    return {
+        ...session,
+        [SESSION_STARTED_AT_FIELD]: startedAt,
+        [SESSION_EXPIRES_AT_FIELD]: expiresAt
+    };
+};
+
+export const getAlumniSessionTimeRemaining = (session) => {
+    const expiresAt = Number(session?.[SESSION_EXPIRES_AT_FIELD] || 0);
+    return expiresAt ? Math.max(0, expiresAt - Date.now()) : 0;
+};
+
 export const getStoredAlumniSession = () => {
     if (typeof window === 'undefined') return null;
     const session = readJson(SESSION_KEY, null);
     if (!session?.user?.email) return null;
-    return session;
+
+    const sessionWithExpiry = withSessionExpiry(session);
+    if (getAlumniSessionTimeRemaining(sessionWithExpiry) <= 0) {
+        window.localStorage.removeItem(SESSION_KEY);
+        notifyAlumniSessionChange();
+        return null;
+    }
+
+    if (!session[SESSION_STARTED_AT_FIELD] || !session[SESSION_EXPIRES_AT_FIELD]) {
+        writeJson(SESSION_KEY, sessionWithExpiry);
+    }
+
+    return sessionWithExpiry;
 };
 
 export const clearStoredAlumniSession = () => {
@@ -158,9 +211,10 @@ export const signInAlumni = async ({ email, password }) => {
             method: 'POST',
             body: JSON.stringify({ email, password })
         });
-        writeJson(SESSION_KEY, session);
+        const sessionWithExpiry = withSessionExpiry(session);
+        writeJson(SESSION_KEY, sessionWithExpiry);
         notifyAlumniSessionChange();
-        return { session };
+        return { session: sessionWithExpiry };
     }
 
     const accounts = readJson(PREVIEW_ACCOUNTS_KEY, []);
@@ -173,9 +227,10 @@ export const signInAlumni = async ({ email, password }) => {
         access_token: 'preview-token',
         user: { id: account.id, email: account.email }
     };
-    writeJson(SESSION_KEY, session);
+    const sessionWithExpiry = withSessionExpiry(session);
+    writeJson(SESSION_KEY, sessionWithExpiry);
     notifyAlumniSessionChange();
-    return { session };
+    return { session: sessionWithExpiry };
 };
 
 export const signUpAlumni = async ({ email, password }) => {
@@ -186,9 +241,10 @@ export const signUpAlumni = async ({ email, password }) => {
         });
 
         if (payload.session) {
-            writeJson(SESSION_KEY, payload.session);
+            const sessionWithExpiry = withSessionExpiry(payload.session);
+            writeJson(SESSION_KEY, sessionWithExpiry);
             notifyAlumniSessionChange();
-            return { session: payload.session };
+            return { session: sessionWithExpiry };
         }
 
         return { session: null, needsEmailConfirmation: true };
@@ -206,9 +262,10 @@ export const signUpAlumni = async ({ email, password }) => {
         access_token: 'preview-token',
         user: { id: account.id, email: account.email }
     };
-    writeJson(SESSION_KEY, session);
+    const sessionWithExpiry = withSessionExpiry(session);
+    writeJson(SESSION_KEY, sessionWithExpiry);
     notifyAlumniSessionChange();
-    return { session };
+    return { session: sessionWithExpiry };
 };
 
 export const signOutAlumni = async (session) => {
