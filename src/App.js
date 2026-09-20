@@ -145,6 +145,17 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
     };
     const feedPosts = content?.feedPosts || [];
     const feedPostsById = new Map(feedPosts.map(post => [post.id, post]));
+    const feedComments = content?.feedComments || [];
+    const feedCommentsById = new Map(feedComments.map(comment => [comment.id, comment]));
+    const isCurrentUserComment = (comment) => {
+        if (!comment) return false;
+        if (comment.authorUserId && comment.authorUserId === currentUserId) return true;
+
+        return [
+            ownProfile?.fullName,
+            session?.user?.email
+        ].some(value => normalizeNotificationText(value) === normalizeNotificationText(comment.authorName));
+    };
     const items = [];
 
     feedPosts.forEach(post => {
@@ -154,7 +165,7 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
         }
     });
 
-    (content?.feedComments || []).forEach(comment => {
+    feedComments.forEach(comment => {
         const post = feedPostsById.get(comment.postId);
         const mentioned = ownHandle && getMentionHandlesFromText(comment.body).includes(ownHandle);
         const onOwnPost = isCurrentUserPost(post);
@@ -174,6 +185,13 @@ const getAlumniNotificationItems = (content, ownProfile, session) => {
         const post = feedPostsById.get(like.postId);
         if (isCurrentUserPost(post) && like.userId !== currentUserId) {
             items.push({ id: `like-${like.postId}-${like.userId}`, createdAt: normalizeNotificationTime(like.createdAt) });
+        }
+    });
+
+    (content?.feedCommentLikes || []).forEach(like => {
+        const comment = feedCommentsById.get(like.commentId);
+        if (isCurrentUserComment(comment) && like.userId !== currentUserId) {
+            items.push({ id: `comment-like-${like.commentId}-${like.userId}`, createdAt: normalizeNotificationTime(like.createdAt) });
         }
     });
 

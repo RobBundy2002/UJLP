@@ -1642,7 +1642,8 @@
     align-items: center;
 }
 
-.alumni-feed-social-actions button {
+.alumni-feed-social-actions button,
+.alumni-comment-social-actions button {
     appearance: none;
     min-height: 2.15rem;
     padding: .45rem .68rem;
@@ -1656,7 +1657,8 @@
     font-weight: 800;
 }
 
-.alumni-feed-social-actions .alumni-like-button {
+.alumni-feed-social-actions .alumni-like-button,
+.alumni-comment-social-actions .alumni-like-button {
     display: inline-flex;
     align-items: center;
     gap: .35rem;
@@ -1675,21 +1677,35 @@
     fill: currentColor;
 }
 
-.alumni-feed-social-actions .alumni-like-count-button {
-    border-color: rgba(166, 195, 223, .28);
-    color: var(--alumni-ink);
-}
-
 .alumni-feed-social-actions button:hover,
-.alumni-feed-social-actions button.is-active {
+.alumni-feed-social-actions button.is-active,
+.alumni-comment-social-actions button:hover,
+.alumni-comment-social-actions button.is-active {
     border-color: rgba(201, 163, 91, .65);
     color: var(--alumni-gold);
 }
 
 .alumni-feed-social-actions span,
-.alumni-feed-social p {
+.alumni-feed-social p,
+.alumni-like-summary-button {
     color: var(--alumni-faint);
     font-size: .78rem;
+}
+
+.alumni-like-summary-button {
+    appearance: none;
+    width: fit-content;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    text-align: left;
+}
+
+.alumni-like-summary-button:hover {
+    color: var(--alumni-gold);
 }
 
 .alumni-like-dropdown {
@@ -1740,7 +1756,7 @@
 
 .alumni-feed-comment {
     display: grid;
-    grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+    grid-template-columns: 2.25rem minmax(0, 1fr);
     gap: .7rem;
     align-items: start;
 }
@@ -1778,20 +1794,26 @@
     font-size: .88rem;
 }
 
-.alumni-feed-comment > button {
-    appearance: none;
-    padding: .25rem 0;
-    border: 0;
-    background: transparent;
-    color: var(--alumni-faint);
-    cursor: pointer;
-    font: inherit;
-    font-size: .72rem;
-    font-weight: 800;
+.alumni-comment-social-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    align-items: center;
+    padding-top: .2rem;
 }
 
-.alumni-feed-comment > button:hover {
-    color: var(--alumni-gold);
+.alumni-comment-social-actions button {
+    min-height: 1.8rem;
+    padding: .32rem .55rem;
+    font-size: .72rem;
+}
+
+.alumni-comment-like-summary {
+    margin-top: .08rem;
+}
+
+.alumni-comment-like-dropdown {
+    margin-top: .22rem;
 }
 
 .alumni-feed-comment-form {

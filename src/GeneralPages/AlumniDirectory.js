@@ -16,7 +16,13 @@ import {
     getStoredAlumniSession,
     isAlumniAdmin
 } from '../Services/alumniApi';
-import { deletePortalItem, fetchPortalContent, savePortalItem, toggleFeedLike } from '../Services/alumniPortalApi';
+import {
+    deletePortalItem,
+    fetchPortalContent,
+    savePortalItem,
+    toggleFeedCommentLike,
+    toggleFeedLike
+} from '../Services/alumniPortalApi';
 import '../Styling/AlumniDirectory.css';
 import '../Styling/EditorialPages.css';
 
@@ -38,6 +44,7 @@ const defaultPortalContentState = {
     feedPosts: [],
     feedComments: [],
     feedLikes: [],
+    feedCommentLikes: [],
     announcements: [],
     tasks: [],
     calendarEvents: []
@@ -278,6 +285,7 @@ function AlumniDirectory() {
     const [feedMentionMenu, setFeedMentionMenu] = useState(defaultFeedMentionMenu);
     const [commentDrafts, setCommentDrafts] = useState({});
     const [expandedLikePostId, setExpandedLikePostId] = useState('');
+    const [expandedLikeCommentId, setExpandedLikeCommentId] = useState('');
     const [notificationsSeenAt, setNotificationsSeenAt] = useState('');
     const [dismissedNotificationIds, setDismissedNotificationIds] = useState([]);
     const [calendarDraft, setCalendarDraft] = useState(createDefaultCalendarDraft);
@@ -487,6 +495,14 @@ function AlumniDirectory() {
         }, {})
     ), [portalContent.feedLikes]);
 
+    const feedCommentLikesByCommentId = useMemo(() => (
+        (portalContent.feedCommentLikes || []).reduce((lookup, like) => {
+            if (!lookup[like.commentId]) lookup[like.commentId] = [];
+            lookup[like.commentId].push(like);
+            return lookup;
+        }, {})
+    ), [portalContent.feedCommentLikes]);
+
     const notificationItems = useMemo(() => {
         if (!currentUserId) return [];
 
@@ -505,6 +521,17 @@ function AlumniDirectory() {
             ].some(value => normalizeText(value) === authorName);
         };
         const feedPostsById = new Map((portalContent.feedPosts || []).map(post => [post.id, post]));
+        const feedCommentsById = new Map((portalContent.feedComments || []).map(comment => [comment.id, comment]));
+        const isCurrentUserComment = (comment) => {
+            if (!comment) return false;
+            if (comment.authorUserId && comment.authorUserId === currentUserId) return true;
+
+            return [
+                ownProfile?.fullName,
+                session?.user?.email,
+                accountName
+            ].some(value => normalizeText(value) === normalizeText(comment.authorName));
+        };
         const items = [];
 
         (portalContent.feedPosts || []).forEach(post => {
@@ -573,6 +600,25 @@ function AlumniDirectory() {
             }
         });
 
+        (portalContent.feedCommentLikes || []).forEach(like => {
+            const comment = feedCommentsById.get(like.commentId);
+            const post = feedPostsById.get(like.postId || comment?.postId);
+            if (isCurrentUserComment(comment) && like.userId !== currentUserId) {
+                const likeProfile = profiles.find(profile => (
+                    profile.userId === like.userId || normalizeText(profile.fullName) === normalizeText(like.userName)
+                )) || null;
+                items.push({
+                    id: `comment-like-${like.commentId}-${like.userId}`,
+                    type: 'Like',
+                    title: `${like.userName} liked your comment`,
+                    body: comment.body,
+                    createdAt: normalizeNotificationTime(like.createdAt),
+                    postId: post?.id || comment.postId,
+                    photoKey: likeProfile?.photoKey || like.userPhotoKey || 'blank'
+                });
+            }
+        });
+
         (portalContent.announcements || []).forEach(announcement => {
             const announcementAuthorProfile = profiles.find(profile => (
                 profile.userId === announcement.authorUserId || normalizeText(profile.fullName) === normalizeText(announcement.authorName)
@@ -607,7 +653,7 @@ function AlumniDirectory() {
         return items
             .filter(item => !dismissedIds.has(item.id))
             .sort((left, right) => String(right.createdAt || '').localeCompare(String(left.createdAt || '')));
-    }, [accountName, currentUserId, dismissedNotificationIds, ownProfile, portalContent.announcements, portalContent.feedComments, portalContent.feedLikes, portalContent.feedPosts, portalContent.tasks, profiles, session?.user?.email]);
+    }, [accountName, currentUserId, dismissedNotificationIds, ownProfile, portalContent.announcements, portalContent.feedCommentLikes, portalContent.feedComments, portalContent.feedLikes, portalContent.feedPosts, portalContent.tasks, profiles, session?.user?.email]);
 
     const unreadNotificationCount = useMemo(() => {
         if (!notificationsSeenAt) return notificationItems.length;
@@ -814,7 +860,8 @@ function AlumniDirectory() {
                 ...current,
                 feedPosts: current.feedPosts.filter(item => item.id !== id),
                 feedComments: current.feedComments.filter(item => item.postId !== id),
-                feedLikes: current.feedLikes.filter(item => item.postId !== id)
+                feedLikes: current.feedLikes.filter(item => item.postId !== id),
+                feedCommentLikes: current.feedCommentLikes.filter(item => item.postId !== id)
             }));
             if (feedDraft.id === id) setFeedDraft(defaultFeedDraft);
             dispatchNotificationsChanged();
@@ -863,6 +910,24 @@ function AlumniDirectory() {
         }
     };
 
+    const handleFeedCommentLike = async (comment) => {
+        if (!currentUserId) return;
+
+        const liked = (feedCommentLikesByCommentId[comment.id] || []).some(like => like.userId === currentUserId);
+        try {
+            const savedLike = await toggleFeedCommentLike(comment, getCurrentActor(), liked, session);
+            setPortalContent(current => ({
+                ...current,
+                feedCommentLikes: liked
+                    ? current.feedCommentLikes.filter(like => !(like.commentId === comment.id && like.userId === currentUserId))
+                    : [savedLike, ...current.feedCommentLikes.filter(like => !(like.commentId === comment.id && like.userId === currentUserId))]
+            }));
+            dispatchNotificationsChanged();
+        } catch (error) {
+            setFeedMessage(error.message);
+        }
+    };
+
     const handleCommentSave = async (event, post) => {
         event.preventDefault();
         const body = String(commentDrafts[post.id] || '').trim();
@@ -895,7 +960,8 @@ function AlumniDirectory() {
             await deletePortalItem('feedComments', comment.id, session);
             setPortalContent(current => ({
                 ...current,
-                feedComments: current.feedComments.filter(item => item.id !== comment.id)
+                feedComments: current.feedComments.filter(item => item.id !== comment.id),
+                feedCommentLikes: current.feedCommentLikes.filter(item => item.commentId !== comment.id)
             }));
             dispatchNotificationsChanged();
         } catch (error) {
@@ -1314,8 +1380,14 @@ function AlumniDirectory() {
         if (names.length === 0) return 'No likes yet';
         if (names.length === 1) return `${names[0]} liked this`;
         if (names.length === 2) return `${names[0]} and ${names[1]} liked this`;
-        return `${names[0]}, ${names[1]} and ${names.length - 2} other${names.length - 2 === 1 ? '' : 's'} liked this`;
+        return `${names[0]} and ${names.length - 1} other${names.length - 1 === 1 ? '' : 's'} liked this`;
     };
+
+    const renderLikeIcon = () => (
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M7 10v10H3V10h4Zm4.2 10H9V9.6L13.1 3l.8.1c1.4.2 2.3 1.5 2 2.9l-.6 3h3.1c1.6 0 2.7 1.5 2.3 3l-1.4 5.3A3.5 3.5 0 0 1 16 20h-4.8Z" />
+        </svg>
+    );
 
     const updateFeedMentionMenu = (value, cursorIndex) => {
         const activeMention = getActiveFeedMention(value, cursorIndex);
@@ -1465,22 +1537,23 @@ function AlumniDirectory() {
                                 aria-pressed={likedByMe}
                                 onClick={() => handleFeedLike(post)}
                             >
-                                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                                    <path d="M12 21s-7.5-4.6-9.6-9.1C.9 8.7 2.7 5 6.2 5c2 0 3.4 1.1 4.2 2.3C11.2 6.1 12.6 5 14.6 5c3.5 0 5.3 3.7 3.8 6.9C16.3 16.4 12 21 12 21Z" />
-                                </svg>
-                                {likedByMe ? 'Hearted' : 'Heart'}
-                            </button>
-                            <button
-                                type="button"
-                                className="alumni-like-count-button"
-                                aria-expanded={likesExpanded}
-                                onClick={() => setExpandedLikePostId(current => current === post.id ? '' : post.id)}
-                            >
-                                {postLikes.length} like{postLikes.length === 1 ? '' : 's'}
+                                {renderLikeIcon()}
+                                {likedByMe ? 'Liked' : 'Like'}
                             </button>
                             <span>{postComments.length} comment{postComments.length === 1 ? '' : 's'}</span>
                         </div>
-                        <p>{likeSummary}</p>
+                        {postLikes.length > 0 ? (
+                            <button
+                                type="button"
+                                className="alumni-like-summary-button"
+                                aria-expanded={likesExpanded}
+                                onClick={() => setExpandedLikePostId(current => current === post.id ? '' : post.id)}
+                            >
+                                {likeSummary}
+                            </button>
+                        ) : (
+                            <p className="alumni-like-summary-text">{likeSummary}</p>
+                        )}
                         {likesExpanded && (
                             <div className="alumni-like-dropdown">
                                 {postLikes.length === 0 && <span>No one has liked this yet.</span>}
@@ -1506,6 +1579,10 @@ function AlumniDirectory() {
                         {postComments.map(comment => {
                             const canDeleteComment = isAdmin || comment.authorUserId === currentUserId;
                             const commentAuthorProfile = getCommentAuthorProfile(comment);
+                            const commentLikes = feedCommentLikesByCommentId[comment.id] || [];
+                            const commentLikedByMe = commentLikes.some(like => like.userId === currentUserId);
+                            const commentLikesExpanded = expandedLikeCommentId === comment.id;
+                            const commentLikeSummary = formatLikeSummary(commentLikes);
                             return (
                                 <article className="alumni-feed-comment" key={comment.id}>
                                     <img src={getAlumniPhoto(commentAuthorProfile?.photoKey || comment.authorPhotoKey || 'blank')} alt="" />
@@ -1521,10 +1598,50 @@ function AlumniDirectory() {
                                             <time>{formatUpdatedDate(comment.createdAt)}</time>
                                         </div>
                                         <p>{renderPostBody({ ...post, id: comment.id, body: comment.body })}</p>
+                                        <div className="alumni-comment-social-actions">
+                                            <button
+                                                type="button"
+                                                className={`alumni-like-button${commentLikedByMe ? ' is-active' : ''}`}
+                                                aria-pressed={commentLikedByMe}
+                                                onClick={() => handleFeedCommentLike(comment)}
+                                            >
+                                                {renderLikeIcon()}
+                                                {commentLikedByMe ? 'Liked' : 'Like'}
+                                            </button>
+                                            {canDeleteComment && (
+                                                <button type="button" onClick={() => handleCommentDelete(comment)}>Delete</button>
+                                            )}
+                                        </div>
+                                        {commentLikes.length > 0 && (
+                                            <button
+                                                type="button"
+                                                className="alumni-like-summary-button alumni-comment-like-summary"
+                                                aria-expanded={commentLikesExpanded}
+                                                onClick={() => setExpandedLikeCommentId(current => current === comment.id ? '' : comment.id)}
+                                            >
+                                                {commentLikeSummary}
+                                            </button>
+                                        )}
+                                        {commentLikes.length > 0 && commentLikesExpanded && (
+                                            <div className="alumni-like-dropdown alumni-comment-like-dropdown">
+                                                {commentLikes.map(like => {
+                                                    const likeProfile = getLikeAuthorProfile(like);
+                                                    return (
+                                                        <div className="alumni-like-row" key={`${comment.id}-${like.userId || like.userName}`}>
+                                                            <img src={getAlumniPhoto(likeProfile?.photoKey || like.userPhotoKey || 'blank')} alt="" />
+                                                            {likeProfile ? (
+                                                                <button type="button" className="alumni-feed-author-link" onClick={() => openProfileView(likeProfile)}>
+                                                                    {getProfileName(likeProfile)}
+                                                                </button>
+                                                            ) : (
+                                                                <strong>{like.userName || 'UJLP member'}</strong>
+                                                            )}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        )}
                                     </div>
-                                    {canDeleteComment && (
-                                        <button type="button" onClick={() => handleCommentDelete(comment)}>Delete</button>
-                                    )}
                                 </article>
                             );
                         })}

@@ -416,6 +416,16 @@ create table if not exists public.alumni_feed_likes (
   primary key (post_id, user_id)
 );
 
+create table if not exists public.alumni_feed_comment_likes (
+  comment_id uuid not null references public.alumni_feed_comments(id) on delete cascade,
+  post_id uuid not null references public.alumni_feed_posts(id) on delete cascade,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  user_name text not null default 'UJLP member',
+  user_photo_key text not null default 'blank',
+  created_at timestamptz not null default now(),
+  primary key (comment_id, user_id)
+);
+
 create index if not exists alumni_feed_posts_feed_idx
 on public.alumni_feed_posts (pinned desc, created_at desc);
 
@@ -432,6 +442,12 @@ on public.alumni_feed_comments (post_id, created_at asc);
 
 create index if not exists alumni_feed_likes_post_idx
 on public.alumni_feed_likes (post_id, created_at asc);
+
+create index if not exists alumni_feed_comment_likes_comment_idx
+on public.alumni_feed_comment_likes (comment_id, created_at asc);
+
+create index if not exists alumni_feed_comment_likes_post_idx
+on public.alumni_feed_comment_likes (post_id, created_at asc);
 
 create index if not exists public_announcements_feed_idx
 on public.public_announcements (audience, pinned desc, publish_date desc);
@@ -474,6 +490,7 @@ execute function public.set_portal_content_updated_at();
 alter table public.alumni_feed_posts enable row level security;
 alter table public.alumni_feed_comments enable row level security;
 alter table public.alumni_feed_likes enable row level security;
+alter table public.alumni_feed_comment_likes enable row level security;
 alter table public.public_announcements enable row level security;
 alter table public.alumni_weekly_tasks enable row level security;
 
@@ -491,6 +508,11 @@ drop policy if exists "Authenticated members can create feed likes" on public.al
 drop policy if exists "Members can update their own feed likes" on public.alumni_feed_likes;
 drop policy if exists "Members can delete their own feed likes" on public.alumni_feed_likes;
 drop policy if exists "Directory admins can manage feed likes" on public.alumni_feed_likes;
+drop policy if exists "Authenticated members can read feed comment likes" on public.alumni_feed_comment_likes;
+drop policy if exists "Authenticated members can create feed comment likes" on public.alumni_feed_comment_likes;
+drop policy if exists "Members can update their own feed comment likes" on public.alumni_feed_comment_likes;
+drop policy if exists "Members can delete their own feed comment likes" on public.alumni_feed_comment_likes;
+drop policy if exists "Directory admins can manage feed comment likes" on public.alumni_feed_comment_likes;
 drop policy if exists "Anyone can read public announcements" on public.public_announcements;
 drop policy if exists "Authenticated members can read portal announcements" on public.public_announcements;
 drop policy if exists "Directory admins can manage announcements" on public.public_announcements;
@@ -581,6 +603,38 @@ using (auth.uid() = user_id);
 
 create policy "Directory admins can manage feed likes"
 on public.alumni_feed_likes
+for all
+to authenticated
+using (public.is_alumni_directory_admin())
+with check (public.is_alumni_directory_admin());
+
+create policy "Authenticated members can read feed comment likes"
+on public.alumni_feed_comment_likes
+for select
+to authenticated
+using (true);
+
+create policy "Authenticated members can create feed comment likes"
+on public.alumni_feed_comment_likes
+for insert
+to authenticated
+with check (auth.uid() = user_id);
+
+create policy "Members can update their own feed comment likes"
+on public.alumni_feed_comment_likes
+for update
+to authenticated
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);
+
+create policy "Members can delete their own feed comment likes"
+on public.alumni_feed_comment_likes
+for delete
+to authenticated
+using (auth.uid() = user_id);
+
+create policy "Directory admins can manage feed comment likes"
+on public.alumni_feed_comment_likes
 for all
 to authenticated
 using (public.is_alumni_directory_admin())
