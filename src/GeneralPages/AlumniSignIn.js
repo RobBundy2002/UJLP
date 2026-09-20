@@ -16,7 +16,7 @@ function AlumniSignIn() {
     const [session, setSession] = useState(() => getStoredAlumniSession());
     const [authMode, setAuthMode] = useState('signin');
     const [authForm, setAuthForm] = useState({ email: '', password: '' });
-    const [showAuthPassword, setShowAuthPassword] = useState(true);
+    const [showAuthPassword, setShowAuthPassword] = useState(false);
     const [authMessage, setAuthMessage] = useState('');
     const [loading, setLoading] = useState(false);
     const backendMode = getAlumniBackendMode();

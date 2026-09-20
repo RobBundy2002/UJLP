@@ -56,6 +56,17 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .header-account { align-self: center; margin: 0 0 0 .35rem; }
 .header-account-profile { width: 3rem; height: 3rem; border-color: rgba(231,222,203,.3); background: rgba(255,255,255,.06); }
 .header-account-profile img { display: block; }
+.header-account-initial {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: inherit;
+    line-height: 1;
+}
 .header-account-signin { min-height: 2.6rem; margin: 0; padding: .45rem .75rem; border-color: rgba(231,222,203,.26); background: rgba(255,255,255,.06); color: #f7f1e7; }
 .header-account-signin-icon { display: none; width: 1.1rem; height: 1.1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .mobile-menu-button, .menu-icon { color: #f7f1e7; stroke: #f7f1e7; }
@@ -144,6 +155,9 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
         backdrop-filter: blur(10px);
     }
     .header-account-profile { overflow: visible; }
+    .header-account-initial {
+        font-size: .98rem;
+    }
     .header-account-signin-icon { display: block; }
     .header-account-signin span {
         position: absolute;

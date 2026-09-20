@@ -13,7 +13,7 @@ function AlumniEmailConfirmed() {
         email: searchParams.get('email') || '',
         password: ''
     });
-    const [showAuthPassword, setShowAuthPassword] = useState(true);
+    const [showAuthPassword, setShowAuthPassword] = useState(false);
     const [authMessage, setAuthMessage] = useState('');
     const [loading, setLoading] = useState(false);
 

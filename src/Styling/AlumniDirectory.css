@@ -3004,6 +3004,13 @@
         line-height: .88;
     }
 
+    .alumni-profile-page .alumni-empty-profile h2 {
+        justify-self: center;
+        max-width: 10em;
+        text-align: center;
+        text-wrap: balance;
+    }
+
     .alumni-directory-page .alumni-profile-details,
     .alumni-directory-page .alumni-profile-footer {
         grid-column: 1 / -1;
