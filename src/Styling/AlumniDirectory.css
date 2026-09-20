@@ -1526,6 +1526,17 @@
     border-bottom: 1px solid var(--alumni-line);
 }
 
+.alumni-feed-heading {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .75rem;
+}
+
+.alumni-feed-heading > div {
+    display: grid;
+    gap: .25rem;
+}
+
 .alumni-feed-card,
 .alumni-upcoming-card,
 .alumni-calendar-card,
@@ -2085,11 +2096,6 @@
     border: 1px solid var(--alumni-line);
     border-radius: 8px;
     background: var(--alumni-bg-soft);
-}
-
-.alumni-feed-composer-closed {
-    display: flex;
-    justify-content: flex-start;
 }
 
 .alumni-feed-composer-heading {
@@ -2934,6 +2940,11 @@
     .alumni-results-heading {
         align-items: stretch;
         flex-direction: column;
+    }
+
+    .alumni-feed-heading {
+        grid-template-columns: 1fr;
+        align-items: stretch;
     }
 
     .alumni-session-actions,

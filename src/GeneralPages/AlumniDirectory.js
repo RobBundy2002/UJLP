@@ -1789,12 +1789,12 @@ function AlumniDirectory() {
     const renderFeed = () => (
         <div className="alumni-home-grid">
             <section className="alumni-home-feed">
-                <div className="alumni-panel-heading">
-                    <span>Alumni network</span>
-                    <strong>Member updates and opportunities</strong>
-                </div>
-                {!isFeedComposerOpen && (
-                    <div className="alumni-feed-composer-closed">
+                <div className="alumni-panel-heading alumni-feed-heading">
+                    <div>
+                        <span>Alumni network</span>
+                        <strong>Member updates and opportunities</strong>
+                    </div>
+                    {!isFeedComposerOpen && (
                         <button
                             type="button"
                             className="alumni-primary-action"
@@ -1808,8 +1808,8 @@ function AlumniDirectory() {
                         >
                             Make a post
                         </button>
-                    </div>
-                )}
+                    )}
+                </div>
                 {isFeedComposerOpen && (
                     <form className="alumni-feed-composer" onSubmit={handleFeedSave}>
                         <div className="alumni-panel-heading alumni-feed-composer-heading">
