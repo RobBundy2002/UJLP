@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { newStaffMembers } from '../Data/staffData';
 import { Link } from 'react-router-dom';
 import '../Styling/About.css';
 import '../Styling/Home.css';
@@ -11,6 +12,33 @@ import derekImg from '../ProfilePictures/Derek.png';
 import robImg from '../ProfilePictures/Rob.jpg';
 import evanImg from '../ProfilePictures/Evan.jpeg';
 import willImg from '../ProfilePictures/Will.jpg';
+
+const teamRoleOrder = [
+    'executive-editor',
+    'staff-editor',
+    'internal-writer',
+    'submission-writer',
+    'event-coordinator',
+    'alumni'
+];
+
+const getTeamRoleRank = (member) => {
+    const ranks = (member.types || [])
+        .map(type => teamRoleOrder.indexOf(type))
+        .filter(rank => rank >= 0);
+
+    return ranks.length ? Math.min(...ranks) : teamRoleOrder.length;
+};
+
+const compareTeamMembers = (left, right) => {
+    const roleDifference = getTeamRoleRank(left) - getTeamRoleRank(right);
+    if (roleDifference !== 0) return roleDifference;
+
+    const nameDifference = left.name.localeCompare(right.name, undefined, { sensitivity: 'base' });
+    if (nameDifference !== 0) return nameDifference;
+
+    return String(left.id).localeCompare(String(right.id), undefined, { sensitivity: 'base' });
+};
 
 function About() {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -171,20 +199,14 @@ function About() {
                     <div>
                         {(() => {
                             const teamMembers = [
+                                ...newStaffMembers,
                                 { id: 'rishi', img: require('../ProfilePictures/Rishi.jpg'), name: 'Rishi Chandra', link: '/author/rishi', types: ['executive-editor'], role: 'Executive Editor' },
-                                { id: 'comingsoon_new', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon_new', types: ['executive-editor'], role: 'Executive Editor' },
                                 { id: 'comingsoon1', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon1', types: ['executive-editor'], role: 'Executive Editor' },
-                                { id: 'comingsoon2', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon2', types: ['staff-editor'], role: 'Staff Editor' },
-                                { id: 'comingsoon21', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon2', types: ['staff-editor'], role: 'Staff Editor' },
-                                { id: 'comingsoon20', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon2', types: ['staff-editor'], role: 'Staff Editor' },
-                                { id: 'comingsoon3', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon3', types: ['internal-writer'], role: 'Internal Writer' },
-                                { id: 'comingsoon4', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon4', types: ['internal-writer'], role: 'Internal Writer' },
                                 { id: 'comingsoon5', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon5', types: ['submission-writer'], role: 'Submission Writer' },
                                 { id: 'comingsoon6', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon6', types: ['submission-writer'], role: 'Submission Writer' },
                                 { id: 'comingsoon7', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon7', types: ['event-coordinator'], role: 'Event Coordinator' },
                                 { id: 'comingsoon8', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon8', types: ['event-coordinator'], role: 'Event Coordinator' },
                                 { id: 'comingsoon14', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon8', types: ['event-coordinator'], role: 'Event Coordinator' },
-                                { id: 'comingsoon9', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon9', types: ['internal-writer'], role: 'Internal Writer' },
                                 { id: 'comingsoon10', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon10', types: ['submission-writer'], role: 'Submission Writer' },
                                 { id: 'comingsoon11', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon11', types: ['event-coordinator'], role: 'Event Coordinator' },
                                 { id: 'sam', img: require('../ProfilePictures/Sam.png'), name: 'Sam Burnett', types: ['alumni'], role: 'Founding Editor (2024–2025)' },
@@ -192,7 +214,9 @@ function About() {
                                 { id: 'mia', img: require('../ProfilePictures/Mia.jpg'), name: 'Mia Petersen', link: '/author/mia', types: ['alumni'], role: 'Executive Editor (2025-2026)' },
                             ];
 
-                            const filtered = teamMembers.filter(m => activeFilter === 'all' || m.types.includes(activeFilter));
+                            const filtered = teamMembers
+                                .filter(m => activeFilter === 'all' || m.types.includes(activeFilter))
+                                .sort(compareTeamMembers);
                             const gridClass = `team-members-grid ${filtered.length === 2 ? 'two-up' : ''}`.trim();
 
                             return (

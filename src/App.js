@@ -40,6 +40,8 @@ import PublicationIndex from './GeneralPages/PublicationIndex';
 import IssueEdition from './GeneralPages/IssueEdition';
 import ResearchArea from './GeneralPages/ResearchArea';
 import BioFrame from './Components/BioFrame';
+import StaffProfile from './Bios/StaffProfile';
+import { newStaffMembers } from './Data/staffData';
 import {
     ALUMNI_SESSION_EVENT,
     clearStoredAlumniSession,
@@ -480,14 +482,19 @@ function App() {
                         <Route path="/author/mia" element={<BioFrame name="Mia Petersen"><Mia /></BioFrame>} />
                         <Route path="/author/charlie" element={<BioFrame name="Charlie Houck"><Charlie /></BioFrame>} />
                         <Route path="/author/rhett" element={<BioFrame name="Rhett Deitz"><Rhett /></BioFrame>} />
-                        <Route path="/author/comingsoon1" element={<ComingSoon1 />} />
-                        <Route path="/author/comingsoon2" element={<ComingSoon2 />} />
-                        <Route path="/author/comingsoon3" element={<ComingSoon3 />} />
-                        <Route path="/author/comingsoon4" element={<ComingSoon4 />} />
-                        <Route path="/author/comingsoon5" element={<ComingSoon5 />} />
-                        <Route path="/author/comingsoon6" element={<ComingSoon6 />} />
-                        <Route path="/author/comingsoon7" element={<ComingSoon7 />} />
-                        <Route path="/author/comingsoon8" element={<ComingSoon8 />} />
+                        {newStaffMembers.map(member => (
+                            <Route key={member.id} path={member.link} element={
+                                <BioFrame name={member.name}><StaffProfile member={member} /></BioFrame>
+                            } />
+                        ))}
+                        <Route path="/author/comingsoon1" element={<BioFrame name="Coming Soon 1"><ComingSoon1 /></BioFrame>} />
+                        <Route path="/author/comingsoon2" element={<BioFrame name="Coming Soon 2"><ComingSoon2 /></BioFrame>} />
+                        <Route path="/author/comingsoon3" element={<BioFrame name="Coming Soon 3"><ComingSoon3 /></BioFrame>} />
+                        <Route path="/author/comingsoon4" element={<BioFrame name="Coming Soon 4"><ComingSoon4 /></BioFrame>} />
+                        <Route path="/author/comingsoon5" element={<BioFrame name="Coming Soon 5"><ComingSoon5 /></BioFrame>} />
+                        <Route path="/author/comingsoon6" element={<BioFrame name="Coming Soon 6"><ComingSoon6 /></BioFrame>} />
+                        <Route path="/author/comingsoon7" element={<BioFrame name="Coming Soon 7"><ComingSoon7 /></BioFrame>} />
+                        <Route path="/author/comingsoon8" element={<BioFrame name="Coming Soon 8"><ComingSoon8 /></BioFrame>} />
                         <Route path="/unequalopportunity" element={<UnequalOpportunity />} />
                         <Route path="/schoolhousesecrets" element={<SchoolhouseSecrets />} />
                         <Route path="*" element={<Navigate to="/" />} />
