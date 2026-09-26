@@ -43,12 +43,40 @@ export const researchAreas = {
         name: 'Civil Rights Law',
         kicker: 'Equality, institutions, and the unfinished work of law',
         statement: 'Research examining how doctrine, institutions, and individual action shape the practical meaning of equal protection.',
-        relatedTopics: ['Equal Opportunity', 'Higher Education', 'Desegregation', 'Institutional Change']
+        mapPosition: { left: '27%', top: '39%' },
+        axis: 'Institutions and equal protection',
+        signal: 'Tracks how formal legal victories move through universities, public systems, and civic life.',
+        workflow: [
+            { label: 'Archive', description: 'Recover institutional records, litigation history, and first-person accounts.' },
+            { label: 'Doctrine', description: 'Place the claims beside equal protection principles and civil-rights enforcement.' },
+            { label: 'Institution', description: 'Test how legal change becomes policy, custom, and lived opportunity.' }
+        ],
+        relatedTopics: ['Equal Opportunity', 'Higher Education', 'Desegregation', 'Institutional Change'],
+        topicDetails: [
+            { title: 'Equal Opportunity', detail: 'How open access differs from meaningful belonging.' },
+            { title: 'Higher Education', detail: 'Universities as legal actors and civic institutions.' },
+            { title: 'Desegregation', detail: 'The distance between admission, integration, and power.' },
+            { title: 'Institutional Change', detail: 'Where doctrine meets culture, budgets, and governance.' }
+        ]
     },
     'education-law': {
         name: 'Education Law',
         kicker: 'Rights and responsibilities inside American classrooms',
         statement: 'Scholarship exploring the legal relationships among students, parents, educators, institutions, and the state.',
-        relatedTopics: ['Parental Rights', 'Student Privacy', 'Public Schools', 'Constitutional Rights']
+        mapPosition: { left: '72%', top: '35%' },
+        axis: 'Classrooms, privacy, and public authority',
+        signal: 'Follows disputes where family authority, student privacy, and school governance collide.',
+        workflow: [
+            { label: 'Conflict', description: 'Identify the school policy, disclosure rule, or constitutional claim at stake.' },
+            { label: 'Stakeholders', description: 'Map students, parents, educators, administrators, and courts.' },
+            { label: 'Balance', description: 'Evaluate the legal standard and the practical classroom consequences.' }
+        ],
+        relatedTopics: ['Parental Rights', 'Student Privacy', 'Public Schools', 'Constitutional Rights'],
+        topicDetails: [
+            { title: 'Parental Rights', detail: 'The scope of notice, consent, and family decision-making.' },
+            { title: 'Student Privacy', detail: 'How schools handle identity, safety, and confidential information.' },
+            { title: 'Public Schools', detail: 'Local policy choices inside constitutional boundaries.' },
+            { title: 'Constitutional Rights', detail: 'Claims that reshape the duties of educators and the state.' }
+        ]
     }
 };

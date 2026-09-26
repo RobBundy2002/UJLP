@@ -1703,13 +1703,35 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .research-area-works > .section-content { padding-top: clamp(5rem,9vw,8rem); padding-bottom: clamp(6rem,10vw,10rem); }
 .research-area-heading { display: flex; justify-content: space-between; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(231,222,203,.18); color: #899aa8; font-size: .6rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
 .research-area-heading a { color: #f18c62; }
-.research-area-works article { display: grid; grid-template-columns: 4rem minmax(0,1fr); gap: 1.5rem; padding: clamp(2.5rem,5vw,4.5rem) 0; border-bottom: 1px solid rgba(231,222,203,.18); }
+.research-area-works article { position: relative; display: grid; grid-template-columns: 4rem minmax(0,1fr); gap: 1.5rem; padding: clamp(2.5rem,5vw,4.5rem) 0; border-bottom: 1px solid rgba(231,222,203,.18); transition: background .22s ease, border-color .22s ease, padding-left .22s ease, padding-right .22s ease; }
 .research-area-works article > span { color: #f18c62; font-size: .62rem; }
 .research-area-works article small { color: #f18c62; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; }
 .research-area-works article h2 { max-width: 950px; margin: 1rem 0; font-size: clamp(2rem,4vw,4.2rem); line-height: 1; }
 .research-area-works article h2 a { color: #f7f1e7; }
 .research-area-works article p { margin: 0; color: #8fa0ae; }
 .research-area-works article p a { color: #f18c62; }
+.research-area-work-hitbox { position: absolute; inset: 0; z-index: 1; display: block; text-decoration: none; }
+.research-area-works article > span,
+.research-area-works article > div { position: relative; z-index: 2; pointer-events: none; }
+.research-area-works article a:not(.research-area-work-hitbox) { position: relative; z-index: 3; pointer-events: auto; }
+.research-area-works article:hover,
+.research-area-works article:focus-within {
+    border-color: rgba(241,140,98,.52);
+    background:
+        linear-gradient(90deg, rgba(241,140,98,.13), rgba(241,140,98,.045) 38%, transparent 82%);
+    padding-right: 1.1rem;
+    padding-left: 1.1rem;
+}
+.research-area-works article:hover h2 a,
+.research-area-works article:focus-within h2 a,
+.research-area-works article:hover > span,
+.research-area-works article:focus-within > span {
+    color: #f18c62;
+}
+.research-area-works article:active {
+    background:
+        linear-gradient(90deg, rgba(241,140,98,.2), rgba(241,140,98,.075) 42%, transparent 86%);
+}
 
 @media (max-width: 760px) {
     .index-tools, .research-area-intro > .section-content { grid-template-columns: 1fr; }
@@ -2165,5 +2187,1165 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
         font-size: clamp(3.05rem, 13.4vw, 4.2rem);
         overflow-wrap: normal;
         white-space: nowrap;
+    }
+}
+
+/* Research field index visual upgrade. */
+.field-index-console {
+    display: grid;
+    grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
+    gap: 1px;
+    margin: clamp(2.8rem, 6vw, 5.5rem) 0 clamp(2rem, 5vw, 4rem);
+    border: 1px solid rgba(231,222,203,.18);
+    background: rgba(231,222,203,.18);
+    box-shadow: 0 28px 80px rgba(0,0,0,.25);
+}
+
+.field-index-map,
+.field-index-workflow,
+.field-topic-board {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, rgba(9,22,35,.98), rgba(7,17,31,.98));
+}
+
+.field-index-map {
+    grid-row: span 2;
+    min-height: 680px;
+}
+
+.field-index-map::before,
+.field-topic-board::before,
+.research-area-field-brief::before,
+.constellation-intel::before {
+    content: "";
+    position: absolute;
+    width: 18rem;
+    aspect-ratio: 1;
+    right: -9rem;
+    bottom: -10rem;
+    border: 1px solid rgba(172,193,176,.16);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.field-index-panel-heading {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.15rem 1.25rem;
+    border-bottom: 1px solid rgba(231,222,203,.14);
+}
+
+.field-index-panel-heading span,
+.research-area-heading > span,
+.research-workflow-track li > span,
+.research-topic-grid article > span,
+.constellation-intel > span,
+.constellation-node small {
+    color: #f18c62;
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.field-index-panel-heading strong {
+    color: #cad6d0;
+    font-size: .64rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.field-index-map-stage {
+    position: relative;
+    min-height: 612px;
+    overflow: hidden;
+    background:
+        linear-gradient(rgba(231,222,203,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(231,222,203,.055) 1px, transparent 1px),
+        radial-gradient(circle 23rem at 50% 46%, rgba(172,193,176,.11), transparent 70%),
+        radial-gradient(circle 24rem at 18% 78%, rgba(241,140,98,.12), transparent 72%);
+    background-size: 44px 44px, 44px 44px, auto, auto;
+}
+
+.field-index-map-stage svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.field-index-map-stage svg path {
+    fill: none;
+    stroke: rgba(241,140,98,.58);
+    stroke-width: 1.4;
+    stroke-dasharray: 8 11;
+    vector-effect: non-scaling-stroke;
+}
+
+.field-index-map-stage svg .field-index-axis {
+    stroke: rgba(156,179,199,.18);
+    stroke-dasharray: 2 14;
+}
+
+.field-index-core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    display: grid;
+    width: clamp(142px, 15vw, 190px);
+    aspect-ratio: 1;
+    place-items: center;
+    place-content: center;
+    border: 1px solid rgba(241,140,98,.48);
+    border-radius: 50%;
+    background: radial-gradient(circle at 38% 32%, rgba(241,140,98,.22), rgba(9,22,35,.95) 66%);
+    text-align: center;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 0 1.1rem rgba(241,140,98,.035), 0 0 0 2.2rem rgba(172,193,176,.025), 0 24px 65px rgba(0,0,0,.28);
+}
+
+.field-index-core span,
+.field-index-core small {
+    color: #9cb3c7;
+    font-size: .55rem;
+    font-weight: 800;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+
+.field-index-core strong {
+    color: #f18c62;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(3.5rem, 6vw, 5.2rem);
+    font-weight: 400;
+    letter-spacing: -.08em;
+    line-height: .86;
+}
+
+.field-map-node {
+    position: absolute;
+    z-index: 3;
+    display: grid;
+    width: clamp(12rem, 20vw, 17rem);
+    min-height: 8.4rem;
+    align-content: space-between;
+    gap: .65rem;
+    padding: 1.1rem;
+    border: 1px solid rgba(231,222,203,.2);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.06), transparent 32%),
+        linear-gradient(180deg, rgba(13,35,54,.97), rgba(9,18,30,.97));
+    color: #f7f1e7;
+    text-decoration: none;
+    transform: translate(-50%, -50%);
+    transition: border-color .25s ease, transform .25s ease, background .25s ease;
+}
+
+.field-map-node:hover,
+.field-map-node:focus-visible {
+    border-color: rgba(241,140,98,.78);
+    background:
+        linear-gradient(135deg, rgba(241,140,98,.16), transparent 38%),
+        linear-gradient(180deg, rgba(14,42,62,.98), rgba(9,18,30,.98));
+    transform: translate(-50%, -50%) translateY(-5px);
+}
+
+.field-map-node span,
+.constellation-map-shell .constellation-node > span {
+    width: auto;
+    height: auto;
+    border: 0;
+    color: #f18c62;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: .62rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+    line-height: 1;
+}
+
+.field-map-node strong {
+    color: #f7f1e7;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.45rem, 2.4vw, 2.15rem);
+    font-weight: 400;
+    letter-spacing: -.045em;
+    line-height: .98;
+}
+
+.field-map-node small {
+    color: #a8b8b0;
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.field-map-coordinate {
+    position: absolute;
+    z-index: 1;
+    color: rgba(247,241,231,.14);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    letter-spacing: -.08em;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.field-map-coordinate-left { left: 1.1rem; bottom: 1rem; }
+.field-map-coordinate-right { right: 1.1rem; top: 1rem; }
+
+.field-index-workflow {
+    min-height: 320px;
+}
+
+.field-index-workflow ol {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.field-index-workflow li {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.35rem 1.25rem;
+    border-bottom: 1px solid rgba(231,222,203,.12);
+}
+
+.field-index-workflow li > span {
+    color: rgba(244,163,125,.38);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 2.35rem;
+    letter-spacing: -.08em;
+    line-height: .9;
+}
+
+.field-index-workflow strong,
+.research-workflow-track strong {
+    display: block;
+    color: #f7f1e7;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: -.035em;
+}
+
+.field-index-workflow p,
+.research-workflow-track p,
+.field-topic-grid p,
+.research-topic-grid p {
+    margin: .35rem 0 0;
+    color: #aeb8c3;
+    font-size: .88rem;
+    line-height: 1.65;
+}
+
+.field-topic-board {
+    min-height: 358px;
+}
+
+.field-topic-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: rgba(231,222,203,.14);
+}
+
+.field-topic-grid article {
+    min-height: 240px;
+    padding: 1.35rem;
+    background:
+        radial-gradient(circle 13rem at 100% 0%, rgba(172,193,176,.12), transparent 72%),
+        #07111f;
+}
+
+.field-topic-grid article > span {
+    color: #a8b8b0;
+    font-size: .57rem;
+    font-weight: 800;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.field-topic-grid h2 {
+    margin: 2rem 0 .75rem;
+    font-size: clamp(1.55rem, 2.5vw, 2.2rem);
+    line-height: 1;
+}
+
+.field-topic-grid h2 a {
+    color: #f7f1e7;
+    text-decoration: none;
+}
+
+.field-topic-grid h2 a:hover {
+    color: #f18c62;
+}
+
+.field-topic-grid article > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    margin-top: 1.1rem;
+}
+
+.field-topic-grid small,
+.research-area-brief-copy li,
+.constellation-intel small {
+    display: inline-flex;
+    align-items: center;
+    min-height: 1.75rem;
+    padding: .45rem .55rem;
+    border: 1px solid rgba(172,193,176,.24);
+    color: #cad6d0;
+    font-size: .52rem;
+    font-weight: 800;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.research-area-intro > .section-content {
+    grid-template-columns: minmax(0, .76fr) minmax(420px, .62fr);
+    align-items: stretch;
+    gap: clamp(2rem, 5vw, 5rem);
+}
+
+.research-area-title-block {
+    display: grid;
+    align-content: start;
+}
+
+.research-area-title-block h2 {
+    margin: 0;
+}
+
+.research-area-title-block p {
+    max-width: 680px;
+    margin: 2rem 0 0;
+    color: #b8bcc9;
+    font-size: 1rem;
+    line-height: 1.85;
+}
+
+.research-area-field-brief {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+    padding: clamp(1.2rem, 3vw, 1.8rem);
+    border: 1px solid rgba(231,222,203,.18);
+    background:
+        radial-gradient(circle 20rem at 100% 10%, rgba(172,193,176,.12), transparent 72%),
+        rgba(7,17,31,.72);
+}
+
+.research-area-compass {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: min(11.25rem, 100%);
+    aspect-ratio: 1;
+    padding: 0;
+    border: 1px solid rgba(241,140,98,.46);
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 0 0 0 .9rem rgba(241,140,98,.035);
+}
+
+.research-area-compass span,
+.research-area-compass small {
+    position: absolute;
+    left: 50%;
+    display: grid;
+    width: 72%;
+    min-height: 1.5rem;
+    place-items: center;
+    color: #9cb3c7;
+    font-size: .5rem;
+    font-weight: 800;
+    letter-spacing: .11em;
+    line-height: 1.12;
+    text-align: center;
+    text-transform: uppercase;
+    transform: translateX(-50%);
+}
+
+.research-area-compass span {
+    top: 21%;
+}
+
+.research-area-compass small {
+    bottom: 21%;
+}
+
+.research-area-compass strong {
+    position: absolute;
+    left: 50%;
+    top: 47%;
+    display: block;
+    width: auto;
+    color: #f18c62;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2.6rem, 5vw, 4.3rem);
+    font-weight: 400;
+    letter-spacing: -.045em;
+    line-height: .82;
+    text-align: center;
+    transform: translate(-48%, -50%);
+}
+
+.research-area-brief-copy {
+    position: relative;
+    z-index: 2;
+    align-self: center;
+}
+
+.research-area-brief-copy > span {
+    display: block;
+    color: #f18c62;
+    font-size: .58rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.research-area-brief-copy p {
+    margin: .85rem 0 1.2rem;
+    color: #d2d9d5;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.25rem, 1.75vw, 1.65rem);
+    line-height: 1.28;
+}
+
+.research-area-brief-copy ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.research-area-workflow-section,
+.research-area-topics {
+    border-bottom: 1px solid rgba(231,222,203,.18);
+    background:
+        radial-gradient(circle 28rem at 15% 0%, rgba(241,140,98,.09), transparent 72%),
+        #07111f;
+}
+
+.research-area-workflow-section > .section-content,
+.research-area-topics > .section-content {
+    padding-top: clamp(4rem, 8vw, 7rem);
+    padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.research-workflow-track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin: 2rem 0 0;
+    padding: 0;
+    background: rgba(231,222,203,.16);
+    list-style: none;
+}
+
+.research-workflow-track li {
+    min-height: 255px;
+    padding: clamp(1.4rem, 3vw, 2rem);
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.045), transparent 35%),
+        #081421;
+}
+
+.research-workflow-track li > span {
+    display: block;
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+    color: rgba(244,163,125,.36);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(3rem, 5vw, 5.2rem);
+    letter-spacing: -.08em;
+    line-height: .78;
+}
+
+.research-topic-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 2rem;
+    background: rgba(231,222,203,.16);
+}
+
+.research-topic-grid article {
+    min-height: 295px;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+    background:
+        radial-gradient(circle 12rem at 100% 0%, rgba(172,193,176,.11), transparent 72%),
+        #07111f;
+}
+
+.research-topic-grid h2 {
+    margin: clamp(2.4rem, 5vw, 4rem) 0 .75rem;
+    font-size: clamp(1.55rem, 3vw, 2.55rem);
+    line-height: 1.02;
+    overflow-wrap: anywhere;
+}
+
+.research-area-empty {
+    padding: 4rem 0 0;
+    color: #9cb3c7;
+}
+
+.jh-page .research-constellation {
+    background:
+        radial-gradient(circle 33rem at 18% 15%, rgba(241,140,98,.11), transparent 74%),
+        radial-gradient(circle 35rem at 78% 58%, rgba(172,193,176,.11), transparent 76%),
+        #06101d;
+}
+
+.jh-page .research-constellation .section-content {
+    max-width: 1380px;
+}
+
+.jh-page .constellation-stage {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, .36fr);
+    gap: 1px;
+    min-height: 650px;
+    padding: 0;
+    border-color: rgba(231,222,203,.2);
+    background: rgba(231,222,203,.16);
+}
+
+.constellation-stage::after {
+    display: none;
+}
+
+.constellation-map-shell {
+    position: relative;
+    min-height: 650px;
+    overflow: hidden;
+    background:
+        linear-gradient(rgba(231,222,203,.038) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(231,222,203,.038) 1px, transparent 1px),
+        radial-gradient(ellipse 31rem 20rem at 50% 50%, rgba(241,140,98,.1), transparent 72%),
+        radial-gradient(ellipse 34rem 22rem at 50% 50%, rgba(172,193,176,.075), transparent 82%),
+        #07111f;
+    background-size: 42px 42px, 42px 42px, auto, auto;
+}
+
+.constellation-lines {
+    filter: drop-shadow(0 0 7px rgba(241,140,98,.18));
+}
+
+.constellation-lines path {
+    fill: none;
+    stroke: url(#fieldLinePrimary);
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: .72;
+    vector-effect: non-scaling-stroke;
+}
+
+.constellation-lines .constellation-spokes path {
+    opacity: .8;
+}
+
+.constellation-lines .constellation-bridges path {
+    stroke: rgba(202,214,208,.34);
+    stroke-width: 1;
+    opacity: .7;
+}
+
+.constellation-lines .constellation-line-secondary {
+    stroke: rgba(156,179,199,.24);
+    opacity: .58;
+}
+
+.constellation-pin-lines circle {
+    fill: #07111f;
+    stroke: rgba(241,140,98,.62);
+    stroke-width: 1.2;
+    vector-effect: non-scaling-stroke;
+}
+
+.constellation-map-shell .constellation-core {
+    top: 50%;
+    z-index: 4;
+    width: clamp(142px, 15vw, 210px);
+    overflow: hidden;
+    border-color: rgba(241,140,98,.42);
+    background:
+        linear-gradient(145deg, rgba(255,255,255,.045), transparent 38%),
+        radial-gradient(circle at 50% 50%, rgba(241,140,98,.08), transparent 58%),
+        #07111f;
+    box-shadow: 0 0 0 .42rem rgba(241,140,98,.03), 0 18px 42px rgba(0,0,0,.28);
+}
+
+.constellation-map-shell .constellation-core::before,
+.constellation-map-shell .constellation-core::after {
+    content: "";
+    position: absolute;
+    inset: .68rem;
+    border: 1px solid rgba(231,222,203,.13);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.constellation-map-shell .constellation-core::after {
+    inset: 1.15rem;
+    border-color: rgba(241,140,98,.22);
+    border-style: dashed;
+}
+
+.constellation-map-shell .constellation-core span,
+.constellation-map-shell .constellation-core strong,
+.constellation-map-shell .constellation-core small {
+    position: relative;
+    z-index: 1;
+}
+
+.constellation-orbit-plane {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: min(72vw, 42rem);
+    height: min(39vw, 22rem);
+    border: 1px solid rgba(231,222,203,.105);
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse at center, transparent 55%, rgba(172,193,176,.035) 56%, transparent 72%),
+        linear-gradient(90deg, transparent 49.8%, rgba(231,222,203,.075) 50%, transparent 50.2%),
+        linear-gradient(0deg, transparent 49.8%, rgba(231,222,203,.075) 50%, transparent 50.2%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.constellation-map-shell .constellation-node {
+    z-index: 5;
+    display: flex;
+    width: clamp(9.25rem, 14vw, 12.4rem);
+    min-height: 7.85rem;
+    aspect-ratio: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: .45rem;
+    padding: 1rem;
+    border: 1px solid rgba(231,222,203,.22);
+    border-radius: .4rem;
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.06), transparent 34%),
+        linear-gradient(180deg, rgba(13,33,50,.98), rgba(7,17,31,.98));
+    color: #f7f1e7;
+    text-align: left;
+    box-shadow: 0 18px 44px rgba(0,0,0,.25);
+    transform: translate(-50%, -50%);
+}
+
+.constellation-map-shell .constellation-node:hover,
+.constellation-map-shell .constellation-node.active {
+    border-color: rgba(241,140,98,.82);
+    background:
+        linear-gradient(135deg, rgba(241,140,98,.16), transparent 38%),
+        linear-gradient(180deg, rgba(15,41,61,.98), rgba(7,17,31,.98));
+    transform: translate(-50%, -50%) translateY(-5px);
+}
+
+.constellation-node small {
+    color: #a8b8b0;
+}
+
+.constellation-node strong {
+    color: #f7f1e7;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(1.15rem, 2vw, 1.65rem);
+    font-weight: 400;
+    letter-spacing: -.04em;
+    line-height: 1;
+}
+
+.constellation-node em {
+    color: #9cb3c7;
+    font-size: .56rem;
+    font-style: normal;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.constellation-quadrant {
+    position: absolute;
+    z-index: 1;
+    color: rgba(247,241,231,.12);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(3.45rem, 8vw, 7rem);
+    letter-spacing: -.08em;
+    pointer-events: none;
+}
+
+.constellation-quadrant-left {
+    left: 1rem;
+    bottom: -.65rem;
+}
+
+.constellation-quadrant-right {
+    right: 1rem;
+    top: -2.15rem;
+}
+
+.constellation-intel {
+    position: relative;
+    z-index: 3;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding: clamp(1.35rem, 3vw, 2rem);
+    background:
+        radial-gradient(circle 17rem at 100% 0%, rgba(172,193,176,.13), transparent 74%),
+        #081421;
+}
+
+.constellation-intel h3 {
+    margin: clamp(2.35rem, 4.8vw, 4.2rem) 0 .75rem;
+    color: #f7f1e7;
+    font-size: clamp(2rem, 3.6vw, 3.25rem);
+    line-height: .92;
+}
+
+.constellation-intel p {
+    margin: 0;
+    color: #b8bcc9;
+    line-height: 1.75;
+}
+
+.constellation-intel dl {
+    display: grid;
+    gap: .68rem;
+    margin: 1.15rem 0 0;
+}
+
+.constellation-intel dl div {
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1fr);
+    gap: .9rem;
+    padding-top: .7rem;
+    border-top: 1px solid rgba(231,222,203,.14);
+}
+
+.constellation-intel dt {
+    color: #718397;
+    font-size: .54rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.constellation-intel dd {
+    margin: 0;
+    color: #f7f1e7;
+    font-size: .85rem;
+    line-height: 1.35;
+}
+
+.constellation-intel button {
+    width: 100%;
+    margin: 1.45rem 0 1rem;
+    padding: .95rem 1rem;
+    border: 1px solid rgba(241,140,98,.72);
+    background: #bf4e2c;
+    color: #07111f;
+    cursor: pointer;
+    font-size: .62rem;
+    font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.constellation-intel button:hover,
+.constellation-intel button:focus-visible {
+    background: #f18c62;
+}
+
+.constellation-intel > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+}
+
+.constellation-stage.departing .constellation-intel {
+    animation: constellation-suck-lines 1.05s cubic-bezier(.7,0,.3,1) forwards;
+}
+
+@media (max-width: 1080px) {
+    .field-index-console,
+    .jh-page .constellation-stage {
+        grid-template-columns: 1fr;
+    }
+
+    .field-index-map,
+    .field-index-workflow,
+    .field-topic-board {
+        grid-row: auto;
+    }
+
+    .constellation-intel {
+        min-height: 0;
+    }
+
+    .constellation-intel h3 {
+        margin-top: 2.25rem;
+    }
+
+    .constellation-intel button {
+        margin-top: 2rem;
+    }
+
+    .research-topic-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .field-index-console {
+        margin-top: 2rem;
+    }
+
+    .field-index-map,
+    .field-index-map-stage,
+    .constellation-map-shell {
+        min-height: 620px;
+    }
+
+    .field-index-panel-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .field-map-node {
+        width: min(10.4rem, 42vw);
+        min-height: 7.8rem;
+        padding: .85rem;
+    }
+
+    .field-map-node-1 {
+        left: 28% !important;
+        top: 28% !important;
+    }
+
+    .field-map-node-2 {
+        left: 72% !important;
+        top: 72% !important;
+    }
+
+    .field-index-core,
+    .constellation-map-shell .constellation-core {
+        width: 118px;
+    }
+
+    .field-index-core strong,
+    .constellation-core strong {
+        font-size: 3rem;
+    }
+
+    .field-topic-grid,
+    .research-workflow-track,
+    .research-topic-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .research-area-intro > .section-content,
+    .research-area-field-brief {
+        grid-template-columns: 1fr;
+    }
+
+    .research-area-compass {
+        width: min(12rem, 70vw);
+        justify-self: center;
+    }
+
+    .jh-page .constellation-stage {
+        min-height: 0;
+    }
+
+    .constellation-map-shell .constellation-node {
+        width: min(8.7rem, 36vw);
+        min-height: 7.45rem;
+        padding: .78rem;
+    }
+
+    .constellation-map-shell .constellation-node:nth-of-type(1) {
+        left: 19% !important;
+        top: 23% !important;
+    }
+
+    .constellation-map-shell .constellation-node:nth-of-type(2) {
+        left: 81% !important;
+        top: 23% !important;
+    }
+
+    .constellation-map-shell .constellation-node:nth-of-type(3) {
+        left: 19% !important;
+        top: 78% !important;
+    }
+
+    .constellation-map-shell .constellation-node:nth-of-type(4) {
+        left: 81% !important;
+        top: 78% !important;
+    }
+
+    .constellation-node strong {
+        font-size: 1rem;
+        overflow-wrap: anywhere;
+    }
+
+    .constellation-node small,
+    .constellation-node em {
+        font-size: .48rem;
+    }
+
+    .constellation-intel dl div {
+        grid-template-columns: 1fr;
+        gap: .35rem;
+    }
+}
+
+@media (max-width: 460px) {
+    .field-index-map-stage,
+    .constellation-map-shell {
+        min-height: 570px;
+    }
+
+    .field-map-node strong {
+        font-size: 1.2rem;
+    }
+
+    .field-map-node small {
+        font-size: .48rem;
+    }
+
+    .constellation-map-shell .constellation-node {
+        width: min(7.7rem, 36vw);
+        min-height: 7rem;
+    }
+}
+
+/* Cleaner constellation route transition. */
+.constellation-transition {
+    position: absolute;
+    inset: 0;
+    z-index: 12;
+    display: grid;
+    width: auto;
+    aspect-ratio: auto;
+    place-items: center;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    background:
+        linear-gradient(90deg, rgba(7,17,31,.94), rgba(8,20,33,.84) 42%, rgba(7,17,31,.96)),
+        radial-gradient(circle 28rem at 50% 50%, rgba(241,140,98,.2), transparent 72%);
+    opacity: 0;
+    color: #f7f1e7;
+    text-align: center;
+    box-shadow: none;
+    transform: none;
+    pointer-events: none;
+}
+
+.constellation-transition::before,
+.constellation-transition::after {
+    content: "";
+    position: absolute;
+    border-radius: 0;
+    pointer-events: none;
+}
+
+.constellation-transition::before {
+    inset: 0;
+    background:
+        linear-gradient(90deg, transparent 0 17%, rgba(241,140,98,.22) 47%, rgba(202,214,208,.15) 53%, transparent 83%),
+        repeating-linear-gradient(90deg, transparent 0 4.2rem, rgba(231,222,203,.07) 4.2rem 4.26rem);
+    opacity: 0;
+    transform: translateX(-18%);
+}
+
+.constellation-transition::after {
+    inset: clamp(1rem, 2vw, 1.5rem);
+    border: 1px solid rgba(231,222,203,.18);
+    background:
+        linear-gradient(90deg, transparent 0 49.8%, rgba(241,140,98,.36) 50%, transparent 50.2%),
+        linear-gradient(0deg, transparent 0 49.8%, rgba(156,179,199,.18) 50%, transparent 50.2%);
+    opacity: 0;
+}
+
+.constellation-transition-card {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    min-width: min(100%, 25rem);
+    gap: .5rem;
+    padding: clamp(1.3rem, 3vw, 2rem);
+    border: 1px solid rgba(241,140,98,.38);
+    background:
+        linear-gradient(145deg, rgba(255,255,255,.06), transparent 38%),
+        rgba(7,17,31,.78);
+    box-shadow: 0 28px 80px rgba(0,0,0,.34);
+    opacity: 0;
+    transform: translateY(1rem) scale(.96);
+}
+
+.constellation-transition-card span,
+.constellation-transition-card em {
+    position: relative;
+    z-index: 1;
+    max-width: none;
+    color: #f18c62;
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: .62rem;
+    font-style: normal;
+    font-weight: 900;
+    letter-spacing: .16em;
+    line-height: 1.25;
+    text-shadow: none;
+    text-transform: uppercase;
+}
+
+.constellation-transition-card strong {
+    color: #f7f1e7;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(2.3rem, 6vw, 5.2rem);
+    font-weight: 400;
+    letter-spacing: -.07em;
+    line-height: .86;
+}
+
+.constellation-transition-card em {
+    color: #9cb3c7;
+}
+
+.constellation-transition > i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(transparent, rgba(241,140,98,.65), transparent);
+    opacity: 0;
+    transform: translate(-50%, -50%) scaleY(.35);
+    pointer-events: none;
+}
+
+.constellation-stage.departing .constellation-transition {
+    animation: constellation-route-open 1.32s cubic-bezier(.2,.8,.18,1) forwards;
+}
+
+.constellation-stage.departing .constellation-transition::before {
+    animation: constellation-route-sweep 1.12s cubic-bezier(.2,.8,.18,1) forwards;
+}
+
+.constellation-stage.departing .constellation-transition::after {
+    animation: constellation-route-frame 1.1s ease forwards;
+}
+
+.constellation-stage.departing .constellation-transition-card {
+    animation: constellation-route-card 1.08s cubic-bezier(.2,.8,.18,1) forwards;
+}
+
+.constellation-stage.departing .constellation-transition > i {
+    animation: constellation-route-beam .92s cubic-bezier(.2,.8,.18,1) forwards;
+}
+
+.constellation-stage.departing .constellation-lines {
+    animation: constellation-map-exit .82s cubic-bezier(.7,0,.3,1) forwards;
+}
+
+.constellation-stage.departing .constellation-core {
+    animation: constellation-core-route .82s cubic-bezier(.7,0,.3,1) forwards;
+}
+
+.constellation-stage.departing .constellation-node {
+    animation: constellation-node-route .74s cubic-bezier(.7,0,.3,1) forwards;
+}
+
+.constellation-stage.departing .constellation-intel {
+    animation: constellation-panel-route .62s ease forwards;
+}
+
+@keyframes constellation-route-open {
+    0% { opacity: 0; }
+    15% { opacity: 1; }
+    100% { opacity: 1; }
+}
+
+@keyframes constellation-route-sweep {
+    0% { opacity: 0; transform: translateX(-18%); }
+    24% { opacity: 1; }
+    100% { opacity: .95; transform: translateX(18%); }
+}
+
+@keyframes constellation-route-frame {
+    0% { opacity: 0; transform: scale(.985); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes constellation-route-card {
+    0% { opacity: 0; transform: translateY(1rem) scale(.96); }
+    26% { opacity: 1; }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes constellation-route-beam {
+    0% { opacity: 0; transform: translate(-50%, -50%) scaleY(.35); }
+    45% { opacity: 1; }
+    100% { opacity: .5; transform: translate(-50%, -50%) scaleY(1); }
+}
+
+@keyframes constellation-map-exit {
+    to { opacity: .2; transform: scale(1.04); filter: blur(2px); }
+}
+
+@keyframes constellation-core-route {
+    to { opacity: .35; transform: translate(-50%, -50%) scale(1.18); filter: blur(1px); }
+}
+
+@keyframes constellation-node-route {
+    to { opacity: 0; transform: translate(-50%, -50%) scale(.9); filter: blur(4px); }
+}
+
+@keyframes constellation-panel-route {
+    to { opacity: 0; transform: translateX(.8rem); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .constellation-stage.departing .constellation-transition,
+    .constellation-stage.departing .constellation-transition::before,
+    .constellation-stage.departing .constellation-transition::after,
+    .constellation-stage.departing .constellation-transition-card,
+    .constellation-stage.departing .constellation-transition > i,
+    .constellation-stage.departing .constellation-lines,
+    .constellation-stage.departing .constellation-core,
+    .constellation-stage.departing .constellation-node,
+    .constellation-stage.departing .constellation-intel {
+        animation-duration: .01s;
     }
 }
