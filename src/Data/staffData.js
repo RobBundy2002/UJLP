@@ -203,6 +203,14 @@ export const newStaffMembers = [
         ]
     },
     {
+        "id": "ian-gilstrap",
+        "name": "Ian Gilstrap",
+        "role": "Staff Editor",
+        "types": [
+            "staff-editor"
+        ]
+    },
+    {
         "id": "sherry-klen",
         "name": "Sherry Klen",
         "role": "Staff Editor",
