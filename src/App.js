@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link, Navigate, useLocation } from 'react-router-dom';
 import './Styling/App.css';
 import './Styling/GlobalOverhaul.css';
@@ -58,32 +58,35 @@ import { getAlumniPhoto } from './Data/alumniPhotoRegistry';
 function ScrollToTop() {
     const { pathname } = useLocation();
 
-    useEffect(() => {
-        const scrollToTop = () => {
-            const startPosition = window.pageYOffset;
-            const duration = 500;
-            let startTime = null;
+    useLayoutEffect(() => {
+        if (pathname.startsWith('/author/')) {
+            window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+            return;
+        }
 
-            const animation = (currentTime) => {
-                if (!startTime) startTime = currentTime;
-                const progress = currentTime - startTime;
-                const easeInOutQuad = (t) => {
-                    return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-                };
+        let animationFrame;
+        const startPosition = window.pageYOffset;
+        const duration = 500;
+        let startTime = null;
 
-                if (progress < duration) {
-                    const newPosition = startPosition * (1 - easeInOutQuad(progress / duration));
-                    window.scrollTo(0, newPosition);
-                    requestAnimationFrame(animation);
-                } else {
-                    window.scrollTo(0, 0);
-                }
-            };
+        const animation = (currentTime) => {
+            if (!startTime) startTime = currentTime;
+            const progress = currentTime - startTime;
+            const easeInOutQuad = (t) => (
+                t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+            );
 
-            requestAnimationFrame(animation);
+            if (progress < duration) {
+                const newPosition = startPosition * (1 - easeInOutQuad(progress / duration));
+                window.scrollTo(0, newPosition);
+                animationFrame = requestAnimationFrame(animation);
+            } else {
+                window.scrollTo(0, 0);
+            }
         };
 
-        scrollToTop();
+        animationFrame = requestAnimationFrame(animation);
+        return () => cancelAnimationFrame(animationFrame);
     }, [pathname]);
 
     return null;
@@ -482,6 +485,9 @@ function App() {
                         <Route path="/author/mia" element={<BioFrame name="Mia Petersen"><Mia /></BioFrame>} />
                         <Route path="/author/charlie" element={<BioFrame name="Charlie Houck"><Charlie /></BioFrame>} />
                         <Route path="/author/rhett" element={<BioFrame name="Rhett Deitz"><Rhett /></BioFrame>} />
+                        {newStaffMembers.flatMap(member => (member.aliases || []).map(alias => (
+                            <Route key={alias} path={`/author/${alias}`} element={<Navigate to={member.link} replace />} />
+                        )))}
                         {newStaffMembers.map(member => (
                             <Route key={member.id} path={member.link} element={
                                 <BioFrame name={member.name}><StaffProfile member={member} /></BioFrame>

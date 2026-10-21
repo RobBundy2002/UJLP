@@ -1,4 +1,4 @@
-import blankPortrait from '../ProfilePictures/ComingSoon.jpg';
+import blankPortrait from '../ProfilePictures/ProfilePlaceholder.svg';
 import derekImg from '../ProfilePictures/Derek.png';
 import shelbyImg from '../ProfilePictures/Shelby.jpeg';
 import robImg from '../ProfilePictures/Rob.jpg';

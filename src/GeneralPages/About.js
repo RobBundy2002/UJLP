@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { newStaffMembers } from '../Data/staffData';
+import { newStaffMembers, willStaffMember } from '../Data/staffData';
 import { Link } from 'react-router-dom';
 import '../Styling/About.css';
 import '../Styling/Home.css';
@@ -11,7 +11,6 @@ import shelbyImg from '../ProfilePictures/Shelby.jpeg';
 import derekImg from '../ProfilePictures/Derek.png';
 import robImg from '../ProfilePictures/Rob.jpg';
 import evanImg from '../ProfilePictures/Evan.jpeg';
-import willImg from '../ProfilePictures/Will.jpg';
 
 const teamRoleOrder = [
     'executive-editor',
@@ -33,6 +32,10 @@ const getTeamRoleRank = (member) => {
 const compareTeamMembers = (left, right) => {
     const roleDifference = getTeamRoleRank(left) - getTeamRoleRank(right);
     if (roleDifference !== 0) return roleDifference;
+
+    const lastName = member => member.lastName || member.name.trim().split(/\s+/).pop();
+    const lastNameDifference = lastName(left).localeCompare(lastName(right), undefined, { sensitivity: 'base' });
+    if (lastNameDifference !== 0) return lastNameDifference;
 
     const nameDifference = left.name.localeCompare(right.name, undefined, { sensitivity: 'base' });
     if (nameDifference !== 0) return nameDifference;
@@ -114,11 +117,11 @@ function About() {
                         </div>
                         <div className="leader-card">
                             <div className="jh-leader-thumbnail">
-                                <img src={willImg} alt="Will Olszewski" />
+                                <img src={willStaffMember.img} alt="Will Olszewski" />
                             </div>
                             <div className="leader-info">
                                 <h3><Link to="/author/will" className="author-link">Will Olszewski</Link></h3>
-                                <span className="leader-role">Director of Legal Writing & Research</span>
+                                <span className="leader-role">{willStaffMember.role}</span>
                                 <p>Will Olszewski leads legal research initiatives and ensures the accuracy and integrity of legal content.</p>
                             </div>
                         </div>
@@ -200,6 +203,7 @@ function About() {
                         {(() => {
                             const teamMembers = [
                                 ...newStaffMembers,
+                                willStaffMember,
                                 { id: 'rishi', img: require('../ProfilePictures/Rishi.jpg'), name: 'Rishi Chandra', link: '/author/rishi', types: ['executive-editor'], role: 'Executive Editor' },
                                 // { id: 'comingsoon1', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon1', types: ['executive-editor'], role: 'Executive Editor' },
                                 // { id: 'comingsoon5', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon5', types: ['submission-writer'], role: 'Submission Writer' },
