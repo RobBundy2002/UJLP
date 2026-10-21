@@ -752,7 +752,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .jh-about .about-hero h1 em { color: #f4a37d; font-weight: 400; }
 
 .jh-about .jh-people-heading { margin-bottom: 3.5rem; }
-.jh-about .jh-leadership-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1.25rem; padding: 0 clamp(1.5rem, 7vw, 7rem) clamp(6rem, 10vw, 9rem); }
+.jh-about .jh-leadership-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; padding: 0 clamp(1.5rem, 7vw, 7rem) clamp(6rem, 10vw, 9rem); }
 .jh-about .jh-leadership-grid .leader-card, .jh-about .jh-leadership-grid .leader-card:nth-child(n) { display: flex; flex-direction: column; grid-column: auto; min-height: 0; margin: 0; padding: 0; overflow: hidden; border: 1px solid rgba(231,222,203,.16); border-radius: 1rem; background: #0c1b30; }
 .jh-about .jh-leadership-grid .leader-image { display: block; width: 100%; height: clamp(155px, 15vw, 225px); min-width: 0; min-height: 0; margin: 0; border: 0; border-radius: 0; background: #07111f; }
 .jh-about .jh-leadership-grid .leader-image::after { display: block; height: 55%; background: linear-gradient(to top, rgba(7,17,31,.8), transparent); }
@@ -882,7 +882,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 /* Force exact parity between the About hero/leadership cards and the team roster. */
 .jh-about .about-hero h1 { font-size: clamp(2.8rem, 6vw, 5rem) !important; line-height: .9 !important; }
 .jh-about .jh-about-kicker { margin-bottom: 1.25rem !important; font-size: .62rem !important; }
-.jh-about .jh-leadership-grid { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 1.1rem !important; }
+.jh-about .jh-leadership-grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 1.1rem !important; }
 .jh-about .leadership-section, .jh-about .leadership-section .section-content, .jh-about .jh-leadership-grid { background: #07111f !important; }
 
 /* About finishing pass: executive context, cleaner portraits, and continuous Home-style ember. */

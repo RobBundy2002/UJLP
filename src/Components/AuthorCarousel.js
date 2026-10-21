@@ -43,7 +43,7 @@ const authors = [
     {
         id: 'will',
         name: 'Will Olszewski',
-        role: 'Director of Legal Writing & Research',
+        role: 'Director of Legal Research',
         image: willImg,
         bio: 'Constitutional Law & Legal Writing',
         link: '/author/will'

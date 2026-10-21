@@ -25,7 +25,7 @@ const searchData = {
         { name: "Rob Bundy", role: "Director of Technology", link: "/author/rob", type: "author" },
         { name: "Evan Proudkii", role: "Managing Editor", link: "/author/evan", type: "author" },
         { name: "Richard Xu", role: "Former Director of Legal Writing & Research", link: "/author/richard", type: "author" },
-        { name: "Will Olszewski", role: "Director of Legal Writing & Research", link: "/author/will", type: "author" },
+        { name: "Will Olszewski", role: "Director of Legal Research", link: "/author/will", type: "author" },
         { name: "Rishi Chandra", role: "Executive Editor", link: "/author/rishi", type: "author" },
         { name: "Mia Petersen", role: "Former Executive Editor", link: "/author/mia", type: "author" },
         { name: "Charlie", role: "Executive Editor", link: "/author/charlie", type: "author" },

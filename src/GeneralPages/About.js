@@ -15,7 +15,6 @@ import evanImg from '../ProfilePictures/Evan.jpeg';
 
 const teamRoleOrder = [
     'executive-editor',
-    'staff-editor',
     'editor',
     'submission-writer',
     'event-coordinator',
@@ -44,6 +43,8 @@ const compareTeamMembers = (left, right) => {
 
     return String(left.id).localeCompare(String(right.id), undefined, { sensitivity: 'base' });
 };
+
+const caseyStaffMember = newStaffMembers.find(member => member.id === 'casey-pita');
 
 function About() {
     const [activeFilter, setActiveFilter] = useState('all');
@@ -129,6 +130,15 @@ function About() {
                         </div>
                         <div className="leader-card">
                             <div className="jh-leader-thumbnail">
+                                <Portrait src={caseyStaffMember.img} name={caseyStaffMember.name} />
+                            </div>
+                            <div className="leader-info">
+                                <h3><Link to={caseyStaffMember.link} className="author-link">{caseyStaffMember.name}</Link></h3>
+                                <span className="leader-role">{caseyStaffMember.role}</span>
+                            </div>
+                        </div>
+                        <div className="leader-card">
+                            <div className="jh-leader-thumbnail">
                                 <Portrait src={robImg} name="Rob Bundy" />
                             </div>
                             <div className="leader-info">
@@ -165,18 +175,6 @@ function About() {
                             All
                         </button>
                         <button 
-                            className={`filter-button ${activeFilter === 'executive-editor' ? 'active' : ''}`}
-                            onClick={() => setActiveFilter('executive-editor')}
-                        >
-                            Executive Editors
-                        </button>
-                        <button 
-                            className={`filter-button ${activeFilter === 'staff-editor' ? 'active' : ''}`}
-                            onClick={() => setActiveFilter('staff-editor')}
-                        >
-                            Staff Editors
-                        </button>
-                        <button 
                             className={`filter-button ${activeFilter === 'editor' ? 'active' : ''}`}
                             onClick={() => setActiveFilter('editor')}
                         >
@@ -210,9 +208,7 @@ function About() {
                     <div>
                         {(() => {
                             const teamMembers = [
-                                ...newStaffMembers,
-                                willStaffMember,
-                                { id: 'rishi', img: require('../ProfilePictures/Rishi.jpg'), name: 'Rishi Chandra', link: '/author/rishi', types: ['executive-editor'], role: 'Executive Editor' },
+                                ...newStaffMembers.filter(member => member.id !== caseyStaffMember.id),
                                 // { id: 'comingsoon1', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon1', types: ['executive-editor'], role: 'Executive Editor' },
                                 // { id: 'comingsoon5', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon5', types: ['submission-writer'], role: 'Submission Writer' },
                                 // { id: 'comingsoon6', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon6', types: ['submission-writer'], role: 'Submission Writer' },
@@ -221,9 +217,7 @@ function About() {
                                 // { id: 'comingsoon14', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon8', types: ['event-coordinator'], role: 'Event Coordinator' },
                                 // { id: 'comingsoon10', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon10', types: ['submission-writer'], role: 'Submission Writer' },
                                 // { id: 'comingsoon11', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon11', types: ['event-coordinator'], role: 'Event Coordinator' },
-                                { id: 'sam', img: require('../ProfilePictures/Sam.png'), name: 'Sam Burnett', types: ['alumni'], role: 'Founding Editor (2024–2025)' },
                                 { id: 'richard', img: require('../ProfilePictures/Richard.jpg'), name: 'Richard Xu', link: '/author/richard', types: ['alumni'], role: 'Director of Legal Writing & Research (2025–2026)' },
-                                { id: 'mia', img: require('../ProfilePictures/Mia.jpg'), name: 'Mia Petersen', link: '/author/mia', types: ['alumni'], role: 'Executive Editor (2025-2026)' },
                             ];
 
                             const filtered = teamMembers

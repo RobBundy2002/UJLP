@@ -165,17 +165,17 @@ export const newStaffMembers = [
     {
         "id": "max-levy",
         "name": "Max Levy",
-        "role": "Staff Editor",
+        "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ]
     },
     {
         "id": "meilhi-leon-terceros",
         "name": "Meilhi Leon Terceros",
-        "role": "Staff Editor",
+        "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ]
     },
     {
@@ -253,9 +253,9 @@ export const newStaffMembers = [
     {
         "id": "lindsey-dufault",
         "name": "Lindsey Dufault",
-        "role": "Staff Editor",
+        "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ]
     },
     {
@@ -291,9 +291,9 @@ export const newStaffMembers = [
     {
         "id": "eunbin-lee",
         "name": "Eunbin Lee",
-        "role": "Staff Editor",
+        "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ]
     },
     {
@@ -371,9 +371,9 @@ export const newStaffMembers = [
     {
         "id": "nina-galinsky",
         "name": "Nina Galinsky",
-        "role": "Staff Editor",
+        "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ]
     },
     {
@@ -394,9 +394,9 @@ export const newStaffMembers = [
 export const willStaffMember = {
     id: 'will',
     name: 'Will Olszewski',
-    role: 'Executive Editor',
+    role: 'Director of Legal Research',
     year: '3rd',
-    types: ['executive-editor'],
+    types: ['director-of-legal-research'],
     img: staffPortraits['will-olszewski'],
     link: '/author/will',
 };
