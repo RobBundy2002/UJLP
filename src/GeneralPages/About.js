@@ -217,7 +217,6 @@ function About() {
                                 // { id: 'comingsoon14', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon8', types: ['event-coordinator'], role: 'Event Coordinator' },
                                 // { id: 'comingsoon10', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon10', types: ['submission-writer'], role: 'Submission Writer' },
                                 // { id: 'comingsoon11', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon11', types: ['event-coordinator'], role: 'Event Coordinator' },
-                                { id: 'richard', img: require('../ProfilePictures/Richard.jpg'), name: 'Richard Xu', link: '/author/richard', types: ['alumni'], role: 'Director of Legal Writing & Research (2025–2026)' },
                             ];
 
                             const filtered = teamMembers
