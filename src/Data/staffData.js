@@ -73,18 +73,18 @@ export const newStaffMembers = [
     {
         "id": "alexis-chen",
         "name": "Alexis Chen",
-        "role": "Writer",
+        "role": "Submission Writer",
         "types": [
-            "internal-writer"
+            "submission-writer"
         ],
         "year": "1st"
     },
     {
         "id": "ryan-arsenault",
         "name": "Ryan Arsenault",
-        "role": "Writer",
+        "role": "Submission Writer",
         "types": [
-            "internal-writer"
+            "submission-writer"
         ],
         "year": "3rd"
     },
@@ -99,9 +99,9 @@ export const newStaffMembers = [
     {
         "id": "amy-cherian",
         "name": "Amy Cherian",
-        "role": "Writer",
+        "role": "Submission Writer",
         "types": [
-            "internal-writer"
+            "submission-writer"
         ],
         "year": "1st",
         "aliases": [
@@ -111,36 +111,36 @@ export const newStaffMembers = [
     {
         "id": "pauline-tsui",
         "name": "Pauline Tsui",
-        "role": "Writer",
+        "role": "Submission Writer",
         "types": [
-            "internal-writer"
+            "submission-writer"
         ],
         "year": "2nd"
     },
     {
         "id": "caroline-south",
         "name": "Caroline South",
-        "role": "Writer",
+        "role": "Submission Writer",
         "types": [
-            "internal-writer"
+            "submission-writer"
         ],
         "year": "1st"
     },
     {
         "id": "meridith-bradley",
         "name": "Meridith Bradley",
-        "role": "Writer",
+        "role": "Submission Writer",
         "types": [
-            "internal-writer"
+            "submission-writer"
         ],
         "year": "1st"
     },
     {
         "id": "neelesh-gupta",
         "name": "Neelesh Gupta",
-        "role": "Writer",
+        "role": "Submission Writer",
         "types": [
-            "internal-writer"
+            "submission-writer"
         ],
         "year": "1st"
     },
@@ -149,7 +149,7 @@ export const newStaffMembers = [
         "name": "Rylie Reid",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "3rd"
     },
@@ -158,7 +158,7 @@ export const newStaffMembers = [
         "name": "Ava Ross",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st"
     },
@@ -183,7 +183,7 @@ export const newStaffMembers = [
         "name": "Matthew Len",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "2nd"
     },
@@ -192,7 +192,7 @@ export const newStaffMembers = [
         "name": "Monica Sarkisian",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "2nd"
     },
@@ -201,7 +201,7 @@ export const newStaffMembers = [
         "name": "Beauford Mathews",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "2nd",
         "aliases": [
@@ -213,7 +213,7 @@ export const newStaffMembers = [
         "name": "Aayush Tendulkar",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st",
         "aliases": [
@@ -225,7 +225,7 @@ export const newStaffMembers = [
         "name": "Ava Wilkins",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "2nd"
     },
@@ -234,7 +234,7 @@ export const newStaffMembers = [
         "name": "Annabelle Bragdon",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "2nd"
     },
@@ -243,7 +243,7 @@ export const newStaffMembers = [
         "name": "Nelly (Yinuo) Zhang",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st",
         "aliases": [
@@ -263,7 +263,7 @@ export const newStaffMembers = [
         "name": "Catherine Ziegler",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st"
     },
@@ -272,7 +272,7 @@ export const newStaffMembers = [
         "name": "Skylar Dalil",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st",
         "aliases": [
@@ -284,7 +284,7 @@ export const newStaffMembers = [
         "name": "Mimi Reschly-Krasowski",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st"
     },
@@ -299,9 +299,9 @@ export const newStaffMembers = [
     {
         "id": "ian-gilstrap",
         "name": "Ian Gilstrap",
-        "role": "Writer",
+        "role": "Submission Writer",
         "types": [
-            "internal-writer"
+            "submission-writer"
         ],
         "year": "3rd"
     },
@@ -310,7 +310,7 @@ export const newStaffMembers = [
         "name": "Sherry Klein",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st",
         "aliases": [
@@ -322,7 +322,7 @@ export const newStaffMembers = [
         "name": "Sonvi Chawla",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st"
     },
@@ -331,7 +331,7 @@ export const newStaffMembers = [
         "name": "Isabella Miller",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "2nd"
     },
@@ -340,7 +340,7 @@ export const newStaffMembers = [
         "name": "Ella Blakeley",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st"
     },
@@ -349,7 +349,7 @@ export const newStaffMembers = [
         "name": "Vick Volovnyk",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st",
         "aliases": [
@@ -361,7 +361,7 @@ export const newStaffMembers = [
         "name": "Benjamin Wood",
         "role": "Editor",
         "types": [
-            "staff-editor"
+            "editor"
         ],
         "year": "1st",
         "aliases": [
@@ -382,7 +382,7 @@ export const newStaffMembers = [
         "role": "Editor",
         "year": "1st",
         "types": [
-            "staff-editor"
+            "editor"
         ]
     }
 ].map(member => ({

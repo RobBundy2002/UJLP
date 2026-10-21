@@ -5,6 +5,7 @@ import '../Styling/About.css';
 import '../Styling/Home.css';
 import '../Styling/EditorialPages.css';
 import Timeline from '../Components/Timeline';
+import Portrait from '../Components/Portrait';
 import { PrintingPressIntro } from '../Components/JournalCinema';
 import ParticleBackground from '../Components/ParticleBackground';
 import shelbyImg from '../ProfilePictures/Shelby.jpeg';
@@ -15,9 +16,10 @@ import evanImg from '../ProfilePictures/Evan.jpeg';
 const teamRoleOrder = [
     'executive-editor',
     'staff-editor',
-    'internal-writer',
+    'editor',
     'submission-writer',
     'event-coordinator',
+    'internal-writer',
     'alumni'
 ];
 
@@ -87,7 +89,7 @@ function About() {
                     <div className="leadership-grid jh-leadership-grid">
                         <div className="leader-card">
                             <div className="jh-leader-thumbnail">
-                                <img src={derekImg} alt="Derek Tsai" />
+                                <Portrait src={derekImg} name="Derek Tsai" />
                             </div>
                             <div className="leader-info">
                                 <h3><Link to="/author/derek" className="author-link">Derek Tsai</Link></h3>
@@ -97,7 +99,7 @@ function About() {
                         </div>
                         <div className="leader-card">
                             <div className="jh-leader-thumbnail">
-                                <img src={shelbyImg} alt="Shelby Eliasek" />
+                                <Portrait src={shelbyImg} name="Shelby Eliasek" />
                             </div>
                             <div className="leader-info">
                                 <h3><Link to="/author/shelby" className="author-link">Shelby Eliasek</Link></h3>
@@ -107,7 +109,7 @@ function About() {
                         </div>
                         <div className="leader-card">
                             <div className="jh-leader-thumbnail">
-                                <img src={evanImg} alt="Evan Proudkii" />
+                                <Portrait src={evanImg} name="Evan Proudkii" />
                             </div>
                             <div className="leader-info">
                                 <h3><Link to="/author/evan" className="author-link">Evan Proudkii</Link></h3>
@@ -117,7 +119,7 @@ function About() {
                         </div>
                         <div className="leader-card">
                             <div className="jh-leader-thumbnail">
-                                <img src={willStaffMember.img} alt="Will Olszewski" />
+                                <Portrait src={willStaffMember.img} name="Will Olszewski" />
                             </div>
                             <div className="leader-info">
                                 <h3><Link to="/author/will" className="author-link">Will Olszewski</Link></h3>
@@ -127,7 +129,7 @@ function About() {
                         </div>
                         <div className="leader-card">
                             <div className="jh-leader-thumbnail">
-                                <img src={robImg} alt="Rob Bundy" />
+                                <Portrait src={robImg} name="Rob Bundy" />
                             </div>
                             <div className="leader-info">
                                 <h3><Link to="/author/rob" className="author-link">Rob Bundy</Link></h3>
@@ -175,10 +177,10 @@ function About() {
                             Staff Editors
                         </button>
                         <button 
-                            className={`filter-button ${activeFilter === 'internal-writer' ? 'active' : ''}`}
-                            onClick={() => setActiveFilter('internal-writer')}
+                            className={`filter-button ${activeFilter === 'editor' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('editor')}
                         >
-                            Internal Writers
+                            Editors
                         </button>
                         <button 
                             className={`filter-button ${activeFilter === 'submission-writer' ? 'active' : ''}`}
@@ -191,6 +193,12 @@ function About() {
                             onClick={() => setActiveFilter('event-coordinator')}
                         >
                             Event Coordinators
+                        </button>
+                        <button
+                            className={`filter-button ${activeFilter === 'internal-writer' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('internal-writer')}
+                        >
+                            Internal Writers
                         </button>
                         <button 
                             className={`filter-button ${activeFilter === 'alumni' ? 'active' : ''}`}
@@ -227,7 +235,7 @@ function About() {
                                 <div className={`${gridClass} jh-roster-grid`}>
                                     {filtered.map((m) => (
                                         <div key={m.id} className={`team-member-card jh-roster-member visible`}>
-                                            <img src={m.img} alt={m.name} className="team-member-photo" />
+                                            <Portrait src={m.img} name={m.name} className="team-member-photo" />
                                             <div className="team-member-info">
                                                 {m.link ? (
                                                     <h3><Link to={m.link} className="author-link">{m.name}</Link></h3>
