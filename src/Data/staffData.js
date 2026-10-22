@@ -73,35 +73,27 @@ export const newStaffMembers = [
     {
         "id": "alexis-chen",
         "name": "Alexis Chen",
-        "role": "Submission Writer",
+        "role": "Staff Writer",
         "types": [
-            "submission-writer"
+            "staff-writer"
         ],
         "year": "1st"
     },
     {
         "id": "ryan-arsenault",
         "name": "Ryan Arsenault",
-        "role": "Submission Writer",
+        "role": "Staff Writer",
         "types": [
-            "submission-writer"
+            "staff-writer"
         ],
         "year": "3rd"
     },
     {
-        "id": "nadia-hassen",
-        "name": "Nadia Hassen",
-        "role": "Internal Writer",
-        "types": [
-            "internal-writer"
-        ]
-    },
-    {
         "id": "amy-cherian",
         "name": "Amy Cherian",
-        "role": "Submission Writer",
+        "role": "Staff Writer",
         "types": [
-            "submission-writer"
+            "staff-writer"
         ],
         "year": "1st",
         "aliases": [
@@ -111,97 +103,97 @@ export const newStaffMembers = [
     {
         "id": "pauline-tsui",
         "name": "Pauline Tsui",
-        "role": "Submission Writer",
+        "role": "Staff Writer",
         "types": [
-            "submission-writer"
+            "staff-writer"
         ],
         "year": "2nd"
     },
     {
         "id": "caroline-south",
         "name": "Caroline South",
-        "role": "Submission Writer",
+        "role": "Staff Writer",
         "types": [
-            "submission-writer"
+            "staff-writer"
         ],
         "year": "1st"
     },
     {
         "id": "meridith-bradley",
         "name": "Meridith Bradley",
-        "role": "Submission Writer",
+        "role": "Staff Writer",
         "types": [
-            "submission-writer"
+            "staff-writer"
         ],
         "year": "1st"
     },
     {
         "id": "neelesh-gupta",
         "name": "Neelesh Gupta",
-        "role": "Submission Writer",
+        "role": "Staff Writer",
         "types": [
-            "submission-writer"
+            "staff-writer"
         ],
         "year": "1st"
     },
     {
         "id": "rylie-reid",
         "name": "Rylie Reid",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "3rd"
     },
     {
         "id": "ava-ross",
         "name": "Ava Ross",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st"
     },
     {
         "id": "max-levy",
         "name": "Max Levy",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ]
     },
     {
         "id": "meilhi-leon-terceros",
         "name": "Meilhi Leon Terceros",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ]
     },
     {
         "id": "matthew-len",
         "name": "Matthew Len",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "2nd"
     },
     {
         "id": "monica-sarkisian",
         "name": "Monica Sarkisian",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "2nd"
     },
     {
         "id": "beauford-mathews",
         "name": "Beauford Mathews",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "2nd",
         "aliases": [
@@ -211,9 +203,9 @@ export const newStaffMembers = [
     {
         "id": "aayush-tendulkar",
         "name": "Aayush Tendulkar",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st",
         "aliases": [
@@ -223,27 +215,27 @@ export const newStaffMembers = [
     {
         "id": "ava-wilkins",
         "name": "Ava Wilkins",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "2nd"
     },
     {
         "id": "annabelle-bragdon",
         "name": "Annabelle Bragdon",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "2nd"
     },
     {
         "id": "nelly-yinuo-zhang",
         "name": "Nelly (Yinuo) Zhang",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st",
         "aliases": [
@@ -253,26 +245,26 @@ export const newStaffMembers = [
     {
         "id": "lindsey-dufault",
         "name": "Lindsey Dufault",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ]
     },
     {
         "id": "catherine-ziegler",
         "name": "Catherine Ziegler",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st"
     },
     {
         "id": "skylar-dalil",
         "name": "Skylar Dalil",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st",
         "aliases": [
@@ -282,35 +274,27 @@ export const newStaffMembers = [
     {
         "id": "mimi-reschly-krasowski",
         "name": "Mimi Reschly-Krasowski",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st"
     },
     {
-        "id": "eunbin-lee",
-        "name": "Eunbin Lee",
-        "role": "Editor",
-        "types": [
-            "editor"
-        ]
-    },
-    {
         "id": "ian-gilstrap",
         "name": "Ian Gilstrap",
-        "role": "Submission Writer",
+        "role": "Staff Writer",
         "types": [
-            "submission-writer"
+            "staff-writer"
         ],
         "year": "3rd"
     },
     {
         "id": "sherry-klein",
         "name": "Sherry Klein",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st",
         "aliases": [
@@ -320,36 +304,36 @@ export const newStaffMembers = [
     {
         "id": "sonvi-chawla",
         "name": "Sonvi Chawla",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st"
     },
     {
         "id": "isabella-miller",
         "name": "Isabella Miller",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "2nd"
     },
     {
         "id": "ella-blakeley",
         "name": "Ella Blakeley",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st"
     },
     {
         "id": "vick-volovnyk",
         "name": "Vick Volovnyk",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st",
         "aliases": [
@@ -359,9 +343,9 @@ export const newStaffMembers = [
     {
         "id": "benjamin-wood",
         "name": "Benjamin Wood",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ],
         "year": "1st",
         "aliases": [
@@ -371,18 +355,18 @@ export const newStaffMembers = [
     {
         "id": "nina-galinsky",
         "name": "Nina Galinsky",
-        "role": "Editor",
+        "role": "Staff Editor",
         "types": [
-            "editor"
+            "staff-editor"
         ]
     },
     {
         "id": "lily-lee",
         "name": "Lily Lee",
-        "role": "Editor",
+        "role": "Staff Editor",
         "year": "1st",
         "types": [
-            "editor"
+            "staff-editor"
         ]
     }
 ].map(member => ({

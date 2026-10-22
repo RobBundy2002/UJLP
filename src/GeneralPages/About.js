@@ -15,8 +15,8 @@ import evanImg from '../ProfilePictures/Evan.jpeg';
 
 const teamRoleOrder = [
     'executive-editor',
-    'editor',
-    'submission-writer',
+    'staff-editor',
+    'staff-writer',
     'event-coordinator',
     'internal-writer',
     'alumni'
@@ -175,16 +175,16 @@ function About() {
                             All
                         </button>
                         <button 
-                            className={`filter-button ${activeFilter === 'editor' ? 'active' : ''}`}
-                            onClick={() => setActiveFilter('editor')}
+                            className={`filter-button ${activeFilter === 'staff-editor' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('staff-editor')}
                         >
-                            Editors
+                            Staff Editors
                         </button>
                         <button 
-                            className={`filter-button ${activeFilter === 'submission-writer' ? 'active' : ''}`}
-                            onClick={() => setActiveFilter('submission-writer')}
+                            className={`filter-button ${activeFilter === 'staff-writer' ? 'active' : ''}`}
+                            onClick={() => setActiveFilter('staff-writer')}
                         >
-                            Submission Writers
+                            Staff Writers
                         </button>
                         <button 
                             className={`filter-button ${activeFilter === 'event-coordinator' ? 'active' : ''}`}
@@ -210,12 +210,12 @@ function About() {
                             const teamMembers = [
                                 ...newStaffMembers.filter(member => member.id !== caseyStaffMember.id),
                                 // { id: 'comingsoon1', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon1', types: ['executive-editor'], role: 'Executive Editor' },
-                                // { id: 'comingsoon5', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon5', types: ['submission-writer'], role: 'Submission Writer' },
-                                // { id: 'comingsoon6', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon6', types: ['submission-writer'], role: 'Submission Writer' },
+                                // { id: 'comingsoon5', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon5', types: ['staff-writer'], role: 'Staff Writer' },
+                                // { id: 'comingsoon6', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon6', types: ['staff-writer'], role: 'Staff Writer' },
                                 // { id: 'comingsoon7', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon7', types: ['event-coordinator'], role: 'Event Coordinator' },
                                 // { id: 'comingsoon8', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon8', types: ['event-coordinator'], role: 'Event Coordinator' },
                                 // { id: 'comingsoon14', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon8', types: ['event-coordinator'], role: 'Event Coordinator' },
-                                // { id: 'comingsoon10', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon10', types: ['submission-writer'], role: 'Submission Writer' },
+                                // { id: 'comingsoon10', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon10', types: ['staff-writer'], role: 'Staff Writer' },
                                 // { id: 'comingsoon11', img: require('../ProfilePictures/ComingSoon.jpg'), name: 'Coming Soon', link: '/author/comingsoon11', types: ['event-coordinator'], role: 'Event Coordinator' },
                             ];
 
