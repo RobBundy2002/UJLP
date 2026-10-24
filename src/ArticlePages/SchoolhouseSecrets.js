@@ -1,7 +1,8 @@
 import React from 'react';
 import '../Styling/Journal.css';
 import profilePic from "../ProfilePictures/Shelby.jpeg";
-import PDFViewer from '../Components/PDFViewer';
+import ArticleReader from '../Components/ArticleReader';
+import { Link } from 'react-router-dom';
 import CiteShare from '../Components/CiteShare';
 
 function SchoolhouseSecrets() {
@@ -11,7 +12,8 @@ function SchoolhouseSecrets() {
                 <h1>
                     Schoolhouse Secrets:<br /><em>Parental Rights and Gender Identity Disclosure in the American Classroom</em>
                 </h1>
-                <p className="article-meta">Shelby Eliasek • Volume 1 · Issue 1 • May 2026</p>
+                <Link className="article-issue-link" to="/journal/issue/2026-1">Volume 1 · Issue 1 ↗</Link>
+            <p className="article-meta">Shelby Eliasek • Volume 1 · Issue 1 • May 2026</p>
 
                 <div className="article-summary">
                     <div className="article-summary-heading">
@@ -33,8 +35,7 @@ function SchoolhouseSecrets() {
                     </p>
                 </div>
 
-                <PDFViewer 
-                    pdfPath="/ArticlePDFs/Schoolhouse Secrets Final Manuscript.pdf"
+                <ArticleReader articleId="schoolhousesecrets"
                     title="Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom"
                     author="Shelby Eliasek"
                 />

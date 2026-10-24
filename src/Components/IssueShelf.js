@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function IssueShelf({ issues, articles }) {
     const publishedIssues = issues.filter(issue => issue.id !== 'all');
@@ -29,7 +29,6 @@ function IssueShelf({ issues, articles }) {
         <div className="issue-shelf reading-room" aria-label="Published journal issues">
             <div className="issue-shelf-heading">
                 <div><span>The digital reading room</span><strong>Enter the current issue</strong></div>
-                <Link to="/journal/index">Open complete index <span>↗</span></Link>
             </div>
             <div className="reading-room-atmosphere" aria-hidden="true"><span>UJLP</span><i /><b>Est. 2024</b></div>
             <div className="issue-volumes">

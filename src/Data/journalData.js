@@ -1,6 +1,6 @@
 export const issues = [
     { id: 'all', label: 'All Issues' },
-    { id: '2026-1', label: '2026 Issue 1', publicationDate: 'May 2026', accent: '#f18c62', tone: 'ember' },
+    { id: '2026-1', label: '2026 Issue 1', publicationDate: 'May 2026', volume: 1, number: 1, pdfPath: '/ArticlePDFs/UJLP-Volume-1-Issue-1.pdf', overview: 'Two perspectives on law and education: the desegregation of the University of Virginia School of Law, and the competing rights of parents, students, and teachers in American classrooms.', accent: '#f18c62', tone: 'ember' },
 ];
 
 export const articles = [

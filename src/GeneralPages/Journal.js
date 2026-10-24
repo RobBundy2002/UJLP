@@ -47,7 +47,6 @@ function Journal() {
                                 <p>Published issues</p>
                                 <h2>The Journal,<br /><em>in full.</em></h2>
                             </div>
-                            <Link to="/journal/index">Open complete index <span>↗</span></Link>
                         </div>
                         {issues.filter(issue => issue.id !== 'all').map(issue => {
                             const issueArticles = articles
@@ -57,8 +56,9 @@ function Journal() {
                                 <section className="journal-issue-group" key={issue.id}>
                                     <div className="journal-issue-label">
                                         <span>Volume 1</span>
-                                        <strong>{issue.label}</strong>
+                                        <strong><Link to={`/journal/issue/${issue.id}`}>{issue.label}</Link></strong>
                                         <em>{issue.publicationDate || 'Publication date forthcoming'}</em>
+                                        <Link to={`/journal/issue/${issue.id}`}>Explore this issue ↗</Link>
                                     </div>
                                     <div className="journal-issue-articles">
                                         {issueArticles.map((article) => (

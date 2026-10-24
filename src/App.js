@@ -59,7 +59,7 @@ function ScrollToTop() {
     const { pathname } = useLocation();
 
     useLayoutEffect(() => {
-        if (pathname.startsWith('/author/')) {
+        if (pathname.startsWith('/author/') || window.scrollY === 0 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
             return;
         }

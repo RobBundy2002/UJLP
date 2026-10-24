@@ -2,7 +2,8 @@ import React from 'react';
 import '../Styling/Journal.css';
 import profilePic from '../ProfilePictures/Derek.png';
 import editorPic from '../ProfilePictures/Will.jpg';
-import PDFViewer from '../Components/PDFViewer';
+import ArticleReader from '../Components/ArticleReader';
+import { Link } from 'react-router-dom';
 import CiteShare from '../Components/CiteShare';
 
 function UnequalOpportunity() {
@@ -11,6 +12,7 @@ function UnequalOpportunity() {
             <h1>
                 Unequal Opportunity:<br /><em>Desegregation at the University of Virginia School of Law</em>
             </h1>
+            <Link className="article-issue-link" to="/journal/issue/2026-1">Volume 1 · Issue 1 ↗</Link>
             <p className="article-meta">Derek Tsai • Volume 1 · Issue 1 • May 2026</p>
 
             <div className="article-summary">
@@ -23,8 +25,7 @@ function UnequalOpportunity() {
                 </p>
             </div>
 
-            <PDFViewer 
-                pdfPath="/ArticlePDFs/Unequal Opportunity Final Manuscript.pdf"
+            <ArticleReader articleId="unequalopportunity"
                 title="Unequal Opportunity: Desegregation at the University of Virginia School of Law"
                 author="Derek Tsai"
             />

@@ -4,10 +4,11 @@ import ParticleBackground from '../Components/ParticleBackground';
 import { articles, issues } from '../Data/journalData';
 import '../Styling/EditorialPages.css';
 import '../Styling/Home.css';
+import '../Styling/IssueLanding.css';
 
 function IssueEdition() {
     const { issueId } = useParams();
-    const issue = issues.find(item => item.id === issueId);
+    const issue = issues.find(item => item.id === issueId && item.id !== 'all');
 
     if (!issue) {
         return <Navigate to="/journal/index" replace />;
@@ -24,12 +25,27 @@ function IssueEdition() {
             <section className="issue-edition-hero">
                 <ParticleBackground />
                 <div className="section-content">
-                    <p className="issue-edition-kicker"><strong>UJLP</strong> · University of Virginia · 2026</p>
-                    <h1>Volume 1</h1>
+                    <p className="issue-edition-kicker"><strong>UJLP</strong> · University of Virginia</p>
+                    <h1>Volume {issue.volume || 1}</h1>
                     <p className="issue-edition-subtitle">{issue.label}</p>
                     <div className="issue-edition-meta" aria-label="Issue details">
                         <span>{issuePublished}</span>
                         <span>{issueArticles.length} article{issueArticles.length === 1 ? '' : 's'}</span>
+                    </div>
+                    <div className="issue-landing-intro">
+                        <div className="issue-landing-cover" role="img" aria-label={`Journal cover: Volume ${issue.volume}, Issue ${issue.number}, ${issuePublished}`}>
+                            <span>University of Virginia</span>
+                            <strong>Undergraduate<br />Journal of<br /><em>Law &amp; Politics</em></strong>
+                            <div className="issue-cover-monogram" aria-hidden="true">UJLP</div>
+                            <div><span>Volume {issue.volume} · Issue {issue.number}</span><span>{issuePublished}</span></div>
+                        </div>
+                        <div className="issue-landing-overview">
+                            <p className="issue-section-kicker">In this issue</p>
+                            <h2>Two inquiries.<br /><em>A wider perspective.</em></h2>
+                            <p>{issue.overview}</p>
+                            {issue.pdfPath && <a href={issue.pdfPath} download className="issue-edition-button">Download complete issue <span aria-hidden="true">↓</span></a>}
+                            <a href="#issue-contents" onClick={event => { event.preventDefault(); const contents = document.getElementById('issue-contents'); if (contents) { window.scrollTo({ top: contents.getBoundingClientRect().top + window.scrollY - 110, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' }); contents.focus({ preventScroll: true }); } }} className="issue-browse-contents">Explore the contents ↓</a>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -65,7 +81,7 @@ function IssueEdition() {
                         )}
                     </article>
 
-                    <aside className="issue-edition-contents">
+                    <aside className="issue-edition-contents" id="issue-contents" tabIndex={-1}>
                         <p className="issue-section-kicker">Contents</p>
                         <ol className="issue-edition-list">
                             {issueArticles.map((article) => (

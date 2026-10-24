@@ -73,6 +73,9 @@ if (!issueIds.has('all')) {
 issues
   .filter(issue => issue.id !== 'all')
   .forEach(issue => {
+    if (issue.pdfPath && !fs.existsSync(path.join(rootDir, 'public', issue.pdfPath.replace(/^\//, '')))) {
+      fail(`Missing complete issue PDF: ${issue.pdfPath}`);
+    }
     ['id', 'label', 'publicationDate', 'accent', 'tone'].forEach(field => {
       if (!issue[field]) fail(`Issue ${issue.id || '(missing id)'} is missing ${field}.`);
     });
