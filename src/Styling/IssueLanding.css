@@ -1,0 +1,18 @@
+.jh-issue .issue-edition-hero .section-content { width: 100%; }
+.issue-landing-intro { display: grid; grid-template-columns: minmax(220px,340px) minmax(0,1fr); gap: clamp(2rem,7vw,7rem); align-items: center; width: 100%; margin-top: 3.5rem; text-align: left; }
+.issue-landing-cover { display: flex; flex-direction: column; justify-content: space-between; aspect-ratio: 3/4; padding: clamp(1.4rem,3vw,2.2rem); border: 1px solid #b9c1c5; border-left: 9px solid #8d4333; background: linear-gradient(135deg,#18384e,#0b1a2b 65%); box-shadow: 14px 18px 0 #020b1660, 0 30px 55px #0005; color: #efe5d4; }
+.issue-landing-cover > span { font: .6rem/1.5 system-ui,sans-serif; text-transform: uppercase; letter-spacing: .17em; }
+.issue-landing-cover > strong { font: clamp(1.5rem,3vw,2.4rem)/1.15 Georgia,serif; margin: 1.5rem 0; }
+.issue-landing-cover em { color: #f4a37d; font-weight: normal; }
+.issue-cover-monogram { font: clamp(3rem,5vw,4.5rem)/1 Georgia,serif; color: #f4a37d; letter-spacing: -.08em; white-space: nowrap; }
+.issue-landing-cover > div:last-child { display: flex; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #81919f; font: .65rem/1.7 system-ui,sans-serif; }
+.jh-issue .issue-landing-overview h2 { font: clamp(2rem,4vw,3.6rem)/1.12 Georgia,serif; color: #f5e9d8; margin: 1rem 0 1.5rem; }
+.issue-landing-overview h2 em { color: #f4a37d; font-weight: normal; }
+.jh-issue .issue-landing-overview > p:not(.issue-section-kicker) { max-width: 560px; color: #bfcbd5; font: 1rem/1.9 Georgia,serif; margin-bottom: 2rem; }
+.issue-browse-contents { display: block; color: #f4a37d; font-size: .85rem; margin-top: 1.25rem; }
+#issue-contents { scroll-margin-top: 110px; }
+@media (max-width:700px) {
+    .issue-landing-intro { grid-template-columns: 1fr; gap: 2.5rem; }
+    .issue-landing-cover { width: min(100%,300px); justify-self: center; }
+    .issue-landing-cover > strong { font-size: 2rem; }
+}

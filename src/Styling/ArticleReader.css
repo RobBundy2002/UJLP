@@ -1,0 +1,48 @@
+.article-page .article-reading-room { width: 100%; max-width: 1120px; margin: 3rem auto; text-align: left !important; }
+.article-reader-tabs { display: flex; gap: .5rem; padding-bottom: 1rem; border-bottom: 1px solid #344353; }
+.article-reader-tabs button { padding: .75rem 1.15rem; border: 1px solid #586779; border-radius: 2rem; background: transparent; color: #e9e2d6; font: inherit; cursor: pointer; }
+.article-reader-tabs button[aria-selected="true"] { background: #f18c62; border-color: #f18c62; color: #07111f; }
+.article-reader-layout { display: grid; grid-template-columns: 220px minmax(0,1fr); gap: clamp(2rem,5vw,5rem); padding-top: 2rem; }
+.article-desktop-contents { position: sticky; top: 110px; align-self: start; max-height: calc(100dvh - 130px); overflow-y: auto; }
+.article-desktop-contents > p { color: #f18c62; font-size: .7rem; letter-spacing: .15em; text-transform: uppercase; }
+.article-reading-room nav ol { list-style: none; margin: 0; padding: 0; }
+.article-reading-room nav li { margin: .3rem 0; }
+.article-reading-room nav button { width: 100%; padding: .65rem .75rem; border: 0; border-left: 2px solid transparent; background: transparent; color: #b8c5d2; text-align: left; font: inherit; font-size: .78rem; line-height: 1.6; cursor: pointer; }
+.article-reading-room nav button[aria-current] { border-color: #f18c62; background: #13283b; color: #fff2e4; }
+.article-desktop-contents > a { display: inline-block; margin-top: 1.5rem; font-size: .8rem; color: #f4a37d; }
+.article-page .article-reader-text { min-width: 0; max-width: 740px; text-align: left !important; }
+.article-page .article-reader-text p { color: #d5dbe1; font-family: Georgia, serif; font-size: 1.08rem; line-height: 1.95; text-align: left !important; margin: 0 0 1.4rem; overflow-wrap: break-word; }
+.article-page .article-reader-text .article-reader-note { color: #a6b6c5; font: .78rem/1.7 system-ui, sans-serif; margin-bottom: 2.5rem; }
+.article-page .article-reader-text h2 { scroll-margin-top: 125px; color: #f4a37d; font-family: Georgia, serif; font-size: clamp(1.3rem,2.4vw,1.7rem); line-height: 1.5; letter-spacing: 0; text-align: left !important; margin: 3rem 0 1.5rem; }
+.article-reader-text h2::before, .article-reader-text h2::after { display: none !important; }
+.article-reader-text section:first-of-type h2 { margin-top: 0; }
+.article-footnote-reference { padding: 0 .2rem; border: 0; border-radius: .2rem; background: #24394a; color: #ffb38f; font: bold .76rem/1.4 system-ui,sans-serif; cursor: pointer; }
+.article-reading-room button:focus-visible, .article-reading-room a:focus-visible, .article-reading-room summary:focus-visible { outline: 2px solid #ffb38f; outline-offset: 4px; }
+.article-page .article-endnotes { margin-top: 4rem; padding-top: 1rem; border-top: 1px solid #344353; }
+.article-endnotes ol { padding-left: 1.5rem; }
+.article-endnotes li { margin-bottom: 1.2rem; padding-left: .5rem; color: #c5d0da; font: .9rem/1.8 Georgia,serif; overflow-wrap: anywhere; }
+.article-endnotes a, .article-citation-dialog a { color: #ffb38f; text-decoration: underline; }
+.article-endnotes button { border: 0; background: transparent; color: #ffb38f; cursor: pointer; padding: .3rem; }
+.article-citation-dialog { width: min(600px,calc(100% - 2rem)); max-height: 80dvh; padding: 0; border: 1px solid #697b8d; border-radius: 1rem; background: #102337; color: #e9e2d6; box-shadow: 0 25px 100px #0008; }
+.article-citation-dialog::backdrop { background: #020b16b8; }
+.article-citation-panel { padding: clamp(1.2rem,4vw,2rem); }
+.article-citation-panel > div { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.article-citation-panel h2 { margin: 0; font: 1.25rem Georgia,serif; color: #ffb38f; }
+.article-citation-panel button { padding: .5rem; border: 1px solid #697b8d; border-radius: .4rem; background: transparent; color: #fff; cursor: pointer; }
+.article-citation-panel p { margin: 1.5rem 0 0; font: 1rem/1.8 Georgia,serif; overflow-wrap: anywhere; }
+.article-mobile-contents { display: none; }
+.article-page .article-issue-link { display: inline-block; color: #f4a37d; margin-bottom: 1rem; font-size: .82rem; }
+@media (max-width: 850px) {
+    .article-reader-layout { display: block; padding-top: 1.5rem; }
+    .article-desktop-contents { display: none; }
+    .article-mobile-contents { display: block; margin-top: 1rem; border: 1px solid #344353; border-radius: .6rem; padding: .85rem; }
+    .article-mobile-contents summary { color: #f4a37d; cursor: pointer; font-size: .9rem; }
+    .article-mobile-contents nav { padding-top: .8rem; }
+    .article-page .article-reader-text p { font-size: 1rem; line-height: 1.85; }
+    .article-page .article-reader-text { max-width: 100%; }
+}
+/* Clip decorative page edges without creating a separate scroll container. */
+.article-page:has(.article-reading-room) { overflow: clip; }
+@media (max-width: 850px) {
+    .article-page .article-reader-text { padding-inline: .5rem; }
+}
