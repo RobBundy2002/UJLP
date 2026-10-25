@@ -384,3 +384,6 @@ export const willStaffMember = {
     img: staffPortraits['will-olszewski'],
     link: '/author/will',
 };
+
+// Derek, Shelby, Evan, Will, and Rob are outside the intake list; Casey is already included.
+export const currentTeamMemberCount = newStaffMembers.length + 5;

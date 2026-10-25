@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
 import IssueShelf from '../Components/IssueShelf';
 import { articles, issues } from '../Data/journalData';
+import { currentTeamMemberCount } from '../Data/staffData';
 
 function Home() {
     return (
@@ -43,7 +44,7 @@ function Home() {
                 </div>
                 <div className="jh-stats" aria-label="Journal at a glance">
                     <div><strong>02</strong><span>Articles published</span></div>
-                    <div><strong>06</strong><span>Team members</span></div>
+                    <div><strong>{String(currentTeamMemberCount).padStart(2, '0')}</strong><span>Team members</span></div>
                     <div><strong>04</strong><span>Research areas</span></div>
                 </div>
             </section>
