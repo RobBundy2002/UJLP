@@ -6,12 +6,12 @@
   "dependencies": {
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^14.6.6",
+    "@testing-library/user-event": "^14.6.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.18.3",
+    "react-router-dom": "^7.18.4",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^6.2.2"
   },
   "scripts": {
     "start": "HOST=0.0.0.0 react-scripts start",
