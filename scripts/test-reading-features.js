@@ -78,6 +78,23 @@ const server = http.createServer((req, res) => {
         await page.setViewportSize({ width: 390, height: 844 });
         assert(await page.locator('.issue-landing-intro').evaluate(el => el.scrollWidth <= el.clientWidth + 1));
         await page.screenshot({ animations: 'disabled', path: '/tmp/ujlp-issue-mobile.png', fullPage: true });
+        for (const width of [320, 375, 390, 430, 768]) {
+            await page.setViewportSize({ width, height: 844 });
+            const geometry = await page.locator('.jh-issue').evaluate(root => {
+                const selectors = ['.issue-edition-hero h1', '.issue-landing-cover', '.issue-landing-overview', '.issue-edition-featured', '.issue-edition-contents'];
+                return selectors.map(selector => {
+                    const element = root.querySelector(selector);
+                    const rect = element.getBoundingClientRect();
+                    return { selector, left: rect.left, right: rect.right, center: rect.left + rect.width / 2, overflow: element.scrollWidth > element.clientWidth + 1 };
+                });
+            });
+            for (const item of geometry) {
+                assert(Math.abs(item.center - width / 2) <= 2, `${item.selector} off-center at ${width}px: ${JSON.stringify(item)}`);
+                assert(item.left >= -1 && item.right <= width + 1, `${item.selector} exceeds ${width}px viewport`);
+                assert(!item.overflow, `${item.selector} overflows at ${width}px`);
+            }
+            await page.screenshot({ animations: 'disabled', path: `/tmp/ujlp-issue-mobile-${width}.png`, fullPage: true });
+        }
         await page.getByRole('link', {name:'Explore the contents'}).click();
         await page.waitForFunction(() => document.getElementById('issue-contents').getBoundingClientRect().top < 150);
         assert.equal(new URL(page.url()).hash, '');

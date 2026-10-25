@@ -16,3 +16,65 @@
     .issue-landing-cover { width: min(100%,300px); justify-self: center; }
     .issue-landing-cover > strong { font-size: 2rem; }
 }
+
+/* Keep the issue's stacked layout centered, including narrow phones and tablets. */
+@media (max-width: 780px) {
+    .jh-issue,
+    .jh-issue .section-content,
+    .jh-issue .issue-landing-intro,
+    .jh-issue .issue-landing-cover,
+    .jh-issue .issue-landing-overview {
+        box-sizing: border-box;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .jh-issue .issue-edition-hero .section-content {
+        width: 100%;
+        padding-inline: 0;
+        margin-inline: auto;
+    }
+
+    .jh-issue .issue-landing-intro {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+        gap: 2.5rem;
+    }
+
+    .jh-issue .issue-landing-cover {
+        width: min(100%, 300px);
+        margin-inline: auto;
+        text-align: left;
+        box-shadow: 0 16px 30px #0005;
+    }
+
+    .jh-issue .issue-landing-overview,
+    .jh-issue .issue-edition-featured,
+    .jh-issue .issue-edition-contents {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+
+    .jh-issue .issue-landing-overview > p,
+    .jh-issue .issue-edition-excerpt,
+    .jh-issue .issue-edition-grid,
+    .jh-issue .issue-edition-footer .section-content {
+        margin-inline: auto;
+    }
+
+    .jh-issue .issue-edition-grid {
+        width: 100%;
+        padding: 0;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .jh-issue .issue-section-kicker::after { margin-inline: auto; }
+    .jh-issue .issue-edition-actions,
+    .jh-issue .issue-edition-list p { justify-content: center; }
+    .jh-issue .issue-edition-list li { justify-items: center; }
+    .jh-issue .issue-edition-button { max-width: 100%; box-sizing: border-box; white-space: normal; }
+    .jh-issue .issue-edition-featured h2,
+    .jh-issue .issue-edition-list h3 { overflow-wrap: anywhere; }
+    .jh-issue .issue-edition-footer .section-content { box-sizing: border-box; width: 100%; }
+}
