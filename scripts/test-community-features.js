@@ -9,7 +9,7 @@ const { startBuildServer } = require('./build-preview-server');
 const output = fs.mkdtempSync(path.join(os.tmpdir(), 'ujlp-community-build-'));
 const memberId = '00000000-0000-4000-8000-000000000001';
 const adminId = '00000000-0000-4000-8000-000000000003';
-const profile = { id: 'profile-example', user_id: memberId, full_name: 'Example Member', status: 'current', profile_type: 'uva-undergraduate-alumni', directory_visible: true, affiliated_with_ujlp: true, verification_status: 'verified', photo_key: 'blank' };
+const profile = { id: 'profile-example', user_id: memberId, full_name: 'Example Member', status: 'current', profile_type: 'uva-undergraduate-alumni', directory_visible: true, affiliated_with_ujlp: true, verification_status: 'verified', photo_key: 'rob-bundy', class_year: '2027', undergrad_major: 'Computer Science', ujlp_role: 'Director of Technology', preferred_email: 'member@example.test', path_type: 'current-student', bio: 'Synthetic member for local testing only' };
 const adminProfile = { ...profile, id: 'profile-admin', user_id: adminId, full_name: 'Example Administrator' };
 let reviews = [];
 let meetings = [];
@@ -53,6 +53,7 @@ async function setupPage(browser, base, role) {
             }
         } else if (url.pathname.endsWith('/alumni_profiles')) {
             const id = url.searchParams.get('user_id')?.replace('eq.', '');
+            if (request.method() === 'PATCH') { Object.assign(profile, body); }
             result = [profile, adminProfile].filter(item => !id || item.user_id === id);
         } else if (url.pathname.endsWith('/alumni_affiliation_reviews')) result = reviews;
         else if (url.pathname.endsWith('/rpc/request_affiliation_review')) {
@@ -89,6 +90,19 @@ async function setupPage(browser, base, role) {
         await member.page.getByRole('button', { name: 'Request review', exact: true }).click();
         await member.page.getByRole('button', { name: 'Review pending', exact: true }).waitFor();
         assert.equal(await member.page.getByRole('button', { name: 'Confirm affiliation' }).count(), 0);
+        await member.page.goto(server.url + '/alumni/profile');
+        await member.page.getByLabel('Graduate School', { exact: true }).fill('Example Graduate School');
+        await member.page.getByLabel('Law School', { exact: true }).fill('Example Law School');
+        await member.page.getByLabel('Company / employer', { exact: true }).fill('Example Company');
+        await member.page.getByLabel('Job Title', { exact: true }).fill('Research Analyst');
+        assert(await member.page.locator('.alumni-profile-form select').first().evaluate(el => getComputedStyle(el).appearance === 'none' && parseFloat(getComputedStyle(el).paddingRight) >= 40));
+        await member.page.getByRole('button', { name: 'Save profile', exact: true }).click();
+        await member.page.getByText('Profile saved.', { exact: true }).waitFor();
+        await member.page.reload();
+        await member.page.getByLabel('Graduate School', { exact: true }).waitFor();
+        assert.equal(await member.page.getByLabel('Graduate School', { exact: true }).inputValue(), 'Example Graduate School');
+        assert.equal(await member.page.getByLabel('Law School', { exact: true }).inputValue(), 'Example Law School');
+        assert.equal(await member.page.getByLabel('Company / employer', { exact: true }).inputValue(), 'Example Company');
         await member.context.close();
 
         const admin = await setupPage(browser, server.url, 'admin');
@@ -98,6 +112,7 @@ async function setupPage(browser, base, role) {
         await admin.page.locator('.meeting-editor').getByLabel('Summary', { exact: true }).fill('Synthetic test content; never published to the real backend.');
         await admin.page.locator('.meeting-editor').getByLabel('Meeting notes', { exact: true }).fill('Example notes for testing.');
         await admin.page.locator('.meeting-editor').getByLabel('Follow-up questions', { exact: true }).fill('What should the next workshop cover?');
+        await admin.page.getByText('Use existing recording or slide links instead (optional)', { exact: true }).click();
         await admin.page.locator('.meeting-editor').getByLabel('Slides URL').fill('https://example.com/slides');
         await admin.page.getByRole('button', { name: 'Add resource', exact: true }).click();
         await admin.page.locator('.meeting-editor').getByLabel('Resource title').fill('Example reading');

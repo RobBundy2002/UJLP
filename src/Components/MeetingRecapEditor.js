@@ -54,8 +54,6 @@ export default function MeetingRecapEditor({ initial, session, onSave, onCancel 
             <label>Title<input required value={draft.title} onChange={event => update('title', event.target.value)} /></label>
             <label>Date<input required type="date" value={draft.meeting_date} onChange={event => update('meeting_date', event.target.value)} /></label>
             <label>Type<select value={draft.kind} onChange={event => update('kind', event.target.value)}>{['Meeting', 'Workshop', 'Panel'].map(kind => <option key={kind}>{kind}</option>)}</select></label>
-            <label>Recording URL<input type="url" placeholder="https://" value={draft.recording_url} onChange={event => update('recording_url', event.target.value)} /></label>
-            <label>Slides URL<input type="url" placeholder="https://" value={draft.slides_url} onChange={event => update('slides_url', event.target.value)} /></label>
         </div>
         <label>Summary<textarea required rows={3} value={draft.summary} onChange={event => update('summary', event.target.value)} /></label>
         <label>Meeting notes<textarea rows={5} value={draft.notes} onChange={event => update('notes', event.target.value)} /></label>
@@ -73,6 +71,12 @@ export default function MeetingRecapEditor({ initial, session, onSave, onCancel 
             </>}
             {(draft.uploaded_files || []).length > 0 && <ul>{draft.uploaded_files.map(file => <li key={file.path}><span>{file.name} · {file.kind}</span><button type="button" disabled={busy} aria-label={`Remove attachment ${file.name}`} onClick={() => update('uploaded_files', draft.uploaded_files.filter(item => item.path !== file.path))}>Remove attachment</button></li>)}</ul>}
         </fieldset>
+        <details className="meeting-external-links">
+            <summary>Use existing recording or slide links instead (optional)</summary>
+            <p>For example, an existing YouTube recording or a shared Google Slides presentation. You can upload files above without using these fields.</p>
+            <label>Recording URL<input type="url" placeholder="https://" value={draft.recording_url} onChange={event => update('recording_url', event.target.value)} /></label>
+            <label>Slides URL<input type="url" placeholder="https://" value={draft.slides_url} onChange={event => update('slides_url', event.target.value)} /></label>
+        </details>
         <label className="community-checkbox"><input type="checkbox" checked={draft.published} onChange={event => update('published', event.target.checked)} />Publish on the public archive</label>
         <div className="community-actions"><button disabled={busy} type="submit">{busy ? 'Saving…' : 'Save recap'}</button><button disabled={busy} type="button" onClick={onCancel}>Cancel</button></div>
         {message && <p role="alert">{message}</p>}

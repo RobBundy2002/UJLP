@@ -1267,6 +1267,8 @@ function AlumniDirectory() {
             ['Employer / school', getAlumniPrimaryOrg(activeProfile)],
             ['Major or program', activeProfile.undergradMajor],
             ['Highest degree', activeProfile.degreeTitle],
+        ...(activeProfile.gradSchool ? [['Graduate school', activeProfile.gradSchool]] : []),
+        ...(activeProfile.lawSchool ? [['Law school', activeProfile.lawSchool]] : []),
             ['Location', activeProfile.location],
             ['Updated', formatUpdatedDate(activeProfile.updatedAt)]
         ];

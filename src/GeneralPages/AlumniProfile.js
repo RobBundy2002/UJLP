@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
+import ProfileEmploymentFields from '../Components/ProfileEmploymentFields';
+import { undergraduateCareerDetails } from '../Data/alumniCareer';
 import { pathTypeLabels } from '../Data/alumniDemoData';
 import {
     getAlumniPrimaryOrg,
@@ -13,9 +15,7 @@ import { getAlumniPhoto } from '../Data/alumniPhotoRegistry';
 import {
     anticipatedPathOptions,
     degreeTitleOptions,
-    employerIndustryOptions,
     formatLocationSearchResult,
-    jobSectorOptions,
     normalizeLocationInput,
     profileTypeOptions,
     ujlpRoleOptions,
@@ -135,8 +135,7 @@ const getProfileDefaultsForType = (profileType) => {
 const getJobsForDraft = (profileDraft) => {
     if (!profileDraft) return [];
     if (Array.isArray(profileDraft.jobs) && profileDraft.jobs.length > 0) return profileDraft.jobs;
-    if (profileDraft.profileType === 'uva-law-student' || profileDraft.profileType === 'unaffiliated') return [emptyJob()];
-    return [];
+    return [emptyJob()];
 };
 
 const jobSectorToPathType = (sector) => {
@@ -253,7 +252,6 @@ function AlumniProfile() {
 
         let isMounted = true;
         setLoading(true);
-        setProfileMessage('');
         fetchAlumniProfiles(session)
             .then(rows => {
                 if (isMounted) setProfiles(rows);
@@ -568,11 +566,7 @@ function AlumniProfile() {
         if (profileDraft.profileType === 'uva-undergraduate-alumni') {
             return {
                 ...baseProfile,
-                currentTitle: profileDraft.status === 'current' ? 'Undergraduate Student' : 'UVA Alumni',
-                currentOrg: 'University of Virginia',
-                industry: profileDraft.status === 'current' ? 'Current Student' : 'UVA Alumni',
-                lawSchool: '',
-                gradSchool: '',
+                ...undergraduateCareerDetails(profileDraft, jobs),
                 undergraduateSchool: '',
                 affiliatedWithUjlp: true
             };
@@ -671,6 +665,8 @@ function AlumniProfile() {
         ['Employer / school', getAlumniPrimaryOrg(previewProfile)],
         ['Major or program', previewProfile.undergradMajor],
         ['Highest degree', previewProfile.degreeTitle],
+        ...(previewProfile.gradSchool ? [['Graduate school', previewProfile.gradSchool]] : []),
+        ...(previewProfile.lawSchool ? [['Law school', previewProfile.lawSchool]] : []),
         ['Location', previewProfile.location],
         ['Updated', formatUpdatedDate(previewProfile.updatedAt)]
     ] : [];
@@ -986,6 +982,10 @@ function AlumniProfile() {
         </>
     );
 
+    const renderEmploymentFields = () => (
+        <ProfileEmploymentFields jobs={getJobsForDraft(profileDraft)} onChange={updateJob} onAdd={addJob} onRemove={removeJob} />
+    );
+
     const renderUndergraduateAlumniFields = () => {
         const selectedPath = anticipatedPathOptions.some(([value]) => value === profileDraft.pathType)
             ? anticipatedPathOptions
@@ -1036,14 +1036,21 @@ function AlumniProfile() {
                         ))}
                     </select>
                 </label>
+                <label>
+                    <span>Graduate School</span>
+                    <input value={profileDraft.gradSchool || ''} onChange={event => updateDraft('gradSchool', event.target.value)} />
+                </label>
+                <label>
+                    <span>Law School</span>
+                    <input value={profileDraft.lawSchool || ''} onChange={event => updateDraft('lawSchool', event.target.value)} />
+                </label>
+                {renderEmploymentFields()}
                 {renderContactFields()}
             </>
         );
     };
 
     const renderLawStudentFields = () => {
-        const jobs = getJobsForDraft(profileDraft);
-
         return (
             <>
                 <label>
@@ -1084,37 +1091,13 @@ function AlumniProfile() {
                         {renderRoleSelect(true)}
                     </div>
                 )}
-                <div className="alumni-job-list alumni-wide">
-                    {jobs.map((job, index) => (
-                        <div className="alumni-job-entry" key={`law-job-${index}`}>
-                            <label>
-                                <span>Employer</span>
-                                <input value={job.employer || ''} onChange={(event) => updateJob(index, 'employer', event.target.value)} />
-                            </label>
-                            <label>
-                                <span>Employer Industry</span>
-                                <select value={job.industry || ''} onChange={(event) => updateJob(index, 'industry', event.target.value)}>
-                                    <option value="">Select industry</option>
-                                    {getSelectOptions(employerIndustryOptions, job.industry).map(industry => (
-                                        <option key={industry} value={industry}>{industry}</option>
-                                    ))}
-                                </select>
-                            </label>
-                            {jobs.length > 1 && (
-                                <button type="button" className="alumni-secondary-action alumni-job-remove" onClick={() => removeJob(index)}>Remove job</button>
-                            )}
-                        </div>
-                    ))}
-                    <button type="button" className="alumni-secondary-action alumni-add-job" onClick={addJob}>+ Add another job</button>
-                </div>
+                {renderEmploymentFields()}
                 {renderContactFields()}
             </>
         );
     };
 
     const renderUnaffiliatedFields = () => {
-        const jobs = getJobsForDraft(profileDraft);
-
         return (
             <>
                 <label>
@@ -1130,42 +1113,7 @@ function AlumniProfile() {
                     <span>Graduate or Law School</span>
                     <input value={profileDraft.gradSchool || ''} onChange={(event) => updateDraft('gradSchool', event.target.value)} />
                 </label>
-                <div className="alumni-job-list alumni-wide">
-                    {jobs.map((job, index) => (
-                        <div className="alumni-job-entry alumni-job-entry-wide" key={`unaffiliated-job-${index}`}>
-                            <label>
-                                <span>Employer</span>
-                                <input value={job.employer || ''} onChange={(event) => updateJob(index, 'employer', event.target.value)} />
-                            </label>
-                            <label>
-                                <span>Employer Industry</span>
-                                <select value={job.industry || ''} onChange={(event) => updateJob(index, 'industry', event.target.value)}>
-                                    <option value="">Select industry</option>
-                                    {getSelectOptions(employerIndustryOptions, job.industry).map(industry => (
-                                        <option key={industry} value={industry}>{industry}</option>
-                                    ))}
-                                </select>
-                            </label>
-                            <label>
-                                <span>Job Title</span>
-                                <input value={job.title || ''} onChange={(event) => updateJob(index, 'title', event.target.value)} />
-                            </label>
-                            <label>
-                                <span>Job Sector</span>
-                                <select value={job.sector || ''} onChange={(event) => updateJob(index, 'sector', event.target.value)}>
-                                    <option value="">Select sector</option>
-                                    {getSelectOptions(jobSectorOptions, job.sector).map(sector => (
-                                        <option key={sector} value={sector}>{sector}</option>
-                                    ))}
-                                </select>
-                            </label>
-                            {jobs.length > 1 && (
-                                <button type="button" className="alumni-secondary-action alumni-job-remove" onClick={() => removeJob(index)}>Remove job</button>
-                            )}
-                        </div>
-                    ))}
-                    <button type="button" className="alumni-secondary-action alumni-add-job" onClick={addJob}>+ Add another job</button>
-                </div>
+                {renderEmploymentFields()}
                 {renderContactFields()}
             </>
         );
