@@ -16,7 +16,7 @@ There are no seeded or invented meeting recaps. An empty archive is intentional 
 4. Uploads are private immediately. Save the recap to attach them to the record.
 5. Check **Publish on the public archive** and save to make the recap and its attached files available to visitors.
 
-Supported files: PDF, PPT/PPTX, DOC/DOCX, TXT, MP4, WebM, MP3, and WAV. The configured limit is **50 MiB per file**; the Supabase project's global limit can be lower. Use the recording URL field for larger recordings. Uploads use standard transfers; resumable uploads are not included in this version.
+Supported files: PDF, PPT/PPTX, DOC/DOCX, TXT, MP4, WebM, MP3, and WAV. The configured limit is **50 MiB per file**; the Supabase project's global limit can be lower. Slides and recordings are added through file uploads. Uploads use standard transfers; resumable uploads are not included in this version.
 
 Files go to the private `meeting-materials` bucket in your existing Supabase project, not Git. Storage policies allow only existing administrators to upload. A visitor can obtain a five-minute download URL only for a file explicitly attached to a published recap. The filename and download link appear on the recap automatically; there is no repo editing required for each file.
 
@@ -38,7 +38,7 @@ If someone submits a different affiliation after being verified, the existing ve
 
 ## Database rollout — required before production use
 
-The migration is prepared in this repository; it has **not** been applied to a live database by this change.
+Both migrations were applied to the existing UJLP Supabase project on October 31, 2026. Live verification confirmed both tables, the private `meeting-materials` bucket, and all three attachment policies. The API schema cache was refreshed. Other Supabase projects still require the setup below.
 
 1. Complete [the alumni database setup](alumni-database-setup.md), including the `is_alumni_directory_admin()` function and update timestamp trigger function.
 2. Confirm the backend administrator allowlist is correct. The React `REACT_APP_ALUMNI_ADMIN_EMAILS` list controls UI visibility only; it must agree with server authorization.
