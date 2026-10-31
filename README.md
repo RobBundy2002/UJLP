@@ -10,7 +10,7 @@ The Undergraduate Journal of Law & Politics (UJLP) is a University of Virginia p
 
 We create space for undergraduate writers to ask difficult questions, follow evidence wherever it leads, and connect legal doctrine to the larger worlds of history, philosophy, economics, public policy, and human experience. The result is scholarship that is rigorous without being narrow—and a community that believes thoughtful disagreement is part of the work.
 
-**[Explore the journal](https://ujlawandpolitics.org/#/journal)** · **[Join the team](https://ujlawandpolitics.org/#/jointheteam)** · **[Follow us on Instagram](https://www.instagram.com/ujlawandpoliticsatuva/)**
+**[Explore the journal](https://ujlawandpolitics.org/journal)** · **[Join the team](https://ujlawandpolitics.org/jointheteam)** · **[Follow us on Instagram](https://www.instagram.com/ujlawandpoliticsatuva/)**
 
 ---
 
@@ -28,9 +28,29 @@ We create space for undergraduate writers to ask difficult questions, follow evi
 
 ![UJLP article page](docs/screenshots/article-desktop.png)
 
+### Issue landing page
+
+![UJLP issue landing page](docs/screenshots/issue-desktop.png)
+
+### Meetings and events
+
+![UJLP meeting archive, before recaps are published](docs/screenshots/announcements-desktop.png)
+
 ### Mobile
 
 ![UJLP mobile home page](docs/screenshots/home-mobile.png)
+
+Screenshots show a dated local source snapshot. The meeting archive uses an empty fixture, not production data. See the [visual history](docs/HISTORY_CHANGELOG.md) and [snapshot manifest](docs/changelog-assets/history-screenshots/2026-10-31/manifest.json) for provenance.
+
+## Current site features
+
+- Public journal, permanent issue pages, complete-issue PDF downloads, and author profiles.
+- Original PDF view by default, with an optional online reader, section navigation, and 88 citation previews across the two published articles.
+- Public [meeting and event recaps](https://ujlawandpolitics.org/announcements): approved recordings, slides, notes, resources, and follow-up questions, inside Announcements, with direct admin file uploads, private drafts, and publishing controls.
+- A signed-in member network with profiles, directory filters, feed, calendar, resources, weekly tasks, and notifications.
+- Affiliation review requests, admin confirmation/revocation, and explicit verified or self-reported labels. Backend migration is required; existing profiles are not automatically verified.
+
+For backend setup and rollout checks, see [community features](docs/community-features.md) and the [alumni database setup](docs/alumni-database-setup.md). These repository changes do not apply migrations or publish the site automatically.
 
 ## Our purpose
 
@@ -52,7 +72,7 @@ Our journal explores the intersection of law and politics across a growing range
 
 Recent work includes Derek Tsai’s *Unequal Opportunity: Desegregation at the University of Virginia School of Law, 1950–1960* and Shelby Eliasek’s *Schoolhouse Secrets: Parental Rights and Gender Identity Disclosure in the American Classroom*.
 
-Read the latest work in the [journal](https://ujlawandpolitics.org/#/journal), browse the [archives](https://ujlawandpolitics.org/#/archives), or visit an author’s profile to learn more about the research behind each piece.
+Read the latest work in the [journal](https://ujlawandpolitics.org/journal), browse the [archives](https://ujlawandpolitics.org/journal/index), or visit an author’s profile to learn more about the research behind each piece.
 
 ## A student-led editorial community
 
@@ -64,7 +84,7 @@ The Journal is a place to publish, but it is also a place to practice: close rea
 
 Whether you are developing your first research question, polishing a draft, looking for an editorial community, or simply interested in the ideas our members are pursuing, there is a place for you here.
 
-**[Meet the team](https://ujlawandpolitics.org/#/about)** · **[Submit your work or apply](https://ujlawandpolitics.org/#/jointheteam)** · **[Contact UJLP](mailto:ujlawandpolitics@gmail.com)**
+**[Meet the team](https://ujlawandpolitics.org/about)** · **[Submit your work or apply](https://ujlawandpolitics.org/jointheteam)** · **[Contact UJLP](mailto:ujlawandpolitics@gmail.com)**
 
 ## Visit the publication
 
@@ -76,7 +96,7 @@ You can also find UJLP on [Instagram](https://www.instagram.com/ujlawandpolitics
 
 ## For contributors
 
-This repository contains the React application that powers the UJLP website. The site includes the journal, article pages, author profiles, announcements, team information, and contact pages.
+This repository contains the React application that powers the UJLP website. The site includes the journal, article readers, author profiles, public meeting recaps, announcements, team information, and an authenticated member network.
 
 ### Technology
 
@@ -87,7 +107,8 @@ This repository contains the React application that powers the UJLP website. The
 | Build tooling | Create React App / react-scripts |
 | Deployment | GitHub Pages |
 | CI/CD | GitHub Actions |
-| Content | Structured JavaScript metadata and static PDFs |
+| Content | Structured JavaScript metadata, extracted article text, and static PDFs |
+| Member data and meeting recaps | Supabase Auth, Postgres, and Row Level Security; local preview when unconfigured |
 | Domain | ujlawandpolitics.org |
 
 ### Architecture
@@ -124,9 +145,20 @@ The development server runs at `http://localhost:3000`.
 npm run validate
 npm test -- --watchAll=false
 npm run build
+npm run test:reading
+npm run test:community
 ```
 
 `npm run validate` checks the journal metadata, article routes, author routes, research-area references, and PDF asset references before production builds run.
+
+### Refresh screenshots and preserve history
+
+```bash
+npm run build
+npm run screenshots
+```
+
+The screenshot command serves the local build automatically, refreshes `docs/screenshots/`, and saves a dated snapshot plus a source-commit/working-tree manifest under `docs/changelog-assets/history-screenshots/YYYY-MM-DD/`. Backend data is replaced with empty fixtures; private member information is not captured. Set `SCREENSHOT_DATE=YYYY-MM-DD` to label a snapshot or `SCREENSHOT_BASE_URL` to use an existing local server.
 
 ### Deployment
 
@@ -155,7 +187,9 @@ GitHub Pages should be configured in the repository settings to use **GitHub Act
 - `src/Components/` contains reusable navigation, search, journal, and editorial components.
 - `src/Styling/` contains the site’s visual system and responsive layouts.
 - `scripts/validate-content.js` guards against broken journal metadata and missing PDF assets.
-- `scripts/capture-screenshots.js` captures README screenshots from a locally served production build.
+- `scripts/capture-screenshots.js` refreshes README screenshots and dated visual-history snapshots.
+- `docs/community-features.sql` and `docs/community-storage.sql` contain the recap, protected affiliation review, and private file-bucket migrations for the existing Supabase project.
+- `docs/community-features.md` documents rollout, permissions, and verification workflows.
 
 ### Repository maintenance
 

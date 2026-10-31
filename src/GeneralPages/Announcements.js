@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import '../Styling/Announcements.css';
 import '../Styling/EditorialPages.css';
 import ParticleBackground from '../Components/ParticleBackground';
+import MeetingArchive from '../Components/MeetingArchive';
 import { ALUMNI_SESSION_EVENT, getStoredAlumniSession, isAlumniAdmin } from '../Services/alumniApi';
 import { deletePortalItem, fetchPortalContent, fetchPublicAnnouncements, savePortalItem } from '../Services/alumniPortalApi';
 
@@ -197,8 +198,9 @@ function Announcements() {
                         <p className="jh-eyebrow jh-announcements-kicker"><strong>UJLP</strong> / Newsroom</p>
                         <h1>Announcements</h1>
                         <p className="hero-content">
-                            Updates, events, deadlines, and opportunities from the Undergraduate Journal of Law and Politics.
+                            Updates, upcoming events, deadlines, and meeting materials from the Undergraduate Journal of Law and Politics.
                         </p>
+                        <a className="announcement-recaps-link" href="#meeting-recaps">Browse meeting recaps ↓</a>
                     </div>
                     <div className="announcements-hero-panel">
                         <span>Latest bulletin</span>
@@ -239,6 +241,7 @@ function Announcements() {
             </section>
 
             {renderAdminTools()}
+            <MeetingArchive />
         </div>
     );
 }

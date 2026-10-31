@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-31",
+  "sourceCommit": "cbf28689efd91de97e4059df0530423862337595",
+  "workingTreeChanges": true,
+  "description": "Local working-tree snapshot. Public backend requests use empty fixtures; no real member data or invented meetings.",
+  "screenshots": [
+    {
+      "file": "home-desktop.png",
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 950
+      }
+    },
+    {
+      "file": "journal-desktop.png",
+      "route": "/journal",
+      "viewport": {
+        "width": 1440,
+        "height": 950
+      }
+    },
+    {
+      "file": "article-desktop.png",
+      "route": "/schoolhousesecrets",
+      "viewport": {
+        "width": 1440,
+        "height": 950
+      }
+    },
+    {
+      "file": "issue-desktop.png",
+      "route": "/journal/issue/2026-1",
+      "viewport": {
+        "width": 1440,
+        "height": 950
+      }
+    },
+    {
+      "file": "announcements-desktop.png",
+      "route": "/announcements",
+      "viewport": {
+        "width": 1440,
+        "height": 950
+      }
+    },
+    {
+      "file": "home-mobile.png",
+      "route": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "issue-mobile.png",
+      "route": "/journal/issue/2026-1",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "file": "announcements-mobile.png",
+      "route": "/announcements",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      }
+    }
+  ]
+}

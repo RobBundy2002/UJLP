@@ -20,7 +20,8 @@
     "eject": "react-scripts eject",
     "validate": "node scripts/validate-content.js",
     "screenshots": "node scripts/capture-screenshots.js",
-    "test:reading": "node scripts/test-reading-features.js"
+    "test:reading": "node scripts/test-reading-features.js",
+    "test:community": "node scripts/test-community-features.js"
   },
   "eslintConfig": {
     "extends": [

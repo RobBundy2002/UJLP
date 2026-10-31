@@ -22,6 +22,8 @@ coverage/
 
 # Local database setup scripts
 *.sql
+!docs/community-features.sql
+!docs/community-storage.sql
 docs/*.txt
 
 # Logs

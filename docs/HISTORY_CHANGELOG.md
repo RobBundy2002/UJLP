@@ -1,6 +1,6 @@
 # UJLP Complete Visual Changelog
 
-This is a visual and historical changelog for the UJLP website from the first commit on `main` through the current `main` head.
+This records the original UJLP source history through the September 12, 2026 baseline, followed by dated local working-tree snapshots. Historical screenshots are preserved; a working-tree snapshot is not a tagged release.
 
 Generated from local `main` at `383c3acf` on the 2026-09-12 commit history. The review used a temporary clone, checked out historical `main` source points, ran each version locally, and captured full-page desktop screenshots with headless Chromium.
 
@@ -423,3 +423,33 @@ Most release tags resolve cleanly to source commits on `main`. `v1.0.0` is the e
 - [`V2.1.0`](changelog-assets/history-screenshots/release-v2-1-0.jpg)
 - [`v3.0.0`](changelog-assets/history-screenshots/release-v3-0-0.jpg)
 - [Current main](changelog-assets/history-screenshots/current-main-2026-09-12.jpg)
+
+## October 31, 2026 — Working-tree snapshot
+
+This snapshot extends the September baseline without relabeling its historical commits. It captures the current local source, including uncommitted changes; it does not claim the changes are deployed. Exact source commit, viewport sizes, routes, and fixture use are recorded in the [manifest](changelog-assets/history-screenshots/2026-10-31/manifest.json).
+
+- Current homepage and journal presentation, including the updated team roster.
+- Issue landing page with a one-line UJLP cover and complete-issue PDF download.
+- PDF-first article page with optional online reading, section navigation, and citation previews.
+- Meeting recaps integrated into Announcements, with a real empty state, admin uploads, and private drafts; no historical meeting content is invented.
+- Affiliation review UI and protected database migration. Database rollout is separate from this visual snapshot.
+
+### Home
+
+![October 2026 homepage](changelog-assets/history-screenshots/2026-10-31/home-desktop.png)
+
+### Journal and issue
+
+![October 2026 journal](changelog-assets/history-screenshots/2026-10-31/journal-desktop.png)
+
+![October 2026 issue page](changelog-assets/history-screenshots/2026-10-31/issue-desktop.png)
+
+### Meeting archive
+
+![Meeting archive before recaps are published](changelog-assets/history-screenshots/2026-10-31/announcements-desktop.png)
+
+### Mobile issue and meeting archive
+
+![Mobile issue page](changelog-assets/history-screenshots/2026-10-31/issue-mobile.png)
+
+![Mobile meeting archive](changelog-assets/history-screenshots/2026-10-31/announcements-mobile.png)

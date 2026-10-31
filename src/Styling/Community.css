@@ -1,0 +1,59 @@
+.meetings-page {
+    box-sizing: border-box;
+    min-width: 0;
+    width: min(100%, 76rem);
+    margin-inline: auto;
+    padding: 3rem clamp(1.25rem, 5vw, 4rem) 4rem;
+    color: #e8e3da;
+}
+.meetings-heading { width: 100%; max-width: 46rem; margin-bottom: 4rem; }
+.meetings-heading > h2 { font: 400 clamp(2rem, 4vw, 3rem)/1.05 Georgia, serif; letter-spacing: -.04em; overflow-wrap: anywhere; }
+.meetings-heading em { color: #f4a37d; }
+.meetings-heading > p:not(.jh-section-label), .meeting-card > p, .meeting-empty p { max-width: 43rem; color: #b8c6d2; line-height: 1.85; }
+.meetings-page a { color: #f4a37d; }
+.meeting-empty { padding: clamp(1.5rem, 4vw, 3rem); border: 1px solid #344657; background: #0d1f32; border-radius: .75rem; }
+.meeting-empty > span, .meeting-meta { color: #a8b8c8; font-size: .75rem; letter-spacing: .06em; }
+.meeting-empty h2 { font: 400 clamp(1.6rem, 3vw, 2.5rem)/1.2 Georgia, serif; margin-top: 1rem; }
+.meeting-list { display: grid; gap: 1.5rem; }
+.meeting-card { min-width: 0; border-top: 1px solid #344657; padding: 2rem 0; overflow-wrap: anywhere; }
+.meeting-card h2 { font: 400 clamp(1.6rem, 3vw, 2.3rem)/1.25 Georgia, serif; margin-block: 1rem; }
+.meeting-card h3 { color: #f4a37d; margin-top: 1.5rem; }
+.meeting-meta, .meeting-links, .community-actions, .meeting-admin { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.meeting-links { margin: 1.5rem 0; }
+.meeting-card details { padding: 1rem; background: #102337; border-radius: .5rem; }
+.meeting-card summary { cursor: pointer; color: #f4a37d; }
+.meeting-notes { white-space: pre-wrap; line-height: 1.85; }
+.meeting-card li { margin-block: .75rem; }
+.meeting-admin { margin-bottom: 2rem; font-size: .85rem; color: #b8c6d2; }
+.meeting-filters, .meeting-form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.meeting-filters { margin-bottom: 2rem; }
+.meetings-page label, .affiliation-review label { display: flex; flex-direction: column; gap: .6rem; color: #c4cfda; font-size: .85rem; }
+.meetings-page input, .meetings-page textarea, .meetings-page select, .affiliation-review select { box-sizing: border-box; width: 100%; min-width: 0; border: 1px solid #536679; border-radius: .35rem; padding: .75rem; background: #0c1d30; color: #f7f1e7; font: inherit; }
+.meetings-page textarea { resize: vertical; }
+.meetings-page button, .affiliation-review button { border: 1px solid #64758a; border-radius: .4rem; padding: .75rem 1rem; background: #16334c; color: #f7f1e7; cursor: pointer; font: inherit; }
+.meetings-page button:disabled, .affiliation-review button:disabled { opacity: .6; cursor: default; }
+.meeting-editor { display: grid; gap: 1.25rem; margin-bottom: 3rem; padding: 1.5rem; border: 1px solid #536679; border-radius: .75rem; background: #102337; }
+.meeting-editor > p { color: #b8c6d2; line-height: 1.7; }
+.meeting-editor fieldset { min-width: 0; border: 1px solid #536679; padding: 1rem; }
+.meeting-resource-row { display: grid; grid-template-columns: 1fr 1fr auto; align-items: end; gap: .75rem; margin-bottom: 1rem; }
+.meeting-editor .community-checkbox { flex-direction: row; align-items: center; }
+.meeting-editor input[type=checkbox] { width: auto; }
+.meetings-page :focus-visible, .affiliation-review :focus-visible { outline: 2px solid #f4a37d; outline-offset: 4px; }
+.affiliation-badge { color: #a8e4d0 !important; border: 1px solid #427d6e; background: #123b35; padding: .3rem .5rem; border-radius: .35rem; font-size: .7rem; }
+.affiliation-unverified { color: #a8b8c8; font-size: .7rem; }
+.affiliation-review { border: 1px solid #536679; background: #102337; padding: 1.25rem; border-radius: .5rem; margin-block: 1.5rem; }
+.affiliation-review p { color: #c2ced9; font-size: .85rem; line-height: 1.7; }
+.affiliation-review form { display: flex; align-items: end; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; }
+@media (max-width: 650px) {
+    .meetings-page { padding-top: 2rem; }
+    .meeting-filters, .meeting-form-grid, .meeting-resource-row { grid-template-columns: minmax(0, 1fr); }
+    .meeting-editor { padding: 1rem; }
+}
+
+#meeting-recaps { scroll-margin-top: 7rem; }
+.announcement-recaps-link { display: inline-block; margin-top: 1rem; color: #f4a37d; }
+
+.meeting-upload label { margin-block: 1rem; }
+.meeting-upload li { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin-block: .75rem; overflow-wrap: anywhere; }
+.meeting-attachments { padding-left: 0; list-style: none; }
+.meeting-attachments button { max-width: 100%; text-align: left; overflow-wrap: anywhere; }

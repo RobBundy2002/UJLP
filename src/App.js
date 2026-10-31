@@ -472,6 +472,7 @@ function App() {
                         <Route path="/journal/index" element={<PublicationIndex />} />
                         <Route path="/journal/issue/:issueId" element={<IssueEdition />} />
                         <Route path="/research/:slug" element={<ResearchArea />} />
+                        <Route path="/meetings" element={<Navigate to="/announcements" replace />} />
                         <Route path="/announcements" element={<Announcements />} />
                         <Route path="/contact" element={<Contact />} />
                         <Route path="/jointheteam" element={<JoinTheTeam />} />

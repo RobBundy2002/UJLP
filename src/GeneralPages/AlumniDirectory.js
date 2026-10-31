@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import ParticleBackground from '../Components/ParticleBackground';
+import { AffiliationBadge, AffiliationReviewPanel, useAffiliationReviews } from '../Components/AffiliationVerification';
 import { pathTypeLabels } from '../Data/alumniDemoData';
 import {
     getAlumniPrimaryOrg,
@@ -38,7 +39,8 @@ const defaultFilters = {
     status: 'all',
     pathType: 'all',
     classYear: 'all',
-    willingOnly: false
+    willingOnly: false,
+    verification: 'all'
 };
 
 const defaultPortalContentState = {
@@ -275,6 +277,8 @@ function AlumniDirectory() {
     const location = useLocation();
     const navigate = useNavigate();
     const [session, setSession] = useState(() => getStoredAlumniSession());
+    const verification = useAffiliationReviews(session);
+    const reviewFor = profile => verification.reviews.find(review => review.user_id === profile.userId);
     const [authMessage, setAuthMessage] = useState('');
     const [profiles, setProfiles] = useState([]);
     const [accessProfile, setAccessProfile] = useState(null);
@@ -431,9 +435,11 @@ function AlumniDirectory() {
             const matchesClass = filters.classYear === 'all' || profile.classYear === filters.classYear;
             const matchesAvailability = !filters.willingOnly || profile.willingToChat;
 
-            return matchesQuery && matchesStatus && matchesPath && matchesClass && matchesAvailability;
+            const review = verification.reviews.find(item => item.user_id === profile.userId);
+            const matchesVerification = filters.verification === 'all' || review?.status === filters.verification;
+            return matchesQuery && matchesStatus && matchesPath && matchesClass && matchesAvailability && matchesVerification;
         });
-    }, [profiles, filters]);
+    }, [profiles, filters, verification.reviews]);
 
     const classYearDistribution = useMemo(() => {
         const counts = profiles.reduce((accumulator, profile) => {
@@ -1125,6 +1131,7 @@ function AlumniDirectory() {
             <div className="alumni-profile-main">
                 <div className="alumni-profile-title">
                     <span>{getAlumniProfileTypeLabel(profile)}</span>
+                    <AffiliationBadge review={reviewFor(profile)} />
                     <span>{getPathLabel(profile)}</span>
                     {profile.isExample && <b>Preview</b>}
                     {!profile.directoryVisible && <b>Hidden</b>}
@@ -1198,6 +1205,14 @@ function AlumniDirectory() {
                             ))}
                         </select>
                     </label>
+                    <label>
+                        <span>Affiliation review</span>
+                        <select aria-label="Affiliation review" value={filters.verification} onChange={event => updateFilter('verification', event.target.value)}>
+                            <option value="all">All affiliations</option>
+                            <option value="verified">Verified affiliations</option>
+                            {isAdmin && <option value="pending">Pending review</option>}
+                        </select>
+                    </label>
                     <label className="alumni-checkbox">
                         <input
                             type="checkbox"
@@ -1267,6 +1282,7 @@ function AlumniDirectory() {
                             <div>
                                 <div className="alumni-profile-title">
                                     <span>{getAlumniProfileTypeLabel(activeProfile)}</span>
+                                    <AffiliationBadge review={reviewFor(activeProfile)} />
                                     <span>{activeProfile.willingToChat ? 'Open to outreach' : 'Not currently open'}</span>
                                     {!activeProfile.directoryVisible && <b>Hidden</b>}
                                     {isAdmin && !isOwnProfile && <b>Admin view</b>}
@@ -1284,6 +1300,7 @@ function AlumniDirectory() {
                             </div>
                         </div>
 
+                        <AffiliationReviewPanel key={activeProfile.userId} profile={activeProfile} review={reviewFor(activeProfile)} session={session} isAdmin={isAdmin} error={verification.error} onChange={verification.reload} />
                         <div className="alumni-profile-view-grid">
                             <div className="alumni-profile-bio">
                                 <span>Bio</span>
