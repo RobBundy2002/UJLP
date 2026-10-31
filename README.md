@@ -104,7 +104,7 @@ This repository contains the React application that powers the UJLP website. The
 | --- | --- |
 | Frontend | React 18 |
 | Routing | React Router |
-| Build tooling | Create React App / react-scripts |
+| Build tooling | Vite / Vitest |
 | Deployment | GitHub Pages |
 | CI/CD | GitHub Actions |
 | Content | Structured JavaScript metadata, extracted article text, and static PDFs |
@@ -143,7 +143,7 @@ The development server runs at `http://localhost:3000`.
 
 ```bash
 npm run validate
-npm test -- --watchAll=false
+npm test
 npm run build
 npm run test:reading
 npm run test:community
@@ -169,7 +169,7 @@ Every push to `main` runs:
 ```text
 npm ci
 npm run validate
-npm test -- --watchAll=false
+npm test
 npm run build
 GitHub Pages artifact upload
 GitHub Pages deployment
@@ -177,7 +177,7 @@ GitHub Pages deployment
 
 Direct pushes to `main` run the standalone CI checks and the production deployment workflow. Pull requests to `main` run validation, test, and build checks without deploying.
 
-GitHub Pages should be configured in the repository settings to use **GitHub Actions** as the Pages source. The custom domain is stored in `public/CNAME`, so Create React App copies it into `build/CNAME` during production builds and the Pages artifact includes it automatically.
+GitHub Pages should be configured in the repository settings to use **GitHub Actions** as the Pages source. The custom domain is stored in `public/CNAME`, so Vite copies it into `build/CNAME` during production builds and the Pages artifact includes it automatically.
 
 ### Project notes
 

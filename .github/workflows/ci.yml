@@ -8,6 +8,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Validate and Build
@@ -30,7 +33,7 @@ jobs:
         run: npm run validate
 
       - name: Run tests
-        run: CI=true npm test -- --watchAll=false
+        run: npm test
 
       - name: Verify production build
         run: npm run build

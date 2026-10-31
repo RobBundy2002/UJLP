@@ -32,5 +32,5 @@ For visual comparison, run `node scripts/automation/visual.cjs capture automatio
 - Accessibility scans cover public states, including the signed-out profile entry point. The community browser tests also scan synthetic member/admin profile and recap forms with Axe. Automated scans and a basic focus check do not replace a manual screen-reader/keyboard review.
 - Link checks can fail because sites block automated requests. Review failures before excluding a URL; private backend URLs are excluded. Dynamic links require browser tests.
 - Site smoke checks report failure but never automatically roll back or change production. GitHub Pages deep links may initially return its 404 redirect shell; checks require successful recovery to the intended route and rendered content.
-- Dependencies and npm audit reports may include vulnerabilities inherited from the existing React Scripts stack. Maintenance reports them; this work does not automatically upgrade or merge dependency changes.
+- The deprecated React Scripts dependency tree has been replaced by Vite and Vitest. Maintenance reports new dependency advisories; it does not automatically upgrade or merge changes. Run `npm audit` to check current findings.
 - Workflow artifacts and summaries provide screenshot review without granting PR jobs write permissions. Fork PRs never receive production secrets.

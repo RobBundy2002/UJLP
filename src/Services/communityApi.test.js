@@ -1,7 +1,6 @@
-process.env.REACT_APP_SUPABASE_URL = 'https://community.example.test';
-const { fetchMeetingRecaps, getMeetingFileUrl, requestAffiliationReview, reviewAffiliation, safeResourceUrl, saveMeetingRecap, uploadMeetingFile } = require('./communityApi');
+import { fetchMeetingRecaps, getMeetingFileUrl, requestAffiliationReview, reviewAffiliation, safeResourceUrl, saveMeetingRecap, uploadMeetingFile } from './communityApi';
 
-jest.mock('./alumniApi', () => ({
+vi.mock('./alumniApi', () => ({
     isSupabaseConfigured: true,
     isAlumniAdmin: session => Boolean(session?.admin)
 }));
@@ -10,8 +9,8 @@ const admin = { admin: true, access_token: 'test-admin' };
 const member = { access_token: 'test-member' };
 const recap = { title: 'Workshop recap', meeting_date: '2026-10-20', kind: 'Workshop', summary: 'Research notes', notes: '', open_questions: '', recording_url: '', slides_url: '', resources: [], published: false };
 
-beforeEach(() => { global.fetch = jest.fn().mockResolvedValue({ ok: true, text: async () => '[]' }); });
-afterEach(() => jest.restoreAllMocks());
+beforeEach(() => { global.fetch = vi.fn().mockResolvedValue({ ok: true, text: async () => '[]' }); });
+afterEach(() => vi.restoreAllMocks());
 
 test('public archive requests only published recaps; admins may fetch drafts', async () => {
     await fetchMeetingRecaps(null);

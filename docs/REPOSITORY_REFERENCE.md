@@ -5,10 +5,9 @@
 
 | Command | Runs |
 | --- | --- |
-| `npm run start` | `HOST=0.0.0.0 react-scripts start` |
-| `npm run build` | `react-scripts build` |
-| `npm run test` | `react-scripts test` |
-| `npm run eject` | `react-scripts eject` |
+| `npm run start` | `vite --host 0.0.0.0 --port 3000` |
+| `npm run build` | `vite build` |
+| `npm run test` | `vitest run` |
 | `npm run validate` | `node scripts/validate-content.js` |
 | `npm run screenshots` | `node scripts/capture-screenshots.js` |
 | `npm run test:reading` | `node scripts/test-reading-features.js` |

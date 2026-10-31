@@ -2,7 +2,7 @@ import React from 'react';
 import framing from '../Data/portraitFraming.json';
 import '../Styling/Portrait.css';
 
-// CRA retains the original filename before the content hash in image URLs.
+// The build keeps the original filename before the content hash.
 function Portrait({ src, name, className = '' }) {
     const key = src.split('/').pop().split('.')[0];
     const crop = framing[key];

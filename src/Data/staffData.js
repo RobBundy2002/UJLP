@@ -1,4 +1,6 @@
 import blankPortrait from '../ProfilePictures/ProfilePlaceholder.svg';
+import ninaPortrait from '../ProfilePictures/nina-galinsky.png';
+import lindseyPortrait from '../ProfilePictures/lindsey-dufault.jpg';
 import staffPortrait0 from '../ProfilePictures/neelesh-gupta.jpg';
 import staffPortrait1 from '../ProfilePictures/mimi-reschly-krasowski.jpg';
 import staffPortrait2 from '../ProfilePictures/caroline-south.jpg';
@@ -30,6 +32,8 @@ import staffPortrait26 from '../ProfilePictures/skylar-dalil.jpg';
 import staffPortrait27 from '../ProfilePictures/rylie-reid.jpg';
 
 const staffPortraits = {
+    'nina-galinsky': ninaPortrait,
+    'lindsey-dufault': lindseyPortrait,
     'annabelle-bragdon': staffPortrait20,
     'ian-gilstrap': staffPortrait21,
     'ava-ross': staffPortrait22,

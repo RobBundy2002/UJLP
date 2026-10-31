@@ -2,7 +2,7 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { AffiliationBadge } from './AffiliationVerification';
 
-jest.mock('../Services/communityApi', () => ({
+vi.mock('../Services/communityApi', () => ({
     affiliationOptions: [{ value: 'ujlp-current', label: 'Current UJLP member' }]
 }));
 

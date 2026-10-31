@@ -37,7 +37,7 @@ jobs:
         run: npm run validate
 
       - name: Run tests
-        run: CI=true npm test -- --watchAll=false
+        run: npm test
 
       - name: Test database migrations and permissions
         run: npm run test:database
