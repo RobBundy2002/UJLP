@@ -9,3 +9,7 @@ The CI workflow now declares `contents: read`, addressing the open `actions/miss
 Validation passed: production build, 15 unit tests, database permission tests, journal reader checks, synthetic member/admin flows, accessibility scans, documentation freshness, deployment asset checks, and desktop/mobile screenshot comparisons. Existing portrait crop filenames are preserved in Vite output.
 
 Run `npm start` to start the Vite development server on port 3000. Restart any previously running React Scripts server after this tooling change. Run `npm test`, `npm run build`, and `npm audit` to repeat the core checks.
+
+## React 19 follow-up
+
+React and React DOM were upgraded together to 19.3.1, with React Testing Library 16.3.3 and its DOM peer dependency. Installation reported zero vulnerabilities; dependency validation, all 15 unit tests, production build, reader tests, synthetic member/admin tests, accessibility scans, and desktop/mobile visual comparisons passed. Dependabot now groups React and React DOM updates together and no longer requests the missing `dependencies` label.

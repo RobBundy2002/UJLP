@@ -5,5 +5,8 @@ updates:
     directory: /
     schedule:
       interval: monthly
-    labels:
-      - dependencies
+    groups:
+      react:
+        patterns:
+          - react
+          - react-dom

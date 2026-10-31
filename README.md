@@ -102,7 +102,7 @@ This repository contains the React application that powers the UJLP website. The
 
 | Area | Stack |
 | --- | --- |
-| Frontend | React 18 |
+| Frontend | React 19 |
 | Routing | React Router |
 | Build tooling | Vite / Vitest |
 | Deployment | GitHub Pages |

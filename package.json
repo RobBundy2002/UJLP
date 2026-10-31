@@ -4,8 +4,8 @@
   "homepage": "https://ujlawandpolitics.org",
   "private": true,
   "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.4",
     "web-vitals": "^6.2.2"
   },
@@ -43,12 +43,13 @@
     "playwright": "^1.62.1",
     "pngjs": "^7.0.0",
     "@testing-library/jest-dom": "^7.0.1",
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
     "vite": "^8.3.5",
     "@vitejs/plugin-react": "^6.1.2",
     "vitest": "^5.0.5",
-    "jsdom": "^29.1.1"
+    "jsdom": "^29.1.1",
+    "@testing-library/dom": "^10.4.1"
   },
   "engines": {
     "node": ">=22.13.0"
