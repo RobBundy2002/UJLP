@@ -208,3 +208,9 @@ For submissions, partnerships, questions, or general correspondence:
 © 2026 Undergraduate Journal of Law & Politics at the University of Virginia. All rights reserved.
 
 Website designed by [Rob Bundy](https://www.linkedin.com/in/rob-bundy-192035223/).
+
+## Repository automation
+
+See [automation setup and workflows](docs/REPOSITORY_AUTOMATION.md) for visual PR comparisons, database permission checks, deployed-site checks, weekly maintenance, release notes, secret scanning, and accessibility reports. The [generated repository reference](docs/REPOSITORY_REFERENCE.md) lists current commands, browser configuration names, routes, and content counts.
+
+After changing those sources, run `npm run docs:generate`. CI checks documentation drift with `npm run docs:check`. Automation reports are workflow artifacts rather than generated commits.

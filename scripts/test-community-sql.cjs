@@ -1,4 +1,4 @@
-// Run with PGLITE_MODULE pointing to a temporary @electric-sql/pglite install.
+// npm run test:database; PGLITE_MODULE can override the local test engine.
 // This test never connects to Supabase or uses production credentials.
 const { PGlite } = require(process.env.PGLITE_MODULE || '@electric-sql/pglite');
 const fs = require('fs');

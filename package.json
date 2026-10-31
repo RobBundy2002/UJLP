@@ -21,7 +21,13 @@
     "validate": "node scripts/validate-content.js",
     "screenshots": "node scripts/capture-screenshots.js",
     "test:reading": "node scripts/test-reading-features.js",
-    "test:community": "node scripts/test-community-features.js"
+    "test:community": "node scripts/test-community-features.js",
+    "docs:generate": "node scripts/automation/docs.cjs",
+    "docs:check": "node scripts/automation/docs.cjs --check",
+    "test:database": "node scripts/test-community-sql.cjs",
+    "test:accessibility": "node scripts/automation/accessibility.cjs",
+    "test:live": "node scripts/automation/smoke.cjs",
+    "visual:capture": "node scripts/automation/visual.cjs capture"
   },
   "eslintConfig": {
     "extends": [
@@ -42,7 +48,11 @@
     ]
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
     "@babel/plugin-proposal-private-property-in-object": "7.21.11",
-    "playwright": "^1.62.1"
+    "@electric-sql/pglite": "^0.5.14",
+    "pixelmatch": "^8.0.0",
+    "playwright": "^1.62.1",
+    "pngjs": "^7.0.0"
   }
 }

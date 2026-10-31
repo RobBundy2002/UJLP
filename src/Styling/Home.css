@@ -799,7 +799,7 @@
 .jh-join::before { display: none; }
 .jh-join-mark { position: absolute; z-index: -1; left: 50%; top: 50%; color: rgba(244, 163, 125, .07); font-family: "Playfair Display", Georgia, serif; font-size: clamp(8rem, 25vw, 25rem); letter-spacing: -.12em; transform: translate(-52%, -54%); }
 .jh-join-content { max-width: 720px; text-align: center; }
-.jh-join .jh-section-label { color: #be4d29 !important; margin-bottom: 1.4rem; }
+.jh-join .jh-section-label { color: #f18c62 !important; margin-bottom: 1.4rem; }
 .jh-join h2 { color: var(--ink); margin-bottom: 1.3rem; }
 .jh-join h2 em { color: #f4a37d; }
 .jh-join-content > p:not(.jh-section-label) { max-width: 540px; margin: 0 auto 2rem; color: var(--muted) !important; font-size: 1rem; line-height: 1.7; }

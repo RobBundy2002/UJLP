@@ -39,6 +39,9 @@ jobs:
       - name: Run tests
         run: CI=true npm test -- --watchAll=false
 
+      - name: Test database migrations and permissions
+        run: npm run test:database
+
       - name: Build production site
         env:
           REACT_APP_SUPABASE_URL: ${{ secrets.REACT_APP_SUPABASE_URL }}

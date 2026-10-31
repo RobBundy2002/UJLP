@@ -1,0 +1,11 @@
+max_concurrency = 4
+max_retries = 2
+timeout = 25
+exclude_all_private = true
+exclude = [
+  '^https?://localhost',
+  '^https?://127\.0\.0\.1',
+  '^https://[^/]*\.example\.test',
+  '^https://community\.example\.test',
+  '^https://.*\.supabase\.co',
+]

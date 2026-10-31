@@ -243,7 +243,7 @@
 .alumni-account-actions a.active,
 .alumni-account-actions button.active {
     background: var(--alumni-blue);
-    color: #f7f1e7;
+    color: #07111f;
 }
 
 .alumni-auth-panel input,

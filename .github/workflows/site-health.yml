@@ -1,0 +1,25 @@
+name: Deployed site health
+on:
+  workflow_run:
+    workflows: [Build and Deploy UJLP]
+    types: [completed]
+  workflow_dispatch:
+  schedule:
+    - cron: '25 13 * * *'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      # Run trusted default-branch code, never a PR artifact with production credentials.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:live

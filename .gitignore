@@ -38,3 +38,9 @@ pnpm-debug.log*
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Automation reports
+automation-results/
+gitleaks.sarif
+visual-base/
+proposed-build/

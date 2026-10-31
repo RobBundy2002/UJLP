@@ -107,7 +107,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .App .social-links { gap: 1.1rem; }
 .App .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 1.5rem; border-color: rgba(231,222,203,.16); color: #718397; text-align: left; }
 .App .footer-bottom p { color: #718397; font-size: .72rem; }
-.App .footer-bottom a { color: #b8bcc9; }
+.App .footer-bottom a { color: #b8bcc9; text-decoration: underline; text-underline-offset: .18em; }
 
 /* Floating control */
 .back-to-top { width: 56px; height: 56px; border: 1px solid rgba(231,222,203,.3); border-radius: 50%; background: #0c1b30; color: #f18c62; box-shadow: none; }
@@ -1420,7 +1420,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
 .issue-spine-label { display: block; line-height: 1; white-space: nowrap; }
 .issue-spine-rule { width: .7rem; height: 1px; background: currentColor; opacity: .72; }
 .issue-shelf-base { position: relative; height: 1.2rem; border: 1px solid rgba(231,222,203,.23); background: #102034; box-shadow: 0 14px 26px rgba(0,0,0,.28); }
-.issue-shelf-base span { position: absolute; top: 1.7rem; right: 0; color: #617486; font-size: .54rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.issue-shelf-base span { position: absolute; top: 1.7rem; right: 0; color: #8293a5; font-size: .54rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
 .reading-room-note { max-width: 620px; margin: 3.4rem 0 0 auto; color: #718397; font-size: .7rem; line-height: 1.7; text-align: right; }
 
 /* Timeline chapters: history is navigated as an editorial sequence. */
@@ -2971,7 +2971,7 @@ main { width: 100%; max-width: none; margin: 0; padding: 0; transform: none; }
     margin: 1.45rem 0 1rem;
     padding: .95rem 1rem;
     border: 1px solid rgba(241,140,98,.72);
-    background: #bf4e2c;
+    background: #f18c62;
     color: #07111f;
     cursor: pointer;
     font-size: .62rem;

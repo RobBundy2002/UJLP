@@ -4,6 +4,17 @@ const os = require('os');
 const path = require('path');
 const { execFileSync } = require('child_process');
 const { chromium } = require('playwright');
+const AxeBuilder = require('@axe-core/playwright').default;
+
+async function checkFormAccessibility(page, selector) {
+    await page.evaluate(async () => {
+        await document.fonts.ready;
+        await Promise.all(document.getAnimations().filter(animation => animation.effect?.getTiming().iterations !== Infinity).map(animation => animation.finished.catch(() => {})));
+    });
+    const results = await new AxeBuilder({ page }).include(selector).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
+    const serious = results.violations.filter(item => ['serious', 'critical'].includes(item.impact));
+    assert.deepEqual(serious.map(item => ({ id: item.id, nodes: item.nodes.map(node => ({ target: node.target, summary: node.failureSummary })) })), [], `${selector}: accessibility findings`);
+}
 const { startBuildServer } = require('./build-preview-server');
 
 const output = fs.mkdtempSync(path.join(os.tmpdir(), 'ujlp-community-build-'));
@@ -96,6 +107,7 @@ async function setupPage(browser, base, role) {
         await member.page.getByLabel('Company / employer', { exact: true }).fill('Example Company');
         await member.page.getByLabel('Job Title', { exact: true }).fill('Research Analyst');
         assert(await member.page.locator('.alumni-profile-form select').first().evaluate(el => getComputedStyle(el).appearance === 'none' && parseFloat(getComputedStyle(el).paddingRight) >= 40));
+        await checkFormAccessibility(member.page, '.alumni-profile-form');
         await member.page.getByRole('button', { name: 'Save profile', exact: true }).click();
         await member.page.getByText('Profile saved.', { exact: true }).waitFor();
         await member.page.reload();
@@ -112,13 +124,14 @@ async function setupPage(browser, base, role) {
         await admin.page.locator('.meeting-editor').getByLabel('Summary', { exact: true }).fill('Synthetic test content; never published to the real backend.');
         await admin.page.locator('.meeting-editor').getByLabel('Meeting notes', { exact: true }).fill('Example notes for testing.');
         await admin.page.locator('.meeting-editor').getByLabel('Follow-up questions', { exact: true }).fill('What should the next workshop cover?');
-        await admin.page.getByText('Use existing recording or slide links instead (optional)', { exact: true }).click();
-        await admin.page.locator('.meeting-editor').getByLabel('Slides URL').fill('https://example.com/slides');
+        assert.equal(await admin.page.getByLabel('Slides URL', { exact: true }).count(), 0);
+        assert.equal(await admin.page.getByLabel('Recording URL', { exact: true }).count(), 0);
         await admin.page.getByRole('button', { name: 'Add resource', exact: true }).click();
         await admin.page.locator('.meeting-editor').getByLabel('Resource title').fill('Example reading');
         await admin.page.locator('.meeting-editor').getByLabel('Resource URL').fill('https://example.com/reading');
         await admin.page.getByRole('button', { name: 'Save draft & enable uploads', exact: true }).click();
         await admin.page.getByLabel('Choose a file').waitFor();
+        await checkFormAccessibility(admin.page, '.meeting-editor');
         await admin.page.getByLabel('Choose a file').setInputFiles({ name: 'test-slides.pdf', mimeType: 'application/pdf', buffer: Buffer.from('%PDF-1.4\nSynthetic test fixture') });
         await admin.page.getByText('File uploaded privately.', { exact: false }).waitFor();
         await admin.page.getByRole('button', { name: 'Save recap', exact: true }).click();

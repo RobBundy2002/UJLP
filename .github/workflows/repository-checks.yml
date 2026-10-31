@@ -1,0 +1,59 @@
+name: Repository checks
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  database:
+    name: Database permissions
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test:database
+  browser:
+    name: Browser and accessibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run docs:check
+      - run: npm run build
+      - run: npm run test:reading
+      - run: npm run test:community
+      - run: npm run test:accessibility
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-report
+          path: automation-results/accessibility.json
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # Use the open-source CLI image; no organization action license required.
+      - run: docker run --rm -v "$PWD:/repo" zricethezav/gitleaks:v8.24.3 git /repo --redact --report-format sarif --report-path /repo/gitleaks.sarif
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: secret-scan-redacted
+          path: gitleaks.sarif

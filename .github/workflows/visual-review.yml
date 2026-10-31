@@ -1,0 +1,46 @@
+name: Visual review
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Build and capture proposed version
+        run: |
+          npm run build
+          node scripts/automation/visual.cjs capture automation-results/after
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha || github.sha }}
+          path: visual-base
+      - name: Build base version using its lockfile
+        working-directory: visual-base
+        run: |
+          npm ci
+          npm run build
+      - name: Capture base using identical browser and screenshot rules
+        run: |
+          mv build proposed-build
+          cp -R visual-base/build build
+          node scripts/automation/visual.cjs capture automation-results/before
+      - name: Compare images
+        run: |
+          node scripts/automation/visual.cjs compare automation-results/after automation-results/before
+          cat automation-results/after/comparison.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-before-after-diffs
+          path: automation-results/
